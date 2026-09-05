@@ -1,0 +1,32 @@
+{
+  "name": "@trainable-ds/mcp-server",
+  "version": "1.7.0",
+  "description": "Model Context Protocol (MCP) Server for Trainable DS: Live token queries, component schemas, and automated compliance evaluation for AI agents",
+  "type": "module",
+  "bin": {
+    "tds-mcp": "./dist/bin.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b && chmod +x ./dist/bin.js",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@trainable-ds/core": "^1.7.0",
+    "@trainable-ds/compiler": "^1.7.0",
+    "@trainable-ds/evaluator": "^1.7.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "version": "1.7.0",
+  "lastUpdated": "2026-09-05T12:17:53.798Z",
+  "components": {
+    "CleanCard": {
+      "name": "CleanCard",
+      "path": "./playground/CleanCard.tsx",
+      "family": "containment",
+      "description": "Design system CleanCard component belonging to the containment family.",
+      "anatomy": {
+        "container": {
+          "minTouchTarget": "48px (enforced)"
+        }
+      },
+      "variants": {
+        "default": {
+          "elevation": 0,
+          "description": "default variant"
+        }
+      },
+      "props": {},
+      "a11y": {
+        "minTouchTarget": "48x48px",
+        "requiredAria": [],
+        "focusIndicator": "3px outline with 2px offset"
+      },
+      "rules": [
+        "Always use <CleanCard> instead of raw HTML elements.",
+        "Ensure touch target is at least 48x48px.",
+        "Use semantic M3 colors for background and text contrast pairing."
+      ],
+      "examples": [
+        "<CleanCard variant=\"default\">\n  Action text\n</CleanCard>"
+      ]
+    },
+    "DirtyCard": {
+      "name": "DirtyCard",
+      "path": "./playground/DirtyCard.tsx",
+      "family": "containment",
+      "description": "Design system DirtyCard component belonging to the containment family.",
+      "anatomy": {
+        "container": {
+          "minTouchTarget": "48px (enforced)"
+        }
+      },
+      "variants": {
+        "default": {
+          "elevation": 0,
+          "description": "default variant"
+        }
+      },
+      "props": {},
+      "a11y": {
+        "minTouchTarget": "48x48px",
+        "requiredAria": [],
+        "focusIndicator": "3px outline with 2px offset"
+      },
+      "rules": [
+        "Always use <DirtyCard> instead of raw HTML elements.",
+        "Ensure touch target is at least 48x48px.",
+        "Use semantic M3 colors for background and text contrast pairing."
+      ],
+      "examples": [
+        "<DirtyCard variant=\"default\">\n  Action text\n</DirtyCard>"
+      ]
+    }
+  }
+}

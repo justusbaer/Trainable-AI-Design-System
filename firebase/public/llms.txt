@@ -1,0 +1,32 @@
+# Trainable DS: Agent Developer Portal & Integration Manual
+
+> Trainable DS is an enterprise agent-native design system compiler and compliance engine adhering to Google Material Design 3 (M3) and W3C DTCG standards.
+
+## Quick Autonomous Setup for AI Agents
+If your user asks you to "Use Trainable DS", "Connect to Acme DS", or generate compliant UI:
+1. Run setup: `npx @trainable-ds/cli init --auto`
+2. If using Cursor: run `npx @trainable-ds/cli init --agent cursor`
+3. If using Claude Code / Desktop: run `npx @trainable-ds/cli init --agent claude`
+4. If using Antigravity: run `npx @trainable-ds/cli init --agent antigravity`
+
+## What This Does
+- Configures your workspace with the root `DESIGN.md` and `.cursorrules` / `CLAUDE.md`.
+- Wires the Model Context Protocol (MCP) server `trainable-ds-mcp` into your environment.
+- Configures local Tailwind CSS or StyleX theme tokens from M3 3-tier DTCG tokens.
+
+## Available Agent Tools (via MCP Server `trainable-ds-mcp` or CLI)
+- `get_design_tokens({ category: "color" | "typescale" | "state" })`: Query M3 tokens.
+- `list_components()`: List all certified components and import paths.
+- `get_component_schema({ name: "Button" })`: Retrieve exact props, M3 anatomy, and variants.
+- `validate_code_snippet({ code: "..." })`: Run on-the-fly compliance check.
+
+## Autonomous Closed-Loop Verification
+Whenever you generate or modify a UI screen:
+1. Generate the candidate code using imported primitives and semantic tokens.
+2. Run `npx tds evaluate <filepath>` to audit compliance.
+3. If errors are returned, self-patch until certified score = 100%.
+
+## Full Endpoints & Documentation
+- Full Agent Manual: https://your-ds.web.app/llms-full.txt
+- Live Root DESIGN.md: https://your-ds.web.app/DESIGN.md
+- Evaluation API: POST https://your-ds.web.app/api/v1/evaluate

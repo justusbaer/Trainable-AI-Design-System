@@ -1,0 +1,189 @@
+import { DiagnosticIssue, EvaluationResult } from "./types.js";
+
+export interface EvaluateOptions {
+  fileName?: string;
+  allowedTokens?: Set<string>;
+  strictHexDisallowed?: boolean;
+  minTouchTargetPx?: number;
+  requireSentenceCase?: boolean;
+  requireOnColorPairing?: boolean;
+}
+
+/**
+ * Checks if a string is in sentence case
+ * Allowed: "Save changes", "Submit order now", "Sign in"
+ * Disallowed: "Save Changes", "SUBMIT ORDER", "Submit Your Order Now"
+ */
+export function isSentenceCase(text: string): boolean {
+  const trimmed = text.trim();
+  if (!trimmed || trimmed.length <= 1) return true;
+
+  const words = trimmed.split(/\s+/);
+  if (words.length <= 1) return true;
+
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i].replace(/[^a-zA-Z]/g, "");
+    if (word.length > 1 && word[0] === word[0].toUpperCase() && word.slice(1) === word.slice(1).toLowerCase()) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+/**
+ * Executes a 4-tier design system compliance audit on code.
+ */
+export function evaluateCode(code: string, options: EvaluateOptions = {}): EvaluationResult {
+  const {
+    strictHexDisallowed = true,
+    minTouchTargetPx = 48,
+    requireSentenceCase = true,
+    requireOnColorPairing = true,
+  } = options;
+
+  const diagnostics: DiagnosticIssue[] = [];
+  const lines = code.split(/\r?\n/);
+
+  lines.forEach((lineText, lineIdx) => {
+    const lineNum = lineIdx + 1;
+
+    // =========================================================================
+    // Tier 1: Static Token Audit (Raw Hex Colors & Non-Quantum Spacing)
+    // =========================================================================
+    if (strictHexDisallowed) {
+      // Find raw hex colors (e.g. #2563eb, #ffffff)
+      const hexMatch = lineText.match(/#[0-9a-fA-F]{3,8}\b/g);
+      if (hexMatch) {
+        hexMatch.forEach(hex => {
+          diagnostics.push({
+            severity: "CRITICAL",
+            code: "TDS-RAW-COLOR",
+            line: lineNum,
+            message: `Raw hex color '${hex}' detected.`,
+            remediation: "Replace with semantic token (e.g. 'bg-brand-primary' or 'sys.color.primary').",
+          });
+        });
+      }
+
+      // Find arbitrary spacing classes like p-[13px] or m-[7px]
+      const arbitrarySpacing = lineText.match(/\b[pm][xytbl]?-\[(\d+)px\]/g);
+      if (arbitrarySpacing) {
+        arbitrarySpacing.forEach(cls => {
+          diagnostics.push({
+            severity: "HIGH",
+            code: "TDS-NON-QUANTUM-SPACING",
+            line: lineNum,
+            message: `Arbitrary non-standard spacing class '${cls}' used.`,
+            remediation: "Use standard 4px/8px spatial scale token (e.g. 'p-3' = 12px or 'p-4' = 16px).",
+          });
+        });
+      }
+    }
+
+    // =========================================================================
+    // Tier 2: Component Reuse & On-Color Pair Audit
+    // Case-sensitive check: must distinguish lowercase <button> from uppercase <Button>
+    // =========================================================================
+    if (/<\s*button\b[^>]*className/.test(lineText)) {
+      diagnostics.push({
+        severity: "HIGH",
+        code: "TDS-REINVENTED-COMPONENT",
+        line: lineNum,
+        message: "Raw '<button>' element used where design system component '<Button>' should be imported.",
+        remediation: "Import { Button } from '@/components/ui/button' and use `<Button variant=\"...\">`.",
+      });
+    }
+
+    if (/<\s*input\b[^>]*className/.test(lineText)) {
+      diagnostics.push({
+        severity: "HIGH",
+        code: "TDS-REINVENTED-COMPONENT",
+        line: lineNum,
+        message: "Raw '<input>' element used where design system component '<TextField>' should be imported.",
+        remediation: "Import { TextField } from '@/components/ui/text-field' and use `<TextField>`. ",
+      });
+    }
+
+    // On-Color Pairing Audit: element has bg-primary or bg-brand-primary but text is not on-primary
+    if (requireOnColorPairing) {
+      if (/\bbg-(?:brand-)?primary\b/.test(lineText) && /\btext-(?:gray|slate|zinc|black)-\d+/.test(lineText)) {
+        diagnostics.push({
+          severity: "CRITICAL",
+          code: "TDS-M3-ON-COLOR-MISMATCH",
+          line: lineNum,
+          message: "Element with 'bg-primary' background uses a non-paired text color.",
+          remediation: "Use paired token 'text-on-primary' to ensure accessible contrast.",
+        });
+      }
+    }
+
+    // =========================================================================
+    // Tier 3: Touch Targets & RTL Directionality
+    // =========================================================================
+    if (/\b(?:IconButton|button)\b/i.test(lineText) && /\b(?:w-[678]|h-[678]|w-\[3\dpx\]|h-\[3\dpx\])\b/.test(lineText)) {
+      diagnostics.push({
+        severity: "HIGH",
+        code: "TDS-TOUCH-TARGET-TOO-SMALL",
+        line: lineNum,
+        message: `Interactive target appears smaller than minimum ${minTouchTargetPx}x${minTouchTargetPx}px required by M3 and WCAG AA.`,
+        remediation: `Ensure button has padding or minimum dimensions meeting ${minTouchTargetPx}px (e.g. 'min-w-[48px] min-h-[48px]').`,
+      });
+    }
+
+    if (/\b(?:ml-\d+|mr-\d+|pl-\d+|pr-\d+)\b/.test(lineText)) {
+      diagnostics.push({
+        severity: "LOW",
+        code: "TDS-RTL-NON-LOGICAL",
+        line: lineNum,
+        message: "Physical directional classes detected (e.g. 'ml-', 'mr-').",
+        remediation: "Use bidirectional logical properties ('ms-', 'me-', 'ps-', 'pe-') for internationalization.",
+      });
+    }
+
+    // =========================================================================
+    // Tier 4: Semantic Guidelines & Sentence-Case Check
+    // =========================================================================
+    if (requireSentenceCase) {
+      const buttonContentMatch = lineText.match(/<\s*Button[^>]*>(.*?)<\s*\/\s*Button>/);
+      if (buttonContentMatch) {
+        const labelText = buttonContentMatch[1].replace(/<[^>]*>/g, "").trim();
+        if (labelText && !isSentenceCase(labelText)) {
+          diagnostics.push({
+            severity: "MEDIUM",
+            code: "TDS-CAPITALIZATION-NOT-SENTENCE-CASE",
+            line: lineNum,
+            message: `Button label '${labelText}' uses Title Case instead of M3 Sentence Case.`,
+            remediation: `Change label text to sentence case: '${toSentenceCase(labelText)}'.`,
+          });
+        }
+      }
+    }
+  });
+
+  let score = 100;
+  for (const diag of diagnostics) {
+    if (diag.severity === "CRITICAL") score -= 25;
+    else if (diag.severity === "HIGH") score -= 15;
+    else if (diag.severity === "MEDIUM") score -= 8;
+    else if (diag.severity === "LOW") score -= 3;
+  }
+  score = Math.max(0, score);
+
+  const certified = diagnostics.length === 0;
+  const summary = certified
+    ? "Certified 100% compliant with Trainable DS & Material Design 3 rules."
+    : `${diagnostics.length} violation(s) found. Score: ${score}/100.`;
+
+  return {
+    certified,
+    score,
+    summary,
+    diagnostics,
+  };
+}
+
+function toSentenceCase(str: string): string {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}

@@ -1,0 +1,26 @@
+{
+  "name": "@trainable-ds/evaluator",
+  "version": "1.7.0",
+  "description": "Multi-tier design system compliance engine and auto-repair linter for Trainable DS",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@trainable-ds/core": "^1.7.0",
+    "@trainable-ds/compiler": "^1.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "trainable-ds": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@trainable-ds/cli",
+        "mcp"
+      ]
+    }
+  }
+}

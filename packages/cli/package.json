@@ -1,0 +1,29 @@
+{
+  "name": "@trainable-ds/cli",
+  "version": "1.7.0",
+  "description": "CLI tool for Trainable DS: Agent-first onboarding, training, and evaluation",
+  "type": "module",
+  "bin": {
+    "tds": "./dist/bin.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b && chmod +x ./dist/bin.js",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@trainable-ds/core": "^1.7.0",
+    "@trainable-ds/compiler": "^1.7.0",
+    "@trainable-ds/evaluator": "^1.7.0",
+    "@trainable-ds/mcp-server": "^1.7.0",
+    "commander": "^13.0.0",
+    "picocolors": "^1.1.1",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

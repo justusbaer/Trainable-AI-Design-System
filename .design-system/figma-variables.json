@@ -1,0 +1,1338 @@
+{
+  "variableCollections": [
+    {
+      "action": "CREATE",
+      "id": "coll_sys",
+      "name": "System",
+      "initialModeId": "mode_light"
+    }
+  ],
+  "variableModes": [
+    {
+      "action": "CREATE",
+      "id": "mode_dark",
+      "name": "Dark",
+      "variableCollectionId": "coll_sys"
+    }
+  ],
+  "variables": [
+    {
+      "action": "CREATE",
+      "id": "var_primary",
+      "name": "color/primary",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Primary action color"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onPrimary",
+      "name": "color/onPrimary",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on primary"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_primaryContainer",
+      "name": "color/primaryContainer",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Low-emphasis primary container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onPrimaryContainer",
+      "name": "color/onPrimaryContainer",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on primary container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_secondary",
+      "name": "color/secondary",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Secondary accent"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onSecondary",
+      "name": "color/onSecondary",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on secondary"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_secondaryContainer",
+      "name": "color/secondaryContainer",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Secondary container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onSecondaryContainer",
+      "name": "color/onSecondaryContainer",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on secondary container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_tertiary",
+      "name": "color/tertiary",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Tertiary accent"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onTertiary",
+      "name": "color/onTertiary",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on tertiary"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_tertiaryContainer",
+      "name": "color/tertiaryContainer",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Tertiary container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onTertiaryContainer",
+      "name": "color/onTertiaryContainer",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on tertiary container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_error",
+      "name": "color/error",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Error state color"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onError",
+      "name": "color/onError",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on error"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_errorContainer",
+      "name": "color/errorContainer",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Error container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onErrorContainer",
+      "name": "color/onErrorContainer",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on error container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surface",
+      "name": "color/surface",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Base surface background"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onSurface",
+      "name": "color/onSurface",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on base surface"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surfaceVariant",
+      "name": "color/surfaceVariant",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Surface variant"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onSurfaceVariant",
+      "name": "color/onSurfaceVariant",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on surface variant"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surfaceDim",
+      "name": "color/surfaceDim",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Dim surface"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surfaceBright",
+      "name": "color/surfaceBright",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Bright surface"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surfaceContainerLowest",
+      "name": "color/surfaceContainerLowest",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Lowest container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surfaceContainerLow",
+      "name": "color/surfaceContainerLow",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Low container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surfaceContainer",
+      "name": "color/surfaceContainer",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Default container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surfaceContainerHigh",
+      "name": "color/surfaceContainerHigh",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "High container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surfaceContainerHighest",
+      "name": "color/surfaceContainerHighest",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Highest container"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_primaryFixed",
+      "name": "color/primaryFixed",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Theme-invariant primary fixed"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_primaryFixedDim",
+      "name": "color/primaryFixedDim",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Theme-invariant primary fixed dim"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onPrimaryFixed",
+      "name": "color/onPrimaryFixed",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on primary fixed"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onPrimaryFixedVariant",
+      "name": "color/onPrimaryFixedVariant",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on primary fixed variant"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_secondaryFixed",
+      "name": "color/secondaryFixed",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Secondary fixed"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_secondaryFixedDim",
+      "name": "color/secondaryFixedDim",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Secondary fixed dim"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onSecondaryFixed",
+      "name": "color/onSecondaryFixed",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on secondary fixed"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onSecondaryFixedVariant",
+      "name": "color/onSecondaryFixedVariant",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on secondary fixed variant"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_tertiaryFixed",
+      "name": "color/tertiaryFixed",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Tertiary fixed"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_tertiaryFixedDim",
+      "name": "color/tertiaryFixedDim",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Tertiary fixed dim"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onTertiaryFixed",
+      "name": "color/onTertiaryFixed",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on tertiary fixed"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_onTertiaryFixedVariant",
+      "name": "color/onTertiaryFixedVariant",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on tertiary fixed variant"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_outline",
+      "name": "color/outline",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "3:1 boundary outline"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_outlineVariant",
+      "name": "color/outlineVariant",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Divider outline"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_inverseSurface",
+      "name": "color/inverseSurface",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Inverse surface"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_inverseOnSurface",
+      "name": "color/inverseOnSurface",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Text on inverse surface"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_inversePrimary",
+      "name": "color/inversePrimary",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Inverse primary"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_shadow",
+      "name": "color/shadow",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Elevation shadow"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_scrim",
+      "name": "color/scrim",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Modal backdrop scrim"
+    },
+    {
+      "action": "CREATE",
+      "id": "var_surfaceTint",
+      "name": "color/surfaceTint",
+      "variableCollectionId": "coll_sys",
+      "resolvedType": "COLOR",
+      "description": "Elevation surface tint overlay"
+    }
+  ],
+  "variableModeValues": [
+    {
+      "variableId": "var_primary",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.235,
+        "g": 0.282,
+        "b": 0.361,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_primary",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onPrimary",
+      "modeId": "mode_light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onPrimary",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.059,
+        "g": 0.086,
+        "b": 0.133,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_primaryContainer",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_primaryContainer",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.137,
+        "g": 0.18,
+        "b": 0.251,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onPrimaryContainer",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.008,
+        "g": 0.012,
+        "b": 0.027,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onPrimaryContainer",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_secondary",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.235,
+        "g": 0.282,
+        "b": 0.361,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_secondary",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSecondary",
+      "modeId": "mode_light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSecondary",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.059,
+        "g": 0.086,
+        "b": 0.133,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_secondaryContainer",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_secondaryContainer",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.137,
+        "g": 0.18,
+        "b": 0.251,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSecondaryContainer",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.008,
+        "g": 0.012,
+        "b": 0.027,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSecondaryContainer",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_tertiary",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.235,
+        "g": 0.282,
+        "b": 0.361,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_tertiary",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onTertiary",
+      "modeId": "mode_light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onTertiary",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.059,
+        "g": 0.086,
+        "b": 0.133,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_tertiaryContainer",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_tertiaryContainer",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.137,
+        "g": 0.18,
+        "b": 0.251,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onTertiaryContainer",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.008,
+        "g": 0.012,
+        "b": 0.027,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onTertiaryContainer",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_error",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.729,
+        "g": 0.102,
+        "b": 0.102,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_error",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 1,
+        "g": 0.706,
+        "b": 0.671,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onError",
+      "modeId": "mode_light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onError",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.412,
+        "g": 0,
+        "b": 0.02,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_errorContainer",
+      "modeId": "mode_light",
+      "value": {
+        "r": 1,
+        "g": 0.855,
+        "b": 0.839,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_errorContainer",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.576,
+        "g": 0,
+        "b": 0.039,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onErrorContainer",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.255,
+        "g": 0,
+        "b": 0.008,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onErrorContainer",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 1,
+        "g": 0.855,
+        "b": 0.839,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surface",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.973,
+        "g": 0.973,
+        "b": 0.976,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surface",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.012,
+        "g": 0.012,
+        "b": 0.016,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSurface",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.012,
+        "g": 0.012,
+        "b": 0.016,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSurface",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.871,
+        "g": 0.871,
+        "b": 0.875,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceVariant",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.871,
+        "g": 0.871,
+        "b": 0.875,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceVariant",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.176,
+        "g": 0.176,
+        "b": 0.192,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSurfaceVariant",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.176,
+        "g": 0.176,
+        "b": 0.192,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSurfaceVariant",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.741,
+        "g": 0.741,
+        "b": 0.753,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceDim",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.741,
+        "g": 0.741,
+        "b": 0.753,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceDim",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.012,
+        "g": 0.012,
+        "b": 0.016,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceBright",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.988,
+        "g": 0.988,
+        "b": 0.988,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceBright",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.176,
+        "g": 0.176,
+        "b": 0.192,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainerLowest",
+      "modeId": "mode_light",
+      "value": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainerLowest",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainerLow",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.933,
+        "g": 0.933,
+        "b": 0.937,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainerLow",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.012,
+        "g": 0.012,
+        "b": 0.016,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainer",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.871,
+        "g": 0.871,
+        "b": 0.875,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainer",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.012,
+        "g": 0.012,
+        "b": 0.016,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainerHigh",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.741,
+        "g": 0.741,
+        "b": 0.753,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainerHigh",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.086,
+        "g": 0.086,
+        "b": 0.094,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainerHighest",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.62,
+        "g": 0.62,
+        "b": 0.635,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceContainerHighest",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.176,
+        "g": 0.176,
+        "b": 0.192,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_primaryFixed",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_primaryFixed",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_primaryFixedDim",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_primaryFixedDim",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onPrimaryFixed",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.008,
+        "g": 0.012,
+        "b": 0.027,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onPrimaryFixed",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.008,
+        "g": 0.012,
+        "b": 0.027,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onPrimaryFixedVariant",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.137,
+        "g": 0.18,
+        "b": 0.251,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onPrimaryFixedVariant",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.137,
+        "g": 0.18,
+        "b": 0.251,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_secondaryFixed",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_secondaryFixed",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_secondaryFixedDim",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_secondaryFixedDim",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSecondaryFixed",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.008,
+        "g": 0.012,
+        "b": 0.027,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSecondaryFixed",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.008,
+        "g": 0.012,
+        "b": 0.027,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSecondaryFixedVariant",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.137,
+        "g": 0.18,
+        "b": 0.251,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onSecondaryFixedVariant",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.137,
+        "g": 0.18,
+        "b": 0.251,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_tertiaryFixed",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_tertiaryFixed",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.851,
+        "g": 0.871,
+        "b": 0.906,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_tertiaryFixedDim",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_tertiaryFixedDim",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onTertiaryFixed",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.008,
+        "g": 0.012,
+        "b": 0.027,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onTertiaryFixed",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.008,
+        "g": 0.012,
+        "b": 0.027,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onTertiaryFixedVariant",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.137,
+        "g": 0.18,
+        "b": 0.251,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_onTertiaryFixedVariant",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.137,
+        "g": 0.18,
+        "b": 0.251,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_outline",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.447,
+        "g": 0.467,
+        "b": 0.498,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_outline",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.549,
+        "g": 0.569,
+        "b": 0.6,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_outlineVariant",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.761,
+        "g": 0.78,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_outlineVariant",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.259,
+        "g": 0.278,
+        "b": 0.306,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_inverseSurface",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.086,
+        "g": 0.086,
+        "b": 0.094,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_inverseSurface",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.871,
+        "g": 0.871,
+        "b": 0.875,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_inverseOnSurface",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.933,
+        "g": 0.933,
+        "b": 0.937,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_inverseOnSurface",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.086,
+        "g": 0.086,
+        "b": 0.094,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_inversePrimary",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_inversePrimary",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.235,
+        "g": 0.282,
+        "b": 0.361,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_shadow",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_shadow",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_scrim",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_scrim",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceTint",
+      "modeId": "mode_light",
+      "value": {
+        "r": 0.235,
+        "g": 0.282,
+        "b": 0.361,
+        "a": 1
+      }
+    },
+    {
+      "variableId": "var_surfaceTint",
+      "modeId": "mode_dark",
+      "value": {
+        "r": 0.706,
+        "g": 0.745,
+        "b": 0.812,
+        "a": 1
+      }
+    }
+  ]
+}

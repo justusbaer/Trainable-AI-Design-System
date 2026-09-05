@@ -1,0 +1,15 @@
+name: "My Application Design System"
+version: "1.0.0"
+framework: "react-tailwind"
+mode: "dual-scheme"
+sourceDirs:
+  - "./src"
+docsDirs:
+  - "./docs"
+output:
+  designMdPath: "./DESIGN.md"
+  cursorRulesPath: "./.cursor/rules/design-system.mdc"
+compliance:
+  strictHexDisallowed: true
+  minTouchTargetPx: 48
+  requireSentenceCase: true

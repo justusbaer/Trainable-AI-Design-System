@@ -1,0 +1,25 @@
+{
+  "name": "trainable-ds-monorepo",
+  "version": "1.7.0",
+  "private": true,
+  "description": "Trainable DS: Agent-Native Design System Extractor & Compliance Engine with Material Design 3 Fidelity",
+  "workspaces": [
+    "packages/*",
+    "firebase/functions"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "clean": "rm -rf node_modules packages/*/node_modules packages/*/dist"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "packageManager": "npm@10.9.0",
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

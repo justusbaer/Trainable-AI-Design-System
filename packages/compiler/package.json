@@ -1,0 +1,26 @@
+{
+  "name": "@trainable-ds/compiler",
+  "version": "1.7.0",
+  "description": "Compiles M3 DTCG tokens into DESIGN.md, Tailwind theme, and agent rules",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@trainable-ds/core": "^1.7.0",
+    "yaml": "^2.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

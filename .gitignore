@@ -1,0 +1,28 @@
+# Node & Build artifacts
+node_modules/
+dist/
+**/dist/
+build/
+**/build/
+*.tsbuildinfo
+
+# Logs & Environment
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+.env.local
+.env.*.local
+
+# IDE & System
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Firebase
+.firebase/
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*

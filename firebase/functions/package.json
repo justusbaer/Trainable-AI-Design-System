@@ -1,0 +1,22 @@
+{
+  "name": "trainable-ds-functions",
+  "version": "1.7.0",
+  "description": "Firebase Cloud Functions for Trainable DS: Headless Evaluation API, Remote MCP, and Real-time Token Sync",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@trainable-ds/core": "^1.7.0",
+    "@trainable-ds/evaluator": "^1.7.0",
+    "@trainable-ds/mcp-server": "^1.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

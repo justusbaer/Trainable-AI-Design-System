@@ -1,0 +1,14 @@
+---
+description: Design System Rules and Constraints for My Application
+globs: **/*.{tsx,jsx,vue,svelte,html,css}
+alwaysApply: true
+---
+
+# My Application Design System Rules
+
+You MUST follow the project design system defined in `DESIGN.md` and `.design-system/`:
+1. **NO RAW HEX CODES:** Never write inline hex colors (`#...`) or raw RGB/HSL. Use semantic tokens (`bg-brand-primary`, `text-on-primary`).
+2. **NO REINVENTED HTML PRIMITIVES:** Always check `DESIGN.md` Section 3 or query MCP for certified components (`<Button>`, `<TextField>`, `<Card>`). Do not write raw `<button>` or `<input>`.
+3. **SENTENCE CASE:** All button labels, chip texts, and headers MUST be sentence case (e.g. "Create invoice", not "Create Invoice").
+4. **TOUCH TARGETS:** All interactive elements must maintain at least 48x48px touch targets.
+5. **EVALUATE YOUR CODE:** Run `npx tds evaluate <file>` to verify compliance before finalizing work.
