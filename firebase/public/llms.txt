@@ -1,32 +1,63 @@
-# Trainable DS: Agent Developer Portal & Integration Manual
+# Trainable DS: Agent Developer Portal & System Manual
 
-> Trainable DS is an enterprise agent-native design system compiler and compliance engine adhering to Google Material Design 3 (M3) and W3C DTCG standards.
+> **Trainable DS** is an agent-native, closed-loop Design System engine built on Google Material Design 3 (M3) and W3C DTCG standards. It enables any AI generation surface (Cursor, Claude Code, Antigravity, Figma AI, ChatGPT) to root itself in authoritative design tokens and self-correct UI code to 100% compliance.
 
-## Quick Autonomous Setup for AI Agents
-If your user asks you to "Use Trainable DS", "Connect to Acme DS", or generate compliant UI:
-1. Run setup: `npx @trainable-ds/cli init --auto`
-2. If using Cursor: run `npx @trainable-ds/cli init --agent cursor`
-3. If using Claude Code / Desktop: run `npx @trainable-ds/cli init --agent claude`
-4. If using Antigravity: run `npx @trainable-ds/cli init --agent antigravity`
+---
 
-## What This Does
-- Configures your workspace with the root `DESIGN.md` and `.cursorrules` / `CLAUDE.md`.
-- Wires the Model Context Protocol (MCP) server `trainable-ds-mcp` into your environment.
-- Configures local Tailwind CSS or StyleX theme tokens from M3 3-tier DTCG tokens.
+## 1. Quick Agent Instructions (Astryx Parity)
+If the user tells you to:
+- *"Use Trainable DS"*
+- *"Follow the design system at this URL"*
+- *"Generate a screen/component matching our design system"*
 
-## Available Agent Tools (via MCP Server `trainable-ds-mcp` or CLI)
-- `get_design_tokens({ category: "color" | "typescale" | "state" })`: Query M3 tokens.
-- `list_components()`: List all certified components and import paths.
-- `get_component_schema({ name: "Button" })`: Retrieve exact props, M3 anatomy, and variants.
-- `validate_code_snippet({ code: "..." })`: Run on-the-fly compliance check.
+Execute the following workflow:
+1. **Initialize Workspace (if not already configured):**
+   ```bash
+   npx -y @trainable-ds/cli init --auto
+   ```
+   *This automatically generates `DESIGN.md`, `.cursor/rules/design-system.mdc`, `.cursor/mcp.json`, and injects `CLAUDE.md`.*
+2. **Retrieve Context & Active Contracts:**
+   - Read local [`DESIGN.md`](/DESIGN.md) or fetch [`/api/v1/context`](/api/v1/context).
+   - Review certified components from [`/components.json`](/components.json) or MCP tool `list_components`.
+3. **Generate UI Using Strictly Certified Primitives:**
+   - **Zero Raw Values:** Never use `#hex`, `rgb(...)`, or arbitrary sizing (`p-[13px]`). Always use semantic Tailwind classes (`bg-surface-container-low`, `text-on-surface`, `bg-primary`, `text-on-primary`).
+   - **8dp Spatial Quantum Grid:** All padding, margins, and gaps must be multiples of 4px/8px (`p-2`, `p-4`, `p-6`, `gap-4`).
+   - **$\ge 48\times 48\text{px}$ Touch Targets:** Every button, chip, tab, and input must satisfy `min-h-[48px] min-w-[48px]` or `h-12`.
+   - **Bi-Directional RTL Properties:** Use logical properties (`ps-*`, `pe-*`, `ms-*`, `me-*`) instead of physical (`pl`, `pr`, `ml`, `mr`).
+   - **Sentence Case:** All button text, headings, and labels must use sentence case (`Save changes`, not `Save Changes`).
+4. **Closed-Loop Audit & Auto-Repair:**
+   - In CLI:
+     ```bash
+     npx -y @trainable-ds/cli evaluate <filepath> --strict
+     ```
+   - Over HTTP:
+     ```bash
+     curl -s -X POST /api/v1/evaluate -H "Content-Type: application/json" -d '{"code":"<candidate TSX>"}'
+     ```
+   - Over MCP:
+     Call tool `validate_code_snippet({ code: "..." })`.
+   - If score < 100 or violations are returned, fix all flagged lines and re-evaluate until certified compliant.
 
-## Autonomous Closed-Loop Verification
-Whenever you generate or modify a UI screen:
-1. Generate the candidate code using imported primitives and semantic tokens.
-2. Run `npx tds evaluate <filepath>` to audit compliance.
-3. If errors are returned, self-patch until certified score = 100%.
+---
 
-## Full Endpoints & Documentation
-- Full Agent Manual: https://your-ds.web.app/llms-full.txt
-- Live Root DESIGN.md: https://your-ds.web.app/DESIGN.md
-- Evaluation API: POST https://your-ds.web.app/api/v1/evaluate
+## 2. Direct Machine-Readable Endpoints
+- **Agent Guide (this file):** [`/llms.txt`](/llms.txt)
+- **Comprehensive Prompt Bundle:** [`/llms-full.txt`](/llms-full.txt)
+- **Root DESIGN.md Facade:** [`/DESIGN.md`](/DESIGN.md)
+- **W3C DTCG 3-Tier Tokens JSON:** [`/tokens.json`](/tokens.json)
+- **6-Family Component Catalog JSON:** [`/components.json`](/components.json)
+- **Model Context Protocol (MCP) Discovery:** [`/.well-known/mcp.json`](/.well-known/mcp.json)
+- **Headless Evaluation API:** `POST /api/v1/evaluate`
+- **Compact Context API:** `GET /api/v1/context`
+- **Remote MCP SSE Endpoint:** `GET /api/v1/mcp/sse` & `POST /api/v1/mcp/message`
+
+---
+
+## 3. Model Context Protocol (MCP) Tools
+If connected over MCP, the following tools are available:
+- `get_design_tokens({ category?: "color" | "typography" | "spacing" | "elevation" | "shape" | "motion" | "all", tier?: "ref" | "sys" | "comp" | "all" })`
+- `list_components({ family?: "actions" | "communication" | "containment" | "navigation" | "selection" | "text-inputs" | "all" })`
+- `get_component_schema({ component_name: string })`
+- `validate_code_snippet({ code: string, filename?: string, strict?: boolean })`
+- `suggest_remediation({ component_type: string, intent?: string })`
+- `get_design_guidelines()`

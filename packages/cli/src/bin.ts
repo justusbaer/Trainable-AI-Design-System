@@ -66,5 +66,15 @@ figmaCmd
     await runFigmaPush(options);
   });
 
+program
+  .command("serve")
+  .description("Launch the Trainable DS Source of Truth Web Portal for humans and AI agents")
+  .option("--port <port>", "Port to listen on (default: 5000)", "5000")
+  .option("--dir <path>", "Workspace directory")
+  .action(async (options) => {
+    const { runServe } = await import("./commands/serve.js");
+    await runServe(options);
+  });
+
 program.parse();
 

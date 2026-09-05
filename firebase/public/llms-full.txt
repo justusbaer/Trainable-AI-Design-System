@@ -1,0 +1,167 @@
+# Trainable DS: Complete Machine Reference & Prompt Bundle (Version 1.7.0)
+
+> This document is the full, exhaustive reference for Trainable DS. You can inject this entire file into any AI agent system prompt to achieve 100% compliant Material Design 3 generation.
+
+---
+
+## 1. System Foundations (Material Design 3 Depth)
+
+### 1.1 M3 Semantic Color Taxonomy (Dual Scheme)
+Material Design 3 defines 36+ semantic color roles. Colors are divided into Light and Dark schemes derived mathematically from HCT (Hue, Chroma, Tone) tonal palettes:
+
+#### Primary Accent Family
+- `sys.color.primary`: Key brand color for high-emphasis elements (Filled buttons, active states). Light: Tone 40. Dark: Tone 80.
+- `sys.color.on-primary`: Text & icons on top of `primary`. Light: Tone 100 (#ffffff). Dark: Tone 20.
+- `sys.color.primary-container`: Low-emphasis container fill. Light: Tone 90. Dark: Tone 30.
+- `sys.color.on-primary-container`: Text & icons on top of `primary-container`. Light: Tone 10. Dark: Tone 90.
+
+#### Secondary Accent Family
+- `sys.color.secondary`: Less prominent components (Filter chips, secondary actions). Light: Tone 40. Dark: Tone 80.
+- `sys.color.on-secondary`: Text & icons on `secondary`. Light: Tone 100. Dark: Tone 20.
+- `sys.color.secondary-container`: Tonal containers. Light: Tone 90. Dark: Tone 30.
+- `sys.color.on-secondary-container`: Text & icons on `secondary-container`. Light: Tone 10. Dark: Tone 90.
+
+#### Tertiary Accent Family
+- `sys.color.tertiary`: Contrasting accents, balance, input highlights. Light: Tone 40. Dark: Tone 80.
+- `sys.color.on-tertiary`: Text & icons on `tertiary`. Light: Tone 100. Dark: Tone 20.
+- `sys.color.tertiary-container`: Tonal highlight container. Light: Tone 90. Dark: Tone 30.
+- `sys.color.on-tertiary-container`: Text on tertiary container. Light: Tone 10. Dark: Tone 90.
+
+#### Error Family
+- `sys.color.error`: Attention, destructive actions, form validation failure (#ba1a1a in light, #ffb4ab in dark).
+- `sys.color.on-error`: Text on error (#ffffff in light, #690005 in dark).
+- `sys.color.error-container`: Error banner fill (#ffdad6 in light, #93000a in dark).
+- `sys.color.on-error-container`: Text on error container (#410002 in light, #ffdad6 in dark).
+
+#### Surface Container Hierarchy (5-Level Depth)
+Instead of shadows, M3 uses tonal surface elevation:
+- `sys.color.surface`: Base canvas background.
+- `sys.color.on-surface`: Primary copy on surfaces.
+- `sys.color.surface-variant`: Secondary surfaces.
+- `sys.color.on-surface-variant`: Secondary / supporting text and icons.
+- `sys.color.surface-container-lowest`: Lowest level container (e.g. Card on elevated panel).
+- `sys.color.surface-container-low`: Low emphasis card container.
+- `sys.color.surface-container`: Standard default card container.
+- `sys.color.surface-container-high`: Elevated card, drawer, or dropdown.
+- `sys.color.surface-container-highest`: Modal dialog, top app bar on scroll.
+
+#### Fixed Accent Roles (Theme-Invariant)
+These tokens preserve their visual tone regardless of light or dark theme:
+- `sys.color.primary-fixed`, `sys.color.primary-fixed-dim`, `sys.color.on-primary-fixed`, `sys.color.on-primary-fixed-variant`.
+- `sys.color.secondary-fixed`, `sys.color.secondary-fixed-dim`, `sys.color.on-secondary-fixed`.
+- `sys.color.tertiary-fixed`, `sys.color.tertiary-fixed-dim`, `sys.color.on-tertiary-fixed`.
+
+#### Boundaries & Overlays
+- `sys.color.outline`: 3:1 accessible boundary lines for inputs and outlined buttons (#72777f).
+- `sys.color.outline-variant`: Low-contrast dividers and card borders (#c2c7cf).
+- `sys.color.shadow`: Pure black elevation drop shadow.
+- `sys.color.scrim`: Modal backdrop dimming layer.
+- `sys.color.surface-tint`: Primary color overlay applied to elevated surfaces.
+
+---
+
+### 1.2 15-Tier Typography Scale
+Font Family: `Inter, Roboto, sans-serif`
+
+| Scale Tier | Font Size | Line Height | Weight | Letter Spacing (Tracking) | Usage |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `displayLarge` | 57px | 64px | 400 | -0.25px | Hero splash headings |
+| `displayMedium` | 45px | 52px | 400 | 0px | Splash section titles |
+| `displaySmall` | 36px | 44px | 400 | 0px | Prominent banner titles |
+| `headlineLarge` | 32px | 40px | 400 | 0px | Screen primary headings |
+| `headlineMedium`| 28px | 36px | 400 | 0px | Section headers |
+| `headlineSmall` | 24px | 32px | 400 | 0px | Subsection headers |
+| `titleLarge` | 22px | 28px | 500 | 0px | Top app bar titles, modal titles |
+| `titleMedium` | 16px | 24px | 500 | +0.15px | Card headers, table headings |
+| `titleSmall` | 14px | 20px | 500 | +0.10px | List item titles |
+| `bodyLarge` | 16px | 24px | 400 | +0.50px | Main long-form body text |
+| `bodyMedium` | 14px | 20px | 400 | +0.25px | Standard interface copy, cards |
+| `bodySmall` | 12px | 16px | 400 | +0.40px | Secondary captions, timestamps |
+| `labelLarge` | 14px | 20px | 500 | +0.10px | Buttons, chips, tabs, form labels |
+| `labelMedium` | 12px | 16px | 500 | +0.50px | Small badges, sub-labels |
+| `labelSmall` | 11px | 16px | 500 | +0.50px | Micro indicators |
+
+*Note: All text labels MUST use sentence case (`Save changes`, `View details`).*
+
+---
+
+### 1.3 State Layers & Elevation
+- **Hover State:** 8% (`0.08`) opacity overlay of `on-*` color.
+- **Focus State:** 10% (`0.10`) opacity overlay + 3px outline ring with 2px offset.
+- **Pressed State:** 10% (`0.10`) opacity overlay + expanding ripple.
+- **Dragged State:** 16% (`0.16`) opacity overlay + elevation increase.
+- **Disabled State:** 38% (`0.38`) opacity for text/icons, 12% (`0.12`) opacity for container fills.
+
+#### Elevation Surface Tinting
+- Level 0 (0dp): 0% tint, no shadow
+- Level 1 (1dp): 5% surface tint, light ambient shadow
+- Level 2 (3dp): 8% surface tint, card hover shadow
+- Level 3 (6dp): 11% surface tint, menu / drawer shadow
+- Level 4 (8dp): 12% surface tint, floating toolbar shadow
+- Level 5 (12dp): 14% surface tint, dialog / modal shadow
+
+---
+
+## 2. Component Contracts Across 6 M3 Families
+
+### 1. Actions (`Button`, `IconButton`, `FAB`, `SegmentedButton`)
+- **Minimum Touch Target:** $\ge 48\times 48\text{px}$ (e.g. `min-h-[48px] min-w-[48px]` or `h-12`).
+- **Variants:**
+  - `filled`: `bg-primary text-on-primary`
+  - `tonal`: `bg-secondary-container text-on-secondary-container`
+  - `outlined`: `border border-outline text-primary`
+  - `text`: `text-primary hover:bg-surface-container-low`
+  - `elevated`: `bg-surface-container-low text-primary shadow-sm`
+
+### 2. Communication (`Badge`, `ProgressIndicator`, `Snackbar`, `Tooltip`)
+- **Snackbar:** Positioned bottom-center, surface-container-highest, includes $\ge 48\text{px}$ dismiss button.
+- **Badge:** Small (6px dot) or Large (16px pill with label-small).
+
+### 3. Containment (`Card`, `Dialog`, `BottomSheet`, `Divider`)
+- **Card:** `rounded-2xl p-6 bg-surface-container-low text-on-surface border border-outline-variant/30`.
+- **Dialog:** `rounded-3xl p-6 bg-surface-container-high text-on-surface shadow-lg max-w-md`.
+
+### 4. Navigation (`NavigationBar`, `NavigationDrawer`, `NavigationRail`, `Tabs`)
+- **NavigationBar:** 80px container height, 3–5 items, active pill `bg-secondary-container text-on-secondary-container`.
+- **Tabs:** 48px height, 2px bottom active indicator `bg-primary`.
+
+### 5. Selection (`Checkbox`, `RadioButton`, `Switch`, `Chip`)
+- **Touch Target:** $48\times 48\text{px}$ bounding box even if visual indicator is smaller.
+- **Chip:** `h-8 px-4 rounded-lg border border-outline text-on-surface`.
+
+### 6. Text Inputs (`TextField`, `SearchBar`)
+- **TextField:** 56px height, floating label, active indicator `border-primary`.
+- **SearchBar:** 56px height, `rounded-full bg-surface-container-high px-4`.
+
+---
+
+## 3. Mandatory Executable Constraints (Linter Rules)
+
+| Rule ID | Severity | Constraint Description |
+| :--- | :--- | :--- |
+| `TDS-RAW-COLOR` | CRITICAL | No raw hex (`#1e293b`), rgb, or hsl colors in style or class names. |
+| `TDS-NON-QUANTUM-SPACING` | HIGH | No arbitrary pixel spacing (e.g. `p-[13px]`). Multiples of 4px/8px only (`p-2`, `p-4`, `p-6`). |
+| `TDS-REINVENTED-COMPONENT` | HIGH | Do not reinvent raw `<button>` or `<input>`. Import certified components (`<Button>`, `<Card>`). |
+| `TDS-M3-ON-COLOR-MISMATCH` | HIGH | Container tokens must pair with their corresponding `on-*` color (`primary` $\to$ `on-primary`). |
+| `TDS-TOUCH-TARGET-TOO-SMALL`| HIGH | Interactive elements must be $\ge 48\times 48\text{px}$ (`min-h-[48px]`, `w-12 h-12`). |
+| `TDS-RTL-NON-LOGICAL` | MEDIUM | Use logical CSS classes (`ps-*`, `pe-*`, `ms-*`, `me-*`) instead of `pl`, `pr`, `ml`, `mr`. |
+| `TDS-CAPITALIZATION-NOT-SENTENCE-CASE` | MEDIUM | All labels, titles, and buttons must use sentence case (`Save changes`, not `Save Changes`). |
+
+---
+
+## 4. Closed-Loop Validation API
+Run automated audits against candidate code:
+```bash
+curl -s -X POST https://your-ds.web.app/api/v1/evaluate \
+  -H "Content-Type: application/json" \
+  -d '{"code":"<candidate TSX code here>"}'
+```
+Response:
+```json
+{
+  "certified": true,
+  "score": 100,
+  "diagnostics": [],
+  "summary": "CERTIFIED COMPLIANT: Code meets all Material Design 3 and Trainable DS constraints."
+}
+```

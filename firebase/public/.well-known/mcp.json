@@ -1,0 +1,36 @@
+{
+  "name": "trainable-ds",
+  "version": "1.7.0",
+  "description": "Trainable DS Model Context Protocol Server",
+  "command": "npx",
+  "args": ["-y", "@trainable-ds/cli", "mcp"],
+  "transports": {
+    "stdio": {
+      "command": "npx",
+      "args": ["-y", "@trainable-ds/cli", "mcp"]
+    },
+    "sse": {
+      "url": "/api/v1/mcp/sse",
+      "messageUrl": "/api/v1/mcp/message"
+    }
+  },
+  "capabilities": {
+    "tools": [
+      "get_design_tokens",
+      "list_components",
+      "get_component_schema",
+      "validate_code_snippet",
+      "suggest_remediation",
+      "get_design_guidelines"
+    ],
+    "resources": [
+      "design-system://tokens",
+      "design-system://design-md",
+      "design-system://components"
+    ],
+    "prompts": [
+      "generate_m3_ui",
+      "audit_and_repair"
+    ]
+  }
+}
