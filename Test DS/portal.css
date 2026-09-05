@@ -1,0 +1,808 @@
+@import "./porsche-tokens.css";
+
+[data-theme="light"] {
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+/* ==========================================================================
+   Porsche Design System Verification & Showcase Portal
+   ========================================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --portal-sidebar-width: 280px;
+  --portal-header-height: 72px;
+}
+
+html, body {
+  min-height: 100vh;
+  font-family: var(--p-font-porsche-next);
+  background-color: var(--p-color-canvas);
+  color: var(--p-color-contrast-high);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color var(--p-duration-sm) var(--p-ease-in-out),
+              color var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+/* --------------------------------------------------------------------------
+   Layout Structure
+   -------------------------------------------------------------------------- */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--p-color-canvas);
+}
+
+/* Sidebar */
+.sidebar {
+  width: var(--portal-sidebar-width);
+  background: var(--p-color-surface);
+  border-inline-end: 1px solid var(--p-color-contrast-lower);
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inset-block-end: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  padding: 1.5rem 1.25rem;
+  border-block-end: 1px solid var(--p-color-contrast-lower);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.brand-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-crest {
+  width: 28px;
+  height: 36px;
+  background: #010205;
+  border-radius: 4px 4px 14px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.brand-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--p-color-primary);
+}
+
+.brand-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--p-color-frosted-strong);
+  color: var(--p-color-primary);
+  border-radius: var(--p-radius-sm);
+  width: fit-content;
+}
+
+.sidebar-nav {
+  padding: 1.25rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.nav-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--p-color-contrast-low);
+  padding: 0.75rem 0.75rem 0.25rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--p-radius-md);
+  color: var(--p-color-contrast-high);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: start;
+  transition: background var(--p-duration-sm) var(--p-ease-in-out),
+              color var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.nav-item:hover {
+  background: var(--p-color-frosted);
+  color: var(--p-color-primary);
+}
+
+.nav-item.active {
+  background: var(--p-color-primary);
+  color: var(--p-color-canvas);
+  font-weight: 600;
+}
+
+.nav-item-badge {
+  margin-inline-start: auto;
+  font-size: 0.75rem;
+  padding: 0.1rem 0.4rem;
+  background: var(--p-color-frosted);
+  border-radius: var(--p-radius-full);
+}
+
+.nav-item.active .nav-item-badge {
+  background: rgba(255,255,255,0.25);
+  color: inherit;
+}
+
+/* Main Content Area */
+.main-wrapper {
+  margin-inline-start: var(--portal-sidebar-width);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Top Header */
+.top-header {
+  height: var(--portal-header-height);
+  background: var(--p-color-canvas);
+  border-block-end: 1px solid var(--p-color-contrast-lower);
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 2rem;
+  backdrop-filter: var(--p-blur-frosted);
+}
+
+.header-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--p-color-surface);
+  border: 1px solid var(--p-color-contrast-lower);
+  border-radius: var(--p-radius-md);
+  padding: 0.5rem 1rem;
+  width: 340px;
+}
+
+.header-search input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: var(--p-color-primary);
+  width: 100%;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--p-radius-full);
+  border: 1px solid var(--p-color-contrast-lower);
+  background: var(--p-color-surface);
+  color: var(--p-color-primary);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.btn-theme-toggle:hover {
+  background: var(--p-color-frosted-strong);
+}
+
+.content-body {
+  padding: 2.5rem;
+  max-width: 1400px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Typography & Headers
+   -------------------------------------------------------------------------- */
+.page-header {
+  margin-block-end: 2.5rem;
+}
+
+.page-title {
+  font-size: var(--p-typescale-3xl);
+  font-weight: var(--p-font-weight-bold);
+  color: var(--p-color-primary);
+  letter-spacing: -0.02em;
+  margin-block-end: 0.5rem;
+}
+
+.page-subtitle {
+  font-size: var(--p-typescale-md);
+  color: var(--p-color-contrast-medium);
+  max-width: 800px;
+}
+
+.section-title {
+  font-size: var(--p-typescale-2xl);
+  font-weight: var(--p-font-weight-semibold);
+  color: var(--p-color-primary);
+  margin-block: 2.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section-desc {
+  font-size: 0.95rem;
+  color: var(--p-color-contrast-medium);
+  margin-block-end: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Audit Stat Cards
+   -------------------------------------------------------------------------- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-block-end: 2.5rem;
+}
+
+.stat-card {
+  background: var(--p-color-surface);
+  border: 1px solid var(--p-color-contrast-lower);
+  border-radius: var(--p-radius-xl);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--p-duration-sm) var(--p-ease-in-out),
+              box-shadow var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--p-shadow-md);
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--p-color-primary);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--p-color-contrast-high);
+}
+
+.stat-desc {
+  font-size: 0.78rem;
+  color: var(--p-color-contrast-medium);
+}
+
+/* --------------------------------------------------------------------------
+   Tokens Visualizer
+   -------------------------------------------------------------------------- */
+.token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-block-end: 2.5rem;
+}
+
+.color-swatch-card {
+  background: var(--p-color-surface);
+  border: 1px solid var(--p-color-contrast-lower);
+  border-radius: var(--p-radius-lg);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform var(--p-duration-sm) var(--p-ease-in-out),
+              box-shadow var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.color-swatch-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--p-shadow-sm);
+}
+
+.swatch-preview {
+  height: 90px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 0.5rem;
+}
+
+.swatch-info {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.token-name {
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--p-color-primary);
+}
+
+.token-value {
+  font-size: 0.78rem;
+  color: var(--p-color-contrast-medium);
+  font-family: monospace;
+}
+
+.token-desc {
+  font-size: 0.74rem;
+  color: var(--p-color-contrast-low);
+  margin-block-start: 0.2rem;
+}
+
+/* Typography scale table */
+.type-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--p-color-surface);
+  border: 1px solid var(--p-color-contrast-lower);
+  border-radius: var(--p-radius-xl);
+  overflow: hidden;
+  margin-block-end: 2.5rem;
+}
+
+.type-table th, .type-table td {
+  padding: 1rem 1.25rem;
+  text-align: start;
+  border-block-end: 1px solid var(--p-color-contrast-lower);
+}
+
+.type-table th {
+  background: var(--p-color-frosted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--p-color-contrast-high);
+}
+
+/* Spacing boxes visualizer */
+.spacing-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-end;
+  background: var(--p-color-surface);
+  border: 1px solid var(--p-color-contrast-lower);
+  border-radius: var(--p-radius-xl);
+  padding: 2rem;
+  margin-block-end: 2.5rem;
+}
+
+.spacing-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.spacing-box {
+  background: var(--p-color-primary);
+  border-radius: 2px;
+}
+
+.spacing-label {
+  font-size: 0.75rem;
+  font-family: monospace;
+  color: var(--p-color-contrast-high);
+}
+
+/* --------------------------------------------------------------------------
+   Component Demos & Catalog
+   -------------------------------------------------------------------------- */
+.components-filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-block-end: 1.5rem;
+}
+
+.filter-chip {
+  padding: 0.5rem 1rem;
+  border-radius: var(--p-radius-full);
+  border: 1px solid var(--p-color-contrast-lower);
+  background: var(--p-color-surface);
+  color: var(--p-color-contrast-high);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.filter-chip:hover {
+  background: var(--p-color-frosted);
+}
+
+.filter-chip.active {
+  background: var(--p-color-primary);
+  color: var(--p-color-canvas);
+  font-weight: 600;
+  border-color: var(--p-color-primary);
+}
+
+.components-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 1.5rem;
+  margin-block-end: 3rem;
+}
+
+.comp-card {
+  background: var(--p-color-surface);
+  border: 1px solid var(--p-color-contrast-lower);
+  border-radius: var(--p-radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.comp-card-header {
+  padding: 1rem 1.25rem;
+  border-block-end: 1px solid var(--p-color-contrast-lower);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comp-tag {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--p-color-primary);
+}
+
+.comp-family-badge {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--p-radius-sm);
+  background: var(--p-color-frosted-strong);
+  color: var(--p-color-primary);
+}
+
+.comp-preview-area {
+  padding: 2rem 1.25rem;
+  background: var(--p-color-canvas);
+  border-block-end: 1px solid var(--p-color-contrast-lower);
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.comp-details {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.comp-desc {
+  font-size: 0.85rem;
+  color: var(--p-color-contrast-medium);
+}
+
+.comp-meta-row {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.78rem;
+  color: var(--p-color-contrast-low);
+}
+
+.comp-code-snippet {
+  background: var(--p-color-canvas);
+  border: 1px solid var(--p-color-contrast-lower);
+  border-radius: var(--p-radius-md);
+  padding: 0.75rem;
+  font-family: monospace;
+  font-size: 0.78rem;
+  color: var(--p-color-primary);
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+.btn-copy-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--p-radius-md);
+  border: 1px solid var(--p-color-contrast-lower);
+  background: var(--p-color-surface);
+  color: var(--p-color-primary);
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: all var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.btn-copy-code:hover {
+  background: var(--p-color-frosted-strong);
+}
+
+/* --------------------------------------------------------------------------
+   Porsche Pure Web Component Simulators (for fallback rendering)
+   -------------------------------------------------------------------------- */
+/* Porsche Primary Button */
+.porsche-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 14px 28px;
+  background-color: var(--p-color-primary);
+  color: var(--p-color-on-primary, #ffffff);
+  border: none;
+  border-radius: var(--p-radius-xl);
+  font-family: var(--p-font-porsche-next);
+  font-size: 1rem;
+  font-weight: var(--p-font-weight-normal);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--p-duration-sm) var(--p-ease-in-out),
+              box-shadow var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.porsche-btn-primary:hover {
+  background-color: var(--p-color-contrast-high);
+}
+
+.porsche-btn-primary:focus-visible {
+  outline: 2px solid var(--p-color-focus);
+  outline-offset: 2px;
+}
+
+/* Porsche Secondary / Frosted Button */
+.porsche-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 14px 28px;
+  background-color: var(--p-color-frosted-strong);
+  color: var(--p-color-primary);
+  border: none;
+  border-radius: var(--p-radius-xl);
+  backdrop-filter: var(--p-blur-frosted);
+  font-family: var(--p-font-porsche-next);
+  font-size: 1rem;
+  font-weight: var(--p-font-weight-normal);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.porsche-btn-secondary:hover {
+  background-color: var(--p-color-frosted);
+}
+
+.porsche-btn-secondary:focus-visible {
+  outline: 2px solid var(--p-color-focus);
+  outline-offset: 2px;
+}
+
+/* Porsche Pure Button (Link style) */
+.porsche-btn-pure {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  background: transparent;
+  color: var(--p-color-primary);
+  border: none;
+  font-family: var(--p-font-porsche-next);
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+}
+
+.porsche-btn-pure::after {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block-end: 10px;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.porsche-btn-pure:hover::after {
+  transform: scaleX(1);
+}
+
+/* Porsche Tag */
+.porsche-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 4px 10px;
+  background: var(--p-color-surface);
+  border: 1px solid var(--p-color-contrast-lower);
+  border-radius: var(--p-radius-sm);
+  font-size: 0.8rem;
+  color: var(--p-color-primary);
+  font-weight: 500;
+}
+
+/* Porsche Model Signature script */
+.porsche-signature {
+  font-family: "Georgia", serif;
+  font-style: italic;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--p-model-signature-color);
+  letter-spacing: -0.05em;
+}
+
+/* --------------------------------------------------------------------------
+   Layout Templates Cards
+   -------------------------------------------------------------------------- */
+.templates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 2rem;
+  margin-block-end: 3rem;
+}
+
+.template-card {
+  background: var(--p-color-surface);
+  border: 1px solid var(--p-color-contrast-lower);
+  border-radius: var(--p-radius-xl);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--p-duration-sm) var(--p-ease-in-out),
+              box-shadow var(--p-duration-sm) var(--p-ease-in-out);
+}
+
+.template-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--p-shadow-lg);
+}
+
+.template-thumbnail {
+  height: 220px;
+  background: #010205;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.template-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.template-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.template-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--p-color-primary);
+}
+
+.template-desc {
+  font-size: 0.88rem;
+  color: var(--p-color-contrast-medium);
+}
+
+/* Toast notification */
+.portal-toast {
+  position: fixed;
+  inset-block-end: 2rem;
+  inset-inline-end: 2rem;
+  background: var(--p-color-primary);
+  color: var(--p-color-canvas);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--p-radius-lg);
+  font-size: 0.88rem;
+  font-weight: 500;
+  box-shadow: var(--p-shadow-lg);
+  z-index: 1000;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all var(--p-duration-sm) var(--p-ease-in-out);
+  pointer-events: none;
+}
+
+.portal-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform var(--p-duration-md) var(--p-ease-in-out);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .main-wrapper {
+    margin-inline-start: 0;
+  }
+}

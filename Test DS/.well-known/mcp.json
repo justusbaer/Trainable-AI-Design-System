@@ -1,0 +1,35 @@
+{
+  "name": "trainable-ds-porsche",
+  "version": "1.7.0",
+  "description": "Porsche Design System Model Context Protocol Server (PDS v4.5.0)",
+  "capabilities": {
+    "tools": [
+      {
+        "name": "get_design_tokens",
+        "description": "Returns DTCG design tokens for Porsche Design System (colors, typescale, spacing, radii, motion)"
+      },
+      {
+        "name": "list_components",
+        "description": "Lists all 42 certified Porsche Design System web components and their functional families"
+      },
+      {
+        "name": "get_component_schema",
+        "description": "Returns anatomical contract, observed attributes, variants, and a11y rules for a specific Porsche component"
+      },
+      {
+        "name": "validate_code_snippet",
+        "description": "Audits a candidate HTML / TSX snippet against Porsche Design System and Trainable DS constraints"
+      }
+    ],
+    "resources": [
+      "design-system://tokens",
+      "design-system://design-md",
+      "design-system://components",
+      "design-system://llms-txt"
+    ],
+    "prompts": [
+      "generate_porsche_ui",
+      "audit_porsche_compliance"
+    ]
+  }
+}

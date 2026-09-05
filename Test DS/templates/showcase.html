@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porsche Showcase Stage — 911 GT3 RS</title>
+  <link rel="stylesheet" href="../porsche-tokens.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--p-font-porsche-next);
+      background-color: var(--p-color-canvas);
+      color: var(--p-color-contrast-high);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation */
+    .showcase-nav {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: var(--pds-internal-grid-safe-zone);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: linear-gradient(180deg, rgba(1,2,5,0.7) 0%, transparent 100%);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      text-decoration: none;
+      color: var(--p-color-primary);
+    }
+
+    .wordmark {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255, 255, 255, 0.85);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color var(--p-duration-sm) var(--p-ease-in-out);
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    /* Hero Stage */
+    .hero-stage {
+      position: relative;
+      height: 92vh;
+      min-height: 640px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: var(--pds-internal-grid-safe-zone);
+      background: radial-gradient(circle at 70% 40%, #1e1e24 0%, #010205 70%);
+      overflow: hidden;
+    }
+
+    .hero-bg-visual {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+      opacity: 0.45;
+      mix-blend-mode: luminosity;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .model-badge {
+      font-family: "Georgia", serif;
+      font-style: italic;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-headline {
+      font-size: var(--p-typescale-4xl);
+      font-weight: var(--p-font-weight-bold);
+      color: #ffffff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-disclaimer {
+      font-size: var(--p-typescale-2xs);
+      color: var(--p-color-contrast-medium);
+      max-width: 600px;
+    }
+
+    /* Frosted Action Bar */
+    .frosted-action-bar {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin-block-start: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .pds-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 16px 28px;
+      background: #ffffff;
+      color: #010205;
+      border-radius: var(--p-radius-full);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background var(--p-duration-sm) var(--p-ease-in-out),
+                  transform var(--p-duration-sm) var(--p-ease-in-out);
+    }
+
+    .pds-btn-primary:hover {
+      background: #e2e2e8;
+      transform: translateY(-1px);
+    }
+
+    .pds-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 56px;
+      padding: 16px 28px;
+      background: var(--p-color-frosted-strong);
+      backdrop-filter: var(--p-blur-frosted);
+      color: #ffffff;
+      border-radius: var(--p-radius-full);
+      font-size: 1rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: background var(--p-duration-sm) var(--p-ease-in-out);
+    }
+
+    .pds-btn-secondary:hover {
+      background: var(--p-color-frosted);
+    }
+
+    /* Specs Section */
+    .specs-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 3rem var(--pds-internal-grid-safe-zone);
+      background: var(--p-color-surface);
+      border-block-end: 1px solid var(--p-color-contrast-lower);
+    }
+
+    .spec-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .spec-value {
+      font-size: var(--p-typescale-2xl);
+      font-weight: 700;
+      color: var(--p-color-primary);
+    }
+
+    .spec-label {
+      font-size: 0.85rem;
+      color: var(--p-color-contrast-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Back Link to Portal */
+    .portal-back-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      background: rgba(0,0,0,0.75);
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: var(--p-radius-full);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html#templates" class="portal-back-btn">← Back to Design System Portal</a>
+
+  <!-- Top Bar -->
+  <header class="showcase-nav">
+    <a href="#" class="nav-brand">
+      <span class="wordmark">PORSCHE</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#">Models</a></li>
+      <li><a href="#">Motorsport</a></li>
+      <li><a href="#">Experience</a></li>
+      <li><a href="#">Dealer search</a></li>
+    </ul>
+  </header>
+
+  <!-- Hero Stage -->
+  <section class="hero-stage">
+    <div class="hero-bg-visual"></div>
+
+    <div class="hero-content">
+      <div class="model-badge">911 GT3 RS</div>
+      <h1 class="hero-headline">Car manufactured for pure performance.</h1>
+      <p class="hero-disclaimer">
+        Fuel consumption combined: 13.4 l/100 km; CO₂ emissions combined: 305 g/km (WLTP).
+      </p>
+
+      <div class="frosted-action-bar">
+        <a href="#configure" class="pds-btn-primary">Configure your 911</a>
+        <a href="#specs" class="pds-btn-secondary">Explore technical data</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specifications Strip -->
+  <section class="specs-strip">
+    <div class="spec-card">
+      <span class="spec-value">386 kW / 525 PS</span>
+      <span class="spec-label">Power (kW/PS)</span>
+    </div>
+    <div class="spec-card">
+      <span class="spec-value">3.2 s</span>
+      <span class="spec-label">Acceleration 0 - 100 km/h</span>
+    </div>
+    <div class="spec-card">
+      <span class="spec-value">296 km/h</span>
+      <span class="spec-label">Top speed</span>
+    </div>
+    <div class="spec-card">
+      <span class="spec-value">1,450 kg</span>
+      <span class="spec-label">Kerb weight (DIN)</span>
+    </div>
+  </section>
+
+</body>
+</html>

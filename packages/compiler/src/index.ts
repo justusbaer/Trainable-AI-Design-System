@@ -3,4 +3,5 @@ export * from "./tailwind/generator.js";
 export * from "./rules/emitter.js";
 export * from "./extractor/component-scanner.js";
 export * from "./figma/variables-adapter.js";
+export * from "./aligner/index.js";
 

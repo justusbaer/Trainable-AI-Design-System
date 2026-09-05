@@ -1,0 +1,165 @@
+/**
+ * Porsche Design System (PDS v4.5.0) — CSS Custom Properties
+ * Extracted directly from live porsche.de
+ * Trainable DS Compatible (v1.7.0)
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* --- Colors (Semantic Dual-Scheme via light-dark()) --- */
+  --p-color-canvas: light-dark(#ffffff, #010205);
+  --p-color-surface: light-dark(#f1f1f4, #19191a);
+  --p-color-frosted: light-dark(hsla(240, 5%, 70%, 0.148), hsla(240, 2%, 43%, 0.228));
+  --p-color-frosted-soft: light-dark(rgba(143, 145, 163, 0.06), rgba(65, 65, 70, 0.154));
+  --p-color-frosted-strong: light-dark(rgba(100, 101, 114, 0.236), rgba(156, 156, 159, 0.302));
+  --p-color-backdrop: light-dark(rgba(36, 36, 40, 0.5), rgba(36, 36, 40, 0.5));
+  --p-color-primary: light-dark(#010205, #fafbff);
+  --p-color-on-primary: light-dark(#ffffff, #010205);
+
+  /* Contrast Hierarchy */
+  --p-color-contrast-higher: light-dark(rgba(21, 21, 25, 0.8), rgba(246, 246, 248, 0.78));
+  --p-color-contrast-high: light-dark(rgba(26, 26, 30, 0.7), rgba(246, 246, 248, 0.67));
+  --p-color-contrast-medium: light-dark(rgba(17, 17, 19, 0.6), rgba(246, 246, 248, 0.56));
+  --p-color-contrast-low: light-dark(rgba(36, 36, 40, 0.5), rgba(246, 246, 248, 0.45));
+  --p-color-contrast-lower: light-dark(rgba(79, 80, 89, 0.324), rgba(156, 156, 159, 0.302));
+
+  /* Feedback & Intent Colors */
+  --p-color-focus: #1a44ea;
+  --p-color-info: light-dark(#1a44ea, #178bff);
+  --p-color-info-medium: light-dark(rgba(26, 68, 234, 0.6), rgba(23, 139, 255, 0.6));
+  --p-color-info-low: light-dark(rgba(26, 68, 234, 0.18), rgba(23, 139, 255, 0.18));
+  --p-color-info-frosted: light-dark(rgba(204, 229, 255, 0.55), rgba(11, 51, 91, 0.66));
+  --p-color-info-frosted-soft: light-dark(rgba(232, 242, 252, 0.55), rgba(16, 38, 61, 0.66));
+
+  --p-color-success: light-dark(#197e10, #10c47f);
+  --p-color-success-medium: light-dark(rgba(25, 126, 16, 0.6), rgba(16, 196, 127, 0.6));
+  --p-color-success-low: light-dark(rgba(25, 126, 16, 0.18), rgba(16, 196, 127, 0.18));
+  --p-color-success-frosted: light-dark(rgba(213, 255, 204, 0.55), rgba(11, 91, 60, 0.66));
+  --p-color-success-frosted-soft: light-dark(rgba(236, 252, 232, 0.55), rgba(16, 61, 44, 0.66));
+
+  --p-color-warning: light-dark(#ac5102, #f4882a);
+  --p-color-warning-medium: light-dark(rgba(172, 81, 2, 0.6), rgba(244, 136, 42, 0.6));
+  --p-color-warning-low: light-dark(rgba(172, 81, 2, 0.18), rgba(244, 136, 42, 0.18));
+  --p-color-warning-frosted: light-dark(rgba(255, 238, 204, 0.55), rgba(91, 81, 11, 0.66));
+  --p-color-warning-frosted-soft: light-dark(hsla(40, 80%, 95%, 0.55), rgba(61, 55, 16, 0.66));
+
+  --p-color-error: light-dark(#ba171f, #fc4040);
+  --p-color-error-medium: light-dark(rgba(186, 23, 31, 0.6), rgba(252, 64, 64, 0.6));
+  --p-color-error-low: light-dark(rgba(186, 23, 31, 0.18), rgba(252, 64, 64, 0.18));
+  --p-color-error-frosted: light-dark(hsla(0, 100%, 90%, 0.55), rgba(91, 11, 11, 0.66));
+  --p-color-error-frosted-soft: light-dark(hsla(0, 80%, 95%, 0.55), rgba(61, 16, 16, 0.66));
+
+  --p-model-signature-color: #0e0e12;
+
+  /* --- Typography --- */
+  --p-font-porsche-next: "Porsche Next", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Arial Narrow", Arial, sans-serif;
+  --p-font-sans: var(--p-font-porsche-next);
+  --p-font-weight-normal: 400;
+  --p-font-weight-semibold: 600;
+  --p-font-weight-bold: 700;
+  --p-leading-normal: calc(6px + 2.125ex);
+
+  /* Fluid & Static Typescale */
+  --p-typescale-2xs: 0.75rem;
+  --p-typescale-xs: 0.875rem;
+  --p-typescale-sm: 1rem;
+  --p-typescale-md: clamp(1.13rem, 0.21vw + 1.08rem, 1.33rem);
+  --p-typescale-lg: clamp(1.27rem, 0.51vw + 1.16rem, 1.78rem);
+  --p-typescale-xl: clamp(1.42rem, 0.94vw + 1.23rem, 2.37rem);
+  --p-typescale-2xl: clamp(1.6rem, 1.56vw + 1.29rem, 3.16rem);
+  --p-typescale-3xl: clamp(1.8rem, 2.41vw + 1.32rem, 4.21rem);
+  --p-typescale-4xl: clamp(2.03rem, 3.58vw + 1.31rem, 5.61rem);
+  --p-typescale-5xl: clamp(2.28rem, 5.2vw + 1.24rem, 7.48rem);
+
+  /* --- Spacing --- */
+  --p-spacing-static-2xs: 1px;
+  --p-spacing-static-xs: 4px;
+  --p-spacing-static-sm: 8px;
+  --p-spacing-static-md: 16px;
+  --p-spacing-static-lg: 32px;
+  --p-spacing-static-xl: 48px;
+  --p-spacing-static-2xl: 80px;
+
+  --p-spacing-fluid-xs: clamp(4px, 0.25vw + 3px, 8px);
+  --p-spacing-fluid-sm: clamp(8px, 0.5vw + 6px, 16px);
+  --p-spacing-fluid-md: clamp(16px, 1.25vw + 12px, 36px);
+  --p-spacing-fluid-lg: clamp(32px, 2.75vw + 23px, 76px);
+  --p-spacing-fluid-xl: clamp(48px, 3vw + 38px, 96px);
+  --p-spacing-fluid-2xl: clamp(80px, 7.5vw + 56px, 200px);
+
+  /* --- Border Radius --- */
+  --p-radius-xs: 2px;
+  --p-radius-sm: 4px;
+  --p-radius-md: 6px;
+  --p-radius-lg: 8px;
+  --p-radius-xl: 12px;
+  --p-radius-2xl: 16px;
+  --p-radius-3xl: 24px;
+  --p-radius-4xl: 32px;
+  --p-radius-full: calc(infinity * 1px);
+
+  /* --- Shadows & Blur --- */
+  --p-shadow-sm: 0px 3px 8px rgba(0, 0, 0, 0.16);
+  --p-shadow-md: 0px 4px 16px rgba(0, 0, 0, 0.16);
+  --p-shadow-lg: 0px 8px 40px rgba(0, 0, 0, 0.16);
+  --p-blur-frosted: blur(32px);
+
+  /* --- Motion & Transitions --- */
+  --p-duration-sm: 0.25s;
+  --p-duration-md: 0.4s;
+  --p-duration-lg: 0.6s;
+  --p-duration-xl: 1.2s;
+  --p-ease-in-out: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --p-ease-in: cubic-bezier(0, 0, 0.2, 1);
+  --p-ease-out: cubic-bezier(0.4, 0, 0.5, 1);
+
+  /* --- Grid & Layout --- */
+  --pds-internal-grid-safe-zone: max(22px, 10.625vw - 12px);
+  --pds-grid-basic-span-one-half: span 3;
+  --pds-grid-basic-span-one-third: span 2;
+  --pds-grid-narrow-span-one-half: span 3;
+  --pds-grid-basic-span-two-thirds: span 4;
+  --pds-grid-extended-span-one-half: span 3;
+}
+
+/* Explicit Theme Overrides */
+html[data-theme="light"], :root[data-theme="light"] {
+  color-scheme: light;
+  --p-color-canvas: #ffffff;
+  --p-color-surface: #f1f1f4;
+  --p-color-primary: #010205;
+  --p-color-on-primary: #ffffff;
+  --p-color-contrast-higher: rgba(21, 21, 25, 0.8);
+  --p-color-contrast-high: rgba(26, 26, 30, 0.7);
+  --p-color-contrast-medium: rgba(17, 17, 19, 0.6);
+  --p-color-contrast-low: rgba(36, 36, 40, 0.5);
+  --p-color-contrast-lower: rgba(79, 80, 89, 0.324);
+  --p-color-frosted: hsla(240, 5%, 70%, 0.148);
+  --p-color-frosted-soft: rgba(143, 145, 163, 0.06);
+  --p-color-frosted-strong: rgba(100, 101, 114, 0.236);
+  --p-color-info: #1a44ea;
+  --p-color-success: #197e10;
+  --p-color-warning: #ac5102;
+  --p-color-error: #ba171f;
+}
+
+html[data-theme="dark"], :root[data-theme="dark"] {
+  color-scheme: dark;
+  --p-color-canvas: #010205;
+  --p-color-surface: #19191a;
+  --p-color-primary: #fafbff;
+  --p-color-on-primary: #010205;
+  --p-color-contrast-higher: rgba(246, 246, 248, 0.78);
+  --p-color-contrast-high: rgba(246, 246, 248, 0.67);
+  --p-color-contrast-medium: rgba(246, 246, 248, 0.56);
+  --p-color-contrast-low: rgba(246, 246, 248, 0.45);
+  --p-color-contrast-lower: rgba(156, 156, 159, 0.302);
+  --p-color-frosted: hsla(240, 2%, 43%, 0.228);
+  --p-color-frosted-soft: rgba(65, 65, 70, 0.154);
+  --p-color-frosted-strong: rgba(156, 156, 159, 0.302);
+  --p-color-info: #178bff;
+  --p-color-success: #10c47f;
+  --p-color-warning: #f4882a;
+  --p-color-error: #fc4040;
+}

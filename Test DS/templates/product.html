@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porsche Design — Chronograph 1 All Black</title>
+  <link rel="stylesheet" href="../porsche-tokens.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--p-font-porsche-next);
+      background-color: var(--p-color-canvas);
+      color: var(--p-color-contrast-high);
+      min-height: 100vh;
+      padding-bottom: 4rem;
+    }
+
+    .shop-header {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: var(--pds-internal-grid-safe-zone);
+      border-block-end: 1px solid var(--p-color-contrast-lower);
+    }
+
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--p-color-primary);
+    }
+
+    .product-layout {
+      max-width: 1280px;
+      margin: 3rem auto;
+      padding-inline: 2rem;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 4rem;
+    }
+
+    /* Product Gallery */
+    .product-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .gallery-main {
+      background: var(--p-color-surface);
+      border-radius: var(--p-radius-xl);
+      overflow: hidden;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-main img {
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+    }
+
+    .gallery-thumbs {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .thumb {
+      width: 90px;
+      height: 90px;
+      background: var(--p-color-surface);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .thumb.active {
+      border: 2px solid var(--p-color-primary);
+    }
+
+    /* Product Details */
+    .product-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .product-category {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--p-color-contrast-medium);
+    }
+
+    .product-title {
+      font-size: var(--p-typescale-2xl);
+      font-weight: 700;
+      color: var(--p-color-primary);
+      line-height: 1.2;
+    }
+
+    .product-price {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--p-color-primary);
+    }
+
+    .product-desc {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--p-color-contrast-medium);
+    }
+
+    .edition-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.75rem;
+      background: var(--p-color-frosted-strong);
+      border-radius: var(--p-radius-sm);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--p-color-primary);
+      width: fit-content;
+    }
+
+    .actions-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-block-start: 1rem;
+    }
+
+    .btn-cart {
+      min-height: 56px;
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      border: none;
+      border-radius: var(--p-radius-full);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background var(--p-duration-sm) var(--p-ease-in-out);
+    }
+
+    .btn-cart:hover {
+      background: var(--p-color-contrast-high);
+    }
+
+    .spec-accordion {
+      margin-block-start: 1.5rem;
+      border-top: 1px solid var(--p-color-contrast-lower);
+    }
+
+    .accordion-item {
+      border-bottom: 1px solid var(--p-color-contrast-lower);
+      padding-block: 1rem;
+    }
+
+    .accordion-item summary {
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    .accordion-item div {
+      padding-block-start: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--p-color-contrast-medium);
+      line-height: 1.5;
+    }
+
+    .portal-back-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      padding: 0.5rem 1rem;
+      border-radius: var(--p-radius-full);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      box-shadow: var(--p-shadow-md);
+    }
+
+    @media (max-width: 860px) {
+      .product-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html#templates" class="portal-back-btn">← Back to Design System Portal</a>
+
+  <header class="shop-header">
+    <div class="brand-title">PORSCHE DESIGN</div>
+    <span style="font-size:0.9rem; font-weight:500;">Timepieces Collection</span>
+  </header>
+
+  <main class="product-layout">
+    <!-- Gallery -->
+    <div class="product-gallery">
+      <div class="gallery-main">
+        <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80" alt="Porsche Chronograph 1" />
+      </div>
+      <div class="gallery-thumbs">
+        <div class="thumb active">
+          <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=120&q=80" style="width:70%;" alt="Thumb 1" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-details">
+      <span class="product-category">Timepieces / Icons</span>
+      <span class="edition-badge">Limited Heritage Edition</span>
+
+      <h1 class="product-title">Chronograph 1 — All Black Edition</h1>
+      <div class="product-price">€9,950</div>
+
+      <p class="product-desc">
+        A purist masterpiece crafted from lightweight titanium with black titanium carbide coating.
+        Powered by the Porsche Design caliber WERK 01.140 with COSC chronometer certification.
+      </p>
+
+      <div class="actions-panel">
+        <button class="btn-cart">Add to shopping bag</button>
+        <button class="btn-cart" style="background:var(--p-color-surface); color:var(--p-color-primary); border:1px solid var(--p-color-contrast-lower);">
+          Find in store
+        </button>
+      </div>
+
+      <div class="spec-accordion">
+        <details class="accordion-item" open>
+          <summary>Material & Movement</summary>
+          <div>
+            Case: 100% Titanium with black titanium carbide coating.<br/>
+            Movement: Porsche Design Calibre WERK 01.140, 25 jewels, 28,800 A/h.<br/>
+            Power reserve: 48 hours.
+          </div>
+        </details>
+        <details class="accordion-item">
+          <summary>Dimensions & Water Resistance</summary>
+          <div>
+            Diameter: 40.8 mm | Height: 14.15 mm.<br/>
+            Water resistance: Dynamic water tightness to 10 bar (100 m).
+          </div>
+        </details>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>

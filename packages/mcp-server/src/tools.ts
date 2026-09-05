@@ -113,6 +113,33 @@ export const TOOLS: ToolDefinition[] = [
       properties: {},
     },
   },
+  {
+    name: "align_design_system_with_source",
+    description:
+      "Run multi-loop visual and runtime computed style alignment against a live source website or web application (source of truth). Pierces shadow DOM, detects shape mismatches (pill vs radius), color drift, and automatically reconciles tokens.json and components.json.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        source_url: {
+          type: "string",
+          description: "URL of the live source-of-truth website or web app",
+        },
+        template_path: {
+          type: "string",
+          description: "Optional path to a local HTML template or component testbed to compare against",
+        },
+        max_loops: {
+          type: "number",
+          description: "Maximum alignment loops to run (default: 3)",
+        },
+        threshold: {
+          type: "number",
+          description: "Target convergence score percentage (default: 95)",
+        },
+      },
+      required: ["source_url"],
+    },
+  },
 ];
 
 export interface ToolExecutionContext {
@@ -408,6 +435,31 @@ export async function executeTool(
           {
             type: "text",
             text: guidelines,
+          },
+        ],
+      };
+    }
+
+    case "align_design_system_with_source": {
+      const sourceUrl = String(args.source_url || "");
+      const templatePath = args.template_path ? String(args.template_path) : undefined;
+      const maxLoops = typeof args.max_loops === "number" ? args.max_loops : 3;
+      const threshold = typeof args.threshold === "number" ? args.threshold : 95;
+
+      const { runVisualAlignmentLoop } = await import("@trainable-ds/compiler");
+      const result = await runVisualAlignmentLoop({
+        sourceUrl,
+        templatePath,
+        maxLoops,
+        threshold,
+        dsDirectory: workspaceDir,
+      });
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2),
           },
         ],
       };

@@ -1,0 +1,54 @@
+# Porsche Design System: Agent Developer Portal & System Manual
+
+> **Porsche Design System (PDS v4.5.0)** is the authoritative, agent-native Design System powering porsche.de and all digital touchpoints. Packaged according to the **Trainable DS (v1.7.0)** standard, this system provides authoritative W3C DTCG tokens, dual-scheme color semantics, fluid typography, and 42 certified web components.
+
+---
+
+## 1. Quick Agent Instructions
+When generating screens, components, or flows for Porsche:
+
+1. **Load System Context & Tokens:**
+   - Refer to [`DESIGN.md`](./DESIGN.md) for semantic intent and component contracts.
+   - Refer to [`tokens.json`](./tokens.json) for authoritative token values.
+   - Include [`porsche-tokens.css`](./porsche-tokens.css) in your runtime root.
+2. **Use Strictly Certified Primitives:**
+   - **Never** render raw `<button>`, `<input>`, or unstyled links.
+   - **Always** use `<p-button>`, `<p-button-pure>`, `<p-link>`, `<p-link-pure>`, `<p-text-field>`, `<p-input-search>`, `<p-checkbox>`, `<p-heading>`, `<p-text>`, etc.
+   - For brand markings, use `<p-crest>`, `<p-wordmark>`, and `<p-model-signature>`.
+3. **Strict Constraints Enforced:**
+   - **Zero Raw Hex / RGB:** Always reference `--p-color-*` tokens (`var(--p-color-primary)`, `var(--p-color-canvas)`).
+   - **Sentence Case Mandate:** All labels, CTAs, and headings must use sentence case (`Book test drive`, not `Book Test Drive`).
+   - **Touch Target:** Minimum 48x48px bounding box on all interactive targets.
+   - **Frosted Depth:** Use `backdrop-filter: blur(32px)` and `--p-color-frosted-*` instead of heavy drop shadows.
+   - **8px Quantum Baseline:** All paddings, margins, and gaps must follow 8px increments (4px half-step allowed for compact density).
+
+---
+
+## 2. Certified Component Quick Reference
+
+| Component Tag | Functional Family | Key Props / Variants | Primary Usage |
+| :--- | :--- | :--- | :--- |
+| `<p-button>` | Actions | `variant="primary \| secondary"`, `compact`, `loading`, `icon` | Primary user actions and CTAs |
+| `<p-button-pure>` | Actions | `icon`, `underline`, `align-label` | Inline triggers and quiet dismissals |
+| `<p-link>` | Navigation | `href`, `variant="primary \| secondary"` | High-visibility route navigation |
+| `<p-link-pure>` | Navigation | `href`, `icon`, `underline` | Inline content links |
+| `<p-link-tile>` | Navigation | `href`, `label`, `description`, `aspect-ratio` | Visual hero cards and showcase tiles |
+| `<p-heading>` | Typography | `tag="h1-h6"`, `size="small-2xl"`, `weight="semibold"` | Section and subsection headings |
+| `<p-display>` | Typography | `tag="h1-h6"`, `size="small-large"` | Large promotional stage titles |
+| `<p-text>` | Typography | `tag="p \| span"`, `size="2xs-medium"`, `color` | Body copy, disclaimers, captions |
+| `<p-input-search>` | Text Inputs | `label`, `placeholder`, `clear="true"` | Search bars and location lookups |
+| `<p-text-field>` | Text Inputs | `label`, `placeholder`, `state="none \| error"` | Single-line form fields |
+| `<p-checkbox>` | Selection | `label`, `checked="true \| false"` | Form agreements, option toggles |
+| `<p-segmented-control>` | Selection | `value`, `columns` | Segmented views and mode switches |
+| `<p-modal>` | Containment | `open="true \| false"`, `dismiss-button` | Dialog overlays with frosted scrim |
+| `<p-model-signature>` | Brand | `model="911 \| taycan \| cayenne ..."` | Authentic vehicle model badging |
+| `<p-wordmark>` | Brand | `size="small \| medium \| large"`, `href` | Official PORSCHE typography |
+
+---
+
+## 3. Related Resources
+- Full Machine Reference: [`llms-full.txt`](./llms-full.txt)
+- Design System Facade: [`DESIGN.md`](./DESIGN.md)
+- DTCG Tokens Tree: [`tokens.json`](./tokens.json)
+- Component Catalog: [`components.json`](./components.json)
+- MCP Server Config: [`.well-known/mcp.json`](./.well-known/mcp.json)

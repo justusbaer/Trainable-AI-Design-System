@@ -18,6 +18,7 @@ import { compileDesignMd, scanComponentsInDir } from "@trainable-ds/compiler";
 export interface TrainOptions {
   src?: string;
   docs?: string;
+  align?: string;
 }
 
 /**
@@ -325,4 +326,9 @@ export async function runTrain(options: TrainOptions) {
   console.log(pc.green("✔ Compiled and synchronized root DESIGN.md with tokens and component contracts"));
 
   console.log(pc.bold(pc.green("\n✨ Training complete! Design system derived at M3 fidelity.")));
+
+  if (options.align) {
+    const { runAlign } = await import("./align.js");
+    await runAlign({ url: options.align, dir: dsDir });
+  }
 }

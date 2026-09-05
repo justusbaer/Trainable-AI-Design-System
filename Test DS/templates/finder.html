@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porsche Finder — Find Your Vehicle</title>
+  <link rel="stylesheet" href="../porsche-tokens.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--p-font-porsche-next);
+      background-color: var(--p-color-canvas);
+      color: var(--p-color-contrast-high);
+      min-height: 100vh;
+      padding-bottom: 4rem;
+    }
+
+    .finder-header {
+      padding: 2.5rem var(--pds-internal-grid-safe-zone);
+      border-block-end: 1px solid var(--p-color-contrast-lower);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .wordmark {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--p-color-primary);
+    }
+
+    .finder-title {
+      font-size: var(--p-typescale-3xl);
+      font-weight: 700;
+      color: var(--p-color-primary);
+    }
+
+    .search-filter-box {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-input-wrap {
+      flex: 1;
+      min-width: 280px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--p-color-surface);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-md);
+      padding: 0.75rem 1.25rem;
+    }
+
+    .search-input-wrap input {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      font-size: 1rem;
+      width: 100%;
+      color: var(--p-color-primary);
+    }
+
+    .filter-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tag-btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--p-radius-full);
+      border: 1px solid var(--p-color-contrast-lower);
+      background: var(--p-color-surface);
+      color: var(--p-color-contrast-high);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .tag-btn.active {
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      border-color: var(--p-color-primary);
+      font-weight: 600;
+    }
+
+    /* Vehicles Grid */
+    .vehicles-container {
+      padding: 3rem var(--pds-internal-grid-safe-zone);
+    }
+
+    .vehicles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 2rem;
+    }
+
+    .vehicle-card {
+      background: var(--p-color-surface);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-xl);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform var(--p-duration-sm) var(--p-ease-in-out),
+                  box-shadow var(--p-duration-sm) var(--p-ease-in-out);
+    }
+
+    .vehicle-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--p-shadow-lg);
+    }
+
+    .vehicle-image {
+      height: 220px;
+      background: #010205;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .vehicle-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .vehicle-info {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .vehicle-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .vehicle-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--p-color-primary);
+    }
+
+    .vehicle-price {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--p-color-primary);
+    }
+
+    .vehicle-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--p-color-contrast-medium);
+      padding-block: 0.5rem;
+      border-block: 1px solid var(--p-color-contrast-lower);
+    }
+
+    .vehicle-actions {
+      display: flex;
+      gap: 0.75rem;
+      margin-block-start: auto;
+    }
+
+    .btn-action {
+      flex: 1;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--p-radius-full);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-action.primary {
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      border: none;
+    }
+
+    .btn-action.secondary {
+      background: var(--p-color-frosted-strong);
+      color: var(--p-color-primary);
+      border: 1px solid var(--p-color-contrast-lower);
+    }
+
+    .portal-back-btn {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 1000;
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      padding: 0.5rem 1rem;
+      border-radius: var(--p-radius-full);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      box-shadow: var(--p-shadow-md);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html#templates" class="portal-back-btn">← Back to Design System Portal</a>
+
+  <header class="finder-header">
+    <div class="wordmark">PORSCHE</div>
+    <h1 class="finder-title">Find your new or pre-owned Porsche.</h1>
+
+    <div class="search-filter-box">
+      <div class="search-input-wrap">
+        <span>🔍</span>
+        <input type="text" placeholder="Postal code, city or dealer name" />
+      </div>
+
+      <div class="filter-tags">
+        <button class="tag-btn active">All models</button>
+        <button class="tag-btn">911</button>
+        <button class="tag-btn">Taycan</button>
+        <button class="tag-btn">Panamera</button>
+        <button class="tag-btn">Macan</button>
+        <button class="tag-btn">Cayenne</button>
+        <button class="tag-btn">718</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="vehicles-container">
+    <div class="vehicles-grid">
+      <!-- Card 1 -->
+      <article class="vehicle-card">
+        <div class="vehicle-image">
+          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Porsche 911 Carrera" />
+        </div>
+        <div class="vehicle-info">
+          <div class="vehicle-title-row">
+            <h2 class="vehicle-name">911 Carrera GTS</h2>
+            <span class="vehicle-price">from €170,600</span>
+          </div>
+          <div class="vehicle-specs">
+            <div>Acceleration: <strong>3.0 s</strong></div>
+            <div>Power: <strong>398 kW / 541 PS</strong></div>
+            <div>Top speed: <strong>312 km/h</strong></div>
+            <div>Drive: <strong>Rear-wheel drive</strong></div>
+          </div>
+          <div class="vehicle-actions">
+            <a href="#" class="btn-action primary">Configure</a>
+            <a href="#" class="btn-action secondary">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="vehicle-card">
+        <div class="vehicle-image">
+          <img src="https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=800&q=80" alt="Porsche Taycan Turbo" />
+        </div>
+        <div class="vehicle-info">
+          <div class="vehicle-title-row">
+            <h2 class="vehicle-name">Taycan Turbo S</h2>
+            <span class="vehicle-price">from €209,900</span>
+          </div>
+          <div class="vehicle-specs">
+            <div>Acceleration: <strong>2.4 s</strong></div>
+            <div>Power: <strong>700 kW / 952 PS</strong></div>
+            <div>Range (WLTP): <strong>630 km</strong></div>
+            <div>Drive: <strong>All-wheel drive</strong></div>
+          </div>
+          <div class="vehicle-actions">
+            <a href="#" class="btn-action primary">Configure</a>
+            <a href="#" class="btn-action secondary">Details</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="vehicle-card">
+        <div class="vehicle-image">
+          <img src="https://images.unsplash.com/photo-1541348263662-e0c8de4259ba?auto=format&fit=crop&w=800&q=80" alt="Porsche Cayenne Coupé" />
+        </div>
+        <div class="vehicle-info">
+          <div class="vehicle-title-row">
+            <h2 class="vehicle-name">Cayenne Turbo E-Hybrid</h2>
+            <span class="vehicle-price">from €179,500</span>
+          </div>
+          <div class="vehicle-specs">
+            <div>Acceleration: <strong>3.7 s</strong></div>
+            <div>Power: <strong>544 kW / 739 PS</strong></div>
+            <div>Top speed: <strong>295 km/h</strong></div>
+            <div>Drive: <strong>All-wheel drive</strong></div>
+          </div>
+          <div class="vehicle-actions">
+            <a href="#" class="btn-action primary">Configure</a>
+            <a href="#" class="btn-action secondary">Details</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+</body>
+</html>

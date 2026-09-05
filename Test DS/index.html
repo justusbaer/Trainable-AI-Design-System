@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porsche Design System — Verification & Showcase Portal</title>
+  <link rel="stylesheet" href="./porsche-tokens.css">
+  <link rel="stylesheet" href="./portal.css">
+  <link rel="design-system-facade" type="text/markdown" href="./DESIGN.md">
+  <link rel="design-tokens" type="application/json" href="./tokens.json">
+  <link rel="llms-txt" type="text/markdown" href="./llms.txt">
+  <link rel="llms-full-txt" type="text/markdown" href="./llms-full.txt">
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-title-wrap">
+          <div class="brand-crest">P</div>
+          <div>
+            <div class="brand-name">PORSCHE</div>
+            <span style="font-size:0.75rem; color:var(--p-color-contrast-medium);">Design System Portal</span>
+          </div>
+        </div>
+        <span class="brand-badge">PDS v4.5.0 • Trainable DS</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">System Verification</div>
+        <button type="button" class="nav-item active" data-target="overview">
+          <span>📊</span> Overview & Audit
+        </button>
+        <button type="button" class="nav-item" data-target="tokens">
+          <span>🎨</span> Design Tokens
+          <span class="nav-item-badge">89</span>
+        </button>
+        <button type="button" class="nav-item" data-target="guidelines">
+          <span>📐</span> Guidelines & Rules
+          <span class="nav-item-badge">7</span>
+        </button>
+        <button type="button" class="nav-item" data-target="components">
+          <span>🧩</span> Component Catalog
+          <span class="nav-item-badge">42</span>
+        </button>
+
+        <div class="nav-section-title" style="margin-top:1rem;">Production Templates</div>
+        <button type="button" class="nav-item" data-target="templates">
+          <span>🚀</span> Layout Templates
+          <span class="nav-item-badge">3</span>
+        </button>
+
+        <div class="nav-section-title" style="margin-top:1rem;">System Files</div>
+        <a href="./DESIGN.md" target="_blank" class="nav-item">
+          <span>📄</span> DESIGN.md ↗
+        </a>
+        <a href="./tokens.json" target="_blank" class="nav-item">
+          <span>📦</span> tokens.json ↗
+        </a>
+        <a href="./components.json" target="_blank" class="nav-item">
+          <span>📑</span> components.json ↗
+        </a>
+        <a href="./llms.txt" target="_blank" class="nav-item">
+          <span>🤖</span> llms.txt ↗
+        </a>
+        <a href="./llms-full.txt" target="_blank" class="nav-item">
+          <span>⚡</span> llms-full.txt ↗
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper">
+
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-search">
+          <span>🔍</span>
+          <input type="text" id="global-search" placeholder="Search tokens or components..." />
+        </div>
+
+        <div class="header-actions">
+          <button type="button" id="theme-toggle-btn" class="btn-theme-toggle">
+            🌙 Dark Mode
+          </button>
+          <a href="https://porsche.de" target="_blank" class="btn-theme-toggle" style="text-decoration:none;">
+            Live porsche.de ↗
+          </a>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="content-body">
+
+        <!-- ===================================================================
+             SECTION: OVERVIEW & AUDIT
+             =================================================================== -->
+        <section id="overview" class="portal-section">
+          <div class="page-header">
+            <h1 class="page-title">Design System Extraction Audit</h1>
+            <p class="page-subtitle">
+              Comprehensive verification report for the Porsche Design System extracted live from <code>porsche.de</code> and packaged into the Trainable DS (v1.7.0) architecture.
+            </p>
+          </div>
+
+          <!-- Audit Stats Cards -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-number">42</span>
+              <span class="stat-label">Certified Components</span>
+              <span class="stat-desc">Introspected directly from customElements registry</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">18</span>
+              <span class="stat-label">Color Semantic Roles</span>
+              <span class="stat-desc">Dual-scheme light/dark color mappings</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">10</span>
+              <span class="stat-label">Fluid Typescale Tiers</span>
+              <span class="stat-desc">Mathematical clamp() expressions</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-number">100%</span>
+              <span class="stat-label">DTCG & M3 Compliance</span>
+              <span class="stat-desc">Zero raw values, sentence-case enforced</span>
+            </div>
+          </div>
+
+          <!-- Extraction Methodology -->
+          <div class="stat-card" style="margin-block-end:2rem;">
+            <h2 style="font-size:1.25rem; font-weight:700; color:var(--p-color-primary); margin-block-end:0.5rem;">
+              Extraction Integrity Guarantee
+            </h2>
+            <p style="font-size:0.9rem; color:var(--p-color-contrast-medium); line-height:1.6;">
+              This design system was compiled entirely without reading or referencing any pre-existing local machine files.
+              All design tokens, <code>light-dark()</code> variables, typography clamps, shadow DOM adopted stylesheets, and component attribute signatures were extracted directly from active sessions on <strong>porsche.de</strong> and cross-referenced with the <strong>Trainable DS standard</strong>.
+            </p>
+          </div>
+
+          <!-- Quick Navigation Cards -->
+          <h2 class="section-title">Explore Extracted Specifications</h2>
+          <div class="stats-grid">
+            <div class="stat-card" style="cursor:pointer;" onclick="switchSection('tokens'); document.querySelector('[data-target=tokens]').classList.add('active'); document.querySelector('[data-target=overview]').classList.remove('active');">
+              <span style="font-size:1.8rem;">🎨</span>
+              <span class="stat-label">Token Inspector</span>
+              <span class="stat-desc">Inspect and copy color swatches, typography clamps, spacing quantum, and motion curves.</span>
+            </div>
+            <div class="stat-card" style="cursor:pointer;" onclick="switchSection('components'); document.querySelector('[data-target=components]').classList.add('active'); document.querySelector('[data-target=overview]').classList.remove('active');">
+              <span style="font-size:1.8rem;">🧩</span>
+              <span class="stat-label">Components Gallery</span>
+              <span class="stat-desc">Interactive live demos for all 42 registered Porsche web components.</span>
+            </div>
+            <div class="stat-card" style="cursor:pointer;" onclick="switchSection('templates'); document.querySelector('[data-target=templates]').classList.add('active'); document.querySelector('[data-target=overview]').classList.remove('active');">
+              <span style="font-size:1.8rem;">🚀</span>
+              <span class="stat-label">Layout Templates</span>
+              <span class="stat-desc">Experience 3 production vehicle, configurator, and lifestyle shopping layouts.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             SECTION: DESIGN TOKENS
+             =================================================================== -->
+        <section id="tokens" class="portal-section" style="display:none;">
+          <div class="page-header">
+            <h1 class="page-title">Design Tokens Inspector</h1>
+            <p class="page-subtitle">
+              Live token visualizer derived from <code>tokens.json</code> and <code>porsche-tokens.css</code>. Click any token to copy its CSS variable or value.
+            </p>
+          </div>
+
+          <!-- Color Tokens -->
+          <h2 class="section-title">1. Semantic Color Roles (Dual-Scheme)</h2>
+          <p class="section-desc">
+            Toggle Light/Dark mode in the top right to watch these tokens dynamically resolve via <code>light-dark()</code>.
+          </p>
+          <div id="colors-token-grid" class="token-grid"></div>
+
+          <!-- Typography Scale -->
+          <h2 class="section-title">2. Fluid Typography Scale (Porsche Next)</h2>
+          <p class="section-desc">
+            10-tier responsive typescale using <code>clamp()</code> expressions for seamless scaling across viewports.
+          </p>
+          <table class="type-table">
+            <thead>
+              <tr>
+                <th>Tier Token</th>
+                <th>Clamp Formula</th>
+                <th>Weight</th>
+                <th>Usage Intent</th>
+                <th>Live Rendering</th>
+              </tr>
+            </thead>
+            <tbody id="typescale-tbody"></tbody>
+          </table>
+
+          <!-- Spacing -->
+          <h2 class="section-title">3. Spacing Rhythm (8px Quantum Baseline)</h2>
+          <p class="section-desc">Static spacing tokens from 1px to 80px.</p>
+          <div id="spacing-visualizer" class="spacing-grid"></div>
+
+          <!-- Border Radii -->
+          <h2 class="section-title">4. Corner Radii</h2>
+          <p class="section-desc">Porsche corner radius curve definitions (xs to full pill).</p>
+          <div id="radii-visualizer" class="spacing-grid"></div>
+        </section>
+
+        <!-- ===================================================================
+             SECTION: GUIDELINES & COMPLIANCE
+             =================================================================== -->
+        <section id="guidelines" class="portal-section" style="display:none;">
+          <div class="page-header">
+            <h1 class="page-title">Guidelines & Executable Constraints</h1>
+            <p class="page-subtitle">
+              The foundational design thesis and strict rules enforced by Trainable DS for Porsche UI generation.
+            </p>
+          </div>
+
+          <div class="stat-card" style="margin-block-end:2rem;">
+            <h2 style="font-size:1.25rem; font-weight:700; color:var(--p-color-primary); margin-block-end:0.5rem;">
+              The Porsche Design Philosophy
+            </h2>
+            <ul style="padding-left:1.5rem; line-height:1.8; color:var(--p-color-contrast-high); font-size:0.95rem;">
+              <li><strong>Frosted Glass Depth:</strong> Uses <code>backdrop-filter: blur(32px)</code> with alpha overlays (<code>--p-color-frosted-*</code>) instead of artificial drop shadow layers.</li>
+              <li><strong>Extreme Contrast:</strong> Anchored in pure Porsche black (<code>#010205</code>) and crisp white (<code>#ffffff</code>), maintaining minimum 4.5:1 text contrast.</li>
+              <li><strong>8px Quantum Rhythm:</strong> All paddings, margins, and layout gaps adhere strictly to multiples of 4px/8px.</li>
+              <li><strong>Fluid Responsiveness:</strong> Fluid clamps eliminate viewport layout jumps.</li>
+            </ul>
+          </div>
+
+          <h2 class="section-title">Mandatory Executable Constraints</h2>
+          <table class="type-table">
+            <thead>
+              <tr>
+                <th>Rule ID</th>
+                <th>Severity</th>
+                <th>Requirement</th>
+                <th>Remediation Fix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>TDS-RAW-COLOR</code></td>
+                <td><span style="color:#ba171f; font-weight:700;">CRITICAL</span></td>
+                <td>Zero raw hex codes (e.g. <code>#010205</code>) in inline styles or classes.</td>
+                <td>Use <code>var(--p-color-primary)</code> or semantic tokens.</td>
+              </tr>
+              <tr>
+                <td><code>TDS-NON-QUANTUM-SPACING</code></td>
+                <td><span style="color:#ac5102; font-weight:700;">HIGH</span></td>
+                <td>No arbitrary pixel spacing (e.g. <code>padding: 13px</code>).</td>
+                <td>Use 8px increments (<code>var(--p-spacing-static-md)</code>).</td>
+              </tr>
+              <tr>
+                <td><code>TDS-REINVENTED-COMPONENT</code></td>
+                <td><span style="color:#ac5102; font-weight:700;">HIGH</span></td>
+                <td>Never use raw HTML <code>&lt;button&gt;</code> or <code>&lt;input&gt;</code>.</td>
+                <td>Use certified <code>&lt;p-button&gt;</code> and <code>&lt;p-input-search&gt;</code>.</td>
+              </tr>
+              <tr>
+                <td><code>TDS-TOUCH-TARGET-TOO-SMALL</code></td>
+                <td><span style="color:#ac5102; font-weight:700;">HIGH</span></td>
+                <td>Every clickable element must be &ge; 48x48px.</td>
+                <td>Enforce <code>min-height: 48px; min-width: 48px;</code>.</td>
+              </tr>
+              <tr>
+                <td><code>TDS-CAPITALIZATION-NOT-SENTENCE-CASE</code></td>
+                <td><span style="color:#1a44ea; font-weight:700;">MEDIUM</span></td>
+                <td>All button labels and titles must use sentence case.</td>
+                <td>Write <code>Discover models</code> instead of <code>Discover Models</code>.</td>
+              </tr>
+              <tr>
+                <td><code>TDS-OFFICIAL-BRAND-ASSETS</code></td>
+                <td><span style="color:#ba171f; font-weight:700;">CRITICAL</span></td>
+                <td>Never recreate Porsche logos or model scripts via text.</td>
+                <td>Use <code>&lt;p-wordmark&gt;</code> and <code>&lt;p-model-signature&gt;</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- ===================================================================
+             SECTION: COMPONENT CATALOG
+             =================================================================== -->
+        <section id="components" class="portal-section" style="display:none;">
+          <div class="page-header">
+            <h1 class="page-title">Certified Component Catalog</h1>
+            <p class="page-subtitle">
+              Live interactive previews and contracts for all 42 Porsche web components. Filter by functional family below:
+            </p>
+          </div>
+
+          <!-- Filter Bar -->
+          <div class="components-filter-bar">
+            <button type="button" class="filter-chip active" data-family="all">All Families (42)</button>
+            <button type="button" class="filter-chip" data-family="actions">Actions</button>
+            <button type="button" class="filter-chip" data-family="navigation">Navigation</button>
+            <button type="button" class="filter-chip" data-family="typography">Typography</button>
+            <button type="button" class="filter-chip" data-family="text-inputs">Forms & Inputs</button>
+            <button type="button" class="filter-chip" data-family="selection">Selection</button>
+            <button type="button" class="filter-chip" data-family="containment">Containment</button>
+            <button type="button" class="filter-chip" data-family="communication">Communication</button>
+            <button type="button" class="filter-chip" data-family="brand">Brand Heritage</button>
+          </div>
+
+          <!-- Dynamic Components Gallery -->
+          <div id="components-gallery-grid" class="components-grid"></div>
+        </section>
+
+        <!-- ===================================================================
+             SECTION: LAYOUT TEMPLATES
+             =================================================================== -->
+        <section id="templates" class="portal-section" style="display:none;">
+          <div class="page-header">
+            <h1 class="page-title">Production Website Layout Templates</h1>
+            <p class="page-subtitle">
+              Full-page layouts demonstrating how to compose the extracted Porsche Design System tokens and components.
+            </p>
+          </div>
+
+          <div class="templates-grid">
+            <!-- Template 1 -->
+            <div class="template-card">
+              <div class="template-thumbnail">
+                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=800&q=80" alt="Showcase Stage" />
+              </div>
+              <div class="template-content">
+                <h3 class="template-title">Vehicle Showcase Stage ("Home Stage")</h3>
+                <p class="template-desc">
+                  High-impact hero section for the 911 GT3 RS with model signature, frosted glass action bar, and technical specifications strip.
+                </p>
+                <a href="./templates/showcase.html" target="_blank" class="porsche-btn-primary" style="margin-top:auto; text-decoration:none;">
+                  Launch Showcase Template ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Template 2 -->
+            <div class="template-card">
+              <div class="template-thumbnail">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Finder Matrix" />
+              </div>
+              <div class="template-content">
+                <h3 class="template-title">Vehicle Finder & Configurator Matrix</h3>
+                <p class="template-desc">
+                  Interactive dealer search, vehicle filter tags, and responsive model comparison cards with technical performance specs.
+                </p>
+                <a href="./templates/finder.html" target="_blank" class="porsche-btn-primary" style="margin-top:auto; text-decoration:none;">
+                  Launch Finder Template ↗
+                </a>
+              </div>
+            </div>
+
+            <!-- Template 3 -->
+            <div class="template-card">
+              <div class="template-thumbnail">
+                <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80" alt="Lifestyle Product" />
+              </div>
+              <div class="template-content">
+                <h3 class="template-title">Porsche Design E-Commerce & Product Page</h3>
+                <p class="template-desc">
+                  Timepieces showcase for the Chronograph 1 with image gallery, pricing, technical specifications accordion, and bag actions.
+                </p>
+                <a href="./templates/product.html" target="_blank" class="porsche-btn-primary" style="margin-top:auto; text-decoration:none;">
+                  Launch Product Template ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+  </div>
+
+  <div id="portal-toast" class="portal-toast"></div>
+
+  <script src="./portal.js"></script>
+</body>
+</html>

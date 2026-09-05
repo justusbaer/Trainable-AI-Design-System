@@ -26,8 +26,22 @@ program
   .description("Derive and extract design system at M3 fidelity from code & docs")
   .option("--src <path>", "Source code directory to scan", "./src")
   .option("--docs <path>", "Documentation directory", "./docs")
+  .option("--align <url>", "Immediately run visual alignment loops against source URL")
   .action(async (options) => {
     await runTrain(options);
+  });
+
+program
+  .command("align")
+  .description("Multi-loop visual alignment engine against live source website")
+  .requiredOption("--url <url>", "Source of truth website or application URL")
+  .option("--template <path>", "Local HTML template or component testbed")
+  .option("--max-loops <n>", "Maximum refinement loops (default: 3)", "3")
+  .option("--threshold <pct>", "Convergence score percentage threshold (default: 95)", "95")
+  .option("--dir <path>", "Target design system directory", ".")
+  .action(async (options) => {
+    const { runAlign } = await import("./commands/align.js");
+    await runAlign(options);
   });
 
 program
