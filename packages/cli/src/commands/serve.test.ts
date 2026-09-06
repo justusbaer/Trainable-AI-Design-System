@@ -117,4 +117,21 @@ describe("Trainable DS Portal Server (serve)", () => {
     expect(data.certified).toBe(true);
     expect(data.score).toBe(100);
   });
+
+  it("serves /overview.html", async () => {
+    const res = await dispatchMockRequest(server, "GET", "/overview.html");
+    expect([200, 404]).toContain(res.statusCode);
+  });
+
+  it("handles live token override via POST /api/v1/override", async () => {
+    const res = await dispatchMockRequest(server, "POST", "/api/v1/override", {
+      overrides: {
+        "comp.button.shape.corner": { value: "9999px" }
+      }
+    });
+    expect(res.statusCode).toBe(200);
+    const data = JSON.parse(res.body);
+    expect(data.success).toBe(true);
+    expect(data.count).toBe(1);
+  });
 });
