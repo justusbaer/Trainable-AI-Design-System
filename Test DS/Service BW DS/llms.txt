@@ -1,0 +1,22 @@
+# Serviceportal Baden-Württemberg Design System: Agent Quick Manual
+
+> **Serviceportal Baden-Württemberg Design System** is an agent-native, closed-loop Design System engine for the official administrative portal of the State of Baden-Württemberg, conforming to **Trainable DS v1.7.0** (https://trainable-ds-2026.web.app/) and W3C DTCG standards.
+
+---
+
+## 1. Quick Agent Instructions (Astryx Parity)
+If the user tells you to:
+- *"Use Service BW Design System"*
+- *"Generate an administrative screen matching service-bw.de"*
+- *"Build a barrier-free government service component"*
+
+Execute the following workflow:
+1. **Retrieve Context & Active Contracts:**
+   - Read local [`DESIGN.md`](./DESIGN.md) and [`tokens.json`](./tokens.json).
+   - Review certified components from [`components.json`](./components.json).
+2. **Generate UI Using Strictly Certified Primitives:**
+   - **Official Palette Only:** Use `--bw-color-highlight` (`#fffc00`), `--bw-color-charcoal` (`#2a2623`), `--bw-color-call2action` (`#116a8d`), and `--bw-color-surface-container` (`#f4f3f1`).
+   - **3px Radius Constraint:** All cards, buttons, and inputs must strictly use `3px` corner radius (`rounded-[3px]`).
+   - **50px Touch Target:** Interactive buttons and search bars must be at least `50px` in height.
+   - **Dual Typography Stack:** Headings `h1` must use `BaWueSerif, Arial`, while body and UI controls use `BaWueSans, Arial, sans-serif`.
+   - **Sentence Case:** Labels and titles must use sentence case (`Zum Servicekonto`, `Elterngeld beantragen`).

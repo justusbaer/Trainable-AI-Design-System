@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zum Servicekonto — Serviceportal Baden-Württemberg</title>
+  <link rel="stylesheet" href="../service-bw.css">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--bw-font-sans);
+      background-color: var(--bw-color-surface);
+      color: var(--bw-color-charcoal);
+      line-height: 1.5;
+    }
+
+    .bund-bar {
+      height: 32px;
+      background-color: var(--bw-header-bund-bg);
+      border-bottom: 1px solid var(--bw-color-border);
+      display: flex;
+      align-items: center;
+      padding-inline: 32px;
+      font-size: 13px;
+    }
+
+    .header-yellow {
+      background-color: var(--bw-color-highlight);
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 32px;
+      padding-block: 12px;
+      gap: 20px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--bw-color-charcoal);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-tools {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-konto {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding-inline: 16px;
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      border-radius: var(--bw-button-radius);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .btn-konto:hover {
+      background-color: var(--bw-color-call2action-contrast);
+    }
+
+    .tool-icon {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bw-button-radius);
+      color: var(--bw-color-charcoal);
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .tool-icon:hover {
+      background-color: var(--bw-color-surface-container);
+    }
+
+    /* Dual Search Bar Container */
+    .search-section {
+      background-color: var(--bw-color-surface);
+      padding-block: 24px;
+      border-bottom: 1px solid var(--bw-color-surface-container-high);
+    }
+
+    .search-wrapper {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding-inline: 32px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-field-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 260px;
+      gap: 4px;
+    }
+
+    .search-field-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+    }
+
+    .search-input-box {
+      height: var(--bw-input-height);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-input-radius);
+      padding-inline: 16px;
+      font-family: var(--bw-font-sans);
+      font-size: 15px;
+      color: var(--bw-color-charcoal);
+      background-color: var(--bw-color-surface);
+      width: 100%;
+    }
+
+    .search-input-box:focus {
+      outline: var(--bw-focus-outline);
+      box-shadow: 0 0 0 3px var(--bw-color-highlight);
+    }
+
+    .search-submit-btn {
+      align-self: flex-end;
+      height: var(--bw-button-height);
+      padding-inline: 24px;
+      background-color: var(--bw-color-surface-container);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-button-radius);
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+    }
+
+    .search-submit-btn:hover {
+      background-color: var(--bw-color-surface-container-high);
+    }
+
+    /* Main Container */
+    .page-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding-inline: 32px;
+      padding-bottom: 80px;
+    }
+
+    .page-headline {
+      font-family: var(--bw-font-serif);
+      font-size: 2.25rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--bw-color-charcoal);
+      margin-bottom: 16px;
+    }
+
+    .page-lead {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--bw-color-charcoal);
+      max-width: 820px;
+      margin-bottom: 32px;
+    }
+
+    /* Action button */
+    .btn-action-primary {
+      min-height: var(--bw-button-height);
+      padding-inline: 20px;
+      background-color: var(--bw-color-call2action);
+      color: var(--bw-color-surface);
+      border: 2px solid var(--bw-color-call2action);
+      border-radius: var(--bw-button-radius);
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: auto;
+    }
+
+    .btn-action-primary:hover {
+      background-color: var(--bw-color-call2action-contrast);
+      border-color: var(--bw-color-call2action-contrast);
+    }
+
+    /* Back To Top FAB */
+    .bw-fab {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(42, 38, 35, 0.2);
+    }
+
+    .bw-fab:hover {
+      background-color: var(--bw-color-call2action-contrast);
+    }
+
+    /* Footer */
+    .portal-footer {
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      padding: 48px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--bw-color-surface);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Official German Federal Banner -->
+  <div class="bund-bar">
+    <span>Offizielle Website – Bundesrepublik Deutschland</span>
+  </div>
+
+  <!-- State Yellow Header -->
+  <header class="header-yellow">
+    <a href="./portal-home.html" class="brand-title">
+      <svg width="40" height="40" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <rect width="100" height="100" rx="6" fill="var(--bw-color-highlight)"/>
+        <path d="M22 26h56v8H22zM22 46h56v8H22zM22 66h56v8H22z" fill="var(--bw-color-charcoal)"/>
+      </svg>
+      <span>Serviceportal Baden-Württemberg</span>
+    </a>
+
+    <div class="header-tools">
+      <a href="./servicekonto.html" class="btn-konto">Zum Servicekonto</a>
+      <a href="#" class="tool-icon" title="Kontrastmodus umschalten" aria-label="Kontrast">◐</a>
+      <a href="#" class="tool-icon" title="Leichte Sprache" aria-label="Leichte Sprache">📖</a>
+      <a href="#" class="tool-icon" title="Gebärdensprache" aria-label="Gebärdensprache">👐</a>
+      <a href="#" class="tool-icon" title="Sprache wählen" aria-label="Sprache">🌐</a>
+    </div>
+  </header>
+
+  <!-- Dual Search Section -->
+  <section class="search-section">
+    <div class="search-wrapper">
+      <div class="search-field-group">
+        <label for="search-topic" class="search-field-label">Suche</label>
+        <input id="search-topic" type="text" class="search-input-box" placeholder="Infos, Behörden und mehr finden">
+      </div>
+      <div class="search-field-group">
+        <label for="search-location" class="search-field-label">Ort</label>
+        <input id="search-location" type="text" class="search-input-box" placeholder="Ort angeben (optional)">
+      </div>
+      <button type="button" class="search-submit-btn">
+        <span>🔍</span>
+        <span>Suchen</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="page-container">
+
+    <!-- Breadcrumb Path -->
+    <nav class="bw-breadcrumb" aria-label="Breadcrumbs">
+      <a href="./portal-home.html">Startseite</a>
+      <span class="bw-breadcrumb__separator">→</span>
+      <span style="font-weight:700;">Zum Servicekonto</span>
+    </nav>
+
+    <h1 class="page-headline">Zum Servicekonto</h1>
+    <p class="page-lead">
+      Wählen Sie Ihren gewünschten Zugang für Bürgerinnen und Bürger oder für Unternehmen, um Behördengänge digital, sicher und medienbruchfrei abzuwickeln.
+    </p>
+
+    <!-- 3-Column Identity Accounts Grid -->
+    <div class="bw-account-grid">
+
+      <!-- Account 1: Servicekonto BW -->
+      <article class="bw-account-card">
+        <div class="bw-account-card__logo">
+          <div style="font-weight:700; font-size:18px; color:var(--bw-color-charcoal); display:flex; align-items:center; gap:8px;">
+            <span>🏛️</span>
+            <span>Servicekonto BW</span>
+          </div>
+        </div>
+        <div class="bw-account-card__body">
+          <h2 class="bw-account-card__title">Servicekonto Baden-Württemberg</h2>
+          <p class="bw-account-card__desc">
+            Ihr landesweites Bürgerkonto für Verwaltungsleistungen der Kommunen, Landratsämter und Landesbehörden in Baden-Württemberg. Unterstützt Benutzername/Passwort, ELSTER-Zertifikat und den Online-Ausweis (eID).
+          </p>
+          <a href="#" class="btn-action-primary">
+            <span>Jetzt anmelden</span>
+            <span>➔</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Account 2: BundID -->
+      <article class="bw-account-card">
+        <div class="bw-account-card__logo">
+          <div style="font-weight:700; font-size:18px; color:var(--bw-color-charcoal); display:flex; align-items:center; gap:8px;">
+            <span>🇩🇪</span>
+            <span>BundID</span>
+          </div>
+        </div>
+        <div class="bw-account-card__body">
+          <h2 class="bw-account-card__title">BundID (Deutschlandkonto)</h2>
+          <p class="bw-account-card__desc">
+            Das zentrale Bürgerkonto des Bundes für alle behördlichen Online-Dienste deutschlandweit. Nutzen Sie Ihr bestehendes BundID-Konto mit Online-Ausweis, ELSTER oder EU-Identität.
+          </p>
+          <a href="#" class="btn-action-primary">
+            <span>Weiter zu BundID</span>
+            <span>➔</span>
+          </a>
+        </div>
+      </article>
+
+      <!-- Account 3: Mein Unternehmenskonto (MUK) -->
+      <article class="bw-account-card">
+        <div class="bw-account-card__logo">
+          <div style="font-weight:700; font-size:18px; color:var(--bw-color-charcoal); display:flex; align-items:center; gap:8px;">
+            <span>🏢</span>
+            <span>Unternehmenskonto</span>
+          </div>
+        </div>
+        <div class="bw-account-card__body">
+          <h2 class="bw-account-card__title">Mein Unternehmenskonto</h2>
+          <p class="bw-account-card__desc">
+            Das einheitliche Unternehmenskonto auf Basis der ELSTER-Technologie für juristische Personen, Betriebe, Selbstständige und freie Berufe zur bundesweiten Abwicklung wirtschaftlicher Verfahren.
+          </p>
+          <a href="#" class="btn-action-primary">
+            <span>Unternehmenskonto öffnen</span>
+            <span>➔</span>
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Back to top FAB -->
+  <a href="#" class="bw-fab" title="Nach oben scrollen" aria-label="Nach oben scrollen">↑</a>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="footer-inner">
+      <div>© 2026 Land Baden-Württemberg — Serviceportal</div>
+      <div class="footer-links">
+        <a href="#">Datenschutz</a>
+        <a href="#">Barrierefreiheit</a>
+        <a href="#">Impressum</a>
+        <a href="#">Support & Feedback</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+# Serviceportal Baden-Württemberg Design System: Exhaustive Machine Reference (v1.7.0)
+
+> Complete machine reference for the Serviceportal Baden-Württemberg Design System, engineered for prompt injection across Antigravity, Claude Code, Cursor, and Figma AI.
+
+---
+
+## 1. System Foundations & Authoritative Color Roles
+
+### 1.1 Palette & Semantic Roles
+- `sys.color.primary` / `--bw-color-highlight`: `#fffc00` (Official State Yellow)
+- `sys.color.onPrimary` / `--bw-color-charcoal`: `#2a2623` (rgb: 42, 38, 35)
+- `sys.color.secondary` / `--bw-color-call2action`: `#116a8d` (Administrative Action Blue)
+- `sys.color.onSecondary`: `#ffffff`
+- `sys.color.surface`: `#ffffff`
+- `sys.color.onSurface`: `#2a2623`
+- `sys.color.surfaceVariant` / `--bw-color-surface-container`: `#f4f3f1`
+- `sys.color.onSurfaceVariant`: `#47535c`
+- `sys.color.outlineVariant` / `--bw-color-border`: `#cbc6bd` (rgb: 203, 198, 189)
+- `sys.color.error`: `#bb232b`
+- `sys.color.success`: `#00753a`
+- `sys.color.warning`: `#165571`
+- `sys.color.banner`: `#af0060`
+
+### 1.2 Typography Hierarchy
+- **Serif Display Stack:** `BaWueSerif, Arial, serif`
+  - `h1` / Screen Main Titles: `36px` / `43.2px` line-height / Weight `400`
+- **Sans Interface Stack:** `BaWueSans, Arial, sans-serif`
+  - `h2` / Section Headers: `30px` / `36px` line-height / Weight `400`
+  - `h3` / Subsection Headers: `26px` / `31.2px` line-height / Weight `400`
+  - `h4` / Card Titles: `20px` / `28px` line-height / Weight `400`
+  - `h5` / Component Subheaders: `16px` / `24px` line-height / Weight `700`
+  - `bodyLarge` / Lead Body: `18px` / `27px` line-height / Weight `400`
+  - `bodyMedium` / Standard Body: `16px` / `24px` line-height / Weight `400`
+  - `labelLarge` / Button & Tab: `14px` / `20px` line-height / Weight `700`
+
+### 1.3 State Layers & Focus Rings
+- **Universal Radius:** `3px` (`--border-radius: 3px`).
+- **Focus Indicator (BITV 2.0 / WCAG AAA):**
+  - Inner Ring: `3px solid #fffc00`
+  - Outer Offset Ring: `2px solid #2a2623`
+- **Hover:** 8% overlay or color shift (Yellow `#fffc00` -> `#e6e300`; Blue `#116a8d` -> `#0d536e`).
+- **Disabled:** Background `#eeeeee`, Text `#7a756e`, opacity `0.38`.
+
+---
+
+## 2. Component Contracts Across 6 Functional Families
+
+1. **Actions:**
+   - Primary Action Button: `min-h-[50px] px-6 rounded-[3px] bg-[#fffc00] text-[#2a2623] font-bold text-sm`
+   - Secondary Action Button: `min-h-[50px] px-6 rounded-[3px] border-2 border-[#2a2623] bg-white text-[#2a2623] font-bold text-sm`
+   - CallToAction Button: `min-h-[50px] px-6 rounded-[3px] bg-[#116a8d] text-white font-bold text-sm`
+   - BackToTop FAB: `w-16 h-16 rounded-full bg-[#2a2623]/75 text-white flex items-center justify-center`
+
+2. **Communication:**
+   - Category Badge: `px-2 py-1 rounded-[3px] border border-[#2a2623] bg-white text-xs font-bold text-[#2a2623]`
+   - Alert Banner: `p-4 rounded-[3px] bg-[#af0060] text-white font-medium`
+
+3. **Containment:**
+   - TeaserCard: Container `#f4f3f1`, border `1px solid #cbc6bd`, corner radius `3px`, 16:9 media slot, title 20px.
+   - HighlightCard: Container `#fffc00`, corner radius `3px`, padding 24px, text `#2a2623`.
+   - ZustaendigeStelleCard: Authority contact panel with `#f4f3f1` header panel, 2-column `<dl>` definition list for Hausanschrift, Telefon, E-Mail, Fax, and link `→ Zur zuständigen Stelle`.
+   - TaxonomyCategoryCard: 3-column category card (`/zufi/lebenslagen`) with `#f4f3f1` fill, `BaWueSans` 18px bold title, and bulleted sub-topic link list with `→` prefix.
+   - AccountSelectorCard: Authentication selector card (`/zufi/zum-servicekonto`) with white logo header slot, neutral body, and primary administrative blue action button.
+
+4. **Navigation:**
+   - OfficialBundHeader: Height `32px`, background `#f4f3f1`, border-bottom `1px solid #cbc6bd`.
+   - PortalHeader: Height `76px`, background `#fffc00`, state crest + "Serviceportal Baden-Württemberg", "Zum Servicekonto".
+   - Inhaltsverzeichnis (Sticky TOC): Vertical hierarchical sticky tree navigation for service procedure detail pages (`/zufi/leistungen/*`). Active item is highlighted in solid `#fffc00` with 1px `#cbc6bd` border and underline.
+   - BreadcrumbNav: Accessible path navigation with right arrow `→` separator (`Startseite → Thema → Leistung`).
+   - PortalFooter: Background `#2a2623`, text white, multi-column navigation links.
+
+5. **Selection:**
+   - Checkbox: 24x24px, 3px radius.
+   - HighContrastToggle: In-header toggle switch.
+
+6. **Text Inputs:**
+   - DualSearchBar: Dual citizen inputs (`Infos, Behörden und mehr finden` + `Ort angeben (optional)`) with magnifying glass button, height `50px`, border `1px solid #cbc6bd`, border radius `3px`.
+

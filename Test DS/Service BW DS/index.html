@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serviceportal Baden-Württemberg — Design System Portal (Trainable DS)</title>
+  <link rel="stylesheet" href="./portal.css">
+  <!-- Agent Discovery Links -->
+  <link rel="llms-txt" type="text/markdown" href="./llms.txt">
+  <link rel="llms-full-txt" type="text/markdown" href="./llms-full.txt">
+  <link rel="design-system-facade" type="text/markdown" href="./DESIGN.md">
+  <link rel="design-tokens" type="application/json" href="./tokens.json">
+  <meta name="mcp-server" content="./.well-known/mcp.json">
+</head>
+<body>
+
+  <!-- Top Federal Provenance Bar -->
+  <div class="bund-bar">
+    <div class="bund-flag">
+      <div class="bund-flag-black"></div>
+      <div class="bund-flag-red"></div>
+      <div class="bund-flag-gold"></div>
+    </div>
+    <span>Offizielle Website – Bundesrepublik Deutschland</span>
+  </div>
+
+  <!-- Main Yellow Header -->
+  <header class="main-portal-header">
+    <a href="#" class="brand-group">
+      <div class="brand-crest">🏛️</div>
+      <div>
+        <div class="brand-title">Serviceportal Baden-Württemberg</div>
+        <div style="font-size: 0.75rem; opacity: 0.85;">Design System & Agent Source of Truth</div>
+      </div>
+      <span class="brand-badge">v1.7.0</span>
+    </a>
+
+    <div class="nav-tools">
+      <a href="#foundations" class="nav-link-konto" style="font-size: 0.85rem;">Tokens</a>
+      <a href="#components" class="nav-link-konto" style="font-size: 0.85rem;">Komponenten</a>
+      <a href="#templates" class="nav-link-konto" style="font-size: 0.85rem;">Templates (5)</a>
+      <a href="#evaluator" class="nav-link-konto" style="font-size: 0.85rem;">Live-Auditor</a>
+      <a href="./templates/servicekonto.html" class="nav-link-konto">Zum Servicekonto</a>
+
+
+      <button class="icon-button" title="Kontrastmodus umschalten">◐</button>
+      <button class="icon-button" title="Leichte Sprache">👤</button>
+      <button class="icon-button" title="Gebärdensprache">👐</button>
+      <button class="icon-button" title="Sprache wechseln">🌐</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <span class="hero-tag">Sovereign Administrative Design System</span>
+      <h1 class="hero-title">Serviceportal Baden-Württemberg</h1>
+      <p class="hero-subtitle">
+        Die zentrale Quelle für barrierefreie, hoheitliche Benutzeroberflächen des Landes Baden-Württemberg. 
+        Vollständig extrahiert aus <a href="https://www.service-bw.de" target="_blank" style="color:var(--bw-color-call2action); font-weight:700;">service-bw.de</a> nach dem <strong>Trainable DS</strong> W3C DTCG Standard.
+      </p>
+
+      <!-- 1-Click Agent Integration Box -->
+      <div class="agent-connect-box">
+        <div class="agent-connect-header">
+          <span style="font-weight:700; font-size:0.95rem;">⚡ One-Click Agent Anbindung</span>
+          <span style="font-size:0.8rem; color:#666;">Cursor / Antigravity / Claude Code</span>
+        </div>
+        <code id="agent-prompt-code" class="agent-prompt-code">Connect to Serviceportal Baden-Württemberg DS and follow ./DESIGN.md for all administrative UI generation.</code>
+        <button id="btn-copy-prompt" class="btn-primary" style="min-height:42px; font-size:13px;">
+          📋 Prompt Kopieren
+        </button>
+      </div>
+
+      <!-- Metrics Grid -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-value">#fffc00</span>
+          <span class="metric-label">Offizielles Landesgelb</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">3px</span>
+          <span class="metric-label">Hoheitlicher Eckenradius</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">50px</span>
+          <span class="metric-label">Mindest-Touch-Target (BITV 2.0)</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">WCAG AAA</span>
+          <span class="metric-label">Barrierefreiheit & Doppel-Fokusring</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Foundations: Design Tokens -->
+    <section id="foundations" class="section-container">
+      <h2 class="section-title">1. Farb- & Typografie-Tokens</h2>
+      <p class="section-desc">Echte Runtime-Farbwerte und W3C DTCG Token-Hierarchie des Serviceportals.</p>
+
+      <div class="palette-grid">
+        <div class="token-swatch">
+          <div class="swatch-color" style="background: #fffc00;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Highlight Gelb</span>
+            <span class="swatch-val">#fffc00</span>
+          </div>
+        </div>
+        <div class="token-swatch">
+          <div class="swatch-color" style="background: #2a2623;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Brand Charcoal</span>
+            <span class="swatch-val">#2a2623</span>
+          </div>
+        </div>
+        <div class="token-swatch">
+          <div class="swatch-color" style="background: #116a8d;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Aktion Blau (CTA)</span>
+            <span class="swatch-val">#116a8d</span>
+          </div>
+        </div>
+        <div class="token-swatch">
+          <div class="swatch-color" style="background: #f4f3f1; border-bottom:1px solid #cbc6bd;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Container Fläche</span>
+            <span class="swatch-val">#f4f3f1</span>
+          </div>
+        </div>
+        <div class="token-swatch">
+          <div class="swatch-color" style="background: #cbc6bd;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Struktur-Rahmen</span>
+            <span class="swatch-val">#cbc6bd</span>
+          </div>
+        </div>
+        <div class="token-swatch">
+          <div class="swatch-color" style="background: #00753a;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Erfolg Grün</span>
+            <span class="swatch-val">#00753a</span>
+          </div>
+        </div>
+        <div class="token-swatch">
+          <div class="swatch-color" style="background: #bb232b;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Fehler Rot</span>
+            <span class="swatch-val">#bb232b</span>
+          </div>
+        </div>
+        <div class="token-swatch">
+          <div class="swatch-color" style="background: #af0060;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Hinweis Magenta</span>
+            <span class="swatch-val">#af0060</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Component Catalog -->
+    <section id="components" class="section-container">
+      <h2 class="section-title">2. Zertifizierte UI-Komponenten</h2>
+      <p class="section-desc">Extrahierte interaktive Komponenten für baden-württembergische Verwaltungsdienste.</p>
+
+      <div class="components-grid">
+        <!-- Buttons Card -->
+        <div class="comp-preview-card">
+          <h3>Schaltflächen (Buttons)</h3>
+          <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <button class="btn-primary">Gelber Primär-Button</button>
+            <button class="btn-cta">Blauer CTA-Button</button>
+            <button class="btn-secondary">Sekundär-Button</button>
+          </div>
+          <div style="font-size:0.8rem; color:#666;">
+            Höhe: 50px | Radius: 3px | Font: BaWueSans 14px Fett
+          </div>
+        </div>
+
+        <!-- Badges & Indicators -->
+        <div class="comp-preview-card">
+          <h3>Kategorie-Badges</h3>
+          <div style="display:flex; gap:12px; align-items:center;">
+            <span class="badge-lebenslage">Lebenslage</span>
+            <span class="badge-leistung">Leistung</span>
+          </div>
+          <div style="font-size:0.8rem; color:#666;">
+            Strikte 3px Umrandung für behördliche Kategorisierung.
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="comp-preview-card">
+          <h3>Bürgersuche</h3>
+          <div class="search-box-preview">
+            <input type="text" placeholder="Infos, Behörden und mehr finden" readonly value="Bauen und Modernisieren">
+            <button>🔍</button>
+          </div>
+          <div style="font-size:0.8rem; color:#666;">
+            Höhe: 50px | Rahmen: 1px #cbc6bd | Schrift: 16px
+          </div>
+        </div>
+
+        <!-- Teaser Card -->
+        <div class="comp-preview-card">
+          <h3>Teaser-Karte</h3>
+          <div class="teaser-card-preview">
+            <div class="teaser-card-img-placeholder">
+              Bildbereich (16:9)
+            </div>
+            <div class="teaser-card-body">
+              <span class="badge-lebenslage" style="align-self:flex-start;">Lebenslage</span>
+              <div class="teaser-card-title">Bauen und Modernisieren</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Highlight Card -->
+        <div class="comp-preview-card">
+          <h3>Highlight-Karte</h3>
+          <div class="highlight-card-preview">
+            <div class="highlight-card-title">Hilfe in allen Lebenslagen</div>
+            <div style="font-size:0.9rem;">
+              Von A wie Adoption über U wie Unternehmen gründen bis Z wie Zuwanderung
+            </div>
+          </div>
+        </div>
+
+        <!-- Inhaltsverzeichnis (Sticky TOC) -->
+        <div class="comp-preview-card">
+          <h3>Inhaltsverzeichnis (Sticky TOC)</h3>
+          <div style="background:var(--bw-color-surface); border:1px solid var(--bw-color-border); border-radius:3px; padding:12px; display:flex; flex-direction:column; gap:6px;">
+            <div style="font-weight:700; font-size:0.85rem; margin-bottom:4px;">Inhaltsverzeichnis</div>
+            <div style="padding:6px 12px; background:var(--bw-color-highlight); border:1px solid var(--bw-color-border); border-radius:3px; font-weight:700; font-size:0.8rem; text-decoration:underline;">Verfahrensablauf (Aktiv)</div>
+            <div style="padding:6px 12px; font-size:0.8rem; color:var(--bw-color-charcoal);">Onlineantrag</div>
+            <div style="padding:6px 12px; font-size:0.8rem; color:var(--bw-color-charcoal);">Zuständige Stelle</div>
+            <div style="padding:6px 12px; font-size:0.8rem; color:var(--bw-color-charcoal);">Erforderliche Unterlagen</div>
+          </div>
+          <div style="font-size:0.8rem; color:#666; margin-top:8px;">
+            Vertikale Baumstruktur für Verfahrensseiten (/zufi/leistungen/*) mit aktivem Gold-Pill.
+          </div>
+        </div>
+
+        <!-- Zuständige Stelle Card -->
+        <div class="comp-preview-card">
+          <h3>Zuständige Stelle (Behördenkontakt)</h3>
+          <div style="border:1px solid var(--bw-color-border); border-radius:3px; background:var(--bw-color-surface); overflow:hidden;">
+            <div style="background:var(--bw-color-surface-container); padding:10px 14px; font-weight:700; font-size:0.85rem; border-bottom:1px solid var(--bw-color-border);">
+              L-Bank (Förderbank)
+            </div>
+            <div style="padding:12px 14px; font-size:0.8rem; display:grid; grid-template-columns:90px 1fr; gap:6px;">
+              <span style="font-weight:700; color:var(--bw-color-call2action-contrast);">Anschrift:</span>
+              <span>Schlossplatz 10, Karlsruhe</span>
+              <span style="font-weight:700; color:var(--bw-color-call2action-contrast);">Telefon:</span>
+              <span>0800 6642 422</span>
+            </div>
+          </div>
+          <div style="font-size:0.8rem; color:#666; margin-top:8px;">
+            Kontaktpanel mit neutralem Header und strukturierter Definitionsliste.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Multi-Sub-Page Template Showcase -->
+    <section id="templates" class="section-container">
+      <h2 class="section-title">3. Multi-Sub-Page Production Templates</h2>
+      <p class="section-desc">
+        Vollständig extrahierte und evaluierte Seiten-Templates aus unterschiedlichen Bereichen von <a href="https://www.service-bw.de" target="_blank" style="color:var(--bw-color-call2action); font-weight:700;">service-bw.de</a>. Alle Templates sind zu 100% mit dem Trainable DS Evaluator zertifiziert.
+      </p>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1.5rem; margin-top:1.5rem;">
+        
+        <!-- Template 1: Portal Home -->
+        <div style="background:var(--bw-color-surface); border:1px solid var(--bw-color-border); border-radius:3px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; color:var(--bw-color-call2action); text-transform:uppercase; margin-bottom:4px;">Portal Startseite</div>
+            <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Serviceportal Startseite</h3>
+            <p style="font-size:0.85rem; color:var(--bw-color-charcoal); line-height:1.5; margin-bottom:16px;">
+              Hauptportal-Ansicht mit Bürgersuche, Teaser-Karten, Gelber Highlight-Karte und Bundes-Kennung.
+            </p>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--bw-color-border); padding-top:12px;">
+            <span style="font-size:0.8rem; color:#00753a; font-weight:700;">✔ 100/100 Zertifiziert</span>
+            <a href="./templates/portal-home.html" target="_blank" class="btn-secondary" style="min-height:36px; padding:0 14px; font-size:13px; text-decoration:none;">Öffnen ↗</a>
+          </div>
+        </div>
+
+        <!-- Template 2: Leistung Detail -->
+        <div style="background:var(--bw-color-surface); border:1px solid var(--bw-color-border); border-radius:3px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; color:var(--bw-color-call2action); text-transform:uppercase; margin-bottom:4px;">Verfahren & Leistung</div>
+            <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Elterngeld beantragen</h3>
+            <p style="font-size:0.85rem; color:var(--bw-color-charcoal); line-height:1.5; margin-bottom:16px;">
+              Leistungsdetailseite (/zufi/leistungen/1224) mit Sticky Inhaltsverzeichnis, L-Bank Behördenkarte und CTA-Aktionsbutton.
+            </p>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--bw-color-border); padding-top:12px;">
+            <span style="font-size:0.8rem; color:#00753a; font-weight:700;">✔ 100/100 Zertifiziert</span>
+            <a href="./templates/service-detail.html" target="_blank" class="btn-secondary" style="min-height:36px; padding:0 14px; font-size:13px; text-decoration:none;">Öffnen ↗</a>
+          </div>
+        </div>
+
+        <!-- Template 3: Lebenslagen Taxonomy -->
+        <div style="background:var(--bw-color-surface); border:1px solid var(--bw-color-border); border-radius:3px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; color:var(--bw-color-call2action); text-transform:uppercase; margin-bottom:4px;">Themenkatalog</div>
+            <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Hilfe in allen Lebenslagen</h3>
+            <p style="font-size:0.85rem; color:var(--bw-color-charcoal); line-height:1.5; margin-bottom:16px;">
+              Themen- und Taxonomie-Hub (/zufi/lebenslagen) mit 3-spaltigem Kategorie-Raster und Pfeilverlinkungen.
+            </p>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--bw-color-border); padding-top:12px;">
+            <span style="font-size:0.8rem; color:#00753a; font-weight:700;">✔ 100/100 Zertifiziert</span>
+            <a href="./templates/lebenslagen.html" target="_blank" class="btn-secondary" style="min-height:36px; padding:0 14px; font-size:13px; text-decoration:none;">Öffnen ↗</a>
+          </div>
+        </div>
+
+        <!-- Template 4: Servicekonto Hub -->
+        <div style="background:var(--bw-color-surface); border:1px solid var(--bw-color-border); border-radius:3px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; color:var(--bw-color-call2action); text-transform:uppercase; margin-bottom:4px;">Identität & Zugang</div>
+            <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Zum Servicekonto</h3>
+            <p style="font-size:0.85rem; color:var(--bw-color-charcoal); line-height:1.5; margin-bottom:16px;">
+              Authentifizierungs-Hub (/zufi/zum-servicekonto) mit Servicekonto BW, BundID und Unternehmenskonto (MUK).
+            </p>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--bw-color-border); padding-top:12px;">
+            <span style="font-size:0.8rem; color:#00753a; font-weight:700;">✔ 100/100 Zertifiziert</span>
+            <a href="./templates/servicekonto.html" target="_blank" class="btn-secondary" style="min-height:36px; padding:0 14px; font-size:13px; text-decoration:none;">Öffnen ↗</a>
+          </div>
+        </div>
+
+        <!-- Template 5: Modellübersicht (Cross-Domain Rebuild) -->
+        <div style="background:var(--bw-color-surface); border:1px solid var(--bw-color-border); border-radius:3px; padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="font-size:0.75rem; font-weight:700; color:var(--bw-color-call2action); text-transform:uppercase; margin-bottom:4px;">Cross-Domain Rebuild</div>
+            <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:8px;">Modellübersicht (Porsche Rebuild)</h3>
+            <p style="font-size:0.85rem; color:var(--bw-color-charcoal); line-height:1.5; margin-bottom:16px;">
+              Vollständiger Rebuild der Porsche Modellübersicht-Seite unter strikter Einhaltung der Service BW Design-System-Tokens und M3-Kriterien.
+            </p>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--bw-color-border); padding-top:12px;">
+            <span style="font-size:0.8rem; color:#00753a; font-weight:700;">✔ 100/100 Zertifiziert</span>
+            <a href="./templates/model-overview.html" target="_blank" class="btn-secondary" style="min-height:36px; padding:0 14px; font-size:13px; text-decoration:none;">Öffnen ↗</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Live Compliance Evaluator -->
+    <section id="evaluator" class="section-container">
+      <h2 class="section-title">4. Live Closed-Loop Compliance Evaluator</h2>
+
+      <p class="section-desc">Auditieren Sie TSX / HTML-Code in Echtzeit gegen die Richtlinien des Serviceportals Baden-Württemberg.</p>
+
+      <div style="display:grid; grid-template-columns: 1fr 380px; gap:1.5rem;">
+        <div style="background:#ffffff; border:1px solid var(--bw-color-border); border-radius:3px; padding:1.25rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
+            <span style="font-weight:700; font-size:0.9rem;">Code Snippet (TSX / JSX)</span>
+            <div style="display:flex; gap:0.5rem;">
+              <button id="btn-load-clean" class="btn-secondary" style="min-height:34px; padding:0 12px; font-size:12px;">Valides Beispiel</button>
+              <button id="btn-load-dirty" class="btn-secondary" style="min-height:34px; padding:0 12px; font-size:12px;">Fehlerhaftes Beispiel</button>
+            </div>
+          </div>
+          <textarea id="eval-code-input" style="width:100%; height:180px; font-family:monospace; font-size:13px; padding:12px; border:1px solid var(--bw-color-border); border-radius:3px;" spellcheck="false">&lt;button className="h-[50px] px-6 rounded-[3px] bg-[#fffc00] text-[#2a2623] font-bold text-sm"&gt;
+  Zum Servicekonto anmelden
+&lt;/button&gt;</textarea>
+          <button id="btn-run-audit" class="btn-primary" style="width:100%; margin-top:0.75rem;">
+            ⚡ Code gegen Service BW Richtlinien prüfen
+          </button>
+        </div>
+
+        <div style="background:#ffffff; border:1px solid var(--bw-color-border); border-radius:3px; padding:1.25rem;">
+          <div style="font-weight:700; margin-bottom:1rem;">Audit-Ergebnis</div>
+          <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem;">
+            <div id="eval-score-circle" style="width:54px; height:54px; border-radius:50%; background:#00753a; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:1.3rem;">
+              100
+            </div>
+            <div id="eval-score-summary">
+              <strong style="color:#00753a">CERTIFIED COMPLIANT</strong><br/>
+              <span style="font-size:0.85rem">100% Service BW Konformität</span>
+            </div>
+          </div>
+          <div id="eval-diagnostics-list">
+            <div style="padding:1rem; background:#f4f3f1; border-radius:3px; color:#00753a; font-size:0.9rem;">
+              ✔ Keine Verstöße gefunden.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- High-Contrast Footer -->
+  <footer class="portal-footer">
+    <div class="footer-content">
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <div style="font-size:1.6rem;">🏛️</div>
+        <div>
+          <strong>Serviceportal Baden-Württemberg</strong> — Trainable DS Edition
+        </div>
+      </div>
+
+      <ul class="footer-links">
+        <li><a href="./DESIGN.md" class="footer-link">DESIGN.md</a></li>
+        <li><a href="./tokens.json" class="footer-link">tokens.json</a></li>
+        <li><a href="./components.json" class="footer-link">components.json</a></li>
+        <li><a href="./templates/portal-home.html" class="footer-link">Home ↗</a></li>
+        <li><a href="./templates/service-detail.html" class="footer-link">Leistung ↗</a></li>
+        <li><a href="./templates/lebenslagen.html" class="footer-link">Lebenslagen ↗</a></li>
+        <li><a href="./templates/servicekonto.html" class="footer-link">Servicekonto ↗</a></li>
+        <li><a href="./templates/model-overview.html" class="footer-link">Modellübersicht ↗</a></li>
+      </ul>
+
+
+    </div>
+  </footer>
+
+  <script src="./portal.js"></script>
+</body>
+</html>

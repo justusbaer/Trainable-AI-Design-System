@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Startseite — Serviceportal Baden-Württemberg (Template)</title>
+  <link rel="stylesheet" href="../service-bw.css">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--bw-font-sans);
+      background-color: var(--bw-color-surface);
+      color: var(--bw-color-charcoal);
+      line-height: 1.5;
+    }
+
+    /* 1. Bund Banner */
+    .bund-banner {
+      height: var(--bw-header-bund-height);
+      background-color: var(--bw-header-bund-bg);
+      border-bottom: 1px solid var(--bw-color-border);
+      display: flex;
+      align-items: center;
+      padding-inline: 48px;
+      gap: 12px;
+      font-size: 13px;
+    }
+
+    .bund-flag {
+      display: inline-flex;
+      flex-direction: column;
+      width: 16px;
+      height: 11px;
+      border: 1px solid rgba(42, 38, 35, 0.15);
+    }
+    .bund-flag-b { flex: 1; background: rgb(0, 0, 0); }
+    .bund-flag-r { flex: 1; background: rgb(221, 0, 0); }
+    .bund-flag-g { flex: 1; background: rgb(255, 206, 0); }
+
+    /* 2. Main Yellow Header */
+    .header-yellow {
+      background-color: var(--bw-color-highlight);
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 48px;
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--bw-color-charcoal);
+    }
+
+    .brand-crest {
+      width: 44px;
+      height: 44px;
+      font-size: 36px;
+      line-height: 44px;
+    }
+
+    .brand-label {
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .konto-link {
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--bw-color-charcoal);
+      font-size: 16px;
+    }
+
+    .konto-link:hover {
+      text-decoration: underline;
+    }
+
+    .a11y-icons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .a11y-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: var(--bw-color-charcoal);
+      padding: 6px;
+      border-radius: var(--bw-button-radius);
+    }
+
+    .a11y-btn:focus-visible {
+      outline: var(--bw-focus-outline);
+      box-shadow: 0 0 0 3px var(--bw-color-highlight);
+    }
+
+    /* 3. Search Section */
+    .search-container {
+      max-width: 1280px;
+      margin: 48px auto 32px auto;
+      padding-inline: 48px;
+    }
+
+    .search-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 50px;
+      gap: 16px;
+      align-items: flex-end;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .field-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+    }
+
+    .search-input {
+      height: var(--bw-input-height);
+      border: var(--bw-input-border);
+      border-radius: var(--bw-input-radius);
+      padding: var(--bw-input-padding);
+      font-family: var(--bw-font-sans);
+      font-size: 16px;
+      color: var(--bw-color-charcoal);
+      outline: none;
+      background: var(--bw-color-surface);
+      width: 100%;
+    }
+
+    .search-input:focus {
+      outline: var(--bw-focus-outline);
+      box-shadow: 0 0 0 3px var(--bw-color-highlight);
+    }
+
+    .search-submit-btn {
+      height: var(--bw-button-height);
+      width: 50px;
+      background: var(--bw-color-surface-container);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-button-radius);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--bw-color-charcoal);
+    }
+
+    .search-submit-btn:hover {
+      background: var(--bw-color-surface-container-high);
+    }
+
+    .search-divider {
+      max-width: 1280px;
+      margin: 32px auto;
+      padding-inline: 48px;
+    }
+
+    .search-divider hr {
+      border: none;
+      border-top: 1px solid var(--bw-color-border);
+    }
+
+    /* 4. Cards Grid */
+    .cards-section {
+      max-width: 1280px;
+      margin: 0 auto 64px auto;
+      padding-inline: 48px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+
+    .teaser-card {
+      background: var(--bw-color-surface-container);
+      border: var(--bw-card-border);
+      border-radius: var(--bw-card-radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .teaser-card:hover {
+      box-shadow: 0 4px 12px rgba(42,38,35,0.08);
+      transform: translateY(-2px);
+    }
+
+    .teaser-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: var(--bw-color-surface-container-high);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+
+    .teaser-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      align-self: flex-start;
+      padding: var(--bw-badge-padding);
+      border: var(--bw-badge-border);
+      border-radius: var(--bw-badge-radius);
+      background: var(--bw-color-surface);
+      font-size: var(--bw-badge-font-size);
+      font-weight: 700;
+      text-transform: none;
+    }
+
+    .badge-pill.leistung {
+      border-color: var(--bw-color-call2action);
+      color: var(--bw-color-call2action);
+    }
+
+    .teaser-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+      line-height: 1.3;
+    }
+
+    .teaser-desc {
+      font-size: 15px;
+      color: var(--bw-color-call2action-contrast);
+      line-height: 1.5;
+    }
+
+    /* Highlight Card (All Yellow) */
+    .highlight-card {
+      background: var(--bw-color-highlight);
+      border-radius: var(--bw-card-radius);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-decoration: none;
+      color: var(--bw-color-charcoal);
+    }
+
+    .highlight-title {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .highlight-desc {
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    /* Floating Back-to-Top Button */
+    .fab-back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: var(--bw-fab-size);
+      height: var(--bw-fab-size);
+      border-radius: var(--bw-fab-radius);
+      background: var(--bw-fab-bg);
+      color: var(--bw-color-surface);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: background 0.15s;
+    }
+
+    .fab-back-to-top:hover {
+      background: rgba(42, 38, 35, 0.95);
+    }
+
+    /* 5. Footer */
+    .portal-footer {
+      background: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      padding: 56px 48px 36px 48px;
+    }
+
+    .footer-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .footer-crest {
+      font-size: 32px;
+    }
+
+    .footer-links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px 32px;
+      list-style: none;
+      font-size: 14px;
+    }
+
+    .footer-link {
+      color: var(--bw-color-surface);
+      text-decoration: none;
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Federal Provenance Banner -->
+  <div class="bund-banner">
+    <div class="bund-flag">
+      <div class="bund-flag-b"></div>
+      <div class="bund-flag-r"></div>
+      <div class="bund-flag-g"></div>
+    </div>
+    <span>Offizielle Website – Bundesrepublik Deutschland</span>
+  </div>
+
+  <!-- Main Yellow Header -->
+  <header class="header-yellow">
+    <a href="#" class="brand-block">
+      <div class="brand-crest">🏛️</div>
+      <div>
+        <div class="brand-label">Serviceportal<br/>Baden-Württemberg</div>
+      </div>
+    </a>
+
+    <div class="header-right">
+      <a href="#" class="konto-link">Zum Servicekonto</a>
+      <div class="a11y-icons">
+        <button class="a11y-btn" title="Kontrastmodus umschalten">◐</button>
+        <button class="a11y-btn" title="Leichte Sprache">👤</button>
+        <button class="a11y-btn" title="Gebärdensprache">👐</button>
+        <button class="a11y-btn" title="Sprache wechseln">🌐</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Search Section -->
+  <section class="search-container">
+    <div class="search-grid">
+      <div class="field-group">
+        <label for="search-term" class="field-label">Suche</label>
+        <input type="text" id="search-term" class="search-input" placeholder="Infos, Behörden und mehr finden" value="Bauen und Modernisieren">
+      </div>
+      <div class="field-group">
+        <label for="search-location" class="field-label">Ort</label>
+        <input type="text" id="search-location" class="search-input" placeholder="Ort angeben (optional)" value="Stuttgart">
+      </div>
+      <button class="search-submit-btn" aria-label="Suche starten">🔍</button>
+    </div>
+  </section>
+
+  <div class="search-divider">
+    <hr />
+  </div>
+
+  <!-- Cards Section -->
+  <section class="cards-section">
+    <div class="cards-grid">
+      <!-- Card 1 -->
+      <a href="#" class="teaser-card">
+        <div class="teaser-img">🏡</div>
+        <div class="teaser-body">
+          <span class="badge-pill">Lebenslage</span>
+          <h2 class="teaser-title">Bauen und Modernisieren</h2>
+          <p class="teaser-desc">Baugenehmigungen, Bebauungspläne und Förderprogramme im Land.</p>
+        </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a href="./service-detail.html" class="teaser-card">
+        <div class="teaser-img">👶</div>
+        <div class="teaser-body">
+          <span class="badge-pill leistung">Leistung</span>
+          <h2 class="teaser-title">Elterngeld beantragen</h2>
+          <p class="teaser-desc">Digitale Beantragung von Basis-Elterngeld und ElterngeldPlus.</p>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a href="#" class="teaser-card">
+        <div class="teaser-img">💼</div>
+        <div class="teaser-body">
+          <span class="badge-pill">Lebenslage</span>
+          <h2 class="teaser-title">Neuankunft ausländische Fachkraft</h2>
+          <p class="teaser-desc">Aufenthaltstitel, Berufsanerkennung und behördliche Erstschritte.</p>
+        </div>
+      </a>
+
+      <!-- Card 4 -->
+      <a href="#" class="teaser-card">
+        <div class="teaser-img">🚗</div>
+        <div class="teaser-body">
+          <span class="badge-pill">Lebenslage</span>
+          <h2 class="teaser-title">Fahrzeuge</h2>
+          <p class="teaser-desc">Zulassung, Umschreibung und Abmeldung über i-Kfz online abwickeln.</p>
+        </div>
+      </a>
+
+      <!-- Card 5 (Text Only) -->
+      <a href="#" class="teaser-card">
+        <div class="teaser-body">
+          <h2 class="teaser-title">Ausschreibungsdienst Baden-Württemberg</h2>
+          <p class="teaser-desc">Informieren Sie sich hier über die aktuellen Ausschreibungen der öffentlichen Hand in Baden-Württemberg.</p>
+        </div>
+      </a>
+
+      <!-- Card 6 (Text Only) -->
+      <a href="#" class="teaser-card">
+        <div class="teaser-body">
+          <h2 class="teaser-title">Stellenangebote Baden-Württemberg</h2>
+          <p class="teaser-desc">Informieren Sie sich über die aktuellen Stellenangebote der öffentlichen Hand in Baden-Württemberg.</p>
+        </div>
+      </a>
+
+      <!-- Card 7 (Solid Yellow Highlight Card) -->
+      <a href="#" class="highlight-card">
+        <h2 class="highlight-title">Hilfe in allen Lebenslagen</h2>
+        <p class="highlight-desc">Von A wie Adoption über U wie Unternehmen gründen bis Z wie Zuwanderung – Ihr direkter Pfad zu allen Verwaltungsdienstleistungen.</p>
+      </a>
+
+      <!-- Card 8 (Text Only) -->
+      <a href="#" class="teaser-card">
+        <div class="teaser-body">
+          <h2 class="teaser-title">Einheitlicher Ansprechpartner</h2>
+          <p class="teaser-desc">Unterstützung bei der Aufnahme einer selbstständigen Tätigkeit und der Anerkennung von Berufsqualifikationen.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Back to top FAB -->
+  <button class="fab-back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Nach oben scrollen">
+    ↑
+  </button>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-crest">🏛️</div>
+        <div>
+          <div style="font-weight:700; font-size:16px;">Serviceportal Baden-Württemberg</div>
+          <div style="font-size:13px; opacity:0.8;">Offizielles Portal des Landes Baden-Württemberg</div>
+        </div>
+      </div>
+
+      <ul class="footer-links-row">
+        <li><a href="#" class="footer-link">Informationsseite zu service-bw</a></li>
+        <li><a href="#" class="footer-link">Übersetzungen</a></li>
+        <li><a href="#" class="footer-link">Impressum</a></li>
+        <li><a href="#" class="footer-link">Rechtshinweise</a></li>
+        <li><a href="#" class="footer-link">Nutzungsbedingungen</a></li>
+        <li><a href="#" class="footer-link">Erklärung zur Barrierefreiheit</a></li>
+        <li><a href="#" class="footer-link">Rechnungseingang</a></li>
+        <li><a href="#" class="footer-link">Datenschutzerklärung</a></li>
+        <li><a href="#" class="footer-link">Kontakt</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>

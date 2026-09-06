@@ -53,7 +53,7 @@
   --p-model-signature-color: #0e0e12;
 
   /* --- Typography --- */
-  --p-font-porsche-next: "Porsche Next", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Arial Narrow", Arial, sans-serif;
+  --p-font-porsche-next: "Porsche Next", "Arial Narrow", Arial, "Heiti SC", SimHei, sans-serif;
   --p-font-sans: var(--p-font-porsche-next);
   --p-font-weight-normal: 400;
   --p-font-weight-semibold: 600;
@@ -157,7 +157,7 @@ html[data-theme="dark"], :root[data-theme="dark"] {
   --p-color-contrast-lower: rgba(156, 156, 159, 0.302);
   --p-color-frosted: hsla(240, 2%, 43%, 0.228);
   --p-color-frosted-soft: rgba(65, 65, 70, 0.154);
-  --p-color-frosted-strong: rgba(156, 156, 159, 0.302);
+  --p-color-frosted-strong: rgba(156, 156, 159, 0.3);
   --p-color-info: #178bff;
   --p-color-success: #10c47f;
   --p-color-warning: #f4882a;

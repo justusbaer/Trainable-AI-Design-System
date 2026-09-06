@@ -1,0 +1,377 @@
+/**
+ * Serviceportal Baden-Württemberg Design System — CSS Custom Properties
+ * Source of Truth: https://www.service-bw.de
+ * Architecture: Trainable DS v1.7.0 (https://trainable-ds-2026.web.app/)
+ */
+
+:root {
+  /* ==========================================================================
+     1. Brand & Core Color Tokens
+     ========================================================================== */
+  --bw-color-primary: #000000;
+  --bw-color-primary-rgb: 42, 38, 35;
+  --bw-color-charcoal: #2a2623;
+  --bw-color-highlight: #fffc00; /* Official State Yellow */
+  --bw-color-highlight-contrast: #000000;
+  --bw-color-highlight-text: #2a2623;
+  --bw-color-call2action: #116a8d; /* Administrative Blue */
+  --bw-color-call2action-contrast: #47535c;
+  --bw-color-secondary: #ffffff;
+  --bw-color-secondary-contrast: #cbc6bd; /* rgb(203, 198, 189) */
+  --bw-color-surface: #ffffff;
+  --bw-color-surface-container: #f4f3f1;
+  --bw-color-surface-container-high: #e8e6e2;
+  --bw-color-border: #cbc6bd;
+  --bw-color-disabled: #eeeeee;
+  --bw-color-disabled-contrast: #000000;
+
+  /* Status Colors */
+  --bw-color-success: #00753a;
+  --bw-color-error: #bb232b;
+  --bw-color-warning: #165571;
+  --bw-color-banner: #af0060;
+
+  /* Backward-compatible aliasing with service-bw.de native vars */
+  --primary-color: var(--bw-color-primary);
+  --primary-color-rgb: var(--bw-color-primary-rgb);
+  --secondary-color: var(--bw-color-secondary);
+  --secondary-contrast-color-rgb: 203, 198, 189;
+  --text-color: var(--bw-color-charcoal);
+  --highlight-color: var(--bw-color-highlight);
+  --highlight-contrast-color: var(--bw-color-highlight-contrast);
+  --highlight-text-color: var(--bw-color-highlight-text);
+  --call2action-color: var(--bw-color-call2action);
+  --call2action-contrast-color: var(--bw-color-call2action-contrast);
+  --background-color: var(--bw-color-surface);
+  --content-background-color: var(--bw-color-surface-container);
+  --border-radius: 3px;
+  --border-radius-navigation: 3px;
+
+  /* ==========================================================================
+     2. Typography Tokens
+     ========================================================================== */
+  --bw-font-sans: "BaWueSans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --bw-font-serif: "BaWueSerif", Georgia, "Times New Roman", Times, serif;
+
+  --bw-typescale-display-size: 2.25rem; /* 36px */
+  --bw-typescale-display-line: 1.2;
+  --bw-typescale-display-weight: 400;
+
+  --bw-typescale-h1-font: var(--bw-font-serif);
+  --bw-typescale-h1-size: 2.25rem; /* 36px */
+  --bw-typescale-h1-line: 1.2;
+  --bw-typescale-h1-weight: 400;
+
+  --bw-typescale-h2-font: var(--bw-font-sans);
+  --bw-typescale-h2-size: 1.875rem; /* 30px */
+  --bw-typescale-h2-line: 1.2;
+  --bw-typescale-h2-weight: 400;
+
+  --bw-typescale-h3-font: var(--bw-font-sans);
+  --bw-typescale-h3-size: 1.625rem; /* 26px */
+  --bw-typescale-h3-line: 1.2;
+  --bw-typescale-h3-weight: 400;
+
+  --bw-typescale-h4-font: var(--bw-font-sans);
+  --bw-typescale-h4-size: 1.25rem; /* 20px */
+  --bw-typescale-h4-line: 1.4;
+  --bw-typescale-h4-weight: 400;
+
+  --bw-typescale-h5-font: var(--bw-font-sans);
+  --bw-typescale-h5-size: 1rem; /* 16px */
+  --bw-typescale-h5-line: 1.5;
+  --bw-typescale-h5-weight: 700;
+
+  --bw-typescale-body-size: 1rem; /* 16px */
+  --bw-typescale-body-line: 1.5;
+  --bw-typescale-body-weight: 400;
+
+  --bw-typescale-body-sm-size: 0.875rem; /* 14px */
+  --bw-typescale-body-sm-line: 1.4;
+
+  --bw-typescale-label-size: 0.875rem; /* 14px */
+  --bw-typescale-label-weight: 700;
+
+  /* ==========================================================================
+     3. Component Specific Geometries & Tokens
+     ========================================================================== */
+  --bw-button-height: 50px;
+  --bw-button-radius: 3px;
+  --bw-button-font: var(--bw-font-sans);
+  --bw-button-font-size: 14px;
+  --bw-button-font-weight: 700;
+
+  --bw-input-height: 50px;
+  --bw-input-radius: 3px;
+  --bw-input-border: 1px solid var(--bw-color-border);
+  --bw-input-padding: 10px 16px;
+
+  --bw-card-radius: 3px;
+  --bw-card-border: 1px solid var(--bw-color-border);
+  --bw-card-bg: var(--bw-color-surface-container);
+
+  --bw-badge-radius: 3px;
+  --bw-badge-border: 1px solid var(--bw-color-charcoal);
+  --bw-badge-padding: 4px 8px;
+  --bw-badge-font-size: 0.75rem;
+
+  --bw-header-yellow-height: 72px;
+  --bw-header-bund-height: 32px;
+  --bw-header-bund-bg: #f4f3f1;
+
+  --bw-fab-size: 64px;
+  --bw-fab-radius: 50%;
+  --bw-fab-bg: rgba(42, 38, 35, 0.75);
+
+  /* Accessibility focus ring: high contrast double outline */
+  --bw-focus-ring: 3px solid #fffc00;
+  --bw-focus-outline: 2px solid #2a2623;
+}
+
+/* ==========================================================================
+   4. Extracted Sub-page Component Classes
+   ========================================================================== */
+
+/* Tree Navigation / Inhaltsverzeichnis (Sticky TOC on Service Detail pages) */
+.bw-tree-nav {
+  position: sticky;
+  top: 24px;
+  width: 100%;
+  max-width: 280px;
+}
+
+.bw-tree-nav__title {
+  font-family: var(--bw-font-sans);
+  font-size: var(--bw-typescale-h5-size);
+  font-weight: var(--bw-typescale-h5-weight);
+  margin-bottom: 12px;
+  color: var(--bw-color-charcoal);
+}
+
+.bw-tree-nav__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0;
+  margin: 0;
+}
+
+.bw-tree-nav__item {
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: var(--bw-button-radius);
+  font-size: var(--bw-typescale-body-sm-size);
+  color: var(--bw-color-charcoal);
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: background-color 0.15s ease-in-out;
+}
+
+.bw-tree-nav__item:hover {
+  background-color: var(--bw-color-surface-container);
+}
+
+.bw-tree-nav__item--active {
+  background-color: var(--bw-color-highlight);
+  border: 1px solid var(--bw-color-border);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Administrative Process / Procedure Button */
+.bw-process-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: var(--bw-button-height);
+  padding: 10px 20px;
+  background-color: var(--bw-color-call2action);
+  color: var(--bw-color-surface);
+  border: 2px solid var(--bw-color-call2action);
+  border-radius: var(--bw-button-radius);
+  font-family: var(--bw-font-sans);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.bw-process-button:hover {
+  background-color: var(--bw-color-call2action-contrast);
+  border-color: var(--bw-color-call2action-contrast);
+}
+
+.bw-process-button:focus-visible {
+  outline: var(--bw-focus-outline);
+  box-shadow: 0 0 0 3px var(--bw-color-highlight);
+}
+
+/* Zuständige Stelle (Competent Authority Contact Card) */
+.bw-authority-card {
+  border: 1px solid var(--bw-color-border);
+  border-radius: var(--bw-card-radius);
+  background-color: var(--bw-color-surface);
+  overflow: hidden;
+  margin-block: 24px;
+}
+
+.bw-authority-card__header {
+  background-color: var(--bw-color-surface-container);
+  padding: 16px 20px;
+  font-family: var(--bw-font-sans);
+  font-size: var(--bw-typescale-h5-size);
+  font-weight: 700;
+  color: var(--bw-color-charcoal);
+  border-bottom: 1px solid var(--bw-color-border);
+}
+
+.bw-authority-card__body {
+  padding: 20px;
+}
+
+.bw-authority-card__dl {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px 16px;
+  font-size: var(--bw-typescale-body-sm-size);
+  margin: 0;
+}
+
+.bw-authority-card__dt {
+  font-weight: 700;
+  color: var(--bw-color-call2action-contrast);
+}
+
+.bw-authority-card__dd {
+  margin: 0;
+  color: var(--bw-color-charcoal);
+}
+
+/* Taxonomy Category Cards Grid (/zufi/lebenslagen) */
+.bw-taxonomy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  margin-block: 32px;
+}
+
+.bw-taxonomy-card {
+  background-color: var(--bw-color-surface-container);
+  border: 1px solid var(--bw-color-border);
+  border-radius: var(--bw-card-radius);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.bw-taxonomy-card__title {
+  font-family: var(--bw-font-sans);
+  font-size: 1.125rem; /* 18px */
+  font-weight: 700;
+  color: var(--bw-color-charcoal);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--bw-color-border);
+}
+
+.bw-taxonomy-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bw-taxonomy-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--bw-typescale-body-sm-size);
+  color: var(--bw-color-charcoal);
+  text-decoration: none;
+}
+
+.bw-taxonomy-card__link:hover {
+  text-decoration: underline;
+}
+
+/* Citizen & Business Account Cards (/zufi/zum-servicekonto) */
+.bw-account-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-block: 32px;
+}
+
+.bw-account-card {
+  background-color: var(--bw-color-surface-container);
+  border: 1px solid var(--bw-color-border);
+  border-radius: var(--bw-card-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.bw-account-card__logo {
+  background-color: var(--bw-color-surface);
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--bw-color-border);
+  padding: 16px;
+}
+
+.bw-account-card__body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.bw-account-card__title {
+  font-family: var(--bw-font-sans);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--bw-color-charcoal);
+  margin-bottom: 8px;
+}
+
+.bw-account-card__desc {
+  font-size: var(--bw-typescale-body-sm-size);
+  color: var(--bw-color-charcoal);
+  line-height: 1.5;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+/* Breadcrumbs Navigation */
+.bw-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: var(--bw-typescale-body-sm-size);
+  color: var(--bw-color-call2action-contrast);
+  margin-block: 16px 24px;
+}
+
+.bw-breadcrumb a {
+  color: var(--bw-color-charcoal);
+  text-decoration: none;
+}
+
+.bw-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.bw-breadcrumb__separator {
+  color: var(--bw-color-border);
+  user-select: none;
+}
+

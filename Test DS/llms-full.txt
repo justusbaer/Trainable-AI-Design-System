@@ -1,190 +1,162 @@
-# Porsche Design System: Complete Machine Reference & Prompt Bundle (Version 4.5.0 / Trainable DS v1.7.0)
+# Trainable DS: Complete Machine Reference & Prompt Bundle (Version 1.7.0)
 
-> This document is the full, exhaustive reference for the Porsche Design System extracted live from porsche.de. You can inject this entire file into any AI agent system prompt to achieve 100% compliant Porsche UI generation.
+> This document is the full, exhaustive reference for Trainable DS. You can inject this entire file into any AI agent system prompt to achieve 100% compliant Material Design 3 generation.
 
----
+## 0. Autonomous Website Extraction Protocol (Zero Process Knowledge)
 
-## 1. System Foundations & Visual Philosophy
+When prompted by the user:
+> *"Use Trainable Design System to extract the design system from <website url>"*
 
-### 1.1 Porsche Semantic Color Taxonomy (Dual Scheme via light-dark())
+The AI Agent autonomously executes the following procedure:
 
-#### Canvas & Surface
-- `--p-color-canvas`: Base page background.
-  - Light Mode: `#ffffff`
-  - Dark Mode: `#010205`
-- `--p-color-surface`: Secondary container background.
-  - Light Mode: `#f1f1f4`
-  - Dark Mode: `#19191a`
+1. **Invoke the Multi-Page Pipeline:**
+   ```bash
+   npx -y @trainable-ds/cli train --url "<website url>" --max-loops 3 --threshold 95
+   ```
+   *(Or over MCP: `harvest_design_system_site({ url: "<website url>", max_loops: 3, threshold: 95 })`)*
 
-#### Primary Brand Action
-- `--p-color-primary`: High-emphasis actions, active states, and titles.
-  - Light Mode: `#010205` (Tone 10)
-  - Dark Mode: `#fafbff` (Tone 98)
-- `--p-color-on-primary`: Text and iconography placed atop primary background.
-  - Light Mode: `#ffffff`
-  - Dark Mode: `#010205`
+2. **Automated Pipeline Execution:**
+   - **Archetype Sitemap Crawling:** Discovers internal links and classifies subpages into UX archetypes (`home`, `listing`, `detail`, `form`, `content`).
+   - **Deep Asset Harvesting:** Extracts `@font-face` CDN `.woff2` font declarations into `fonts.json` and pierces Web Component Shadow DOMs (e.g. `<p-icon>`, `<p-button>`) to extract raw SVG vectors into `icons.json`.
+   - **Visual Drift & Convergence Loops:** Analyzes runtime computed styles (geometry, OKLab color ΔE, typography, materials) and runs refinement loops until cross-page compliance meets or exceeds 95%.
+   - **Emits 6-Asset Bundle:** `tokens.json`, `components.json`, `fonts.json`, `icons.json`, `DESIGN.md`, and `overview.html`.
 
-#### Frosted Glass Material System (Elevation without Heavy Shadows)
-- `--p-color-frosted-soft`:
-  - Light Mode: `rgba(143, 145, 163, 0.06)`
-  - Dark Mode: `rgba(65, 65, 70, 0.154)`
-- `--p-color-frosted`:
-  - Light Mode: `hsla(240, 5%, 70%, 0.148)`
-  - Dark Mode: `hsla(240, 2%, 43%, 0.228)`
-- `--p-color-frosted-strong`:
-  - Light Mode: `rgba(100, 101, 114, 0.236)`
-  - Dark Mode: `rgba(156, 156, 159, 0.302)`
-- Backdrop Filter Blur: `blur(32px)` applied concurrently with frosted fills.
-- Scrim Backdrop: `--p-color-backdrop`: `rgba(36, 36, 40, 0.5)`
-
-#### Contrast Hierarchy (Readable Content Layers)
-- `--p-color-contrast-higher`:
-  - Light: `rgba(21, 21, 25, 0.8)` | Dark: `rgba(246, 246, 248, 0.78)`
-- `--p-color-contrast-high`:
-  - Light: `rgba(26, 26, 30, 0.7)` | Dark: `rgba(246, 246, 248, 0.67)`
-- `--p-color-contrast-medium`:
-  - Light: `rgba(17, 17, 19, 0.6)` | Dark: `rgba(246, 246, 248, 0.56)`
-- `--p-color-contrast-low`:
-  - Light: `rgba(36, 36, 40, 0.5)` | Dark: `rgba(246, 246, 248, 0.45)`
-- `--p-color-contrast-lower`:
-  - Light: `rgba(79, 80, 89, 0.324)` | Dark: `rgba(156, 156, 159, 0.302)`
-
-#### Semantic Feedback Roles
-- `--p-color-focus`: `#1a44ea` (2px solid outline with 2px offset)
-- `--p-color-info`: Light `#1a44ea` / Dark `#178bff`
-- `--p-color-success`: Light `#197e10` / Dark `#10c47f`
-- `--p-color-warning`: Light `#ac5102` / Dark `#f4882a`
-- `--p-color-error`: Light `#ba171f` / Dark `#fc4040`
+3. **Launch Human Reviewer Portal:**
+   ```bash
+   npx -y @trainable-ds/cli serve --port 5000
+   ```
+   Provides `http://localhost:5000/overview.html` for interactive human inspection and live overrides with disk locking (`tds:locked: true`).
 
 ---
 
-### 1.2 Fluid Responsive Typography Scale
+## 1. System Foundations (Material Design 3 Depth)
 
-Font Family: `"Porsche Next", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", "Arial Narrow", Arial, sans-serif`
-Line Height: `calc(6px + 2.125ex)`
+### 1.1 M3 Semantic Color Taxonomy (Dual Scheme)
+Material Design 3 defines 36+ semantic color roles. Colors are divided into Light and Dark schemes derived mathematically from HCT (Hue, Chroma, Tone) tonal palettes:
 
-| Scale Tier | Mathematical Expression | Weight | Purpose |
-| :--- | :--- | :--- | :--- |
-| `5xl` | `clamp(2.28rem, 5.2vw + 1.24rem, 7.48rem)` | 700 Bold | Massive showcase stage splash |
-| `4xl` | `clamp(2.03rem, 3.58vw + 1.31rem, 5.61rem)` | 700 Bold | Hero display title |
-| `3xl` | `clamp(1.8rem, 2.41vw + 1.32rem, 4.21rem)` | 600 Semibold | Screen primary headline |
-| `2xl` | `clamp(1.6rem, 1.56vw + 1.29rem, 3.16rem)` | 600 Semibold | Section title |
-| `xl`  | `clamp(1.42rem, 0.94vw + 1.23rem, 2.37rem)` | 600 Semibold | Subsection title |
-| `lg`  | `clamp(1.27rem, 0.51vw + 1.16rem, 1.78rem)` | 600 Semibold | Component / card title |
-| `md`  | `clamp(1.13rem, 0.21vw + 1.08rem, 1.33rem)` | 600 Semibold | Subheadings & lead copy |
-| `sm`  | `1rem` (16px) | 400 Regular | Default body copy |
-| `xs`  | `0.875rem` (14px) | 400 Regular | Supporting copy, form labels |
-| `2xs` | `0.75rem` (12px) | 400 Regular | Legal notices, consumption data |
+#### Primary Accent Family
+- `sys.color.primary`: Key brand color for high-emphasis elements (Filled buttons, active states). Light: Tone 40. Dark: Tone 80.
+- `sys.color.on-primary`: Text & icons on top of `primary`. Light: Tone 100 (#ffffff). Dark: Tone 20.
+- `sys.color.primary-container`: Low-emphasis container fill. Light: Tone 90. Dark: Tone 30.
+- `sys.color.on-primary-container`: Text & icons on top of `primary-container`. Light: Tone 10. Dark: Tone 90.
 
-*Rule:* All button labels, headings, and navigational links MUST use sentence case (`Book appointment`, not `Book Appointment`).
+#### Secondary Accent Family
+- `sys.color.secondary`: Less prominent components (Filter chips, secondary actions). Light: Tone 40. Dark: Tone 80.
+- `sys.color.on-secondary`: Text & icons on `secondary`. Light: Tone 100. Dark: Tone 20.
+- `sys.color.secondary-container`: Tonal containers. Light: Tone 90. Dark: Tone 30.
+- `sys.color.on-secondary-container`: Text & icons on `secondary-container`. Light: Tone 10. Dark: Tone 90.
 
----
+#### Tertiary Accent Family
+- `sys.color.tertiary`: Contrasting accents, balance, input highlights. Light: Tone 40. Dark: Tone 80.
+- `sys.color.on-tertiary`: Text & icons on `tertiary`. Light: Tone 100. Dark: Tone 20.
+- `sys.color.tertiary-container`: Tonal highlight container. Light: Tone 90. Dark: Tone 30.
+- `sys.color.on-tertiary-container`: Text on tertiary container. Light: Tone 10. Dark: Tone 90.
 
-### 1.3 Spacing & Layout Rhythm
+#### Error Family
+- `sys.color.error`: Attention, destructive actions, form validation failure (#ba1a1a in light, #ffb4ab in dark).
+- `sys.color.on-error`: Text on error (#ffffff in light, #690005 in dark).
+- `sys.color.error-container`: Error banner fill (#ffdad6 in light, #93000a in dark).
+- `sys.color.on-error-container`: Text on error container (#410002 in light, #ffdad6 in dark).
 
-#### Static Spacing
-- `2xs`: 1px
-- `xs`: 4px
-- `sm`: 8px
-- `md`: 16px
-- `lg`: 32px
-- `xl`: 48px
-- `2xl`: 80px
+#### Surface Container Hierarchy (5-Level Depth)
+Instead of shadows, M3 uses tonal surface elevation:
+- `sys.color.surface`: Base canvas background.
+- `sys.color.on-surface`: Primary copy on surfaces.
+- `sys.color.surface-variant`: Secondary surfaces.
+- `sys.color.on-surface-variant`: Secondary / supporting text and icons.
+- `sys.color.surface-container-lowest`: Lowest level container (e.g. Card on elevated panel).
+- `sys.color.surface-container-low`: Low emphasis card container.
+- `sys.color.surface-container`: Standard default card container.
+- `sys.color.surface-container-high`: Elevated card, drawer, or dropdown.
+- `sys.color.surface-container-highest`: Modal dialog, top app bar on scroll.
 
-#### Fluid Spacing
-- `fluid-xs`: `clamp(4px, 0.25vw + 3px, 8px)`
-- `fluid-sm`: `clamp(8px, 0.5vw + 6px, 16px)`
-- `fluid-md`: `clamp(16px, 1.25vw + 12px, 36px)`
-- `fluid-lg`: `clamp(32px, 2.75vw + 23px, 76px)`
-- `fluid-xl`: `clamp(48px, 3vw + 38px, 96px)`
-- `fluid-2xl`: `clamp(80px, 7.5vw + 56px, 200px)`
+#### Fixed Accent Roles (Theme-Invariant)
+These tokens preserve their visual tone regardless of light or dark theme:
+- `sys.color.primary-fixed`, `sys.color.primary-fixed-dim`, `sys.color.on-primary-fixed`, `sys.color.on-primary-fixed-variant`.
+- `sys.color.secondary-fixed`, `sys.color.secondary-fixed-dim`, `sys.color.on-secondary-fixed`.
+- `sys.color.tertiary-fixed`, `sys.color.tertiary-fixed-dim`, `sys.color.on-tertiary-fixed`.
 
-#### Border Radii
-- `xs`: 2px
-- `sm`: 4px
-- `md`: 6px
-- `lg`: 8px
-- `xl`: 12px (Standard card & button radius)
-- `2xl`: 16px
-- `3xl`: 24px
-- `4xl`: 32px
-- `full`: 9999px (Pill buttons & round badges)
-
-#### Elevation Shadows & Motion
-- Shadows:
-  - `sm`: `0px 3px 8px rgba(0, 0, 0, 0.16)`
-  - `md`: `0px 4px 16px rgba(0, 0, 0, 0.16)`
-  - `lg`: `0px 8px 40px rgba(0, 0, 0, 0.16)`
-- Motion Durations:
-  - `duration-sm`: 0.25s
-  - `duration-md`: 0.4s
-  - `duration-lg`: 0.6s
-  - `duration-xl`: 1.2s
-- Easing:
-  - `base`: `cubic-bezier(0.25, 0.1, 0.25, 1)`
-  - `in`: `cubic-bezier(0, 0, 0.2, 1)`
-  - `out`: `cubic-bezier(0.4, 0, 0.5, 1)`
+#### Boundaries & Overlays
+- `sys.color.outline`: 3:1 accessible boundary lines for inputs and outlined buttons (#72777f).
+- `sys.color.outline-variant`: Low-contrast dividers and card borders (#c2c7cf).
+- `sys.color.shadow`: Pure black elevation drop shadow.
+- `sys.color.scrim`: Modal backdrop dimming layer.
+- `sys.color.surface-tint`: Primary color overlay applied to elevated surfaces.
 
 ---
 
-## 2. Certified Component Contracts (Across 7 Functional Families)
+### 1.2 15-Tier Typography Scale
+Font Family: `Inter, Roboto, sans-serif`
 
-### 1. Actions Family
-- `<p-button variant="primary | secondary" compact="true | false" loading="true | false" icon="...">`:
-  - Container: min 48x48px touch target.
-  - Primary: `bg: var(--p-color-primary)`, `color: #fff`.
-  - Secondary: `bg: var(--p-color-frosted-strong)`, `color: var(--p-color-primary)`.
-  - Example: `<p-button variant="primary">Configure your 911</p-button>`
-- `<p-button-pure icon="..." underline="true | false">`:
-  - Text-only button with animated underline.
-  - Example: `<p-button-pure icon="arrow-right">Technical details</p-button-pure>`
+| Scale Tier | Font Size | Line Height | Weight | Letter Spacing (Tracking) | Usage |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `displayLarge` | 57px | 64px | 400 | -0.25px | Hero splash headings |
+| `displayMedium` | 45px | 52px | 400 | 0px | Splash section titles |
+| `displaySmall` | 36px | 44px | 400 | 0px | Prominent banner titles |
+| `headlineLarge` | 32px | 40px | 400 | 0px | Screen primary headings |
+| `headlineMedium`| 28px | 36px | 400 | 0px | Section headers |
+| `headlineSmall` | 24px | 32px | 400 | 0px | Subsection headers |
+| `titleLarge` | 22px | 28px | 500 | 0px | Top app bar titles, modal titles |
+| `titleMedium` | 16px | 24px | 500 | +0.15px | Card headers, table headings |
+| `titleSmall` | 14px | 20px | 500 | +0.10px | List item titles |
+| `bodyLarge` | 16px | 24px | 400 | +0.50px | Main long-form body text |
+| `bodyMedium` | 14px | 20px | 400 | +0.25px | Standard interface copy, cards |
+| `bodySmall` | 12px | 16px | 400 | +0.40px | Secondary captions, timestamps |
+| `labelLarge` | 14px | 20px | 500 | +0.10px | Buttons, chips, tabs, form labels |
+| `labelMedium` | 12px | 16px | 500 | +0.50px | Small badges, sub-labels |
+| `labelSmall` | 11px | 16px | 500 | +0.50px | Micro indicators |
 
-### 2. Navigation Family
-- `<p-link href="..." variant="primary | secondary">`: High-contrast route link.
-- `<p-link-pure href="..." icon="arrow-right">`: Inline content navigation.
-- `<p-link-tile href="..." label="..." description="..." aspect-ratio="16:9">`:
-  - Visual hero card with image slot and frosted overlay.
-  - Example:
-    ```html
-    <p-link-tile href="/models/cayenne" label="Cayenne Electric" description="Electrifying versatility">
-      <img src="/cayenne.jpg" alt="Porsche Cayenne" />
-    </p-link-tile>
-    ```
-- `<p-tabs active-tab-index="0">`: Accessible tabs container.
-- `<p-pagination total-items-count="120" items-per-page="12" active-page="1">`: Paging control.
+*Note: All text labels MUST use sentence case (`Save changes`, `View details`).*
 
-### 3. Typography Family
-- `<p-display tag="h1 | h2" size="small | medium | large">`: Stage hero headlines.
-- `<p-heading tag="h2 | h3" size="small | medium | large | xl | 2xl" weight="semibold">`: Section headers.
-- `<p-text tag="p | span" size="xx-small | x-small | small | medium" color="contrast-high">`: Body copy.
+---
 
-### 4. Text Inputs Family
-- `<p-input-search label="..." placeholder="..." clear="true">`: Search with clear trigger.
-- `<p-text-field label="..." placeholder="..." state="none | error" message="...">`: Form text input.
-- `<p-textarea label="..." counter="true" max-length="500">`: Multiline text input.
-- `<p-select label="...">`: Dropdown menu.
-- `<p-multi-select label="...">`: Multi-select dropdown.
-- `<p-pin-code length="6" label="...">`: Numeric verification inputs.
+### 1.3 State Layers & Elevation
+- **Hover State:** 8% (`0.08`) opacity overlay of `on-*` color.
+- **Focus State:** 10% (`0.10`) opacity overlay + 3px outline ring with 2px offset.
+- **Pressed State:** 10% (`0.10`) opacity overlay + expanding ripple.
+- **Dragged State:** 16% (`0.16`) opacity overlay + elevation increase.
+- **Disabled State:** 38% (`0.38`) opacity for text/icons, 12% (`0.12`) opacity for container fills.
 
-### 5. Selection Family
-- `<p-checkbox label="..." checked="true | false">`: 48px touch target checkbox.
-- `<p-radio-button name="..." value="..." label="...">`: Radio selection.
-- `<p-switch label="..." checked="true | false">`: Binary preference toggle.
-- `<p-segmented-control value="...">`: Pill segment control.
+#### Elevation Surface Tinting
+- Level 0 (0dp): 0% tint, no shadow
+- Level 1 (1dp): 5% surface tint, light ambient shadow
+- Level 2 (3dp): 8% surface tint, card hover shadow
+- Level 3 (6dp): 11% surface tint, menu / drawer shadow
+- Level 4 (8dp): 12% surface tint, floating toolbar shadow
+- Level 5 (12dp): 14% surface tint, dialog / modal shadow
 
-### 6. Communication & Overlays Family
-- `<p-modal open="true | false" dismiss-button="true">`: Frosted dialog modal.
-- `<p-flyout open="true | false" position="end">`: Side panel drawer.
-- `<p-banner state="info | warning | error" heading="..." description="...">`: Top alert banner.
-- `<p-inline-notification state="info | success | warning | error">`: In-context message banner.
-- `<p-spinner size="small | medium | large">`: Circular progress spinner.
-- `<p-tag color="primary">`: Fuel type, feature tag, or model status pill.
-- `<p-tag-dismissible label="...">`: Interactive removable filter chip.
+---
 
-### 7. Brand Heritage Family
-- `<p-crest href="/">`: Official coat of arms emblem.
-- `<p-wordmark size="small | medium | large" href="/">`: Official PORSCHE typography.
-- `<p-model-signature model="911 | taycan | cayenne | panamera | macan | 718">`: Authentic model badge.
+## 2. Component Contracts Across 6 M3 Families
+
+### 1. Actions (`Button`, `IconButton`, `FAB`, `SegmentedButton`)
+- **Minimum Touch Target:** $\ge 48\times 48\text{px}$ (e.g. `min-h-[48px] min-w-[48px]` or `h-12`).
+- **Variants:**
+  - `filled`: `bg-primary text-on-primary`
+  - `tonal`: `bg-secondary-container text-on-secondary-container`
+  - `outlined`: `border border-outline text-primary`
+  - `text`: `text-primary hover:bg-surface-container-low`
+  - `elevated`: `bg-surface-container-low text-primary shadow-sm`
+
+### 2. Communication (`Badge`, `ProgressIndicator`, `Snackbar`, `Tooltip`)
+- **Snackbar:** Positioned bottom-center, surface-container-highest, includes $\ge 48\text{px}$ dismiss button.
+- **Badge:** Small (6px dot) or Large (16px pill with label-small).
+
+### 3. Containment (`Card`, `Dialog`, `BottomSheet`, `Divider`)
+- **Card:** `rounded-2xl p-6 bg-surface-container-low text-on-surface border border-outline-variant/30`.
+- **Dialog:** `rounded-3xl p-6 bg-surface-container-high text-on-surface shadow-lg max-w-md`.
+
+### 4. Navigation (`NavigationBar`, `NavigationDrawer`, `NavigationRail`, `Tabs`)
+- **NavigationBar:** 80px container height, 3–5 items, active pill `bg-secondary-container text-on-secondary-container`.
+- **Tabs:** 48px height, 2px bottom active indicator `bg-primary`.
+
+### 5. Selection (`Checkbox`, `RadioButton`, `Switch`, `Chip`)
+- **Touch Target:** $48\times 48\text{px}$ bounding box even if visual indicator is smaller.
+- **Chip:** `h-8 px-4 rounded-lg border border-outline text-on-surface`.
+
+### 6. Text Inputs (`TextField`, `SearchBar`)
+- **TextField:** 56px height, floating label, active indicator `border-primary`.
+- **SearchBar:** 56px height, `rounded-full bg-surface-container-high px-4`.
 
 ---
 
@@ -192,26 +164,29 @@ Line Height: `calc(6px + 2.125ex)`
 
 | Rule ID | Severity | Constraint Description |
 | :--- | :--- | :--- |
-| `TDS-RAW-COLOR` | CRITICAL | No raw hex codes (`#010205`), rgb, or hsl strings in styles. Use `var(--p-color-*)`. |
-| `TDS-NON-QUANTUM-SPACING` | HIGH | No arbitrary pixel spacing (e.g. `13px`). Use 4px/8px quantum tokens or fluid clamps. |
-| `TDS-REINVENTED-COMPONENT` | HIGH | Do not reinvent raw `<button>`, `<input>`, or `<a>`. Import certified `<p-*>` components. |
-| `TDS-TOUCH-TARGET-TOO-SMALL` | HIGH | Interactive elements must maintain $\ge 48\times 48\text{px}$ touch targets. |
-| `TDS-CAPITALIZATION-NOT-SENTENCE-CASE` | MEDIUM | All button labels, titles, and headers must use sentence case (`Explore all models`). |
-| `TDS-CONTRAST-PAIRING` | HIGH | Container background tokens must pair with their corresponding high-contrast foreground color. |
-| `TDS-OFFICIAL-BRAND-ASSETS` | HIGH | Never reconstruct Porsche logos or model names as plain text; use `<p-wordmark>` and `<p-model-signature>`. |
+| `TDS-RAW-COLOR` | CRITICAL | No raw hex (`#1e293b`), rgb, or hsl colors in style or class names. |
+| `TDS-NON-QUANTUM-SPACING` | HIGH | No arbitrary pixel spacing (e.g. `p-[13px]`). Multiples of 4px/8px only (`p-2`, `p-4`, `p-6`). |
+| `TDS-REINVENTED-COMPONENT` | HIGH | Do not reinvent raw `<button>` or `<input>`. Import certified components (`<Button>`, `<Card>`). |
+| `TDS-M3-ON-COLOR-MISMATCH` | HIGH | Container tokens must pair with their corresponding `on-*` color (`primary` $\to$ `on-primary`). |
+| `TDS-TOUCH-TARGET-TOO-SMALL`| HIGH | Interactive elements must be $\ge 48\times 48\text{px}$ (`min-h-[48px]`, `w-12 h-12`). |
+| `TDS-RTL-NON-LOGICAL` | MEDIUM | Use logical CSS classes (`ps-*`, `pe-*`, `ms-*`, `me-*`) instead of `pl`, `pr`, `ml`, `mr`. |
+| `TDS-CAPITALIZATION-NOT-SENTENCE-CASE` | MEDIUM | All labels, titles, and buttons must use sentence case (`Save changes`, not `Save Changes`). |
 
 ---
 
-## 4. Prompt Injection Template for AI Agents
-When instructing an agent to build screens for Porsche:
-
-```markdown
-You are generating Porsche web user interfaces.
-Strictly adhere to the Porsche Design System (PDS v4.5.0) and Trainable DS v1.7.0 rules:
-- Reference tokens from `porsche-tokens.css` and `tokens.json`.
-- Only use certified `<p-*>` custom elements from `components.json`.
-- Enforce sentence case for all labels and CTAs.
-- Maintain >= 48px touch targets for all interactive elements.
-- Use frosted glass overlays (`blur(32px)` + `--p-color-frosted-*`) for containers.
-- Model badges must use `<p-model-signature model="...">`.
+## 4. Closed-Loop Validation API
+Run automated audits against candidate code:
+```bash
+curl -s -X POST https://your-ds.web.app/api/v1/evaluate \
+  -H "Content-Type: application/json" \
+  -d '{"code":"<candidate TSX code here>"}'
+```
+Response:
+```json
+{
+  "certified": true,
+  "score": 100,
+  "diagnostics": [],
+  "summary": "CERTIFIED COMPLIANT: Code meets all Material Design 3 and Trainable DS constraints."
+}
 ```

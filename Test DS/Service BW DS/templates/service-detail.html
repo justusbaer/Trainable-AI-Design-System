@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elterngeld beantragen — Serviceportal Baden-Württemberg</title>
+  <link rel="stylesheet" href="../service-bw.css">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--bw-font-sans);
+      background-color: var(--bw-color-surface);
+      color: var(--bw-color-charcoal);
+      line-height: 1.5;
+    }
+
+    .bund-bar {
+      height: 32px;
+      background-color: var(--bw-header-bund-bg);
+      border-bottom: 1px solid var(--bw-color-border);
+      display: flex;
+      align-items: center;
+      padding-inline: 32px;
+      font-size: 13px;
+    }
+
+    .header-yellow {
+      background-color: var(--bw-color-highlight);
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 32px;
+      padding-block: 12px;
+      gap: 20px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--bw-color-charcoal);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-tools {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-konto {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding-inline: 16px;
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      border-radius: var(--bw-button-radius);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .btn-konto:hover {
+      background-color: var(--bw-color-call2action-contrast);
+    }
+
+    .tool-icon {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bw-button-radius);
+      color: var(--bw-color-charcoal);
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .tool-icon:hover {
+      background-color: var(--bw-color-surface-container);
+    }
+
+    /* Dual Search Bar Container */
+    .search-section {
+      background-color: var(--bw-color-surface);
+      padding-block: 24px;
+      border-bottom: 1px solid var(--bw-color-surface-container-high);
+    }
+
+    .search-wrapper {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding-inline: 32px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-field-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 260px;
+      gap: 4px;
+    }
+
+    .search-field-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+    }
+
+    .search-input-box {
+      height: var(--bw-input-height);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-input-radius);
+      padding-inline: 16px;
+      font-family: var(--bw-font-sans);
+      font-size: 15px;
+      color: var(--bw-color-charcoal);
+      background-color: var(--bw-color-surface);
+      width: 100%;
+    }
+
+    .search-input-box:focus {
+      outline: var(--bw-focus-outline);
+      box-shadow: 0 0 0 3px var(--bw-color-highlight);
+    }
+
+    .search-submit-btn {
+      align-self: flex-end;
+      height: var(--bw-button-height);
+      padding-inline: 24px;
+      background-color: var(--bw-color-surface-container);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-button-radius);
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+    }
+
+    .search-submit-btn:hover {
+      background-color: var(--bw-color-surface-container-high);
+    }
+
+    /* Main Container */
+    .page-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding-inline: 32px;
+      padding-bottom: 80px;
+    }
+
+    /* 2-Column Procedure Layout */
+    .procedure-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 48px;
+      align-items: start;
+      margin-top: 32px;
+    }
+
+    @media (max-width: 960px) {
+      .procedure-layout {
+        grid-template-columns: 1fr;
+      }
+      .bw-tree-nav {
+        position: static;
+        max-width: 100%;
+      }
+    }
+
+    .service-headline {
+      font-family: var(--bw-font-serif);
+      font-size: 2.25rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--bw-color-charcoal);
+      margin-bottom: 16px;
+    }
+
+    .service-lead {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--bw-color-charcoal);
+      margin-bottom: 28px;
+    }
+
+    .action-panel-box {
+      background-color: var(--bw-color-surface-container);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-card-radius);
+      padding: 24px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .content-section {
+      margin-bottom: 40px;
+    }
+
+    .section-title {
+      font-family: var(--bw-font-sans);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--bw-color-surface-container-high);
+    }
+
+    .bullet-list {
+      padding-left: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-block: 16px;
+    }
+
+    .doc-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--bw-color-charcoal);
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    .doc-link:hover {
+      color: var(--bw-color-call2action);
+    }
+
+    /* Back To Top FAB */
+    .bw-fab {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(42, 38, 35, 0.2);
+    }
+
+    .bw-fab:hover {
+      background-color: var(--bw-color-call2action-contrast);
+    }
+
+    /* Footer */
+    .portal-footer {
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      padding: 48px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--bw-color-surface);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Official German Federal Banner -->
+  <div class="bund-bar">
+    <span>Offizielle Website – Bundesrepublik Deutschland</span>
+  </div>
+
+  <!-- State Yellow Header -->
+  <header class="header-yellow">
+    <a href="./portal-home.html" class="brand-title">
+      <svg width="40" height="40" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <rect width="100" height="100" rx="6" fill="var(--bw-color-highlight)"/>
+        <path d="M22 26h56v8H22zM22 46h56v8H22zM22 66h56v8H22z" fill="var(--bw-color-charcoal)"/>
+      </svg>
+      <span>Serviceportal Baden-Württemberg</span>
+    </a>
+
+    <div class="header-tools">
+      <a href="./servicekonto.html" class="btn-konto">Zum Servicekonto</a>
+      <a href="#" class="tool-icon" title="Kontrastmodus umschalten" aria-label="Kontrast">◐</a>
+      <a href="#" class="tool-icon" title="Leichte Sprache" aria-label="Leichte Sprache">📖</a>
+      <a href="#" class="tool-icon" title="Gebärdensprache" aria-label="Gebärdensprache">👐</a>
+      <a href="#" class="tool-icon" title="Sprache wählen" aria-label="Sprache">🌐</a>
+    </div>
+  </header>
+
+  <!-- Dual Search Section -->
+  <section class="search-section">
+    <div class="search-wrapper">
+      <div class="search-field-group">
+        <label for="search-topic" class="search-field-label">Suche</label>
+        <input id="search-topic" type="text" class="search-input-box" placeholder="Infos, Behörden und mehr finden" value="Elterngeld">
+      </div>
+      <div class="search-field-group">
+        <label for="search-location" class="search-field-label">Ort</label>
+        <input id="search-location" type="text" class="search-input-box" placeholder="Ort angeben (optional)">
+      </div>
+      <button type="button" class="search-submit-btn">
+        <span>🔍</span>
+        <span>Suchen</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Page Main Content -->
+  <main class="page-container">
+
+    <!-- Breadcrumb Path -->
+    <nav class="bw-breadcrumb" aria-label="Breadcrumbs">
+      <a href="./portal-home.html">Startseite</a>
+      <span class="bw-breadcrumb__separator">→</span>
+      <a href="./lebenslagen.html">Familie und Kinder</a>
+      <span class="bw-breadcrumb__separator">→</span>
+      <span style="font-weight:700;">Elterngeld beantragen</span>
+    </nav>
+
+    <!-- 2-Column Procedure Layout -->
+    <div class="procedure-layout">
+
+      <!-- Sticky Inhaltsverzeichnis (Tree Navigation) -->
+      <aside aria-label="Inhaltsverzeichnis">
+        <nav class="bw-tree-nav">
+          <h2 class="bw-tree-nav__title">Inhaltsverzeichnis</h2>
+          <ul class="bw-tree-nav__list">
+            <li><a href="#verfahrensablauf" class="bw-tree-nav__item bw-tree-nav__item--active">Verfahrensablauf</a></li>
+            <li><a href="#onlineantrag" class="bw-tree-nav__item">Onlineantrag</a></li>
+            <li><a href="#formulare" class="bw-tree-nav__item">Formulare & Angebote</a></li>
+            <li><a href="#zustaendige-stelle" class="bw-tree-nav__item">Zuständige Stelle</a></li>
+            <li><a href="#voraussetzungen" class="bw-tree-nav__item">Voraussetzungen</a></li>
+            <li><a href="#unterlagen" class="bw-tree-nav__item">Erforderliche Unterlagen</a></li>
+            <li><a href="#kosten" class="bw-tree-nav__item">Kosten</a></li>
+            <li><a href="#fristen" class="bw-tree-nav__item">Fristen</a></li>
+            <li><a href="#rechtsgrundlagen" class="bw-tree-nav__item">Rechtsgrundlage</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Column Content -->
+      <div>
+        <div style="margin-bottom: 20px;">
+          <span style="display:inline-block; padding:4px 8px; border-radius:var(--bw-badge-radius); border:1px solid var(--bw-color-call2action); color:var(--bw-color-call2action); font-size:12px; font-weight:700;">Leistung</span>
+        </div>
+
+        <h1 class="service-headline">Elterngeld beantragen</h1>
+
+        <p class="service-lead">
+          Elterngeld ist eine finanzielle Unterstützung für Eltern, die ihr Kind nach der Geburt selbst betreuen und erziehen und deshalb nicht oder nicht voll erwerbstätig sind.
+        </p>
+
+        <!-- Procedure Action Box -->
+        <section id="onlineantrag" class="action-panel-box">
+          <h2 style="font-size:18px; font-weight:700; color:var(--bw-color-charcoal);">Onlineantrag</h2>
+          <p style="font-size:14px; color:var(--bw-color-charcoal); line-height:1.5;">
+            Sie können den Antrag auf Elterngeld online über das Serviceportal Baden-Württemberg stellen. Nachweise können direkt digital übermittelt werden.
+          </p>
+          <a href="#" class="bw-process-button">
+            <span>Antrag auf Elterngeld für Geburten/Adoptionen ab 01.09.2021</span>
+            <span>↗</span>
+          </a>
+        </section>
+
+        <!-- Zuständige Stelle Card -->
+        <section id="zustaendige-stelle" class="bw-authority-card">
+          <div class="bw-authority-card__header">
+            Zuständige Stelle: L-Bank (Landeskreditbank Baden-Württemberg – Förderbank)
+          </div>
+          <div class="bw-authority-card__body">
+            <dl class="bw-authority-card__dl">
+              <dt class="bw-authority-card__dt">Hausanschrift</dt>
+              <dd class="bw-authority-card__dd">Schlossplatz 10, 76113 Karlsruhe</dd>
+              <dt class="bw-authority-card__dt">Telefon</dt>
+              <dd class="bw-authority-card__dd">0800 6642 422 (gebührenfrei)</dd>
+              <dt class="bw-authority-card__dt">E-Mail</dt>
+              <dd class="bw-authority-card__dd">familienfoerderung@l-bank.de</dd>
+              <dt class="bw-authority-card__dt">Sprechzeiten</dt>
+              <dd class="bw-authority-card__dd">Mo – Fr 08:30 – 16:30 Uhr</dd>
+            </dl>
+            <div style="margin-top: 16px;">
+              <a href="#" class="doc-link">→ Zur zuständigen Stelle</a>
+            </div>
+          </div>
+        </section>
+
+        <!-- Voraussetzungen -->
+        <section id="voraussetzungen" class="content-section">
+          <h2 class="section-title">Voraussetzungen</h2>
+          <p style="font-size:15px; color:var(--bw-color-charcoal); line-height:1.6;">
+            Sie haben Anspruch auf Elterngeld, wenn Sie:
+          </p>
+          <ul class="bullet-list">
+            <li>Ihr neugeborenes Kind nach der Geburt selbst betreuen und erziehen</li>
+            <li>mit Ihrem Kind in einem gemeinsamen Haushalt in Deutschland leben</li>
+            <li>Ihren Wohnsitz oder gewöhnlichen Aufenthalt in Baden-Württemberg haben</li>
+            <li>nicht mehr als 32 Wochenstunden erwerbstätig sind</li>
+          </ul>
+        </section>
+
+        <!-- Verfahrensablauf -->
+        <section id="verfahrensablauf" class="content-section">
+          <h2 class="section-title">Verfahrensablauf</h2>
+          <p style="font-size:15px; color:var(--bw-color-charcoal); line-height:1.6;">
+            Den Antrag auf Elterngeld können Sie erst nach der Geburt des Kindes stellen. Die Beantragung erfolgt in der Regel online über dieses Portal oder schriftlich bei der L-Bank. Nach Eingang des Antrags und Prüfung sämtlicher Unterlagen erhalten Sie den schriftlichen Bewilligungsbescheid.
+          </p>
+        </section>
+
+        <!-- Erforderliche Unterlagen -->
+        <section id="unterlagen" class="content-section">
+          <h2 class="section-title">Erforderliche Unterlagen</h2>
+          <ul class="bullet-list">
+            <li>Geburtsurkunde des Kindes (mit dem Verwendungszweck „für Elterngeld“)</li>
+            <li>Einkommensnachweise der letzten 12 Kalendermonate vor dem Geburtsmonat</li>
+            <li>Bescheinigung der Krankenkasse über Mutterschaftsgeldzahlungen</li>
+            <li>Arbeitgeberbescheinigung über die Inanspruchnahme von Elternzeit</li>
+          </ul>
+        </section>
+
+        <!-- Kosten & Fristen -->
+        <section id="kosten" class="content-section">
+          <h2 class="section-title">Kosten & Fristen</h2>
+          <p style="font-size:15px; color:var(--bw-color-charcoal); line-height:1.6; margin-bottom:12px;">
+            <strong>Kosten:</strong> Das Verfahren ist gebührenfrei.
+          </p>
+          <p style="font-size:15px; color:var(--bw-color-charcoal); line-height:1.6;">
+            <strong>Fristen:</strong> Rückwirkende Zahlungen erfolgen für maximal drei Monate vor dem Monat des Antragseingangs.
+          </p>
+        </section>
+
+        <!-- Rechtsgrundlagen -->
+        <section id="rechtsgrundlagen" class="content-section">
+          <h2 class="section-title">Rechtsgrundlage</h2>
+          <p style="font-size:15px; color:var(--bw-color-charcoal); line-height:1.6;">
+            Bundeselterngeld- und Elternzeitgesetz (BEEG):
+          </p>
+          <div style="margin-top: 8px;">
+            <a href="#" class="doc-link">§ 1 BEEG – Berechtigte ↗</a>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Back to top FAB -->
+  <a href="#" class="bw-fab" title="Nach oben scrollen" aria-label="Nach oben scrollen">↑</a>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="footer-inner">
+      <div>© 2026 Land Baden-Württemberg — Serviceportal</div>
+      <div class="footer-links">
+        <a href="#">Datenschutz</a>
+        <a href="#">Barrierefreiheit</a>
+        <a href="#">Impressum</a>
+        <a href="#">Support & Feedback</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

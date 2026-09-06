@@ -124,7 +124,16 @@ describe("Trainable DS Portal Server (serve)", () => {
   });
 
   it("handles live token override via POST /api/v1/override", async () => {
-    const res = await dispatchMockRequest(server, "POST", "/api/v1/override", {
+    const os = await import("node:os");
+    const fs = await import("node:fs");
+    const path = await import("node:path");
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "serve-test-"));
+    fs.writeFileSync(path.join(tempDir, "tokens.json"), JSON.stringify({}), "utf-8");
+    fs.writeFileSync(path.join(tempDir, "components.json"), JSON.stringify({}), "utf-8");
+    fs.writeFileSync(path.join(tempDir, "DESIGN.md"), "# Design System", "utf-8");
+
+    const tempServer = createPortalServer({ dir: tempDir });
+    const res = await dispatchMockRequest(tempServer, "POST", "/api/v1/override", {
       overrides: {
         "comp.button.shape.corner": { value: "9999px" }
       }
@@ -133,5 +142,7 @@ describe("Trainable DS Portal Server (serve)", () => {
     const data = JSON.parse(res.body);
     expect(data.success).toBe(true);
     expect(data.count).toBe(1);
+
+    fs.rmSync(tempDir, { recursive: true, force: true });
   });
 });

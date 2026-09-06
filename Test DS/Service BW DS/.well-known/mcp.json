@@ -1,0 +1,20 @@
+{
+  "name": "service-bw-ds",
+  "version": "1.7.0",
+  "description": "Serviceportal Baden-Württemberg Design System Model Context Protocol Server",
+  "command": "node",
+  "args": ["packages/cli/dist/bin.js", "mcp"],
+  "capabilities": {
+    "tools": [
+      "get_design_tokens",
+      "list_components",
+      "get_component_schema",
+      "validate_code_snippet"
+    ],
+    "resources": [
+      "design-system://tokens",
+      "design-system://design-md",
+      "design-system://components"
+    ]
+  }
+}

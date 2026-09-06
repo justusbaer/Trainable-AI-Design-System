@@ -5,7 +5,47 @@
 ---
 
 ## 1. Quick Agent Instructions (Astryx Parity)
-If the user tells you to:
+
+### Protocol 1: Autonomous Website Extraction & Training
+If the user tells you:
+- *"Use Trainable Design System to extract the design system from <website url>"*
+- *"Extract the design system from <website url>"*
+- *"Train design system on <website url>"*
+
+The user does NOT need to know the technical crawling or alignment process. Execute this autonomous workflow:
+
+1. **Run the Autonomous Multi-Page Extraction & Alignment Engine:**
+   Run directly in the workspace shell:
+   ```bash
+   npx -y @trainable-ds/cli train --url "<website url>" --max-loops 3 --threshold 95
+   ```
+   *(Or if connected over Model Context Protocol, call `harvest_design_system_site({ url: "<website url>", max_loops: 3, threshold: 95 })`)*
+
+2. **What the Engine Automatically Handles Behind the Scenes:**
+   - **Multi-Page Discovery:** Recursively scans `/sitemap.xml` and internal navigation links, classifying pages into UX archetypes (`home`, `listing`, `detail`, `form`, `content`) to avoid single-page bias.
+   - **Deep Asset & Shadow DOM Harvesting:** Pierces custom Web Component Shadow DOMs (e.g. `<p-icon>`, `<p-button>`) to extract raw SVG vectors into `icons.json`, and captures origin `@font-face` CDN `.woff2` font declarations into `fonts.json`.
+   - **Iterative Visual Alignment:** Runs feedback loops comparing runtime computed styles against M3 tokens, auto-patching discrepancies until cross-page compliance reaches $\ge 95\%$.
+   - **Produces the Complete 6-Asset Bundle:**
+     - `tokens.json`: W3C DTCG 3-tier tokens (`ref`, `sys`, `comp`)
+     - `components.json`: 6 M3 component families with anatomical contracts
+     - `fonts.json`: Origin webfonts with resolved CDN URLs
+     - `icons.json`: Vector icon library with SVG source code
+     - `DESIGN.md`: Authoritative design system facade for LLMs
+     - `overview.html`: Interactive human reviewer portal
+
+3. **Launch the Human Reviewer Portal:**
+   ```bash
+   npx -y @trainable-ds/cli serve --port 5000
+   ```
+   Provide the user with the link `http://localhost:5000/overview.html` where they can visually inspect the extracted system and live-override any token or component directly in the browser. Edits immediately persist to disk with `tds:locked: true`.
+
+4. **Report Back to the User:**
+   Summarize the final compliance score (e.g. 98%), crawled pages, harvested fonts and icon counts, and confirmation that all machine-readable assets are ready.
+
+---
+
+### Protocol 2: UI Generation Using Certified Primitives
+If the user tells you:
 - *"Use Trainable DS"*
 - *"Follow the design system at this URL"*
 - *"Generate a screen/component matching our design system"*
@@ -46,6 +86,9 @@ Execute the following workflow:
 - **Root DESIGN.md Facade:** [`/DESIGN.md`](/DESIGN.md)
 - **W3C DTCG 3-Tier Tokens JSON:** [`/tokens.json`](/tokens.json)
 - **6-Family Component Catalog JSON:** [`/components.json`](/components.json)
+- **Harvested Origin Fonts JSON:** [`/fonts.json`](/fonts.json)
+- **Harvested Vector Icons JSON:** [`/icons.json`](/icons.json)
+- **Interactive Human Reviewer Portal:** [`/overview.html`](/overview.html)
 - **Model Context Protocol (MCP) Discovery:** [`/.well-known/mcp.json`](/.well-known/mcp.json)
 - **Headless Evaluation API:** `POST /api/v1/evaluate`
 - **Compact Context API:** `GET /api/v1/context`
@@ -55,6 +98,9 @@ Execute the following workflow:
 
 ## 3. Model Context Protocol (MCP) Tools
 If connected over MCP, the following tools are available:
+- `harvest_design_system_site({ url: string, pages?: string[], max_loops?: number, threshold?: number })`: Full site discovery, font/icon harvesting, alignment loops, and overview generation.
+- `discover_subpages({ url: string, max_pages?: number })`: Discovers subpages via sitemap and navigation links, categorized by UX archetype.
+- `align_design_system_with_source({ source_url: string, template_path?: string, max_loops?: number, threshold?: number })`: Runs visual alignment loops against a specific page.
 - `get_design_tokens({ category?: "color" | "typography" | "spacing" | "elevation" | "shape" | "motion" | "all", tier?: "ref" | "sys" | "comp" | "all" })`
 - `list_components({ family?: "actions" | "communication" | "containment" | "navigation" | "selection" | "text-inputs" | "all" })`
 - `get_component_schema({ component_name: string })`

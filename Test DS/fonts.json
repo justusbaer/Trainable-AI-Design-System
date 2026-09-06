@@ -1,0 +1,29 @@
+{
+  "families": {
+    "Porsche Next": {
+      "name": "Porsche Next",
+      "weights": [
+        "400",
+        "700"
+      ],
+      "styles": [
+        "normal"
+      ],
+      "faces": [
+        {
+          "family": "Porsche Next",
+          "weight": "400",
+          "style": "normal",
+          "src": "url('https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-regular.woff2') format('woff2')"
+        },
+        {
+          "family": "Porsche Next",
+          "weight": "700",
+          "style": "normal",
+          "src": "url('https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-bold.woff2') format('woff2')"
+        }
+      ],
+      "cssBlock": "@font-face {\n  font-family: 'Porsche Next';\n  font-weight: 400;\n  font-style: normal;\n  font-display: swap;\n  src: url('https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-regular.woff2') format('woff2');\n}\n\n@font-face {\n  font-family: 'Porsche Next';\n  font-weight: 700;\n  font-style: normal;\n  font-display: swap;\n  src: url('https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-bold.woff2') format('woff2');\n}"
+    }
+  }
+}

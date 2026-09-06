@@ -55,22 +55,66 @@ function updateThemeIcon(theme) {
   }
 }
 
-// One-Prompt Agent Connect Box
+// One-Prompt Agent Connect & Extraction Boxes
 function initAgentPrompt() {
+  const origin = window.location.origin;
+
+  // 1. Connect prompt
   const codeEl = document.getElementById("agent-prompt-code");
   const copyBtn = document.getElementById("copy-agent-prompt");
+  const connectPromptText = `Connect to Trainable DS from ${origin} and follow /DESIGN.md for all UI generation.`;
 
-  const origin = window.location.origin;
-  const promptText = `Connect to Trainable DS from ${origin} and follow /DESIGN.md for all UI generation.`;
-
-  if (codeEl) {
-    codeEl.textContent = promptText;
-  }
-
+  if (codeEl) codeEl.textContent = connectPromptText;
   if (copyBtn) {
     copyBtn.addEventListener("click", () => {
-      navigator.clipboard.writeText(promptText);
-      showToast("Agent prompt copied to clipboard!");
+      navigator.clipboard.writeText(connectPromptText);
+      showToast("Agent UI connect prompt copied to clipboard!");
+    });
+  }
+
+  // 2. Extraction prompt with dynamic URL builder
+  const extractUrlInput = document.getElementById("extract-url-input");
+  const extractPromptCode = document.getElementById("extract-prompt-code");
+  const copyExtractBtn = document.getElementById("copy-extract-prompt");
+
+  function updateExtractPrompt() {
+    if (!extractPromptCode) return;
+    const url = (extractUrlInput && extractUrlInput.value.trim()) || "https://example.com";
+    extractPromptCode.textContent = `Use Trainable Design System to extract the design system from ${url}`;
+  }
+
+  if (extractUrlInput) {
+    extractUrlInput.addEventListener("input", updateExtractPrompt);
+  }
+
+  if (copyExtractBtn) {
+    copyExtractBtn.addEventListener("click", () => {
+      const url = (extractUrlInput && extractUrlInput.value.trim()) || "https://example.com";
+      const prompt = `Use Trainable Design System to extract the design system from ${url}`;
+      navigator.clipboard.writeText(prompt);
+      showToast("Website extraction prompt copied! Paste into any AI agent.");
+    });
+  }
+
+  // 3. Mode tab toggles
+  const tabExtract = document.getElementById("tab-btn-extract");
+  const tabConnect = document.getElementById("tab-btn-connect");
+  const panelExtract = document.getElementById("panel-extract");
+  const panelConnect = document.getElementById("panel-connect");
+
+  if (tabExtract && tabConnect) {
+    tabExtract.addEventListener("click", () => {
+      tabExtract.classList.add("active");
+      tabConnect.classList.remove("active");
+      if (panelExtract) panelExtract.style.display = "flex";
+      if (panelConnect) panelConnect.style.display = "none";
+    });
+
+    tabConnect.addEventListener("click", () => {
+      tabConnect.classList.add("active");
+      tabExtract.classList.remove("active");
+      if (panelConnect) panelConnect.style.display = "flex";
+      if (panelExtract) panelExtract.style.display = "none";
     });
   }
 }

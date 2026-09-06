@@ -3,382 +3,463 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Porsche Design System — Verification & Showcase Portal</title>
-  <link rel="stylesheet" href="./porsche-tokens.css">
-  <link rel="stylesheet" href="./portal.css">
-  <link rel="design-system-facade" type="text/markdown" href="./DESIGN.md">
-  <link rel="design-tokens" type="application/json" href="./tokens.json">
-  <link rel="llms-txt" type="text/markdown" href="./llms.txt">
-  <link rel="llms-full-txt" type="text/markdown" href="./llms-full.txt">
+  <title>Trainable DS — Source of Truth for Humans & AI Agents</title>
+  <meta name="description" content="Agent-native Material Design 3 Design System portal, DTCG tokens, and closed-loop compliance engine.">
+
+  <!-- Agent Discovery Links (Astryx Parity) -->
+  <link rel="llms-txt" type="text/markdown" href="/llms.txt">
+  <link rel="llms-full-txt" type="text/markdown" href="/llms-full.txt">
+  <link rel="design-system-facade" type="text/markdown" href="/DESIGN.md">
+  <link rel="design-tokens" type="application/json" href="/tokens.json">
+  <meta name="mcp-server" content="/.well-known/mcp.json">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/portal.css">
 </head>
 <body>
 
-  <div class="app-container">
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo">T</div>
+        <span class="brand-title">Trainable DS</span>
+        <span class="badge">v1.7.0 (M3)</span>
+      </a>
 
-    <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-brand">
-        <div class="brand-title-wrap">
-          <div class="brand-crest">P</div>
-          <div>
-            <div class="brand-name">PORSCHE</div>
-            <span style="font-size:0.75rem; color:var(--p-color-contrast-medium);">Design System Portal</span>
-          </div>
-        </div>
-        <span class="brand-badge">PDS v4.5.0 • Trainable DS</span>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#extract" class="nav-link" style="color:var(--md-sys-color-primary); font-weight:600;">Extract from URL</a></li>
+          <li><a href="#foundations" class="nav-link">Foundations</a></li>
+          <li><a href="#components" class="nav-link">Components</a></li>
+          <li><a href="#evaluator" class="nav-link">Live Evaluator</a></li>
+          <li><a href="#agent-setup" class="nav-link">Agent Setup</a></li>
+          <li><a href="/llms.txt" class="nav-link" target="_blank" style="font-family:var(--font-mono); font-size:0.8rem;">llms.txt ↗</a></li>
+          <li>
+            <button type="button" id="theme-toggle" class="btn-icon" aria-label="Toggle theme">
+              🌙
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Portal Content -->
+  <main class="main-content">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-header">
+        <span class="badge" style="margin-block-end:0.75rem;">AI Developer Portal & System Hub</span>
+        <h1 class="hero-title">The Living Source of Truth for Humans & AI Agents</h1>
+        <p class="hero-subtitle">
+          Extract, govern, and enforce design systems at full <strong>Material Design 3 (M3)</strong> depth.
+          Tell any AI agent to extract from a URL or point it to this portal for 100% compliant UI generation.
+        </p>
       </div>
 
-      <nav class="sidebar-nav">
-        <div class="nav-section-title">System Verification</div>
-        <button type="button" class="nav-item active" data-target="overview">
-          <span>📊</span> Overview & Audit
-        </button>
-        <button type="button" class="nav-item" data-target="tokens">
-          <span>🎨</span> Design Tokens
-          <span class="nav-item-badge">89</span>
-        </button>
-        <button type="button" class="nav-item" data-target="guidelines">
-          <span>📐</span> Guidelines & Rules
-          <span class="nav-item-badge">7</span>
-        </button>
-        <button type="button" class="nav-item" data-target="components">
-          <span>🧩</span> Component Catalog
-          <span class="nav-item-badge">42</span>
-        </button>
-
-        <div class="nav-section-title" style="margin-top:1rem;">Production Templates</div>
-        <button type="button" class="nav-item" data-target="templates">
-          <span>🚀</span> Layout Templates
-          <span class="nav-item-badge">3</span>
-        </button>
-
-        <div class="nav-section-title" style="margin-top:1rem;">System Files</div>
-        <a href="./DESIGN.md" target="_blank" class="nav-item">
-          <span>📄</span> DESIGN.md ↗
-        </a>
-        <a href="./tokens.json" target="_blank" class="nav-item">
-          <span>📦</span> tokens.json ↗
-        </a>
-        <a href="./components.json" target="_blank" class="nav-item">
-          <span>📑</span> components.json ↗
-        </a>
-        <a href="./llms.txt" target="_blank" class="nav-item">
-          <span>🤖</span> llms.txt ↗
-        </a>
-        <a href="./llms-full.txt" target="_blank" class="nav-item">
-          <span>⚡</span> llms-full.txt ↗
-        </a>
-      </nav>
-    </aside>
-
-    <!-- Main Content Wrapper -->
-    <div class="main-wrapper">
-
-      <!-- Top Sticky Header -->
-      <header class="top-header">
-        <div class="header-search">
-          <span>🔍</span>
-          <input type="text" id="global-search" placeholder="Search tokens or components..." />
-        </div>
-
-        <div class="header-actions">
-          <button type="button" id="theme-toggle-btn" class="btn-theme-toggle">
-            🌙 Dark Mode
+      <!-- Agent Banner (Dual Mode: Extract or Connect) -->
+      <div class="agent-banner">
+        <div class="banner-mode-tabs">
+          <button type="button" id="tab-btn-extract" class="banner-mode-btn active">
+            🌐 Extract from Website (One Prompt)
           </button>
-          <a href="https://porsche.de" target="_blank" class="btn-theme-toggle" style="text-decoration:none;">
-            Live porsche.de ↗
-          </a>
+          <button type="button" id="tab-btn-connect" class="banner-mode-btn">
+            ⚡ Connect for UI Generation
+          </button>
         </div>
-      </header>
 
-      <!-- Content Area -->
-      <main class="content-body">
-
-        <!-- ===================================================================
-             SECTION: OVERVIEW & AUDIT
-             =================================================================== -->
-        <section id="overview" class="portal-section">
-          <div class="page-header">
-            <h1 class="page-title">Design System Extraction Audit</h1>
-            <p class="page-subtitle">
-              Comprehensive verification report for the Porsche Design System extracted live from <code>porsche.de</code> and packaged into the Trainable DS (v1.7.0) architecture.
-            </p>
+        <!-- Mode 1: Extraction -->
+        <div id="panel-extract" style="display:flex; flex-direction:column; gap:0.75rem;">
+          <div class="agent-banner-header">
+            <div class="agent-banner-title">
+              <span>🌐 Extract Design System from Any Website</span>
+              <span class="badge" style="background:#dcfce7; color:#166534;">Zero Process Knowledge Required</span>
+            </div>
+            <span style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">Enter target website URL:</span>
           </div>
 
-          <!-- Audit Stats Cards -->
-          <div class="stats-grid">
-            <div class="stat-card">
-              <span class="stat-number">42</span>
-              <span class="stat-label">Certified Components</span>
-              <span class="stat-desc">Introspected directly from customElements registry</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-number">18</span>
-              <span class="stat-label">Color Semantic Roles</span>
-              <span class="stat-desc">Dual-scheme light/dark color mappings</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-number">10</span>
-              <span class="stat-label">Fluid Typescale Tiers</span>
-              <span class="stat-desc">Mathematical clamp() expressions</span>
-            </div>
-            <div class="stat-card">
-              <span class="stat-number">100%</span>
-              <span class="stat-label">DTCG & M3 Compliance</span>
-              <span class="stat-desc">Zero raw values, sentence-case enforced</span>
-            </div>
+          <div class="prompt-url-row">
+            <input type="url" id="extract-url-input" class="prompt-url-input" value="https://www.porsche.com/germany/" placeholder="https://example.com">
           </div>
 
-          <!-- Extraction Methodology -->
-          <div class="stat-card" style="margin-block-end:2rem;">
-            <h2 style="font-size:1.25rem; font-weight:700; color:var(--p-color-primary); margin-block-end:0.5rem;">
-              Extraction Integrity Guarantee
-            </h2>
-            <p style="font-size:0.9rem; color:var(--p-color-contrast-medium); line-height:1.6;">
-              This design system was compiled entirely without reading or referencing any pre-existing local machine files.
-              All design tokens, <code>light-dark()</code> variables, typography clamps, shadow DOM adopted stylesheets, and component attribute signatures were extracted directly from active sessions on <strong>porsche.de</strong> and cross-referenced with the <strong>Trainable DS standard</strong>.
-            </p>
+          <div class="prompt-copy-container">
+            <code id="extract-prompt-code" class="prompt-code">Use Trainable Design System to extract the design system from https://www.porsche.com/germany/</code>
+            <button type="button" id="copy-extract-prompt" class="btn-primary">
+              📋 Copy Extraction Prompt
+            </button>
           </div>
 
-          <!-- Quick Navigation Cards -->
-          <h2 class="section-title">Explore Extracted Specifications</h2>
-          <div class="stats-grid">
-            <div class="stat-card" style="cursor:pointer;" onclick="switchSection('tokens'); document.querySelector('[data-target=tokens]').classList.add('active'); document.querySelector('[data-target=overview]').classList.remove('active');">
-              <span style="font-size:1.8rem;">🎨</span>
-              <span class="stat-label">Token Inspector</span>
-              <span class="stat-desc">Inspect and copy color swatches, typography clamps, spacing quantum, and motion curves.</span>
-            </div>
-            <div class="stat-card" style="cursor:pointer;" onclick="switchSection('components'); document.querySelector('[data-target=components]').classList.add('active'); document.querySelector('[data-target=overview]').classList.remove('active');">
-              <span style="font-size:1.8rem;">🧩</span>
-              <span class="stat-label">Components Gallery</span>
-              <span class="stat-desc">Interactive live demos for all 42 registered Porsche web components.</span>
-            </div>
-            <div class="stat-card" style="cursor:pointer;" onclick="switchSection('templates'); document.querySelector('[data-target=templates]').classList.add('active'); document.querySelector('[data-target=overview]').classList.remove('active');">
-              <span style="font-size:1.8rem;">🚀</span>
-              <span class="stat-label">Layout Templates</span>
-              <span class="stat-desc">Experience 3 production vehicle, configurator, and lifestyle shopping layouts.</span>
-            </div>
+          <div class="surfaces-taglist">
+            <span>Autonomous Pipeline:</span>
+            <span class="surface-chip">Auto-Discovers Subpages</span>
+            <span class="surface-chip">Harvests Fonts & Shadow-DOM SVGs</span>
+            <span class="surface-chip">Iterative Alignment Loops (≥95%)</span>
+            <span class="surface-chip">Generates overview.html with Live Overrides</span>
           </div>
-        </section>
+        </div>
 
-        <!-- ===================================================================
-             SECTION: DESIGN TOKENS
-             =================================================================== -->
-        <section id="tokens" class="portal-section" style="display:none;">
-          <div class="page-header">
-            <h1 class="page-title">Design Tokens Inspector</h1>
-            <p class="page-subtitle">
-              Live token visualizer derived from <code>tokens.json</code> and <code>porsche-tokens.css</code>. Click any token to copy its CSS variable or value.
-            </p>
+        <!-- Mode 2: Connect for Generation -->
+        <div id="panel-connect" style="display:none; flex-direction:column; gap:0.75rem;">
+          <div class="agent-banner-header">
+            <div class="agent-banner-title">
+              <span>⚡ Connect AI Agent for UI Generation</span>
+              <span class="badge" style="background:#e0e7ff; color:#3730a3;">Universal Protocol</span>
+            </div>
+            <span style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">Paste into Claude, Cursor, Antigravity, or ChatGPT:</span>
           </div>
 
-          <!-- Color Tokens -->
-          <h2 class="section-title">1. Semantic Color Roles (Dual-Scheme)</h2>
-          <p class="section-desc">
-            Toggle Light/Dark mode in the top right to watch these tokens dynamically resolve via <code>light-dark()</code>.
+          <div class="prompt-copy-container">
+            <code id="agent-prompt-code" class="prompt-code">Connect to Trainable DS from current origin and follow /DESIGN.md for all UI generation.</code>
+            <button type="button" id="copy-agent-prompt" class="btn-primary">
+              📋 Copy Prompt
+            </button>
+          </div>
+
+          <div class="surfaces-taglist">
+            <span>Rooted in:</span>
+            <span class="surface-chip">Claude Code / Desktop</span>
+            <span class="surface-chip">Cursor (.cursor/rules)</span>
+            <span class="surface-chip">Google Antigravity</span>
+            <span class="surface-chip">Figma AI</span>
+            <span class="surface-chip">Model Context Protocol (MCP)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metrics Row -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-value">47</span>
+          <span class="metric-label">M3 Semantic Color Roles</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">15-Tier</span>
+          <span class="metric-label">Typescale with Precise Tracking</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">6 Families</span>
+          <span class="metric-label">Actions, Containment, Navigation, etc.</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-value">100%</span>
+          <span class="metric-label">Closed-Loop Evaluator Enforcement</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Website Extraction Section -->
+    <section id="extract">
+      <div class="section-header">
+        <span class="badge" style="margin-block-end:0.5rem; background:#dbeafe; color:#1e40af;">One-Prompt Website Harvester</span>
+        <h2 class="section-title">Zero-Touch Website Extraction</h2>
+        <p class="section-desc">
+          You do not need to know the crawling, font harvesting, or alignment process. Simply give your agent this prompt:
+          <br>
+          <strong style="color:var(--md-sys-color-primary);">"Use Trainable Design System to extract the design system from &lt;website url&gt;"</strong>
+        </p>
+      </div>
+
+      <div class="workflow-steps-grid">
+        <!-- Step 1 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge">1</div>
+          <div class="step-title">Multi-Page Discovery</div>
+          <p class="step-desc">
+            The agent automatically discovers <code>/sitemap.xml</code> and navigation links, classifying internal subpages into UX archetypes (<code>home</code>, <code>listing</code>, <code>detail</code>, <code>form</code>, <code>content</code>) to capture the full breadth of the system.
           </p>
-          <div id="colors-token-grid" class="token-grid"></div>
+        </div>
 
-          <!-- Typography Scale -->
-          <h2 class="section-title">2. Fluid Typography Scale (Porsche Next)</h2>
-          <p class="section-desc">
-            10-tier responsive typescale using <code>clamp()</code> expressions for seamless scaling across viewports.
+        <!-- Step 2 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge">2</div>
+          <div class="step-title">Deep Font & Icon Harvesting</div>
+          <p class="step-desc">
+            Captures origin typography by extracting <code>@font-face</code> CDN <code>.woff2</code> URLs into <code>fonts.json</code>, and pierces Web Component Shadow DOMs (like <code>&lt;p-icon&gt;</code>) to extract vector SVGs into <code>icons.json</code>.
           </p>
-          <table class="type-table">
-            <thead>
-              <tr>
-                <th>Tier Token</th>
-                <th>Clamp Formula</th>
-                <th>Weight</th>
-                <th>Usage Intent</th>
-                <th>Live Rendering</th>
-              </tr>
-            </thead>
-            <tbody id="typescale-tbody"></tbody>
-          </table>
+        </div>
 
-          <!-- Spacing -->
-          <h2 class="section-title">3. Spacing Rhythm (8px Quantum Baseline)</h2>
-          <p class="section-desc">Static spacing tokens from 1px to 80px.</p>
-          <div id="spacing-visualizer" class="spacing-grid"></div>
+        <!-- Step 3 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge">3</div>
+          <div class="step-title">Iterative Alignment Loops (≥95%)</div>
+          <p class="step-desc">
+            Executes autonomous visual alignment feedback loops comparing live computed styles against M3 tokens. Automatically patches discrepancies until cross-page compliance meets or exceeds 95%.
+          </p>
+        </div>
 
-          <!-- Border Radii -->
-          <h2 class="section-title">4. Corner Radii</h2>
-          <p class="section-desc">Porsche corner radius curve definitions (xs to full pill).</p>
-          <div id="radii-visualizer" class="spacing-grid"></div>
-        </section>
+        <!-- Step 4 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge">4</div>
+          <div class="step-title">Human Overview & Live Overrides</div>
+          <p class="step-desc">
+            Outputs machine-ready assets (<code>tokens.json</code>, <code>components.json</code>, <code>DESIGN.md</code>) and launches <code>overview.html</code> where humans can visually review and live-override any token with permanent disk locking (<code>tds:locked: true</code>).
+          </p>
+        </div>
+      </div>
+    </section>
 
-        <!-- ===================================================================
-             SECTION: GUIDELINES & COMPLIANCE
-             =================================================================== -->
-        <section id="guidelines" class="portal-section" style="display:none;">
-          <div class="page-header">
-            <h1 class="page-title">Guidelines & Executable Constraints</h1>
-            <p class="page-subtitle">
-              The foundational design thesis and strict rules enforced by Trainable DS for Porsche UI generation.
-            </p>
+    <!-- Foundations Explorer -->
+    <section id="foundations">
+      <div class="section-header">
+        <h2 class="section-title">1. Material Design 3 Foundations</h2>
+        <p class="section-desc">Authoritative 3-tier W3C DTCG tokens. Click any tone or token to copy its value.</p>
+      </div>
+
+      <div class="palette-container">
+        <!-- Tonal Palette Spectrum -->
+        <div>
+          <h3 style="font-size:1rem; font-weight:600; margin-block-end:0.75rem;">Primary HCT Tonal Spectrum (Tones 0–100)</h3>
+          <div id="tonal-spectrum" class="tonal-spectrum">
+            <!-- Dynamic tonal swatches populated by portal.js -->
           </div>
+        </div>
 
-          <div class="stat-card" style="margin-block-end:2rem;">
-            <h2 style="font-size:1.25rem; font-weight:700; color:var(--p-color-primary); margin-block-end:0.5rem;">
-              The Porsche Design Philosophy
-            </h2>
-            <ul style="padding-left:1.5rem; line-height:1.8; color:var(--p-color-contrast-high); font-size:0.95rem;">
-              <li><strong>Frosted Glass Depth:</strong> Uses <code>backdrop-filter: blur(32px)</code> with alpha overlays (<code>--p-color-frosted-*</code>) instead of artificial drop shadow layers.</li>
-              <li><strong>Extreme Contrast:</strong> Anchored in pure Porsche black (<code>#010205</code>) and crisp white (<code>#ffffff</code>), maintaining minimum 4.5:1 text contrast.</li>
-              <li><strong>8px Quantum Rhythm:</strong> All paddings, margins, and layout gaps adhere strictly to multiples of 4px/8px.</li>
-              <li><strong>Fluid Responsiveness:</strong> Fluid clamps eliminate viewport layout jumps.</li>
-            </ul>
+        <!-- Semantic Color Roles Grid -->
+        <div>
+          <h3 style="font-size:1rem; font-weight:600; margin-block-end:0.75rem;">Semantic Roles & Contrast Pairings</h3>
+          <div id="color-roles-grid" class="roles-grid">
+            <!-- Dynamic color role cards populated by portal.js -->
           </div>
+        </div>
 
-          <h2 class="section-title">Mandatory Executable Constraints</h2>
-          <table class="type-table">
-            <thead>
-              <tr>
-                <th>Rule ID</th>
-                <th>Severity</th>
-                <th>Requirement</th>
-                <th>Remediation Fix</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><code>TDS-RAW-COLOR</code></td>
-                <td><span style="color:#ba171f; font-weight:700;">CRITICAL</span></td>
-                <td>Zero raw hex codes (e.g. <code>#010205</code>) in inline styles or classes.</td>
-                <td>Use <code>var(--p-color-primary)</code> or semantic tokens.</td>
-              </tr>
-              <tr>
-                <td><code>TDS-NON-QUANTUM-SPACING</code></td>
-                <td><span style="color:#ac5102; font-weight:700;">HIGH</span></td>
-                <td>No arbitrary pixel spacing (e.g. <code>padding: 13px</code>).</td>
-                <td>Use 8px increments (<code>var(--p-spacing-static-md)</code>).</td>
-              </tr>
-              <tr>
-                <td><code>TDS-REINVENTED-COMPONENT</code></td>
-                <td><span style="color:#ac5102; font-weight:700;">HIGH</span></td>
-                <td>Never use raw HTML <code>&lt;button&gt;</code> or <code>&lt;input&gt;</code>.</td>
-                <td>Use certified <code>&lt;p-button&gt;</code> and <code>&lt;p-input-search&gt;</code>.</td>
-              </tr>
-              <tr>
-                <td><code>TDS-TOUCH-TARGET-TOO-SMALL</code></td>
-                <td><span style="color:#ac5102; font-weight:700;">HIGH</span></td>
-                <td>Every clickable element must be &ge; 48x48px.</td>
-                <td>Enforce <code>min-height: 48px; min-width: 48px;</code>.</td>
-              </tr>
-              <tr>
-                <td><code>TDS-CAPITALIZATION-NOT-SENTENCE-CASE</code></td>
-                <td><span style="color:#1a44ea; font-weight:700;">MEDIUM</span></td>
-                <td>All button labels and titles must use sentence case.</td>
-                <td>Write <code>Discover models</code> instead of <code>Discover Models</code>.</td>
-              </tr>
-              <tr>
-                <td><code>TDS-OFFICIAL-BRAND-ASSETS</code></td>
-                <td><span style="color:#ba171f; font-weight:700;">CRITICAL</span></td>
-                <td>Never recreate Porsche logos or model scripts via text.</td>
-                <td>Use <code>&lt;p-wordmark&gt;</code> and <code>&lt;p-model-signature&gt;</code>.</td>
-              </tr>
-            </tbody>
-          </table>
-        </section>
-
-        <!-- ===================================================================
-             SECTION: COMPONENT CATALOG
-             =================================================================== -->
-        <section id="components" class="portal-section" style="display:none;">
-          <div class="page-header">
-            <h1 class="page-title">Certified Component Catalog</h1>
-            <p class="page-subtitle">
-              Live interactive previews and contracts for all 42 Porsche web components. Filter by functional family below:
-            </p>
+        <!-- 15-Tier Typography Ladder -->
+        <div>
+          <h3 style="font-size:1rem; font-weight:600; margin-block-end:0.75rem;">15-Tier Typescale Ladder</h3>
+          <div style="overflow-x:auto;">
+            <table class="typescale-table">
+              <thead>
+                <tr>
+                  <th>Scale Category</th>
+                  <th>Token Key</th>
+                  <th>Size / Line</th>
+                  <th>Weight</th>
+                  <th>Tracking</th>
+                  <th>Preview (Sentence Case)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Display</td>
+                  <td><code>sys.typescale.displayLarge</code></td>
+                  <td>57px / 64px</td>
+                  <td>Regular (400)</td>
+                  <td>-0.25px</td>
+                  <td style="font-size:1.8rem; font-weight:400;">Hero visual headline</td>
+                </tr>
+                <tr>
+                  <td>Headline</td>
+                  <td><code>sys.typescale.headlineMedium</code></td>
+                  <td>28px / 36px</td>
+                  <td>Regular (400)</td>
+                  <td>0px</td>
+                  <td style="font-size:1.4rem; font-weight:400;">Section headline title</td>
+                </tr>
+                <tr>
+                  <td>Title</td>
+                  <td><code>sys.typescale.titleMedium</code></td>
+                  <td>16px / 24px</td>
+                  <td>Medium (500)</td>
+                  <td>+0.15px</td>
+                  <td style="font-size:1rem; font-weight:500;">Card header title</td>
+                </tr>
+                <tr>
+                  <td>Body</td>
+                  <td><code>sys.typescale.bodyLarge</code></td>
+                  <td>16px / 24px</td>
+                  <td>Regular (400)</td>
+                  <td>+0.50px</td>
+                  <td style="font-size:1rem; font-weight:400;">Main long-form descriptive copy</td>
+                </tr>
+                <tr>
+                  <td>Label</td>
+                  <td><code>sys.typescale.labelLarge</code></td>
+                  <td>14px / 20px</td>
+                  <td>Medium (500)</td>
+                  <td>+0.10px</td>
+                  <td style="font-size:0.88rem; font-weight:500;">Save changes</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
+        </div>
 
-          <!-- Filter Bar -->
-          <div class="components-filter-bar">
-            <button type="button" class="filter-chip active" data-family="all">All Families (42)</button>
-            <button type="button" class="filter-chip" data-family="actions">Actions</button>
-            <button type="button" class="filter-chip" data-family="navigation">Navigation</button>
-            <button type="button" class="filter-chip" data-family="typography">Typography</button>
-            <button type="button" class="filter-chip" data-family="text-inputs">Forms & Inputs</button>
-            <button type="button" class="filter-chip" data-family="selection">Selection</button>
-            <button type="button" class="filter-chip" data-family="containment">Containment</button>
-            <button type="button" class="filter-chip" data-family="communication">Communication</button>
-            <button type="button" class="filter-chip" data-family="brand">Brand Heritage</button>
-          </div>
-
-          <!-- Dynamic Components Gallery -->
-          <div id="components-gallery-grid" class="components-grid"></div>
-        </section>
-
-        <!-- ===================================================================
-             SECTION: LAYOUT TEMPLATES
-             =================================================================== -->
-        <section id="templates" class="portal-section" style="display:none;">
-          <div class="page-header">
-            <h1 class="page-title">Production Website Layout Templates</h1>
-            <p class="page-subtitle">
-              Full-page layouts demonstrating how to compose the extracted Porsche Design System tokens and components.
-            </p>
-          </div>
-
-          <div class="templates-grid">
-            <!-- Template 1 -->
-            <div class="template-card">
-              <div class="template-thumbnail">
-                <img src="https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&w=800&q=80" alt="Showcase Stage" />
-              </div>
-              <div class="template-content">
-                <h3 class="template-title">Vehicle Showcase Stage ("Home Stage")</h3>
-                <p class="template-desc">
-                  High-impact hero section for the 911 GT3 RS with model signature, frosted glass action bar, and technical specifications strip.
-                </p>
-                <a href="./templates/showcase.html" target="_blank" class="porsche-btn-primary" style="margin-top:auto; text-decoration:none;">
-                  Launch Showcase Template ↗
-                </a>
-              </div>
+        <!-- State Layers & Elevation -->
+        <div>
+          <h3 style="font-size:1rem; font-weight:600; margin-block-end:0.75rem;">State Layers & Elevation Tinting</h3>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-value" style="font-size:1.25rem;">Hover (8%)</span>
+              <span class="metric-label">0.08 opacity overlay of on-surface</span>
             </div>
-
-            <!-- Template 2 -->
-            <div class="template-card">
-              <div class="template-thumbnail">
-                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" alt="Finder Matrix" />
-              </div>
-              <div class="template-content">
-                <h3 class="template-title">Vehicle Finder & Configurator Matrix</h3>
-                <p class="template-desc">
-                  Interactive dealer search, vehicle filter tags, and responsive model comparison cards with technical performance specs.
-                </p>
-                <a href="./templates/finder.html" target="_blank" class="porsche-btn-primary" style="margin-top:auto; text-decoration:none;">
-                  Launch Finder Template ↗
-                </a>
-              </div>
+            <div class="metric-card">
+              <span class="metric-value" style="font-size:1.25rem;">Focus (10% + 3dp)</span>
+              <span class="metric-label">3px outline ring with 2px offset</span>
             </div>
-
-            <!-- Template 3 -->
-            <div class="template-card">
-              <div class="template-thumbnail">
-                <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=80" alt="Lifestyle Product" />
-              </div>
-              <div class="template-content">
-                <h3 class="template-title">Porsche Design E-Commerce & Product Page</h3>
-                <p class="template-desc">
-                  Timepieces showcase for the Chronograph 1 with image gallery, pricing, technical specifications accordion, and bag actions.
-                </p>
-                <a href="./templates/product.html" target="_blank" class="porsche-btn-primary" style="margin-top:auto; text-decoration:none;">
-                  Launch Product Template ↗
-                </a>
-              </div>
+            <div class="metric-card">
+              <span class="metric-value" style="font-size:1.25rem;">Pressed (10%)</span>
+              <span class="metric-label">0.10 opacity + expanding ripple</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value" style="font-size:1.25rem;">Disabled (38% / 12%)</span>
+              <span class="metric-label">38% text opacity, 12% container fill</span>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </section>
 
-      </main>
+    <!-- Component Catalog -->
+    <section id="components">
+      <div class="section-header">
+        <h2 class="section-title">2. Certified Component Catalog</h2>
+        <p class="section-desc">Anatomical contracts across 6 M3 functional families. Every interactive element satisfies &ge; 48px touch targets.</p>
+      </div>
+
+      <!-- Functional Family Filter Chips -->
+      <div class="family-filters">
+        <button type="button" class="filter-chip active" data-family="all">All Families</button>
+        <button type="button" class="filter-chip" data-family="actions">Actions</button>
+        <button type="button" class="filter-chip" data-family="communication">Communication</button>
+        <button type="button" class="filter-chip" data-family="containment">Containment</button>
+        <button type="button" class="filter-chip" data-family="navigation">Navigation</button>
+        <button type="button" class="filter-chip" data-family="selection">Selection</button>
+        <button type="button" class="filter-chip" data-family="text-inputs">Text Inputs</button>
+      </div>
+
+      <!-- Components Grid -->
+      <div id="components-grid" class="components-grid">
+        <!-- Dynamic component cards populated by portal.js -->
+      </div>
+    </section>
+
+    <!-- Interactive Closed-Loop Evaluator -->
+    <section id="evaluator">
+      <div class="section-header">
+        <h2 class="section-title">3. Live Closed-Loop Compliance Evaluator</h2>
+        <p class="section-desc">Audit any React / TSX snippet against Material Design 3 and Trainable DS constraints in real-time.</p>
+      </div>
+
+      <div class="evaluator-layout">
+        <!-- Code Input -->
+        <div class="editor-card">
+          <div class="editor-toolbar">
+            <span style="font-weight:600; font-size:0.9rem;">Candidate TSX Code</span>
+            <div style="margin-inline-start:auto; display:flex; gap:0.5rem;">
+              <button type="button" id="btn-load-dirty" class="btn-secondary" style="min-height:36px; padding-inline:0.75rem; font-size:0.78rem;">
+                Load Dirty Sample
+              </button>
+              <button type="button" id="btn-load-clean" class="btn-secondary" style="min-height:36px; padding-inline:0.75rem; font-size:0.78rem;">
+                Load Clean Sample
+              </button>
+            </div>
+          </div>
+
+          <textarea id="eval-code-input" class="code-textarea" spellcheck="false"></textarea>
+
+          <button type="button" id="btn-run-evaluate" class="btn-primary" style="width:100%;">
+            ⚡ Audit Code with Trainable DS
+          </button>
+        </div>
+
+        <!-- Evaluation Results Panel -->
+        <div class="results-card">
+          <div style="font-weight:600; font-size:0.9rem;">Compliance Diagnostics</div>
+
+          <div class="score-display">
+            <div id="score-circle" class="score-circle failed">2</div>
+            <div id="score-summary">
+              <strong>FAILED AUDIT</strong><br/>
+              <span style="color:var(--md-sys-color-error); font-size:0.85rem">Violations detected</span>
+            </div>
+          </div>
+
+          <div id="diagnostics-list" class="diagnostics-list">
+            <!-- Dynamic violation list -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Agent Setup & MCP Guide -->
+    <section id="agent-setup">
+      <div class="section-header">
+        <h2 class="section-title">4. Agent Integration Guides</h2>
+        <p class="section-desc">Configure your AI coding environment in 1 click or tell your agent to self-install.</p>
+      </div>
+
+      <div class="components-grid">
+        <!-- Cursor Card -->
+        <div class="comp-card">
+          <div class="comp-card-header">
+            <span class="comp-name">Cursor Integration</span>
+            <span class="badge">Auto-Wired</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">
+            Rule file placed in <code>.cursor/rules/design-system.mdc</code> and local MCP in <code>.cursor/mcp.json</code>.
+          </p>
+          <div class="code-box">npx @trainable-ds/cli init --agent cursor</div>
+          <button type="button" class="btn-secondary" data-copy="npx @trainable-ds/cli init --agent cursor">
+            📋 Copy Command
+          </button>
+        </div>
+
+        <!-- Claude Code Card -->
+        <div class="comp-card">
+          <div class="comp-card-header">
+            <span class="comp-name">Claude Code / Desktop</span>
+            <span class="badge">CLAUDE.md</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">
+            Injects design system guidelines and constraints into workspace <code>CLAUDE.md</code>.
+          </p>
+          <div class="code-box">npx @trainable-ds/cli init --agent claude</div>
+          <button type="button" class="btn-secondary" data-copy="npx @trainable-ds/cli init --agent claude">
+            📋 Copy Command
+          </button>
+        </div>
+
+        <!-- Remote MCP Card -->
+        <div class="comp-card">
+          <div class="comp-card-header">
+            <span class="comp-name">Model Context Protocol</span>
+            <span class="badge">Remote SSE / Stdio</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">
+            Connect any MCP client to the server for live token queries and code audits.
+          </p>
+          <div class="code-box">npx @trainable-ds/cli mcp</div>
+          <button type="button" class="btn-secondary" data-copy="npx @trainable-ds/cli mcp">
+            📋 Copy Command
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="footer-container">
+      <div>
+        <strong>Trainable DS</strong> — Material Design 3 Agent-Native System Portal (v1.7.0).
+      </div>
+      <ul class="footer-links">
+        <li><a href="/llms.txt" class="footer-link">llms.txt</a></li>
+        <li><a href="/llms-full.txt" class="footer-link">llms-full.txt</a></li>
+        <li><a href="/.well-known/mcp.json" class="footer-link">mcp.json</a></li>
+        <li><a href="/DESIGN.md" class="footer-link">DESIGN.md</a></li>
+        <li><a href="/tokens.json" class="footer-link">tokens.json</a></li>
+        <li><a href="/components.json" class="footer-link">components.json</a></li>
+      </ul>
     </div>
+  </footer>
 
-  </div>
+  <div id="toast-notice" class="toast-notice"></div>
 
-  <div id="portal-toast" class="portal-toast"></div>
-
-  <script src="./portal.js"></script>
+  <script src="/portal.js"></script>
 </body>
 </html>

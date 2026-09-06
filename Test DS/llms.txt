@@ -1,54 +1,109 @@
-# Porsche Design System: Agent Developer Portal & System Manual
+# Trainable DS: Agent Developer Portal & System Manual
 
-> **Porsche Design System (PDS v4.5.0)** is the authoritative, agent-native Design System powering porsche.de and all digital touchpoints. Packaged according to the **Trainable DS (v1.7.0)** standard, this system provides authoritative W3C DTCG tokens, dual-scheme color semantics, fluid typography, and 42 certified web components.
-
----
-
-## 1. Quick Agent Instructions
-When generating screens, components, or flows for Porsche:
-
-1. **Load System Context & Tokens:**
-   - Refer to [`DESIGN.md`](./DESIGN.md) for semantic intent and component contracts.
-   - Refer to [`tokens.json`](./tokens.json) for authoritative token values.
-   - Include [`porsche-tokens.css`](./porsche-tokens.css) in your runtime root.
-2. **Use Strictly Certified Primitives:**
-   - **Never** render raw `<button>`, `<input>`, or unstyled links.
-   - **Always** use `<p-button>`, `<p-button-pure>`, `<p-link>`, `<p-link-pure>`, `<p-text-field>`, `<p-input-search>`, `<p-checkbox>`, `<p-heading>`, `<p-text>`, etc.
-   - For brand markings, use `<p-crest>`, `<p-wordmark>`, and `<p-model-signature>`.
-3. **Strict Constraints Enforced:**
-   - **Zero Raw Hex / RGB:** Always reference `--p-color-*` tokens (`var(--p-color-primary)`, `var(--p-color-canvas)`).
-   - **Sentence Case Mandate:** All labels, CTAs, and headings must use sentence case (`Book test drive`, not `Book Test Drive`).
-   - **Touch Target:** Minimum 48x48px bounding box on all interactive targets.
-   - **Frosted Depth:** Use `backdrop-filter: blur(32px)` and `--p-color-frosted-*` instead of heavy drop shadows.
-   - **8px Quantum Baseline:** All paddings, margins, and gaps must follow 8px increments (4px half-step allowed for compact density).
+> **Trainable DS** is an agent-native, closed-loop Design System engine built on Google Material Design 3 (M3) and W3C DTCG standards. It enables any AI generation surface (Cursor, Claude Code, Antigravity, Figma AI, ChatGPT) to root itself in authoritative design tokens and self-correct UI code to 100% compliance.
 
 ---
 
-## 2. Certified Component Quick Reference
+## 1. Quick Agent Instructions (Astryx Parity)
 
-| Component Tag | Functional Family | Key Props / Variants | Primary Usage |
-| :--- | :--- | :--- | :--- |
-| `<p-button>` | Actions | `variant="primary \| secondary"`, `compact`, `loading`, `icon` | Primary user actions and CTAs |
-| `<p-button-pure>` | Actions | `icon`, `underline`, `align-label` | Inline triggers and quiet dismissals |
-| `<p-link>` | Navigation | `href`, `variant="primary \| secondary"` | High-visibility route navigation |
-| `<p-link-pure>` | Navigation | `href`, `icon`, `underline` | Inline content links |
-| `<p-link-tile>` | Navigation | `href`, `label`, `description`, `aspect-ratio` | Visual hero cards and showcase tiles |
-| `<p-heading>` | Typography | `tag="h1-h6"`, `size="small-2xl"`, `weight="semibold"` | Section and subsection headings |
-| `<p-display>` | Typography | `tag="h1-h6"`, `size="small-large"` | Large promotional stage titles |
-| `<p-text>` | Typography | `tag="p \| span"`, `size="2xs-medium"`, `color` | Body copy, disclaimers, captions |
-| `<p-input-search>` | Text Inputs | `label`, `placeholder`, `clear="true"` | Search bars and location lookups |
-| `<p-text-field>` | Text Inputs | `label`, `placeholder`, `state="none \| error"` | Single-line form fields |
-| `<p-checkbox>` | Selection | `label`, `checked="true \| false"` | Form agreements, option toggles |
-| `<p-segmented-control>` | Selection | `value`, `columns` | Segmented views and mode switches |
-| `<p-modal>` | Containment | `open="true \| false"`, `dismiss-button` | Dialog overlays with frosted scrim |
-| `<p-model-signature>` | Brand | `model="911 \| taycan \| cayenne ..."` | Authentic vehicle model badging |
-| `<p-wordmark>` | Brand | `size="small \| medium \| large"`, `href` | Official PORSCHE typography |
+### Protocol 1: Autonomous Website Extraction & Training
+If the user tells you:
+- *"Use Trainable Design System to extract the design system from <website url>"*
+- *"Extract the design system from <website url>"*
+- *"Train design system on <website url>"*
+
+The user does NOT need to know the technical crawling or alignment process. Execute this autonomous workflow:
+
+1. **Run the Autonomous Multi-Page Extraction & Alignment Engine:**
+   Run directly in the workspace shell:
+   ```bash
+   npx -y @trainable-ds/cli train --url "<website url>" --max-loops 3 --threshold 95
+   ```
+   *(Or if connected over Model Context Protocol, call `harvest_design_system_site({ url: "<website url>", max_loops: 3, threshold: 95 })`)*
+
+2. **What the Engine Automatically Handles Behind the Scenes:**
+   - **Multi-Page Discovery:** Recursively scans `/sitemap.xml` and internal navigation links, classifying pages into UX archetypes (`home`, `listing`, `detail`, `form`, `content`) to avoid single-page bias.
+   - **Deep Asset & Shadow DOM Harvesting:** Pierces custom Web Component Shadow DOMs (e.g. `<p-icon>`, `<p-button>`) to extract raw SVG vectors into `icons.json`, and captures origin `@font-face` CDN `.woff2` font declarations into `fonts.json`.
+   - **Iterative Visual Alignment:** Runs feedback loops comparing runtime computed styles against M3 tokens, auto-patching discrepancies until cross-page compliance reaches $\ge 95\%$.
+   - **Produces the Complete 6-Asset Bundle:**
+     - `tokens.json`: W3C DTCG 3-tier tokens (`ref`, `sys`, `comp`)
+     - `components.json`: 6 M3 component families with anatomical contracts
+     - `fonts.json`: Origin webfonts with resolved CDN URLs
+     - `icons.json`: Vector icon library with SVG source code
+     - `DESIGN.md`: Authoritative design system facade for LLMs
+     - `overview.html`: Interactive human reviewer portal
+
+3. **Launch the Human Reviewer Portal:**
+   ```bash
+   npx -y @trainable-ds/cli serve --port 5000
+   ```
+   Provide the user with the link `http://localhost:5000/overview.html` where they can visually inspect the extracted system and live-override any token or component directly in the browser. Edits immediately persist to disk with `tds:locked: true`.
+
+4. **Report Back to the User:**
+   Summarize the final compliance score (e.g. 98%), crawled pages, harvested fonts and icon counts, and confirmation that all machine-readable assets are ready.
 
 ---
 
-## 3. Related Resources
-- Full Machine Reference: [`llms-full.txt`](./llms-full.txt)
-- Design System Facade: [`DESIGN.md`](./DESIGN.md)
-- DTCG Tokens Tree: [`tokens.json`](./tokens.json)
-- Component Catalog: [`components.json`](./components.json)
-- MCP Server Config: [`.well-known/mcp.json`](./.well-known/mcp.json)
+### Protocol 2: UI Generation Using Certified Primitives
+If the user tells you:
+- *"Use Trainable DS"*
+- *"Follow the design system at this URL"*
+- *"Generate a screen/component matching our design system"*
+
+Execute the following workflow:
+1. **Initialize Workspace (if not already configured):**
+   ```bash
+   npx -y @trainable-ds/cli init --auto
+   ```
+   *This automatically generates `DESIGN.md`, `.cursor/rules/design-system.mdc`, `.cursor/mcp.json`, and injects `CLAUDE.md`.*
+2. **Retrieve Context & Active Contracts:**
+   - Read local [`DESIGN.md`](/DESIGN.md) or fetch [`/api/v1/context`](/api/v1/context).
+   - Review certified components from [`/components.json`](/components.json) or MCP tool `list_components`.
+3. **Generate UI Using Strictly Certified Primitives:**
+   - **Zero Raw Values:** Never use `#hex`, `rgb(...)`, or arbitrary sizing (`p-[13px]`). Always use semantic Tailwind classes (`bg-surface-container-low`, `text-on-surface`, `bg-primary`, `text-on-primary`).
+   - **8dp Spatial Quantum Grid:** All padding, margins, and gaps must be multiples of 4px/8px (`p-2`, `p-4`, `p-6`, `gap-4`).
+   - **$\ge 48\times 48\text{px}$ Touch Targets:** Every button, chip, tab, and input must satisfy `min-h-[48px] min-w-[48px]` or `h-12`.
+   - **Bi-Directional RTL Properties:** Use logical properties (`ps-*`, `pe-*`, `ms-*`, `me-*`) instead of physical (`pl`, `pr`, `ml`, `mr`).
+   - **Sentence Case:** All button text, headings, and labels must use sentence case (`Save changes`, not `Save Changes`).
+4. **Closed-Loop Audit & Auto-Repair:**
+   - In CLI:
+     ```bash
+     npx -y @trainable-ds/cli evaluate <filepath> --strict
+     ```
+   - Over HTTP:
+     ```bash
+     curl -s -X POST /api/v1/evaluate -H "Content-Type: application/json" -d '{"code":"<candidate TSX>"}'
+     ```
+   - Over MCP:
+     Call tool `validate_code_snippet({ code: "..." })`.
+   - If score < 100 or violations are returned, fix all flagged lines and re-evaluate until certified compliant.
+
+---
+
+## 2. Direct Machine-Readable Endpoints
+- **Agent Guide (this file):** [`/llms.txt`](/llms.txt)
+- **Comprehensive Prompt Bundle:** [`/llms-full.txt`](/llms-full.txt)
+- **Root DESIGN.md Facade:** [`/DESIGN.md`](/DESIGN.md)
+- **W3C DTCG 3-Tier Tokens JSON:** [`/tokens.json`](/tokens.json)
+- **6-Family Component Catalog JSON:** [`/components.json`](/components.json)
+- **Harvested Origin Fonts JSON:** [`/fonts.json`](/fonts.json)
+- **Harvested Vector Icons JSON:** [`/icons.json`](/icons.json)
+- **Interactive Human Reviewer Portal:** [`/overview.html`](/overview.html)
+- **Model Context Protocol (MCP) Discovery:** [`/.well-known/mcp.json`](/.well-known/mcp.json)
+- **Headless Evaluation API:** `POST /api/v1/evaluate`
+- **Compact Context API:** `GET /api/v1/context`
+- **Remote MCP SSE Endpoint:** `GET /api/v1/mcp/sse` & `POST /api/v1/mcp/message`
+
+---
+
+## 3. Model Context Protocol (MCP) Tools
+If connected over MCP, the following tools are available:
+- `harvest_design_system_site({ url: string, pages?: string[], max_loops?: number, threshold?: number })`: Full site discovery, font/icon harvesting, alignment loops, and overview generation.
+- `discover_subpages({ url: string, max_pages?: number })`: Discovers subpages via sitemap and navigation links, categorized by UX archetype.
+- `align_design_system_with_source({ source_url: string, template_path?: string, max_loops?: number, threshold?: number })`: Runs visual alignment loops against a specific page.
+- `get_design_tokens({ category?: "color" | "typography" | "spacing" | "elevation" | "shape" | "motion" | "all", tier?: "ref" | "sys" | "comp" | "all" })`
+- `list_components({ family?: "actions" | "communication" | "containment" | "navigation" | "selection" | "text-inputs" | "all" })`
+- `get_component_schema({ component_name: string })`
+- `validate_code_snippet({ code: string, filename?: string, strict?: boolean })`
+- `suggest_remediation({ component_type: string, intent?: string })`
+- `get_design_guidelines()`

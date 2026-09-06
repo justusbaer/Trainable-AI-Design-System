@@ -1,0 +1,401 @@
+{
+  "$schema": "https://trainable-ds-2026.web.app/schemas/components.manifest.json",
+  "name": "Serviceportal Baden-Württemberg Component Manifest",
+  "version": "1.7.0",
+  "sourceOfTruth": "https://www.service-bw.de",
+  "components": {
+    "Button": {
+      "family": "actions",
+      "description": "Standard administrative button adhering to BITV 2.0 / WCAG AAA touch targets and high-contrast standards.",
+      "anatomy": {
+        "container": {
+          "minHeight": "50px",
+          "height": "50px",
+          "borderRadius": "3px",
+          "paddingInline": "24px",
+          "display": "inline-flex",
+          "alignItems": "center",
+          "justifyContent": "center",
+          "gap": "8px"
+        },
+        "label": {
+          "fontFamily": "var(--bw-font-sans)",
+          "fontSize": "14px",
+          "fontWeight": 700,
+          "textTransform": "none"
+        }
+      },
+      "variants": {
+        "primary": {
+          "backgroundColor": "#fffc00",
+          "color": "#2a2623",
+          "border": "2px solid #fffc00",
+          "hover": {
+            "backgroundColor": "#e6e300"
+          }
+        },
+        "secondary": {
+          "backgroundColor": "#ffffff",
+          "color": "#2a2623",
+          "border": "2px solid #2a2623",
+          "hover": {
+            "backgroundColor": "#f4f3f1"
+          }
+        },
+        "callToAction": {
+          "backgroundColor": "#116a8d",
+          "color": "#ffffff",
+          "border": "2px solid #116a8d",
+          "hover": {
+            "backgroundColor": "#0d536e"
+          }
+        },
+        "disabled": {
+          "backgroundColor": "#eeeeee",
+          "color": "#7a756e",
+          "border": "2px solid #eeeeee",
+          "cursor": "not-allowed"
+        }
+      },
+      "accessibility": {
+        "minTouchTarget": "50x50px",
+        "focusRing": "3px solid #fffc00 with 2px solid #2a2623 outer offset"
+      }
+    },
+    "BackToTopFAB": {
+      "family": "actions",
+      "description": "Floating action button fixed at bottom-right for returning to top of long administrative forms.",
+      "anatomy": {
+        "container": {
+          "width": "64px",
+          "height": "64px",
+          "borderRadius": "50%",
+          "backgroundColor": "rgba(42, 38, 35, 0.75)",
+          "color": "#ffffff",
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "center"
+        }
+      },
+      "accessibility": {
+        "minTouchTarget": "64x64px",
+        "ariaLabel": "Nach oben scrollen"
+      }
+    },
+    "Badge": {
+      "family": "communication",
+      "description": "Informational taxonomy pill identifying government service categories (e.g. Lebenslage, Leistung).",
+      "anatomy": {
+        "container": {
+          "display": "inline-block",
+          "padding": "4px 8px",
+          "borderRadius": "3px",
+          "border": "1px solid #2a2623",
+          "backgroundColor": "#ffffff"
+        },
+        "label": {
+          "fontFamily": "var(--bw-font-sans)",
+          "fontSize": "12px",
+          "fontWeight": 700,
+          "color": "#2a2623"
+        }
+      },
+      "variants": {
+        "lebenslage": { "border": "1px solid #2a2623" },
+        "leistung": { "border": "1px solid #116a8d", "color": "#116a8d" }
+      }
+    },
+    "TeaserCard": {
+      "family": "containment",
+      "description": "Standard portal card displaying government service teasers with photo, category badge, and title.",
+      "anatomy": {
+        "container": {
+          "backgroundColor": "#f4f3f1",
+          "border": "1px solid #cbc6bd",
+          "borderRadius": "3px",
+          "overflow": "hidden",
+          "display": "flex",
+          "flexDirection": "column"
+        },
+        "media": {
+          "width": "100%",
+          "aspectRatio": "16/9",
+          "objectFit": "cover"
+        },
+        "content": {
+          "padding": "20px",
+          "display": "flex",
+          "flexDirection": "column",
+          "gap": "12px"
+        },
+        "title": {
+          "fontFamily": "var(--bw-font-sans)",
+          "fontSize": "20px",
+          "fontWeight": 700,
+          "color": "#2a2623"
+        }
+      }
+    },
+    "HighlightCard": {
+      "family": "containment",
+      "description": "High-emphasis hero card rendered in solid Baden-Württemberg Yellow for core municipal portals.",
+      "anatomy": {
+        "container": {
+          "backgroundColor": "#fffc00",
+          "borderRadius": "3px",
+          "padding": "24px",
+          "color": "#2a2623"
+        },
+        "title": {
+          "fontFamily": "var(--bw-font-sans)",
+          "fontSize": "22px",
+          "fontWeight": 700,
+          "color": "#2a2623"
+        },
+        "description": {
+          "fontFamily": "var(--bw-font-sans)",
+          "fontSize": "16px",
+          "lineHeight": 1.5,
+          "color": "#2a2623"
+        }
+      }
+    },
+    "OfficialBundHeader": {
+      "family": "navigation",
+      "description": "Mandatory federal banner indicating official government provenance.",
+      "anatomy": {
+        "container": {
+          "height": "32px",
+          "backgroundColor": "#f4f3f1",
+          "borderBottom": "1px solid #cbc6bd",
+          "display": "flex",
+          "alignItems": "center",
+          "paddingInline": "32px",
+          "gap": "12px",
+          "fontSize": "13px",
+          "color": "#2a2623"
+        }
+      }
+    },
+    "PortalHeader": {
+      "family": "navigation",
+      "description": "Iconic Serviceportal Baden-Württemberg yellow top navigation bar.",
+      "anatomy": {
+        "container": {
+          "height": "76px",
+          "backgroundColor": "#fffc00",
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "space-between",
+          "paddingInline": "32px"
+        },
+        "brand": {
+          "display": "flex",
+          "alignItems": "center",
+          "gap": "16px"
+        },
+        "crest": {
+          "width": "44px",
+          "height": "44px"
+        },
+        "title": {
+          "fontFamily": "var(--bw-font-sans)",
+          "fontSize": "18px",
+          "fontWeight": 700,
+          "color": "#2a2623"
+        },
+        "tools": {
+          "display": "flex",
+          "alignItems": "center",
+          "gap": "20px"
+        }
+      }
+    },
+    "PortalFooter": {
+      "family": "navigation",
+      "description": "High-contrast dark footer with municipal accessibility and legal compliance links.",
+      "anatomy": {
+        "container": {
+          "backgroundColor": "#2a2623",
+          "color": "#ffffff",
+          "padding": "48px 32px 32px 32px"
+        },
+        "linksRow": {
+          "display": "flex",
+          "flexWrap": "wrap",
+          "gap": "24px",
+          "fontSize": "14px"
+        }
+      }
+    },
+    "SearchBar": {
+      "family": "inputs",
+      "description": "Primary citizen search bar for services, laws, and municipalities.",
+      "anatomy": {
+        "container": {
+          "height": "50px",
+          "display": "flex",
+          "borderRadius": "3px",
+          "border": "1px solid #cbc6bd",
+          "backgroundColor": "#ffffff"
+        },
+        "input": {
+          "flex": 1,
+          "border": "none",
+          "paddingInline": "16px",
+          "fontFamily": "var(--bw-font-sans)",
+          "fontSize": "16px",
+          "color": "#2a2623"
+        },
+        "button": {
+          "width": "50px",
+          "height": "50px",
+          "backgroundColor": "#f4f3f1",
+          "border": "none",
+          "borderLeft": "1px solid #cbc6bd",
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "center"
+        }
+      }
+    },
+    "Inhaltsverzeichnis": {
+      "family": "navigation",
+      "description": "Sticky hierarchical tree navigation for service and administrative procedures (/zufi/leistungen/*). Active state uses solid State Yellow #fffc00 background with subtle 1px border and underline.",
+      "anatomy": {
+        "container": {
+          "position": "sticky",
+          "top": "24px",
+          "width": "280px"
+        },
+        "item": {
+          "display": "flex",
+          "alignItems": "center",
+          "padding": "8px 16px",
+          "borderRadius": "3px",
+          "fontSize": "14px",
+          "color": "#2a2623"
+        },
+        "itemActive": {
+          "backgroundColor": "#fffc00",
+          "border": "1px solid #cbc6bd",
+          "fontWeight": 700,
+          "textDecoration": "underline"
+        }
+      }
+    },
+    "ZustaendigeStelleCard": {
+      "family": "containment",
+      "description": "Competent authority contact card featuring neutral #f4f3f1 header panel and structured two-column definition list for Hausanschrift, Telefon, and E-Mail.",
+      "anatomy": {
+        "container": {
+          "border": "1px solid #cbc6bd",
+          "borderRadius": "3px",
+          "backgroundColor": "#ffffff",
+          "overflow": "hidden"
+        },
+        "header": {
+          "backgroundColor": "#f4f3f1",
+          "padding": "16px 20px",
+          "fontSize": "16px",
+          "fontWeight": 700,
+          "color": "#2a2623",
+          "borderBottom": "1px solid #cbc6bd"
+        },
+        "body": {
+          "padding": "20px"
+        },
+        "definitionList": {
+          "display": "grid",
+          "gridTemplateColumns": "140px 1fr",
+          "gap": "12px 16px",
+          "fontSize": "14px"
+        }
+      }
+    },
+    "TaxonomyCategoryCard": {
+      "family": "containment",
+      "description": "Municipal category card used in /zufi/lebenslagen with #f4f3f1 container, BaWueSans bold title, and bulleted sub-topic link list with right arrow indicator.",
+      "anatomy": {
+        "container": {
+          "backgroundColor": "#f4f3f1",
+          "border": "1px solid #cbc6bd",
+          "borderRadius": "3px",
+          "padding": "20px"
+        },
+        "title": {
+          "fontFamily": "var(--bw-font-sans)",
+          "fontSize": "18px",
+          "fontWeight": 700,
+          "color": "#2a2623",
+          "marginBottom": "16px",
+          "borderBottom": "1px solid #cbc6bd"
+        },
+        "linkItem": {
+          "display": "inline-flex",
+          "alignItems": "center",
+          "gap": "8px",
+          "fontSize": "14px",
+          "color": "#2a2623"
+        }
+      }
+    },
+    "AccountSelectorCard": {
+      "family": "containment",
+      "description": "Identity provider selector card (/zufi/zum-servicekonto) grouping Servicekonto BW, BundID, and Mein Unternehmenskonto with white logo header and neutral body.",
+      "anatomy": {
+        "container": {
+          "backgroundColor": "#f4f3f1",
+          "border": "1px solid #cbc6bd",
+          "borderRadius": "3px",
+          "overflow": "hidden"
+        },
+        "logoSlot": {
+          "backgroundColor": "#ffffff",
+          "height": "100px",
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "center",
+          "borderBottom": "1px solid #cbc6bd"
+        },
+        "body": {
+          "padding": "20px"
+        }
+      }
+    },
+    "BreadcrumbNav": {
+      "family": "navigation",
+      "description": "Hierarchical breadcrumb navigation trail with right arrow separator for sub-pages.",
+      "anatomy": {
+        "container": {
+          "display": "flex",
+          "alignItems": "center",
+          "gap": "8px",
+          "fontSize": "14px",
+          "color": "#47535c",
+          "marginBlock": "16px 24px"
+        }
+      }
+    },
+    "AccessibilityToolbar": {
+      "family": "navigation",
+      "description": "Government utility toolbar containing High Contrast switch, Leichte Sprache, Gebärdensprache, and Language selector.",
+      "anatomy": {
+        "container": {
+          "display": "flex",
+          "alignItems": "center",
+          "gap": "12px"
+        },
+        "button": {
+          "width": "40px",
+          "height": "40px",
+          "borderRadius": "3px",
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "center"
+        }
+      }
+    }
+  }
+}
+

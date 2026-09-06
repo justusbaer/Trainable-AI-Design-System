@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hilfe in allen Lebenslagen — Serviceportal Baden-Württemberg</title>
+  <link rel="stylesheet" href="../service-bw.css">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--bw-font-sans);
+      background-color: var(--bw-color-surface);
+      color: var(--bw-color-charcoal);
+      line-height: 1.5;
+    }
+
+    .bund-bar {
+      height: 32px;
+      background-color: var(--bw-header-bund-bg);
+      border-bottom: 1px solid var(--bw-color-border);
+      display: flex;
+      align-items: center;
+      padding-inline: 32px;
+      font-size: 13px;
+    }
+
+    .header-yellow {
+      background-color: var(--bw-color-highlight);
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 32px;
+      padding-block: 12px;
+      gap: 20px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--bw-color-charcoal);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-tools {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-konto {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding-inline: 16px;
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      border-radius: var(--bw-button-radius);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .btn-konto:hover {
+      background-color: var(--bw-color-call2action-contrast);
+    }
+
+    .tool-icon {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--bw-button-radius);
+      color: var(--bw-color-charcoal);
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .tool-icon:hover {
+      background-color: var(--bw-color-surface-container);
+    }
+
+    /* Dual Search Bar Container */
+    .search-section {
+      background-color: var(--bw-color-surface);
+      padding-block: 24px;
+      border-bottom: 1px solid var(--bw-color-surface-container-high);
+    }
+
+    .search-wrapper {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding-inline: 32px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .search-field-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 260px;
+      gap: 4px;
+    }
+
+    .search-field-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+    }
+
+    .search-input-box {
+      height: var(--bw-input-height);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-input-radius);
+      padding-inline: 16px;
+      font-family: var(--bw-font-sans);
+      font-size: 15px;
+      color: var(--bw-color-charcoal);
+      background-color: var(--bw-color-surface);
+      width: 100%;
+    }
+
+    .search-input-box:focus {
+      outline: var(--bw-focus-outline);
+      box-shadow: 0 0 0 3px var(--bw-color-highlight);
+    }
+
+    .search-submit-btn {
+      align-self: flex-end;
+      height: var(--bw-button-height);
+      padding-inline: 24px;
+      background-color: var(--bw-color-surface-container);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-button-radius);
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 15px;
+    }
+
+    .search-submit-btn:hover {
+      background-color: var(--bw-color-surface-container-high);
+    }
+
+    /* Main Container */
+    .page-container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding-inline: 32px;
+      padding-bottom: 80px;
+    }
+
+    .page-headline {
+      font-family: var(--bw-font-serif);
+      font-size: 2.25rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--bw-color-charcoal);
+      margin-bottom: 16px;
+    }
+
+    .page-lead {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--bw-color-charcoal);
+      max-width: 820px;
+      margin-bottom: 32px;
+    }
+
+    /* Back To Top FAB */
+    .bw-fab {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(42, 38, 35, 0.2);
+    }
+
+    .bw-fab:hover {
+      background-color: var(--bw-color-call2action-contrast);
+    }
+
+    /* Footer */
+    .portal-footer {
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      padding: 48px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--bw-color-surface);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Official German Federal Banner -->
+  <div class="bund-bar">
+    <span>Offizielle Website – Bundesrepublik Deutschland</span>
+  </div>
+
+  <!-- State Yellow Header -->
+  <header class="header-yellow">
+    <a href="./portal-home.html" class="brand-title">
+      <svg width="40" height="40" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <rect width="100" height="100" rx="6" fill="var(--bw-color-highlight)"/>
+        <path d="M22 26h56v8H22zM22 46h56v8H22zM22 66h56v8H22z" fill="var(--bw-color-charcoal)"/>
+      </svg>
+      <span>Serviceportal Baden-Württemberg</span>
+    </a>
+
+    <div class="header-tools">
+      <a href="./servicekonto.html" class="btn-konto">Zum Servicekonto</a>
+      <a href="#" class="tool-icon" title="Kontrastmodus umschalten" aria-label="Kontrast">◐</a>
+      <a href="#" class="tool-icon" title="Leichte Sprache" aria-label="Leichte Sprache">📖</a>
+      <a href="#" class="tool-icon" title="Gebärdensprache" aria-label="Gebärdensprache">👐</a>
+      <a href="#" class="tool-icon" title="Sprache wählen" aria-label="Sprache">🌐</a>
+    </div>
+  </header>
+
+  <!-- Dual Search Section -->
+  <section class="search-section">
+    <div class="search-wrapper">
+      <div class="search-field-group">
+        <label for="search-topic" class="search-field-label">Suche</label>
+        <input id="search-topic" type="text" class="search-input-box" placeholder="Infos, Behörden und mehr finden">
+      </div>
+      <div class="search-field-group">
+        <label for="search-location" class="search-field-label">Ort</label>
+        <input id="search-location" type="text" class="search-input-box" placeholder="Ort angeben (optional)">
+      </div>
+      <button type="button" class="search-submit-btn">
+        <span>🔍</span>
+        <span>Suchen</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Main Container -->
+  <main class="page-container">
+
+    <!-- Breadcrumb Path -->
+    <nav class="bw-breadcrumb" aria-label="Breadcrumbs">
+      <a href="./portal-home.html">Startseite</a>
+      <span class="bw-breadcrumb__separator">→</span>
+      <span style="font-weight:700;">Hilfe in allen Lebenslagen</span>
+    </nav>
+
+    <h1 class="page-headline">Hilfe in allen Lebenslagen</h1>
+    <p class="page-lead">
+      Finden Sie administrative Leistungen, zuständige Behörden und Formulare nach Ihren aktuellen Lebensabschnitten und Bedürfnissen geordnet.
+    </p>
+
+    <!-- 3-Column Taxonomy Grid -->
+    <div class="bw-taxonomy-grid">
+
+      <!-- Card 1: Arbeit und Bildung -->
+      <article class="bw-taxonomy-card">
+        <h2 class="bw-taxonomy-card__title">Arbeit und Bildung</h2>
+        <ul class="bw-taxonomy-card__list">
+          <li><a href="#" class="bw-taxonomy-card__link">→ Arbeitnehmer</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Arbeitslos, Arbeit finden</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Berufsausbildung</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Schule</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Studium</a></li>
+        </ul>
+      </article>
+
+      <!-- Card 2: Ausweise und Scheine -->
+      <article class="bw-taxonomy-card">
+        <h2 class="bw-taxonomy-card__title">Ausweise und Scheine</h2>
+        <ul class="bw-taxonomy-card__list">
+          <li><a href="#" class="bw-taxonomy-card__link">→ Führerschein</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Personalausweis, Reisepass</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Tierhaltung, Tierschutz und Fischerei</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Waffen und Sprengstoff</a></li>
+        </ul>
+      </article>
+
+      <!-- Card 3: Bauen und Wohnen -->
+      <article class="bw-taxonomy-card">
+        <h2 class="bw-taxonomy-card__title">Bauen und Wohnen</h2>
+        <ul class="bw-taxonomy-card__list">
+          <li><a href="#" class="bw-taxonomy-card__link">→ Bauen und Modernisieren</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Grundstück und Kataster</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Umzug</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Wohnen und Mietrecht</a></li>
+        </ul>
+      </article>
+
+      <!-- Card 4: Bürger und Staat -->
+      <article class="bw-taxonomy-card">
+        <h2 class="bw-taxonomy-card__title">Bürger und Staat</h2>
+        <ul class="bw-taxonomy-card__list">
+          <li><a href="#" class="bw-taxonomy-card__link">→ Bürgerschaftliches Engagement</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Freiwilligendienste</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Wahlen und Bürgerbeteiligung</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Einbürgerung und Staatsangehörigkeit</a></li>
+        </ul>
+      </article>
+
+      <!-- Card 5: Familie und Lebensbündnisse -->
+      <article class="bw-taxonomy-card">
+        <h2 class="bw-taxonomy-card__title">Familie und Lebensbündnisse</h2>
+        <ul class="bw-taxonomy-card__list">
+          <li><a href="#" class="bw-taxonomy-card__link">→ Adoption</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Der Bund fürs Leben (Eheschließung)</a></li>
+          <li><a href="./service-detail.html" class="bw-taxonomy-card__link">→ Familie und Kinder (Elterngeld)</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Kinderbetreuung und Kindergarten</a></li>
+        </ul>
+      </article>
+
+      <!-- Card 6: Gesundheit und Vorsorge -->
+      <article class="bw-taxonomy-card">
+        <h2 class="bw-taxonomy-card__title">Gesundheit und Vorsorge</h2>
+        <ul class="bw-taxonomy-card__list">
+          <li><a href="#" class="bw-taxonomy-card__link">→ Gesundheitsvorsorge und Impfungen</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Notfall und Rettung</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Pflege und Unterstützung</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Patientenverfügung und Betreuung</a></li>
+        </ul>
+      </article>
+
+      <!-- Card 7: Umwelt und Natur -->
+      <article class="bw-taxonomy-card">
+        <h2 class="bw-taxonomy-card__title">Umwelt und Natur</h2>
+        <ul class="bw-taxonomy-card__list">
+          <li><a href="#" class="bw-taxonomy-card__link">→ Abfallwirtschaft und Recycling</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Natur- und Landschaftsschutz</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Wasser und Gewässer</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Klimaschutz und Energie</a></li>
+        </ul>
+      </article>
+
+      <!-- Card 8: Wirtschaft und Unternehmen -->
+      <article class="bw-taxonomy-card">
+        <h2 class="bw-taxonomy-card__title">Wirtschaft und Unternehmen</h2>
+        <ul class="bw-taxonomy-card__list">
+          <li><a href="#" class="bw-taxonomy-card__link">→ Gewerbeanmeldung und Erlaubnisse</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Steuern und Abgaben</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Unternehmensgründung und Förderung</a></li>
+          <li><a href="#" class="bw-taxonomy-card__link">→ Öffentliche Ausschreibungen</a></li>
+        </ul>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Back to top FAB -->
+  <a href="#" class="bw-fab" title="Nach oben scrollen" aria-label="Nach oben scrollen">↑</a>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="footer-inner">
+      <div>© 2026 Land Baden-Württemberg — Serviceportal</div>
+      <div class="footer-links">
+        <a href="#">Datenschutz</a>
+        <a href="#">Barrierefreiheit</a>
+        <a href="#">Impressum</a>
+        <a href="#">Support & Feedback</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

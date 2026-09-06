@@ -58,66 +58,66 @@ export function compileDesignMd(options: DesignMdCompileOptions): string {
       system: {
         color: {
           light: {
-            primary: colors.light.primary.$value,
-            onPrimary: colors.light.onPrimary.$value,
-            primaryContainer: colors.light.primaryContainer.$value,
-            onPrimaryContainer: colors.light.onPrimaryContainer.$value,
-            surface: colors.light.surface.$value,
-            onSurface: colors.light.onSurface.$value,
-            surfaceContainer: colors.light.surfaceContainer.$value,
-            surfaceContainerHigh: colors.light.surfaceContainerHigh.$value,
-            outline: colors.light.outline.$value,
+            primary: colors?.light?.primary?.$value || "#6750a4",
+            onPrimary: colors?.light?.onPrimary?.$value || "#ffffff",
+            primaryContainer: colors?.light?.primaryContainer?.$value || "#eaddff",
+            onPrimaryContainer: colors?.light?.onPrimaryContainer?.$value || "#21005d",
+            surface: colors?.light?.surface?.$value || "#fef7ff",
+            onSurface: colors?.light?.onSurface?.$value || "#1d1b20",
+            surfaceContainer: colors?.light?.surfaceContainer?.$value || "#f3edf7",
+            surfaceContainerHigh: colors?.light?.surfaceContainerHigh?.$value || "#ece6f0",
+            outline: colors?.light?.outline?.$value || "#79747e",
           },
           dark: {
-            primary: colors.dark.primary.$value,
-            onPrimary: colors.dark.onPrimary.$value,
-            primaryContainer: colors.dark.primaryContainer.$value,
-            onPrimaryContainer: colors.dark.onPrimaryContainer.$value,
-            surface: colors.dark.surface.$value,
-            onSurface: colors.dark.onSurface.$value,
-            surfaceContainer: colors.dark.surfaceContainer.$value,
-            surfaceContainerHigh: colors.dark.surfaceContainerHigh.$value,
-            outline: colors.dark.outline.$value,
+            primary: colors?.dark?.primary?.$value || "#d0bcff",
+            onPrimary: colors?.dark?.onPrimary?.$value || "#381e72",
+            primaryContainer: colors?.dark?.primaryContainer?.$value || "#4f378b",
+            onPrimaryContainer: colors?.dark?.onPrimaryContainer?.$value || "#eaddff",
+            surface: colors?.dark?.surface?.$value || "#141218",
+            onSurface: colors?.dark?.onSurface?.$value || "#e6e1e5",
+            surfaceContainer: colors?.dark?.surfaceContainer?.$value || "#211f26",
+            surfaceContainerHigh: colors?.dark?.surfaceContainerHigh?.$value || "#2b2930",
+            outline: colors?.dark?.outline?.$value || "#938f99",
           }
         },
         typescale: {
           headlineMedium: {
-            font: typescale.headlineMedium.fontFamily.$value,
-            size: typescale.headlineMedium.fontSize.$value,
-            line: typescale.headlineMedium.lineHeight.$value,
-            weight: typescale.headlineMedium.fontWeight.$value,
+            font: typescale?.headlineMedium?.fontFamily?.$value || "Inter, sans-serif",
+            size: typescale?.headlineMedium?.fontSize?.$value || "28px",
+            line: typescale?.headlineMedium?.lineHeight?.$value || "36px",
+            weight: typescale?.headlineMedium?.fontWeight?.$value || "400",
           },
           bodyLarge: {
-            font: typescale.bodyLarge.fontFamily.$value,
-            size: typescale.bodyLarge.fontSize.$value,
-            line: typescale.bodyLarge.lineHeight.$value,
-            weight: typescale.bodyLarge.fontWeight.$value,
+            font: typescale?.bodyLarge?.fontFamily?.$value || "Inter, sans-serif",
+            size: typescale?.bodyLarge?.fontSize?.$value || "16px",
+            line: typescale?.bodyLarge?.lineHeight?.$value || "24px",
+            weight: typescale?.bodyLarge?.fontWeight?.$value || "400",
           },
           labelLarge: {
-            font: typescale.labelLarge.fontFamily.$value,
-            size: typescale.labelLarge.fontSize.$value,
-            line: typescale.labelLarge.lineHeight.$value,
-            weight: typescale.labelLarge.fontWeight.$value,
+            font: typescale?.labelLarge?.fontFamily?.$value || "Inter, sans-serif",
+            size: typescale?.labelLarge?.fontSize?.$value || "14px",
+            line: typescale?.labelLarge?.lineHeight?.$value || "20px",
+            weight: typescale?.labelLarge?.fontWeight?.$value || "500",
           }
         },
         state: {
-          hover: state.hover.$value,
+          hover: state?.hover?.$value || 0.08,
           focus: {
-            opacity: state.focus.$value,
-            ringWidth: state.focusRingWidth.$value,
-            ringOffset: state.focusRingOffset.$value,
+            opacity: state?.focus?.$value || 0.10,
+            ringWidth: state?.focusRingWidth?.$value || "3px",
+            ringOffset: state?.focusRingOffset?.$value || "2px",
           },
-          pressed: state.pressed.$value,
+          pressed: state?.pressed?.$value || 0.10,
           disabled: {
-            content: state.disabledContent.$value,
-            container: state.disabledContainer.$value,
+            content: state?.disabledContent?.$value || 0.38,
+            container: state?.disabledContainer?.$value || 0.12,
           }
         },
         elevation: {
-          level0: { tint: elevation.level0.surfaceTintPercentage.$value },
-          level1: { tint: elevation.level1.surfaceTintPercentage.$value },
-          level2: { tint: elevation.level2.surfaceTintPercentage.$value },
-          level3: { tint: elevation.level3.surfaceTintPercentage.$value },
+          level0: { tint: elevation?.level0?.surfaceTintPercentage?.$value ?? 0 },
+          level1: { tint: elevation?.level1?.surfaceTintPercentage?.$value ?? 0.05 },
+          level2: { tint: elevation?.level2?.surfaceTintPercentage?.$value ?? 0.08 },
+          level3: { tint: elevation?.level3?.surfaceTintPercentage?.$value ?? 0.11 },
         }
       }
     }
@@ -154,19 +154,19 @@ ${rationaleNotes.map(n => `- ${n}`).join("\n")}
 
 ## 2. Foundations Quick-Reference
 ### Color Roles & Contrast Pairings
-- **Primary Action:** \`sys.color.primary\` (${colors.light.primary.$value}) paired with \`sys.color.on-primary\` (${colors.light.onPrimary.$value}).
-- **Surface Hierarchy:** Default card container is \`surface-container\` (${colors.light.surfaceContainer.$value}); elevated dialogs use \`surface-container-high\` (${colors.light.surfaceContainerHigh.$value}).
-- **Border Outline:** 3:1 accessible boundaries use \`outline\` (${colors.light.outline.$value}).
+- **Primary Action:** \`sys.color.primary\` (${colors?.light?.primary?.$value || "#6750a4"}) paired with \`sys.color.on-primary\` (${colors?.light?.onPrimary?.$value || "#ffffff"}).
+- **Surface Hierarchy:** Default card container is \`surface-container\` (${colors?.light?.surfaceContainer?.$value || "#f3edf7"}); elevated dialogs use \`surface-container-high\` (${colors?.light?.surfaceContainerHigh?.$value || "#ece6f0"}).
+- **Border Outline:** 3:1 accessible boundaries use \`outline\` (${colors?.light?.outline?.$value || "#79747e"}).
 
 ### Typography Hierarchy (Sentence Case)
-- **Headline Medium:** ${typescale.headlineMedium.fontSize.$value}/${typescale.headlineMedium.lineHeight.$value} (${typescale.headlineMedium.fontWeight.$value} weight)
-- **Body Large:** ${typescale.bodyLarge.fontSize.$value}/${typescale.bodyLarge.lineHeight.$value} (${typescale.bodyLarge.fontWeight.$value} weight)
-- **Label Large:** ${typescale.labelLarge.fontSize.$value}/${typescale.labelLarge.lineHeight.$value} (${typescale.labelLarge.fontWeight.$value} weight) — Used on buttons, chips, tabs.
+- **Headline Medium:** ${typescale?.headlineMedium?.fontSize?.$value || "28px"}/${typescale?.headlineMedium?.lineHeight?.$value || "36px"} (${typescale?.headlineMedium?.fontWeight?.$value || "400"} weight)
+- **Body Large:** ${typescale?.bodyLarge?.fontSize?.$value || "16px"}/${typescale?.bodyLarge?.lineHeight?.$value || "24px"} (${typescale?.bodyLarge?.fontWeight?.$value || "400"} weight)
+- **Label Large:** ${typescale?.labelLarge?.fontSize?.$value || "14px"}/${typescale?.labelLarge?.lineHeight?.$value || "20px"} (${typescale?.labelLarge?.fontWeight?.$value || "500"} weight) — Used on buttons, chips, tabs.
 
 ### Interaction State Layers
-- **Hover:** ${Number(state.hover.$value) * 100}% overlay of paired \`on-*\` token.
-- **Focus:** ${Number(state.focus.$value) * 100}% overlay + ${state.focusRingWidth.$value} outline ring.
-- **Disabled:** ${Number(state.disabledContent.$value) * 100}% text opacity, ${Number(state.disabledContainer.$value) * 100}% container fill opacity.
+- **Hover:** ${Number(state?.hover?.$value || 0.08) * 100}% overlay of paired \`on-*\` token.
+- **Focus:** ${Number(state?.focus?.$value || 0.10) * 100}% overlay + ${state?.focusRingWidth?.$value || "3px"} outline ring.
+- **Disabled:** ${Number(state?.disabledContent?.$value || 0.38) * 100}% text opacity, ${Number(state?.disabledContainer?.$value || 0.12) * 100}% container fill opacity.
 
 ## 3. Core Component Library (Certified Contracts)
 *Always import and compose certified primitives. Never construct ad-hoc HTML buttons or inputs.*

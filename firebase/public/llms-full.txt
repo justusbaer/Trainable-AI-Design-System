@@ -2,6 +2,31 @@
 
 > This document is the full, exhaustive reference for Trainable DS. You can inject this entire file into any AI agent system prompt to achieve 100% compliant Material Design 3 generation.
 
+## 0. Autonomous Website Extraction Protocol (Zero Process Knowledge)
+
+When prompted by the user:
+> *"Use Trainable Design System to extract the design system from <website url>"*
+
+The AI Agent autonomously executes the following procedure:
+
+1. **Invoke the Multi-Page Pipeline:**
+   ```bash
+   npx -y @trainable-ds/cli train --url "<website url>" --max-loops 3 --threshold 95
+   ```
+   *(Or over MCP: `harvest_design_system_site({ url: "<website url>", max_loops: 3, threshold: 95 })`)*
+
+2. **Automated Pipeline Execution:**
+   - **Archetype Sitemap Crawling:** Discovers internal links and classifies subpages into UX archetypes (`home`, `listing`, `detail`, `form`, `content`).
+   - **Deep Asset Harvesting:** Extracts `@font-face` CDN `.woff2` font declarations into `fonts.json` and pierces Web Component Shadow DOMs (e.g. `<p-icon>`, `<p-button>`) to extract raw SVG vectors into `icons.json`.
+   - **Visual Drift & Convergence Loops:** Analyzes runtime computed styles (geometry, OKLab color ΔE, typography, materials) and runs refinement loops until cross-page compliance meets or exceeds 95%.
+   - **Emits 6-Asset Bundle:** `tokens.json`, `components.json`, `fonts.json`, `icons.json`, `DESIGN.md`, and `overview.html`.
+
+3. **Launch Human Reviewer Portal:**
+   ```bash
+   npx -y @trainable-ds/cli serve --port 5000
+   ```
+   Provides `http://localhost:5000/overview.html` for interactive human inspection and live overrides with disk locking (`tds:locked: true`).
+
 ---
 
 ## 1. System Foundations (Material Design 3 Depth)

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Porsche Design System — Design System Overview & Human Reviewer Portal</title>
+  
+  <style>
+    @font-face {
+  font-family: 'Porsche Next';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Porsche Next';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-bold.woff2') format('woff2');
+}
+
+
+
+    :root {
+      --font-brand: "Porsche Next", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+      /* Dark Theme Defaults */
+      --bg-canvas: #090a0f;
+      --bg-surface: #13151f;
+      --bg-surface-elevated: #1a1d2b;
+      --bg-surface-card: #1f2335;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: #3b82f6;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-primary: #3b82f6;
+      --accent-success: #10b981;
+      --accent-warning: #f59e0b;
+      --accent-danger: #ef4444;
+
+      /* Brand Token Live Overrides */
+      --pds-primary: #ffffff;
+      --pds-surface: #19191a;
+      --pds-radius-button: 9999px;
+      --pds-padding-button: 16px 28px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-brand);
+      background: var(--bg-canvas);
+      color: var(--text-primary);
+      line-height: 1.5;
+      padding-bottom: 5rem;
+    }
+
+    /* Top Sticky Header */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(19, 21, 31, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .brand-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .badge-pill {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-score {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      padding: 0.2rem 0.6rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-save {
+      background: var(--accent-primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.25rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-save:hover { background: #2563eb; transform: translateY(-1px); }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0 2rem;
+      background: var(--bg-surface);
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 1rem 1.25rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .tab-btn:hover { color: var(--text-primary); }
+    .tab-btn.active {
+      color: var(--accent-primary);
+      border-bottom-color: var(--accent-primary);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Section Cards */
+    .section-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Grid Layouts */
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .token-card {
+      background: var(--bg-surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .token-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .token-name {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .token-preview-color {
+      height: 48px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .override-control-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .input-override {
+      flex: 1;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+    }
+
+    .input-override:focus {
+      outline: none;
+      border-color: var(--border-focus);
+    }
+
+    .color-picker-input {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    /* Pill/Radio Controls */
+    .segmented-control {
+      display: flex;
+      background: var(--bg-canvas);
+      border-radius: 6px;
+      padding: 2px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .segmented-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.35rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .segmented-btn.active {
+      background: var(--accent-primary);
+      color: white;
+    }
+
+    /* Live Component Sandbox */
+    .component-preview-box {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-sample-primary {
+      background: var(--pds-primary);
+      color: #000;
+      border: none;
+      border-radius: var(--pds-radius-button);
+      padding: var(--pds-padding-button);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+
+    .btn-sample-secondary {
+      background: rgba(156, 156, 159, 0.3);
+      backdrop-filter: blur(16px);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--pds-radius-button);
+      padding: var(--pds-padding-button);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Icon Grid */
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 1rem;
+    }
+
+    .icon-card {
+      background: var(--bg-surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: transform 0.1s, border-color 0.2s;
+    }
+
+    .icon-card:hover {
+      border-color: var(--accent-primary);
+      transform: translateY(-2px);
+    }
+
+    .icon-svg-wrapper {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-title {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-align: center;
+      word-break: break-word;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #10b981;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 200;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="header">
+    <div class="brand-title-group">
+      <div class="brand-title">Porsche Design System Overview</div>
+      <span class="badge-pill">v1.7.0</span>
+      <span class="badge-score">✔ 98% Aligned</span>
+    </div>
+
+    <div class="header-actions">
+      <span id="pending-count" style="font-size: 0.8rem; color: var(--text-muted);">0 overrides pending</span>
+      <button type="button" id="btn-save-all" class="btn-save">
+        💾 Save All Overrides to Disk
+      </button>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs">
+    <button type="button" class="tab-btn active" data-tab="foundations">Foundations & Tokens</button>
+    <button type="button" class="tab-btn" data-tab="components">Component Contracts (6 M3 Families)</button>
+    <button type="button" class="tab-btn" data-tab="icons">Icon Library (6)</button>
+    <button type="button" class="tab-btn" data-tab="diff">Reviewer Overrides & Diff</button>
+  </nav>
+
+  <div class="container">
+
+    <!-- Tab 1: Foundations -->
+    <div id="tab-foundations" class="tab-content active">
+      
+      <!-- Colors Section -->
+      <section class="section-card">
+        <div class="section-title">
+          <span>Semantic Color Roles</span>
+          <span style="font-size:0.8rem; color:var(--text-muted); font-weight:normal;">Dual-Scheme (Light/Dark)</span>
+        </div>
+        <p class="section-desc">Extracted color tokens. Edit hex or pick colors below to override.</p>
+
+        <div class="token-grid">
+          
+          <div class="token-card" data-token="sys.color.primary">
+            <div class="token-header">
+              <span class="token-name">sys.color.primary</span>
+              <label style="font-size:0.75rem;"><input type="checkbox" class="lock-toggle" checked> Lock</label>
+            </div>
+            <div class="token-preview-color" style="background: #010205; color: #fff;">Primary Brand Fill</div>
+            <div class="override-control-row">
+              <input type="color" class="color-picker-input" value="#010205">
+              <input type="text" class="input-override" value="#010205" data-key="sys.color.primary">
+            </div>
+          </div>
+
+          <div class="token-card" data-token="sys.color.surface-container">
+            <div class="token-header">
+              <span class="token-name">sys.color.surface-container</span>
+              <label style="font-size:0.75rem;"><input type="checkbox" class="lock-toggle" checked> Lock</label>
+            </div>
+            <div class="token-preview-color" style="background: rgba(156, 156, 159, 0.3); color: #fff;">Surface Container</div>
+            <div class="override-control-row">
+              <input type="color" class="color-picker-input" value="#9c9c9f">
+              <input type="text" class="input-override" value="rgba(156, 156, 159, 0.3)" data-key="sys.color.surface-container">
+            </div>
+          </div>
+
+          <div class="token-card" data-token="sys.color.canvas">
+            <div class="token-header">
+              <span class="token-name">sys.color.canvas</span>
+              <label style="font-size:0.75rem;"><input type="checkbox" class="lock-toggle" checked> Lock</label>
+            </div>
+            <div class="token-preview-color" style="background: #000000; color: #fff;">Page Canvas Background</div>
+            <div class="override-control-row">
+              <input type="color" class="color-picker-input" value="#000000">
+              <input type="text" class="input-override" value="#000000" data-key="sys.color.canvas">
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Typography Section -->
+      <section class="section-card">
+        <div class="section-title">
+          <span>Typography & Loaded Webfonts</span>
+        </div>
+        <p class="section-desc">Active font family: <strong>Porsche Next</strong>. Rendered live via extracted @font-face declarations.</p>
+        
+        <div class="token-grid">
+          <div class="token-card" style="grid-column: 1 / -1;">
+            <div class="token-name">ref.typeface.brand</div>
+            <div class="override-control-row">
+              <input type="text" class="input-override" value="Porsche Next" data-key="ref.typeface.brand" style="font-size: 1rem;">
+            </div>
+            <div style="margin-top: 1rem; font-family: var(--font-brand); font-size: 2rem; font-weight: 700;">
+              The quick brown fox jumps over the lazy dog. 0123456789
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Geometry & Spacing Section -->
+      <section class="section-card">
+        <div class="section-title">
+          <span>Component Geometry & Corner Radii</span>
+        </div>
+        <p class="section-desc">Button corner shape and padding tokens.</p>
+        
+        <div class="token-grid">
+          <div class="token-card">
+            <div class="token-name">comp.button.shape.corner</div>
+            <div class="segmented-control" id="ctrl-btn-shape">
+              <button type="button" class="segmented-btn active" data-val="9999px">Full Pill</button>
+              <button type="button" class="segmented-btn" data-val="12px">Rounded Rect (12px)</button>
+              <button type="button" class="segmented-btn" data-val="4px">Square (4px)</button>
+            </div>
+          </div>
+
+          <div class="token-card">
+            <div class="token-name">comp.button.spacing.padding</div>
+            <div class="override-control-row">
+              <input type="text" class="input-override" id="ctrl-btn-padding" value="16px 28px" data-key="comp.button.spacing.padding">
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Tab 2: Components -->
+    <div id="tab-components" class="tab-content">
+      <section class="section-card">
+        <div class="section-title">Actions Family: Button Component Contract</div>
+        <p class="section-desc">Live interactive preview reflecting current tokens and reviewer overrides.</p>
+
+        <div class="component-preview-box">
+          <button type="button" class="btn-sample-primary">
+            <span>Primary Action</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+
+          <button type="button" class="btn-sample-secondary">
+            <span>Secondary Action</span>
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <!-- Tab 3: Icons -->
+    <div id="tab-icons" class="tab-content">
+      <section class="section-card">
+        <div class="section-title">
+          <span>Extracted SVG Icons (6)</span>
+          <input type="text" id="icon-search" placeholder="Filter icons..." class="input-override" style="max-width: 250px;">
+        </div>
+        <p class="section-desc">Extracted directly from source SVGs and custom icon shadow roots. Click any icon to copy its SVG.</p>
+
+        <div class="icon-grid" id="icon-grid-container">
+          
+            <div class="icon-card" data-name="arrow-right" data-svg="%3Csvg%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M5%2012h14M12%205l7%207-7%207%22%2F%3E%3C%2Fsvg%3E">
+              <div class="icon-svg-wrapper"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+              <span class="icon-title">arrow-right</span>
+            </div>
+          
+            <div class="icon-card" data-name="chevron-down" data-svg="%3Csvg%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M6%209l6%206%206-6%22%2F%3E%3C%2Fsvg%3E">
+              <div class="icon-svg-wrapper"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div>
+              <span class="icon-title">chevron-down</span>
+            </div>
+          
+            <div class="icon-card" data-name="filter" data-svg="%3Csvg%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M3%204h18v2l-7%208v6l-4%202v-8L3%206V4z%22%2F%3E%3C%2Fsvg%3E">
+              <div class="icon-svg-wrapper"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h18v2l-7 8v6l-4 2v-8L3 6V4z"/></svg></div>
+              <span class="icon-title">filter</span>
+            </div>
+          
+            <div class="icon-card" data-name="heart" data-svg="%3Csvg%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%3E%3Cpath%20d%3D%22M20.84%204.61a5.5%205.5%200%200%200-7.78%200L12%205.67l-1.06-1.06a5.5%205.5%200%200%200-7.78%207.78l1.06%201.06L12%2021.23l7.78-7.78%201.06-1.06a5.5%205.5%200%200%200%200-7.78z%22%2F%3E%3C%2Fsvg%3E">
+              <div class="icon-svg-wrapper"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+              <span class="icon-title">heart</span>
+            </div>
+          
+            <div class="icon-card" data-name="user" data-svg="%3Csvg%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%227%22%20r%3D%224%22%2F%3E%3Cpath%20d%3D%22M6%2021v-2a6%206%200%200%201%2012%200v2%22%2F%3E%3C%2Fsvg%3E">
+              <div class="icon-svg-wrapper"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg></div>
+              <span class="icon-title">user</span>
+            </div>
+          
+            <div class="icon-card" data-name="search" data-svg="%3Csvg%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%3E%3Ccircle%20cx%3D%2211%22%20cy%3D%2211%22%20r%3D%228%22%2F%3E%3Cpath%20d%3D%22M21%2021l-4.35-4.35%22%2F%3E%3C%2Fsvg%3E">
+              <div class="icon-svg-wrapper"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+              <span class="icon-title">search</span>
+            </div>
+          
+        </div>
+      </section>
+    </div>
+
+    <!-- Tab 4: Diff Inspector -->
+    <div id="tab-diff" class="tab-content">
+      <section class="section-card">
+        <div class="section-title">Reviewer Overrides Log</div>
+        <p class="section-desc">Tracks all manual overrides made on this page that will be saved to tokens.json and DESIGN.md.</p>
+
+        <table style="width:100%; border-collapse: collapse; font-size: 0.85rem; font-family: var(--font-mono);">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--border-subtle); text-align: left;">
+              <th style="padding: 0.75rem;">Token / Contract</th>
+              <th style="padding: 0.75rem;">Extracted Value</th>
+              <th style="padding: 0.75rem;">Human Override</th>
+              <th style="padding: 0.75rem;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="diff-table-body">
+            <tr><td colspan="4" style="padding: 1rem; color: var(--text-muted); text-align: center;">No overrides applied yet. Edit any token above to override.</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+
+  </div>
+
+  <div id="toast" class="toast">✔ Overrides saved to disk!</div>
+
+  <script>
+    // Embedded Initial Data
+    const INITIAL_TOKENS = {"$schema":"https://design-tokens.github.io/community-group/format/","version":"1.7.0","name":"Porsche Design System Tokens","ref":{"palette":{"primary":{"0":{"$value":"#000000","$type":"color","$description":"Absolute black"},"10":{"$value":"#010205","$type":"color","$description":"Porsche black tone 10 (Light primary, Dark canvas)"},"20":{"$value":"#0e0e12","$type":"color","$description":"Porsche deep charcoal / model signature"},"30":{"$value":"#19191a","$type":"color","$description":"Porsche dark surface"},"40":{"$value":"#242428","$type":"color","$description":"Contrast low (light)"},"50":{"$value":"#646572","$type":"color","$description":"Mid-tone slate"},"60":{"$value":"#8f91a3","$type":"color","$description":"Frosted tint base"},"70":{"$value":"#b2b2b8","$type":"color","$description":"Contrast lower (dark)"},"80":{"$value":"#dededf","$type":"color","$description":"Light surface container"},"90":{"$value":"#f1f1f4","$type":"color","$description":"Light surface"},"95":{"$value":"#f6f6f8","$type":"color","$description":"Dark contrast high base"},"98":{"$value":"#fafbff","$type":"color","$description":"Dark primary text"},"100":{"$value":"#ffffff","$type":"color","$description":"Absolute pure white"}},"feedback":{"info":{"light":{"$value":"#1a44ea","$type":"color"},"dark":{"$value":"#178bff","$type":"color"}},"success":{"light":{"$value":"#197e10","$type":"color"},"dark":{"$value":"#10c47f","$type":"color"}},"warning":{"light":{"$value":"#ac5102","$type":"color"},"dark":{"$value":"#f4882a","$type":"color"}},"error":{"light":{"$value":"#ba171f","$type":"color"},"dark":{"$value":"#fc4040","$type":"color"}}}}},"sys":{"color":{"light":{"canvas":{"$value":"#ffffff","$type":"color","$description":"Light page background canvas"},"surface":{"$value":"#f1f1f4","$type":"color","$description":"Light primary surface container"},"primary":{"$value":"#010205","$type":"color","$description":"High-emphasis primary brand fill/text"},"onPrimary":{"$value":"#ffffff","$type":"color","$description":"Text and icon on primary fill"},"frosted":{"$value":"hsla(240, 5%, 70%, 0.148)","$type":"color","$description":"Standard frosted overlay"},"frostedSoft":{"$value":"rgba(143, 145, 163, 0.06)","$type":"color","$description":"Subtle frosted background"},"frostedStrong":{"$value":"rgba(100, 101, 114, 0.236)","$type":"color","$description":"Elevated frosted button/card fill"},"contrastHigher":{"$value":"rgba(21, 21, 25, 0.8)","$type":"color","$description":"Primary high-emphasis typography"},"contrastHigh":{"$value":"rgba(26, 26, 30, 0.7)","$type":"color","$description":"Body and heading text"},"contrastMedium":{"$value":"rgba(17, 17, 19, 0.6)","$type":"color","$description":"Secondary copy and labels"},"contrastLow":{"$value":"rgba(36, 36, 40, 0.5)","$type":"color","$description":"De-emphasized captions and placeholders"},"contrastLower":{"$value":"rgba(79, 80, 89, 0.324)","$type":"color","$description":"Borders, dividers, and disabled states"},"info":{"$value":"#1a44ea","$type":"color","$description":"Informational badges and alerts"},"success":{"$value":"#197e10","$type":"color","$description":"Success confirmations and checkmarks"},"warning":{"$value":"#ac5102","$type":"color","$description":"Warnings and cautions"},"error":{"$value":"#ba171f","$type":"color","$description":"Destructive actions and validation errors"},"focus":{"$value":"#1a44ea","$type":"color","$description":"Accessible focus ring"},"backdrop":{"$value":"rgba(36, 36, 40, 0.5)","$type":"color","$description":"Modal and flyout scrim backdrop"}},"dark":{"canvas":{"$value":"#010205","$type":"color","$description":"Dark page background canvas"},"surface":{"$value":"#19191a","$type":"color","$description":"Dark primary surface container"},"primary":{"$value":"#fafbff","$type":"color","$description":"High-emphasis primary brand fill/text in dark mode"},"onPrimary":{"$value":"#010205","$type":"color","$description":"Text and icon on primary fill in dark mode"},"frosted":{"$value":"hsla(240, 2%, 43%, 0.228)","$type":"color","$description":"Dark standard frosted overlay"},"frostedSoft":{"$value":"rgba(65, 65, 70, 0.154)","$type":"color","$description":"Dark subtle frosted background"},"frostedStrong":{"$value":"rgba(156, 156, 159, 0.3)","$type":"color","$description":"Dark elevated frosted button/card fill"},"contrastHigher":{"$value":"rgba(246, 246, 248, 0.78)","$type":"color","$description":"Dark primary high-emphasis typography"},"contrastHigh":{"$value":"rgba(246, 246, 248, 0.67)","$type":"color","$description":"Dark body and heading text"},"contrastMedium":{"$value":"rgba(246, 246, 248, 0.56)","$type":"color","$description":"Dark secondary copy and labels"},"contrastLow":{"$value":"rgba(246, 246, 248, 0.45)","$type":"color","$description":"Dark de-emphasized captions"},"contrastLower":{"$value":"rgba(156, 156, 159, 0.302)","$type":"color","$description":"Dark borders, dividers, disabled states"},"info":{"$value":"#178bff","$type":"color","$description":"Dark informational badges"},"success":{"$value":"#10c47f","$type":"color","$description":"Dark success status"},"warning":{"$value":"#f4882a","$type":"color","$description":"Dark warning indicators"},"error":{"$value":"#fc4040","$type":"color","$description":"Dark destructive actions and validation errors"},"focus":{"$value":"#1a44ea","$type":"color","$description":"Accessible focus ring"},"backdrop":{"$value":"rgba(36, 36, 40, 0.5)","$type":"color","$description":"Dark modal scrim backdrop"}}},"typescale":{"fontFamily":{"porscheNext":{"$value":"\"Porsche Next\", \"Arial Narrow\", Arial, \"Heiti SC\", SimHei, sans-serif","$type":"fontFamily"}},"fontWeight":{"normal":{"$value":"400","$type":"fontWeight"},"semibold":{"$value":"600","$type":"fontWeight"},"bold":{"$value":"700","$type":"fontWeight"}},"lineHeight":{"normal":{"$value":"calc(6px + 2.125ex)","$type":"lineHeight"}},"tiers":{"2xs":{"$value":"0.75rem","$type":"dimension","$description":"Micro disclaimer, legal text (12px)"},"xs":{"$value":"0.875rem","$type":"dimension","$description":"Captions, small badges, timestamps (14px)"},"sm":{"$value":"1rem","$type":"dimension","$description":"Standard body text, base UI controls (16px)"},"md":{"$value":"clamp(1.13rem, 0.21vw + 1.08rem, 1.33rem)","$type":"dimension","$description":"Subheadings, large copy"},"lg":{"$value":"clamp(1.27rem, 0.51vw + 1.16rem, 1.78rem)","$type":"dimension","$description":"Section subheaders"},"xl":{"$value":"clamp(1.42rem, 0.94vw + 1.23rem, 2.37rem)","$type":"dimension","$description":"Section headings"},"2xl":{"$value":"clamp(1.6rem, 1.56vw + 1.29rem, 3.16rem)","$type":"dimension","$description":"Major section title"},"3xl":{"$value":"clamp(1.8rem, 2.41vw + 1.32rem, 4.21rem)","$type":"dimension","$description":"Page headline"},"4xl":{"$value":"clamp(2.03rem, 3.58vw + 1.31rem, 5.61rem)","$type":"dimension","$description":"Hero display title"},"5xl":{"$value":"clamp(2.28rem, 5.2vw + 1.24rem, 7.48rem)","$type":"dimension","$description":"Massive stage splash title"}}},"spacing":{"static":{"2xs":{"$value":"1px","$type":"dimension"},"xs":{"$value":"4px","$type":"dimension"},"sm":{"$value":"8px","$type":"dimension"},"md":{"$value":"16px","$type":"dimension"},"lg":{"$value":"32px","$type":"dimension"},"xl":{"$value":"48px","$type":"dimension"},"2xl":{"$value":"80px","$type":"dimension"}},"fluid":{"xs":{"$value":"clamp(4px, 0.25vw + 3px, 8px)","$type":"dimension"},"sm":{"$value":"clamp(8px, 0.5vw + 6px, 16px)","$type":"dimension"},"md":{"$value":"clamp(16px, 1.25vw + 12px, 36px)","$type":"dimension"},"lg":{"$value":"clamp(32px, 2.75vw + 23px, 76px)","$type":"dimension"},"xl":{"$value":"clamp(48px, 3vw + 38px, 96px)","$type":"dimension"},"2xl":{"$value":"clamp(80px, 7.5vw + 56px, 200px)","$type":"dimension"}}},"radius":{"xs":{"$value":"2px","$type":"dimension"},"sm":{"$value":"4px","$type":"dimension"},"md":{"$value":"6px","$type":"dimension"},"lg":{"$value":"8px","$type":"dimension"},"xl":{"$value":"12px","$type":"dimension","$description":"Standard Porsche button and card corner radius"},"2xl":{"$value":"16px","$type":"dimension"},"3xl":{"$value":"24px","$type":"dimension"},"4xl":{"$value":"32px","$type":"dimension"},"full":{"$value":"9999px","$type":"dimension","$description":"Pill / circular radius"}},"elevation":{"shadowSm":{"$value":"0px 3px 8px rgba(0, 0, 0, 0.16)","$type":"shadow"},"shadowMd":{"$value":"0px 4px 16px rgba(0, 0, 0, 0.16)","$type":"shadow"},"shadowLg":{"$value":"0px 8px 40px rgba(0, 0, 0, 0.16)","$type":"shadow"},"blurFrosted":{"$value":"blur(32px)","$type":"filter","$description":"Porsche frosted glass backdrop blur"}},"motion":{"duration":{"sm":{"$value":"0.25s","$type":"duration","$description":"Short micro-interactions, hover"},"md":{"$value":"0.4s","$type":"duration","$description":"Standard element transitions, dropdowns"},"lg":{"$value":"0.6s","$type":"duration","$description":"Drawer, modal enter/exit"},"xl":{"$value":"1.2s","$type":"duration","$description":"Stage hero animations"}},"easing":{"base":{"$value":"cubic-bezier(0.25, 0.1, 0.25, 1)","$type":"cubicBezier","$description":"Porsche standard ease-in-out"},"in":{"$value":"cubic-bezier(0, 0, 0.2, 1)","$type":"cubicBezier"},"out":{"$value":"cubic-bezier(0.4, 0, 0.5, 1)","$type":"cubicBezier"}}}}};
+    const INITIAL_COMPONENTS = {"version":"1.7.0","system":"Porsche Design System","pdsVersion":"4.5.0","lastUpdated":"2026-09-05T14:05:00.000Z","components":{"Button":{"name":"Button","tag":"p-button","family":"actions","description":"Standard interactive primary or secondary action button with high-contrast pill styling, optional icon, and loading state.","anatomy":{"container":{"standard":{"minTouchTarget":"48px (enforced)","height":"56px","padding":"16px 28px","borderRadius":"var(--p-radius-xl) /* 12px */"},"compact":{"minTouchTarget":"48px (enforced via hit-box)","height":"36px","padding":"6px 16px","borderRadius":"var(--p-radius-lg) /* 8px */"},"iconOnly":{"width":"56px","height":"56px","padding":"16px","borderRadius":"var(--p-radius-full) /* calc(infinity * 1px) / 1.67772e+07px */"}},"content":{"label":"var(--p-typescale-sm) var(--p-font-porsche-next)","iconSlot":"p-icon","loadingSlot":"spinner / status"}},"variants":{"primary":{"background":"var(--p-color-primary)","color":"var(--p-color-canvas) / #ffffff","hover":"var(--p-color-contrast-high)","backdropFilter":"var(--p-blur-frosted) /* blur(32px) */"},"secondary":{"background":"var(--p-color-frosted-strong)","color":"var(--p-color-primary)","hover":"var(--p-color-frosted)","backdropFilter":"var(--p-blur-frosted) /* blur(32px) */"}},"observedAttributes":["variant","type","name","value","disabled","loading","icon","icon-source","hide-label","compact","aria","form"],"a11y":{"minTouchTarget":"48x48px","focusIndicator":"2px outline var(--p-color-focus) with 2px offset","requiredAria":["aria-label (when hide-label=true)"]},"rules":["Always use <p-button> instead of raw HTML <button>.","Maintain touch targets >= 48x48px for all touch surfaces.","Labels MUST use sentence case (e.g., 'Discover models', 'Save configuration').","When hide-label=true, provide an explicit aria attribute."],"examples":["<p-button variant=\"primary\">Discover models</p-button>","<p-button variant=\"secondary\" icon=\"arrow-right\">Configure now</p-button>","<p-button variant=\"secondary\" hide-label=\"true\" icon=\"play\" aria='{\"aria-label\": \"Play video\"}'></p-button>"]},"ButtonPure":{"name":"ButtonPure","tag":"p-button-pure","family":"actions","description":"Minimal text-only or icon button without container background, with optional underline and active highlight.","anatomy":{"container":{"minTouchTarget":"48px (enforced via hit-box)"}},"variants":{"default":{"color":"var(--p-color-primary)"}},"observedAttributes":["value","type","name","disabled","loading","size","color","icon","icon-source","underline","active","hide-label","align-label","stretch","aria","form"],"a11y":{"minTouchTarget":"48x48px","focusIndicator":"2px outline var(--p-color-focus)"},"rules":["Use for understated actions, inline triggers, or dialog dismissals."],"examples":["<p-button-pure icon=\"arrow-right\">Learn more</p-button-pure>","<p-button-pure underline=\"true\">View details</p-button-pure>"]},"Link":{"name":"Link","tag":"p-link","family":"navigation","description":"Primary or secondary navigational link styled with button-like appearance or link pill.","anatomy":{"container":{"minTouchTarget":"48px (enforced)","height":"56px / 40px"}},"variants":{"primary":{"background":"var(--p-color-primary)","color":"var(--p-color-canvas)"},"secondary":{"background":"var(--p-color-frosted-strong)","color":"var(--p-color-primary)"}},"observedAttributes":["variant","icon","icon-source","href","target","download","rel","hide-label","compact","aria"],"a11y":{"minTouchTarget":"48x48px","focusIndicator":"2px outline var(--p-color-focus)"},"rules":["Use <p-link> for navigation between URLs; use <p-button> for in-page actions."],"examples":["<p-link href=\"/models\" variant=\"primary\">Explore all models</p-link>","<p-link href=\"/dealer\" variant=\"secondary\" icon=\"locate\">Find a dealer</p-link>"]},"LinkPure":{"name":"LinkPure","tag":"p-link-pure","family":"navigation","description":"Pure text link with optional icon and animated hover underline.","anatomy":{"container":{"minTouchTarget":"48px"}},"variants":{"default":{"color":"var(--p-color-primary)"}},"observedAttributes":["align-label","stretch","size","color","icon","icon-source","underline","href","active","hide-label","target","download","rel","aria"],"a11y":{"minTouchTarget":"48x48px"},"rules":["Ideal for card actions, inline references, and model links."],"examples":["<p-link-pure href=\"/911\" icon=\"arrow-right\">Discover the 911</p-link-pure>"]},"LinkTile":{"name":"LinkTile","tag":"p-link-tile","family":"navigation","description":"High-impact visual card tile combining media, gradient overlay, title, and link navigation.","anatomy":{"container":{"borderRadius":"var(--p-radius-3xl) /* 24px */","overflow":"hidden"},"media":"img, video, or picture slot","overlay":"linear-gradient / frosted backdrop"},"variants":{"default":{"aspectRatio":"16:9 / 4:3 / 3:4 / 1:1"}},"observedAttributes":["size","weight","aspect-ratio","label","description","align","gradient","compact","href","target","download","rel","aria"],"a11y":{"requiredAria":["aria-label"]},"rules":["Enclose media inside <p-link-tile> and pass label as descriptive text."],"examples":["<p-link-tile href=\"/eyewear\" label=\"Discover eyewear\" description=\"Porsche Design Collection\">\n  <img src=\"/images/eyewear.jpg\" alt=\"Porsche Eyewear\" />\n</p-link-tile>"]},"LinkTileProduct":{"name":"LinkTileProduct","tag":"p-link-tile-product","family":"navigation","description":"E-commerce product card tile displaying price, original price, description, and wishlist like-button.","anatomy":{"container":{"borderRadius":"var(--p-radius-xl)"}},"variants":{"default":{}},"observedAttributes":["heading","price","price-original","description","like-button","liked","href","aspect-ratio","target","rel"],"a11y":{"minTouchTarget":"48x48px"},"rules":["Must format price according to locale."],"examples":["<p-link-tile-product heading=\"Chronograph 1\" price=\"€9,950\" href=\"/shop/chronograph\">\n  <img src=\"/watch.jpg\" alt=\"Chronograph 1\" />\n</p-link-tile-product>"]},"Display":{"name":"Display","tag":"p-display","family":"typography","description":"Massive stage display typography for hero headers and splash showcases.","anatomy":{"typography":"Porsche Next, 3xl - 5xl fluid scale"},"variants":{"small":{"size":"var(--p-typescale-3xl)"},"medium":{"size":"var(--p-typescale-4xl)"},"large":{"size":"var(--p-typescale-5xl)"}},"observedAttributes":["tag","size","align","color","ellipsis"],"a11y":{"headingOrder":"Match tag to semantic document hierarchy (h1-h6)"},"rules":["Never use display typography for body text."],"examples":["<p-display tag=\"h1\" size=\"medium\">Cayenne Turbo Coupé Electric.</p-display>"]},"Heading":{"name":"Heading","tag":"p-heading","family":"typography","description":"Standard section and screen heading component.","anatomy":{"typography":"Porsche Next, xs - 2xl fluid scale"},"variants":{"small":{"size":"var(--p-typescale-sm)"},"medium":{"size":"var(--p-typescale-md)"},"large":{"size":"var(--p-typescale-lg)"},"xl":{"size":"var(--p-typescale-xl)"},"2xl":{"size":"var(--p-typescale-2xl)"}},"observedAttributes":["tag","size","weight","align","color","hyphens","ellipsis"],"a11y":{"headingOrder":"Enforce semantic heading structure"},"rules":["Headings must use sentence case."],"examples":["<p-heading tag=\"h2\" size=\"xl\" weight=\"semibold\">Find your new or pre-owned Porsche.</p-heading>"]},"Text":{"name":"Text","tag":"p-text","family":"typography","description":"General interface body text, captions, and disclaimers.","anatomy":{"typography":"Porsche Next, 2xs - sm"},"variants":{"xx-small":{"size":"var(--p-typescale-2xs)"},"x-small":{"size":"var(--p-typescale-xs)"},"small":{"size":"var(--p-typescale-sm)"},"medium":{"size":"var(--p-typescale-md)"}},"observedAttributes":["tag","size","weight","align","color","hyphens","ellipsis"],"a11y":{},"rules":["Use contrast-high for readability on light or dark surfaces."],"examples":["<p-text size=\"small\" color=\"contrast-high\">Experience pure driving dynamics.</p-text>","<p-text size=\"xx-small\" color=\"contrast-low\">Combined power consumption: 22.0 – 20.0 kWh/100 km.</p-text>"]},"Icon":{"name":"Icon","tag":"p-icon","family":"communication","description":"Official Porsche icon glyph rendering standard navigational and vehicle icons.","anatomy":{"box":"24x24px"},"variants":{"small":{"size":"16px"},"medium":{"size":"24px"},"large":{"size":"32px"}},"observedAttributes":["name","source","color","size","aria"],"a11y":{"decorative":"aria-hidden=\"true\" when paired with text label"},"rules":["Always accompany icon-only buttons with an aria-label."],"examples":["<p-icon name=\"arrow-right\" size=\"medium\"></p-icon>","<p-icon name=\"locate\" size=\"small\"></p-icon>"]},"Tag":{"name":"Tag","tag":"p-tag","family":"communication","description":"Categorical badge or chip used for vehicle fuel types, features, and model tags.","anatomy":{"container":{"height":"22px (21.75px computed)","padding":"4px 12px","borderRadius":"var(--p-radius-full) /* 14.875px pill */","backdropFilter":"var(--p-blur-frosted) /* blur(32px) */"}},"variants":{"primary":{"background":"var(--p-color-surface)","color":"var(--p-color-primary)"},"compact":{"padding":"2px 6px"}},"observedAttributes":["variant","icon","icon-source","compact"],"a11y":{},"rules":["Keep labels brief and clear."],"examples":["<p-tag color=\"primary\">Petrol</p-tag>","<p-tag color=\"primary\" icon=\"lightning\">Electric</p-tag>"]},"TagDismissible":{"name":"TagDismissible","tag":"p-tag-dismissible","family":"communication","description":"Interactive filter chip with dismiss action.","anatomy":{"container":{"minTouchTarget":"48px"}},"variants":{"default":{}},"observedAttributes":["label","aria","compact"],"a11y":{"touchTarget":">= 48px dismiss tap target"},"rules":["Emit dismissal event on click."],"examples":["<p-tag-dismissible label=\"Transmission: Automatic\"></p-tag-dismissible>"]},"Modal":{"name":"Modal","tag":"p-modal","family":"containment","description":"Dialog overlay with frosted backdrop scrim and focus trapping.","anatomy":{"container":{"borderRadius":"var(--p-radius-xl)","background":"var(--p-color-canvas)","padding":"var(--p-spacing-static-lg)"},"backdrop":"var(--p-color-backdrop) with blur(32px)"},"variants":{"default":{},"fullscreen":{}},"observedAttributes":["open","dismiss-button","disable-backdrop-click","backdrop","background","fullscreen","aria"],"a11y":{"role":"dialog","ariaModal":"true","focusTrap":"true"},"rules":["Ensure escape key closes the modal."],"examples":["<p-modal open=\"true\" heading=\"Cookie Preferences\">\n  <p-text>Manage your privacy settings.</p-text>\n</p-modal>"]},"Flyout":{"name":"Flyout","tag":"p-flyout","family":"containment","description":"Slide-out panel drawer anchored to start, end, top, or bottom.","anatomy":{"container":{"background":"var(--p-color-surface)","shadow":"var(--p-shadow-lg)"}},"variants":{"start":{},"end":{},"top":{},"bottom":{}},"observedAttributes":["open","position","disable-backdrop-click","background","backdrop","footer-behavior","fullscreen","aria"],"a11y":{"focusTrap":"true"},"rules":["Use for mobile navigation, filter panels, and configuration drawers."],"examples":["<p-flyout open=\"true\" position=\"end\">\n  <p-heading size=\"large\">Filter results</p-heading>\n</p-flyout>"]},"Accordion":{"name":"Accordion","tag":"p-accordion","family":"containment","description":"Collapsible disclosure section for FAQs and technical specifications.","anatomy":{"detailsRadius":"var(--p-radius-2xl) /* 16px */","border":"1px solid var(--p-color-contrast-lower)"},"variants":{"default":{},"compact":{}},"observedAttributes":["open","align-marker","background","compact","indent","size","heading","heading-tag","sticky"],"a11y":{"ariaExpanded":"true/false","keyboardAccessible":"true"},"rules":["Always use semantic heading tags inside."],"examples":["<p-accordion heading=\"Technical Specs\" heading-tag=\"h3\">\n  <p-text>Top speed: 305 km/h</p-text>\n</p-accordion>"]},"Divider":{"name":"Divider","tag":"p-divider","family":"containment","description":"1px subtle boundary divider between layout blocks.","anatomy":{"height":"1px","color":"var(--p-color-contrast-lower)"},"variants":{"horizontal":{},"vertical":{}},"observedAttributes":["color","direction"],"a11y":{"role":"separator"},"rules":["Do not use heavy contrasting borders where a divider suffices."],"examples":["<p-divider></p-divider>"]},"Table":{"name":"Table","tag":"p-table","family":"containment","description":"Data table container with sticky header support and responsive scrolling.","anatomy":{"container":{"borderRadius":"var(--p-radius-md)"}},"variants":{"default":{},"compact":{}},"observedAttributes":["caption","compact","layout","sticky"],"a11y":{"caption":"Required caption or aria-label"},"rules":["Include descriptive caption."],"examples":["<p-table caption=\"Fuel consumption data\"></p-table>"]},"InputSearch":{"name":"InputSearch","tag":"p-input-search","family":"text-inputs","description":"Interactive search input with search glyph, clear button, and autocomplete support.","anatomy":{"container":{"minHeight":"48px","borderRadius":"var(--p-radius-md)","background":"var(--p-color-canvas)"}},"variants":{"default":{},"compact":{}},"observedAttributes":["value","label","description","compact","name","auto-complete","clear","indicator","read-only","form","max-length","min-length","placeholder","disabled","required","loading","state","message","hide-label","aria"],"a11y":{"minTouchTarget":"48x48px","labelConnected":"true"},"rules":["Always provide accessible label even if visually hidden."],"examples":["<p-input-search label=\"Search dealer location\" placeholder=\"Postal code or city\" clear=\"true\"></p-input-search>"]},"TextField":{"name":"TextField","tag":"p-text-field","family":"text-inputs","description":"Single-line form input with floating label, validation states, and message slots.","anatomy":{"minHeight":"48px","borderRadius":"var(--p-radius-md)"},"variants":{"default":{},"compact":{}},"observedAttributes":["value","label","description","placeholder","name","disabled","required","state","message"],"a11y":{"focusIndicator":"2px outline var(--p-color-focus)"},"rules":["Show validation message when state is error."],"examples":["<p-text-field label=\"Full name\" placeholder=\"Enter your name\"></p-text-field>"]},"Textarea":{"name":"Textarea","tag":"p-textarea","family":"text-inputs","description":"Multi-line text input with character counter and auto-resizing.","anatomy":{"borderRadius":"var(--p-radius-md)"},"variants":{"default":{}},"observedAttributes":["value","label","description","compact","name","state","message","counter","rows","max-length"],"a11y":{},"rules":["Clearly state max character length."],"examples":["<p-textarea label=\"Inquiry details\" counter=\"true\" max-length=\"500\"></p-textarea>"]},"Select":{"name":"Select","tag":"p-select","family":"text-inputs","description":"Dropdown selection control with custom chevron indicator.","anatomy":{"minHeight":"48px","borderRadius":"var(--p-radius-md)"},"variants":{"default":{},"compact":{}},"observedAttributes":["value","isOpen","label","description","name","state","message","disabled","required"],"a11y":{"minTouchTarget":"48x48px"},"rules":["Group complex choices using <p-optgroup>."],"examples":["<p-select label=\"Select vehicle model\"><p-option value=\"911\">911</p-option></p-select>"]},"MultiSelect":{"name":"MultiSelect","tag":"p-multi-select","family":"text-inputs","description":"Multi-item selection control with checkbox dropdown.","anatomy":{"minHeight":"48px"},"variants":{"default":{}},"observedAttributes":["value","isOpen","label","description","name","state","message","disabled","required"],"a11y":{},"rules":["Displays selected count or pill summary."],"examples":["<p-multi-select label=\"Select exterior packages\"></p-multi-select>"]},"PinCode":{"name":"PinCode","tag":"p-pin-code","family":"text-inputs","description":"Discrete digit input boxes for 2FA and verification codes.","anatomy":{"minHeight":"48px"},"variants":{"default":{}},"observedAttributes":["label","length","type","value","state","disabled"],"a11y":{},"rules":["Automatically focus next field upon input."],"examples":["<p-pin-code length=\"6\" label=\"Verification code\"></p-pin-code>"]},"Checkbox":{"name":"Checkbox","tag":"p-checkbox","family":"selection","description":"Form checkbox with indeterminate state and touch target area.","anatomy":{"touchTarget":"48x48px","box":"28x28px","borderRadius":"var(--p-radius-lg) /* 8px */"},"variants":{"default":{},"compact":{}},"observedAttributes":["checked","indeterminate","disabled","required","name","value","label","state","message"],"a11y":{"minTouchTarget":"48x48px"},"rules":["Always wrap within 48x48px hit area."],"examples":["<p-checkbox label=\"I accept the terms and conditions\"></p-checkbox>"]},"RadioButton":{"name":"RadioButton","tag":"p-radio-button","family":"selection","description":"Single-choice radio selection control.","anatomy":{"touchTarget":"48x48px","circle":"28x28px","borderRadius":"var(--p-radius-full) /* calc(infinity * 1px) */"},"variants":{"default":{}},"observedAttributes":["checked","disabled","required","name","value","label"],"a11y":{"minTouchTarget":"48x48px"},"rules":["Group inside fieldset with common name."],"examples":["<p-radio-button name=\"transmission\" value=\"pdk\" label=\"Porsche Doppelkupplung (PDK)\"></p-radio-button>"]},"Switch":{"name":"Switch","tag":"p-switch","family":"selection","description":"Toggle switch for binary settings and preferences.","anatomy":{"touchTarget":"48x48px","track":"44x28px","borderRadius":"var(--p-radius-full) /* calc(infinity * 1px) */","backgroundColor":"var(--p-color-frosted-soft)"},"variants":{"default":{}},"observedAttributes":["checked","disabled","loading","align-label","stretch"],"a11y":{"role":"switch","ariaChecked":"true/false"},"rules":["Use for instant state changes without form submission."],"examples":["<p-switch label=\"Sport exhaust system\"></p-switch>"]},"SegmentedControl":{"name":"SegmentedControl","tag":"p-segmented-control","family":"selection","description":"Mutually exclusive pill selector for switching modes or views.","anatomy":{"container":{"height":"52px","background":"transparent"},"item":{"height":"52px","padding":"8px 12px","borderRadius":"var(--p-radius-xl) /* 12px */","background":"rgba(175, 175, 182, 0.15) /* frosted item fill */"}},"variants":{"default":{},"compact":{}},"observedAttributes":["value","label","description","name","compact","columns","disabled","no-wrap"],"a11y":{"role":"radiogroup"},"rules":["Keep segments to 2-5 options maximum."],"examples":["<p-segmented-control value=\"grid\"><p-segmented-control-item value=\"grid\">Grid</p-segmented-control-item><p-segmented-control-item value=\"list\">List</p-segmented-control-item></p-segmented-control>"]},"Tabs":{"name":"Tabs","tag":"p-tabs","family":"navigation","description":"Tabbed content navigation switching between views.","anatomy":{"indicator":"2px solid var(--p-color-primary)","height":"48px"},"variants":{"default":{},"compact":{}},"observedAttributes":["activeTabIndex","active-tab-index","size","background","weight"],"a11y":{"role":"tablist","keyboardAccessible":"Arrow keys navigation"},"rules":["Include matching tab panels."],"examples":["<p-tabs active-tab-index=\"0\"><p-tabs-item label=\"Overview\">Content</p-tabs-item></p-tabs>"]},"TabsBar":{"name":"TabsBar","tag":"p-tabs-bar","family":"navigation","description":"Header navigation tab bar without embedded content panels.","anatomy":{"container":{"scrollerRadius":"var(--p-radius-xl) /* 12px */","innerDivRadius":"var(--p-radius-lg) /* 8px */","scrollerPadding":"4px","background":"var(--p-color-surface) /* rgb(241, 241, 244) */"},"button":{"touchTarget":"48px (enforced)","height":"24px","padding":"12px 24px"}},"variants":{"default":{}},"observedAttributes":["activeTabIndex","active-tab-index","size","weight"],"a11y":{"role":"tablist"},"rules":["Synchronize active index with route changes."],"examples":["<p-tabs-bar active-tab-index=\"0\"><button type=\"button\">Exterior</button><button type=\"button\">Interior</button></p-tabs-bar>"]},"Pagination":{"name":"Pagination","tag":"p-pagination","family":"navigation","description":"Multi-page navigation controls with previous, next, and numbered page jumps.","anatomy":{"buttonTarget":"48x48px"},"variants":{"default":{}},"observedAttributes":["total-items-count","items-per-page","active-page","show-last-page","intl"],"a11y":{"navLabel":"aria-label=\"Pagination\""},"rules":["Provide localized labels for accessibility."],"examples":["<p-pagination total-items-count=\"120\" items-per-page=\"12\" active-page=\"1\"></p-pagination>"]},"Scroller":{"name":"Scroller","tag":"p-scroller","family":"navigation","description":"Horizontal carousel / content scroller with scroll indicators and snap points.","anatomy":{"scrollBar":"custom / hidden","indicators":"arrow buttons"},"variants":{"default":{}},"observedAttributes":["scrollToPosition","scrollbar","compact","sticky","align-scroll-indicator"],"a11y":{},"rules":["Support keyboard horizontal scroll."],"examples":["<p-scroller><div class=\"item\">1</div><div class=\"item\">2</div></p-scroller>"]},"Banner":{"name":"Banner","tag":"p-banner","family":"communication","description":"Prominent top banner for site-wide announcements, recalls, or promotions.","anatomy":{"background":"var(--p-color-frosted-strong)","padding":"var(--p-spacing-static-md)"},"variants":{"info":{},"warning":{},"error":{}},"observedAttributes":["open","heading","heading-tag","description","position","state","dismiss-button"],"a11y":{"role":"status"},"rules":["Include dismiss button when dismissible."],"examples":["<p-banner state=\"info\" heading=\"World Premiere\" description=\"Watch live now.\"></p-banner>"]},"InlineNotification":{"name":"InlineNotification","tag":"p-inline-notification","family":"communication","description":"In-context message box indicating status, error, warning, or action required.","anatomy":{"borderRadius":"var(--p-radius-lg)","padding":"16px"},"variants":{"info":{},"success":{},"warning":{},"error":{}},"observedAttributes":["heading","heading-tag","description","state","dismiss-button","action-label","action-loading"],"a11y":{"role":"alert"},"rules":["Use appropriate state color icon."],"examples":["<p-inline-notification state=\"warning\" heading=\"Delivery delayed\" description=\"Estimated delivery in 4 weeks.\"></p-inline-notification>"]},"Spinner":{"name":"Spinner","tag":"p-spinner","family":"communication","description":"Circular indeterminate loading spinner.","anatomy":{"size":"24px / 48px"},"variants":{"small":{"size":"16px"},"medium":{"size":"24px"},"large":{"size":"48px"}},"observedAttributes":["color","size","aria"],"a11y":{"role":"status","ariaLabel":"Loading"},"rules":["Always provide accessible description."],"examples":["<p-spinner size=\"medium\" aria='{\"aria-label\": \"Loading model data\"}'></p-spinner>"]},"Toast":{"name":"Toast","tag":"p-toast","family":"communication","description":"Transient notification toast appearing in screen corner.","anatomy":{"position":"fixed bottom-right","borderRadius":"var(--p-radius-lg)"},"variants":{"default":{}},"observedAttributes":[],"a11y":{"role":"status"},"rules":["Auto-dismiss within 4-6 seconds."],"examples":["<p-toast></p-toast>"]},"Popover":{"name":"Popover","tag":"p-popover","family":"communication","description":"Contextual floating tooltip / popover triggered on click or hover.","anatomy":{"borderRadius":"var(--p-radius-md)","background":"var(--p-color-canvas)"},"variants":{"top":{},"bottom":{},"left":{},"right":{}},"observedAttributes":["open","direction","description","compact","aria"],"a11y":{"role":"tooltip"},"rules":["Dismiss on escape key or outside click."],"examples":["<p-popover description=\"Detailed aerodynamic package explanation\"><p-button-pure icon=\"information\">Info</p-button-pure></p-popover>"]},"StepperHorizontal":{"name":"StepperHorizontal","tag":"p-stepper-horizontal","family":"navigation","description":"Step-by-step progress indicator for configuration flows and checkout.","anatomy":{"line":"2px solid var(--p-color-contrast-lower)"},"variants":{"small":{},"medium":{}},"observedAttributes":["size"],"a11y":{"ariaCurrent":"step"},"rules":["Indicate completed, active, and upcoming steps."],"examples":["<p-stepper-horizontal size=\"medium\"><p-stepper-horizontal-item state=\"complete\">Model</p-stepper-horizontal-item><p-stepper-horizontal-item state=\"current\">Exterior</p-stepper-horizontal-item></p-stepper-horizontal>"]},"Crest":{"name":"Crest","tag":"p-crest","family":"brand","description":"Official Porsche coat of arms crest emblem.","anatomy":{"ratio":"traditional crest shield"},"variants":{"default":{}},"observedAttributes":["href","target","aria"],"a11y":{"alt":"Porsche Crest"},"rules":["Do not alter colors or aspect ratio."],"examples":["<p-crest href=\"https://www.porsche.de\"></p-crest>"]},"Wordmark":{"name":"Wordmark","tag":"p-wordmark","family":"brand","description":"Official PORSCHE typographic brand wordmark.","anatomy":{"lettering":"Monospaced luxury brand lettering"},"variants":{"small":{},"medium":{},"large":{}},"observedAttributes":["size","href","target","aria"],"a11y":{"alt":"Porsche"},"rules":["Never re-type 'PORSCHE' using standard fonts; always use <p-wordmark>."],"examples":["<p-wordmark size=\"medium\" href=\"/\"></p-wordmark>"]},"ModelSignature":{"name":"ModelSignature","tag":"p-model-signature","family":"brand","description":"Official vector lettering script for Porsche model designations (911, Cayenne, Taycan, Panamera, Macan, 718).","anatomy":{"color":"var(--p-model-signature-color)"},"variants":{"718":{},"911":{},"taycan":{},"cayenne":{},"panamera":{},"macan":{}},"observedAttributes":["model","safe-zone","fetch-priority","lazy","size","color"],"a11y":{"alt":"Model designation"},"rules":["Use model-specific signature rather than regular text."],"examples":["<p-model-signature model=\"911\" size=\"medium\"></p-model-signature>"]},"Canvas":{"name":"Canvas","tag":"p-canvas","family":"containment","description":"Root layout shell component providing sidebars, navigation slots, and safe zones.","anatomy":{"safeZone":"var(--pds-internal-grid-safe-zone)"},"variants":{"default":{}},"observedAttributes":["sidebar-start-open","sidebar-end-open","background"],"a11y":{"role":"main"},"rules":["Enforces Porsche safe-zone padding."],"examples":["<p-canvas background=\"surface\"><slot></slot></p-canvas>"]},"Fieldset":{"name":"Fieldset","tag":"p-fieldset","family":"containment","description":"Accessible semantic container grouping related form inputs.","anatomy":{"margin":"var(--p-spacing-static-md)"},"variants":{"default":{}},"observedAttributes":["label","label-size","required","state","message","aria"],"a11y":{"role":"group"},"rules":["Provide descriptive legend/label."],"examples":["<p-fieldset label=\"Personal Information\"></p-fieldset>"]}}};
+    const OVERRIDES = {};
+
+    // Tab Navigation
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Handle Button Shape Override
+    document.querySelectorAll('#ctrl-btn-shape .segmented-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#ctrl-btn-shape .segmented-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const radius = btn.dataset.val;
+        document.documentElement.style.setProperty('--pds-radius-button', radius);
+        recordOverride('comp.button.shape.corner', radius);
+      });
+    });
+
+    // Handle Button Padding Override
+    document.getElementById('ctrl-btn-padding').addEventListener('input', (e) => {
+      const val = e.target.value;
+      document.documentElement.style.setProperty('--pds-padding-button', val);
+      recordOverride('comp.button.spacing.padding', val);
+    });
+
+    // Handle Color Inputs
+    document.querySelectorAll('.token-card').forEach(card => {
+      const colorPicker = card.querySelector('.color-picker-input');
+      const textInput = card.querySelector('.input-override');
+      const preview = card.querySelector('.token-preview-color');
+
+      if (colorPicker && textInput) {
+        colorPicker.addEventListener('input', (e) => {
+          textInput.value = e.target.value;
+          if (preview) preview.style.background = e.target.value;
+          recordOverride(textInput.dataset.key, e.target.value);
+        });
+
+        textInput.addEventListener('input', (e) => {
+          if (preview) preview.style.background = e.target.value;
+          recordOverride(textInput.dataset.key, e.target.value);
+        });
+      }
+    });
+
+    function recordOverride(key, value) {
+      if (!key) return;
+      OVERRIDES[key] = { value, locked: true };
+      updatePendingCount();
+      renderDiffTable();
+    }
+
+    function updatePendingCount() {
+      const count = Object.keys(OVERRIDES).length;
+      document.getElementById('pending-count').textContent = count + ' override(s) pending';
+    }
+
+    function renderDiffTable() {
+      const tbody = document.getElementById('diff-table-body');
+      const keys = Object.keys(OVERRIDES);
+      if (keys.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="padding: 1rem; color: var(--text-muted); text-align: center;">No overrides applied yet.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = keys.map(k => `
+        <tr style="border-bottom: 1px solid var(--border-subtle);">
+          <td style="padding: 0.75rem; color: #60a5fa;">${k}</td>
+          <td style="padding: 0.75rem; color: var(--text-muted); font-size: 0.75rem;">(extracted)</td>
+          <td style="padding: 0.75rem; color: #34d399; font-weight: 600;">${OVERRIDES[k].value}</td>
+          <td style="padding: 0.75rem;"><span style="color: #f59e0b;">● Overridden</span></td>
+        </tr>
+      `).join('');
+    }
+
+    // Save Overrides Button
+    document.getElementById('btn-save-all').addEventListener('click', async () => {
+      try {
+        const res = await fetch('/api/v1/override', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ overrides: OVERRIDES })
+        });
+
+        if (res.ok) {
+          showToast('✔ All overrides saved to tokens.json and DESIGN.md!');
+        } else {
+          // Fallback if not connected to live server: download updated tokens
+          downloadJson(OVERRIDES, 'tokens.overrides.json');
+          showToast('Saved to tokens.overrides.json (Static Mode)');
+        }
+      } catch (err) {
+        downloadJson(OVERRIDES, 'tokens.overrides.json');
+        showToast('Saved to tokens.overrides.json');
+      }
+    });
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3500);
+    }
+
+    function downloadJson(data, filename) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Icon Search Filter & Copy
+    document.getElementById('icon-search').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('.icon-card').forEach(card => {
+        const name = card.dataset.name.toLowerCase();
+        card.style.display = name.includes(q) ? 'flex' : 'none';
+      });
+    });
+
+    document.querySelectorAll('.icon-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const svg = decodeURIComponent(card.dataset.svg);
+        navigator.clipboard.writeText(svg);
+        showToast('Copied SVG: ' + card.dataset.name);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon.de — Porsche Design System Edition</title>
+  <link rel="stylesheet" href="../porsche-tokens.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--p-font-porsche-next);
+      background-color: var(--p-color-canvas);
+      color: var(--p-color-primary);
+      line-height: var(--p-typescale-line-height);
+      -webkit-font-smoothing: antialiased;
+      transition: background-color var(--p-motion-duration-md) var(--p-motion-easing-base),
+                  color var(--p-motion-duration-md) var(--p-motion-easing-base);
+    }
+
+    /* -----------------------------------------------------------------------
+       PORSCHE BUTTONS & INTERACTIVE TOKENS
+       ----------------------------------------------------------------------- */
+    .porsche-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      height: 56px;
+      padding: 16px 28px;
+      border-radius: var(--p-radius-xl);
+      border: none;
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      font-family: inherit;
+      font-size: var(--p-typescale-sm);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity var(--p-motion-duration-sm) var(--p-motion-easing-base),
+                  transform var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .porsche-btn-primary:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
+    .porsche-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      height: 56px;
+      padding: 16px 28px;
+      border-radius: var(--p-radius-xl);
+      border: 1px solid var(--p-color-contrast-lower);
+      background: var(--p-color-frosted-strong);
+      color: var(--p-color-primary);
+      backdrop-filter: var(--p-blur-frosted);
+      -webkit-backdrop-filter: var(--p-blur-frosted);
+      font-family: inherit;
+      font-size: var(--p-typescale-sm);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .porsche-btn-secondary:hover {
+      background: var(--p-color-frosted);
+    }
+
+    .porsche-btn-compact {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      height: 36px;
+      min-height: 36px;
+      padding: 6px 16px;
+      border-radius: var(--p-radius-lg);
+      border: 1px solid var(--p-color-contrast-lower);
+      background: var(--p-color-surface);
+      color: var(--p-color-primary);
+      font-family: inherit;
+      font-size: var(--p-typescale-xs);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color var(--p-motion-duration-sm) var(--p-motion-easing-base),
+                  background var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .porsche-btn-compact:hover {
+      border-color: var(--p-color-primary);
+      background: var(--p-color-frosted-soft);
+    }
+
+    .porsche-btn-pure {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      min-height: 48px;
+      padding: 4px 8px;
+      background: transparent;
+      border: none;
+      color: var(--p-color-primary);
+      font-family: inherit;
+      font-size: var(--p-typescale-sm);
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .porsche-btn-pure:hover {
+      opacity: 0.75;
+    }
+
+    .porsche-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      height: 22px;
+      padding: 4px 12px;
+      border-radius: var(--p-radius-full);
+      background: var(--p-color-surface);
+      color: var(--p-color-primary);
+      font-size: var(--p-typescale-2xs);
+      font-weight: 600;
+      border: 1px solid var(--p-color-contrast-lower);
+      backdrop-filter: var(--p-blur-frosted);
+      -webkit-backdrop-filter: var(--p-blur-frosted);
+      white-space: nowrap;
+    }
+
+    .porsche-tag-deal {
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      border-color: transparent;
+    }
+
+    /* -----------------------------------------------------------------------
+       HEADER & NAVIGATION BAR
+       ----------------------------------------------------------------------- */
+    .amz-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--p-color-canvas);
+      border-bottom: 1px solid var(--p-color-contrast-lower);
+      backdrop-filter: var(--p-blur-frosted);
+      -webkit-backdrop-filter: var(--p-blur-frosted);
+    }
+
+    .amz-main-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.5rem var(--pds-internal-grid-safe-zone);
+      height: 72px;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 0.35rem;
+      text-decoration: none;
+      color: var(--p-color-primary);
+    }
+
+    .brand-wordmark {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+    }
+
+    .brand-domain {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--p-color-contrast-medium);
+      letter-spacing: 0.05em;
+    }
+
+    .location-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.2;
+      padding: 4px 8px;
+    }
+    .loc-sub {
+      font-size: var(--p-typescale-2xs);
+      color: var(--p-color-contrast-medium);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .loc-main {
+      font-size: var(--p-typescale-xs);
+      font-weight: 700;
+      color: var(--p-color-primary);
+    }
+
+    /* Search Bar */
+    .amz-search-box {
+      flex: 1;
+      max-width: 760px;
+      display: flex;
+      align-items: center;
+      height: 48px;
+      background: var(--p-color-surface);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-xl);
+      padding: 3px;
+      transition: border-color var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .amz-search-box:focus-within {
+      border-color: var(--p-color-focus);
+      box-shadow: 0 0 0 2px var(--p-color-focus);
+    }
+
+    .search-category-select {
+      height: 100%;
+      border: none;
+      background: transparent;
+      padding: 0 1rem;
+      font-family: inherit;
+      font-size: var(--p-typescale-xs);
+      font-weight: 600;
+      color: var(--p-color-contrast-high);
+      outline: none;
+      cursor: pointer;
+      border-right: 1px solid var(--p-color-contrast-lower);
+    }
+
+    .search-input {
+      flex: 1;
+      height: 100%;
+      border: none;
+      background: transparent;
+      padding: 0 1rem;
+      font-family: inherit;
+      font-size: var(--p-typescale-sm);
+      color: var(--p-color-primary);
+      outline: none;
+    }
+    .search-input::placeholder {
+      color: var(--p-color-contrast-medium);
+    }
+
+    .search-submit-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--p-radius-lg);
+      border: none;
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .search-submit-btn:hover {
+      opacity: 0.85;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .user-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.2;
+    }
+
+    .cart-btn {
+      height: 42px;
+      border-radius: var(--p-radius-xl);
+      padding: 0 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      border: none;
+    }
+
+    /* Sub Navigation Bar */
+    .amz-sub-nav {
+      background: var(--p-color-surface);
+      border-bottom: 1px solid var(--p-color-contrast-lower);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--pds-internal-grid-safe-zone);
+      height: 44px;
+      overflow-x: auto;
+      gap: 1rem;
+    }
+
+    .subnav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      white-space: nowrap;
+    }
+
+    .subnav-link {
+      padding: 6px 12px;
+      border-radius: var(--p-radius-md);
+      font-size: var(--p-typescale-xs);
+      font-weight: 500;
+      color: var(--p-color-contrast-high);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .subnav-link:hover {
+      background: var(--p-color-frosted-soft);
+      color: var(--p-color-primary);
+    }
+
+    .subnav-sponsor {
+      font-size: var(--p-typescale-2xs);
+      color: var(--p-color-contrast-medium);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      white-space: nowrap;
+    }
+
+    /* -----------------------------------------------------------------------
+       MAIN CONTENT CONTAINER
+       ----------------------------------------------------------------------- */
+    .amz-stage {
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: 1.5rem var(--pds-internal-grid-safe-zone) 4rem var(--pds-internal-grid-safe-zone);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Top Announcement Banner */
+    .porsche-banner {
+      background: var(--p-color-frosted-strong);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-left: 4px solid var(--p-color-primary);
+      border-radius: var(--p-radius-lg);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: var(--p-blur-frosted);
+      -webkit-backdrop-filter: var(--p-blur-frosted);
+    }
+
+    /* -----------------------------------------------------------------------
+       ROW 1: HERO DEALS GRID
+       ----------------------------------------------------------------------- */
+    .deals-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1.25rem;
+    }
+
+    .deal-card {
+      background: var(--p-color-surface);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-xl);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1rem;
+      transition: transform var(--p-motion-duration-sm) var(--p-motion-easing-base),
+                  box-shadow var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .deal-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--p-shadow-md);
+    }
+
+    .card-title {
+      font-size: var(--p-typescale-md);
+      font-weight: 700;
+      color: var(--p-color-primary);
+      line-height: 1.25;
+    }
+
+    .card-subtitle {
+      font-size: var(--p-typescale-2xs);
+      color: var(--p-color-contrast-medium);
+      margin-top: 0.2rem;
+    }
+
+    /* 2x2 Sub-Grid for Card 1 */
+    .sub-grid-2x2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .product-subtile {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .tile-image-box {
+      background: var(--p-color-canvas);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-lg);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tile-image-box svg {
+      width: 70%;
+      height: 70%;
+      stroke: var(--p-color-primary);
+    }
+
+    .tile-caption {
+      font-size: var(--p-typescale-2xs);
+      font-weight: 500;
+      color: var(--p-color-contrast-high);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Visual Feature Cards (Pizza Oven, Deal Days, Burger, Study) */
+    .hero-visual-card {
+      background: var(--p-color-canvas);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-lg);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      aspect-ratio: 4 / 3;
+    }
+
+    .card-burger-hero {
+      background: linear-gradient(135deg, rgba(20,20,25,0.05), rgba(20,20,25,0.15)), var(--p-color-surface);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    /* -----------------------------------------------------------------------
+       ROW 2: HORIZONTAL RECOMMENDATION SCROLLER
+       ----------------------------------------------------------------------- */
+    .scroller-section {
+      background: var(--p-color-surface);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-2xl);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .scroller-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .scroller-track {
+      display: flex;
+      gap: 1rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.5rem;
+    }
+    .scroller-track::-webkit-scrollbar {
+      height: 6px;
+    }
+    .scroller-track::-webkit-scrollbar-thumb {
+      background: var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-full);
+    }
+
+    .product-card {
+      flex: 0 0 230px;
+      scroll-snap-align: start;
+      background: var(--p-color-canvas);
+      border: 1px solid var(--p-color-contrast-lower);
+      border-radius: var(--p-radius-xl);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.75rem;
+      transition: transform var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .product-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .prod-image-container {
+      aspect-ratio: 1;
+      background: var(--p-color-surface);
+      border-radius: var(--p-radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .prod-image-container svg {
+      width: 75%;
+      height: 75%;
+      stroke: var(--p-color-primary);
+    }
+
+    .prod-meta-label {
+      font-size: var(--p-typescale-2xs);
+      color: var(--p-color-contrast-medium);
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .prod-name {
+      font-size: var(--p-typescale-xs);
+      font-weight: 600;
+      color: var(--p-color-primary);
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .prod-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    .prod-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--p-color-primary);
+    }
+
+    /* -----------------------------------------------------------------------
+       CATEGORY FILTER CHIPS BAR
+       ----------------------------------------------------------------------- */
+    .chips-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .chips-row {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 0.25rem;
+    }
+
+    .porsche-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      height: 48px;
+      padding: 0 1.25rem;
+      border-radius: var(--p-radius-full);
+      border: 1px solid var(--p-color-contrast-lower);
+      background: var(--p-color-surface);
+      color: var(--p-color-primary);
+      font-family: inherit;
+      font-size: var(--p-typescale-xs);
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .porsche-chip:hover {
+      border-color: var(--p-color-primary);
+      background: var(--p-color-frosted-strong);
+    }
+    .porsche-chip.active {
+      background: var(--p-color-primary);
+      color: var(--p-color-canvas);
+      border-color: transparent;
+    }
+
+    /* -----------------------------------------------------------------------
+       FLYOUT DRAWER MENU ("ALLE")
+       ----------------------------------------------------------------------- */
+    .porsche-flyout-scrim {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: var(--p-blur-frosted);
+      -webkit-backdrop-filter: var(--p-blur-frosted);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--p-motion-duration-md) var(--p-motion-easing-base);
+    }
+    .porsche-flyout-scrim.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .porsche-flyout-drawer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 380px;
+      max-width: 85vw;
+      background: var(--p-color-canvas);
+      z-index: 1001;
+      transform: translateX(-100%);
+      transition: transform var(--p-motion-duration-lg) var(--p-motion-easing-base);
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--p-shadow-lg);
+    }
+    .porsche-flyout-scrim.open .porsche-flyout-drawer {
+      transform: translateX(0);
+    }
+
+    .flyout-header {
+      padding: 1.5rem;
+      background: var(--p-color-surface);
+      border-bottom: 1px solid var(--p-color-contrast-lower);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .flyout-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .flyout-section-title {
+      font-size: var(--p-typescale-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--p-color-contrast-medium);
+      margin-bottom: 0.5rem;
+    }
+
+    .flyout-nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 0;
+      color: var(--p-color-primary);
+      text-decoration: none;
+      font-size: var(--p-typescale-sm);
+      font-weight: 500;
+      border-bottom: 1px solid var(--p-color-contrast-lower);
+    }
+    .flyout-nav-item:hover {
+      color: var(--p-color-info);
+    }
+
+    /* -----------------------------------------------------------------------
+       FOOTER
+       ----------------------------------------------------------------------- */
+    .amz-footer {
+      background: var(--p-color-surface);
+      border-top: 1px solid var(--p-color-contrast-lower);
+      margin-top: 3rem;
+    }
+
+    .back-to-top-btn {
+      width: 100%;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      color: var(--p-color-primary);
+      font-family: inherit;
+      font-size: var(--p-typescale-xs);
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 1px solid var(--p-color-contrast-lower);
+    }
+    .back-to-top-btn:hover {
+      background: var(--p-color-frosted-soft);
+    }
+
+    .footer-links-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem var(--pds-internal-grid-safe-zone);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+
+    .footer-col-title {
+      font-size: var(--p-typescale-xs);
+      font-weight: 700;
+      color: var(--p-color-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-link-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-link-list a {
+      font-size: var(--p-typescale-2xs);
+      color: var(--p-color-contrast-medium);
+      text-decoration: none;
+      transition: color var(--p-motion-duration-sm) var(--p-motion-easing-base);
+    }
+    .footer-link-list a:hover {
+      color: var(--p-color-primary);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--p-color-contrast-lower);
+      padding: 1.5rem var(--pds-internal-grid-safe-zone);
+      text-align: center;
+      font-size: var(--p-typescale-2xs);
+      color: var(--p-color-contrast-low);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    /* -----------------------------------------------------------------------
+       RESPONSIVE BREAKPOINTS
+       ----------------------------------------------------------------------- */
+    @media (max-width: 1200px) {
+      .deals-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 860px) {
+      .deals-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .amz-main-nav {
+        height: auto;
+        flex-wrap: wrap;
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+      }
+      .amz-search-box {
+        order: 3;
+        width: 100%;
+        max-width: 100%;
+      }
+      .footer-links-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 540px) {
+      .deals-grid {
+        grid-template-columns: 1fr;
+      }
+      .location-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =======================================================================
+       TOP HEADER & SEARCH BAR
+       ======================================================================= -->
+  <header class="amz-header">
+    <div class="amz-main-nav">
+      <!-- Brand & Location -->
+      <div style="display:flex; align-items:center; gap:1.25rem;">
+        <a href="#" class="brand-wrap">
+          <span class="brand-wordmark">AMAZON</span>
+          <span class="brand-domain">.de</span>
+          <span class="porsche-tag porsche-tag-deal" style="margin-left:4px; font-size:0.65rem;">PRIME</span>
+        </a>
+
+        <!-- Location Pin -->
+        <button type="button" class="porsche-btn-pure location-btn" onclick="alert('Lieferadresse: Justus, 72072 Tübingen')">
+          <span class="loc-sub">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Lieferung an Justus
+          </span>
+          <span class="loc-main">72072 Tübingen</span>
+        </button>
+      </div>
+
+      <!-- Porsche Precision Search Bar -->
+      <form class="amz-search-box" onsubmit="event.preventDefault();">
+        <select class="search-category-select" aria-label="Kategorie auswählen">
+          <option>Alle</option>
+          <option>Elektronik &amp; Foto</option>
+          <option>Küche, Haushalt &amp; Wohnen</option>
+          <option>Prime Video</option>
+          <option>Bücher &amp; Audible</option>
+          <option>Computer &amp; Zubehör</option>
+        </select>
+        <input type="text" class="search-input" placeholder="Amazon.de durchsuchen (Porsche DS Engine)" aria-label="Suchbegriff" />
+        <button type="submit" class="search-submit-btn" aria-label="Suchen">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+      </form>
+
+      <!-- Account & Cart Actions -->
+      <div class="nav-actions">
+        <!-- Language -->
+        <button type="button" class="porsche-btn-pure" style="font-size:0.85rem;">
+          🇩🇪 DE ▾
+        </button>
+
+        <!-- Account -->
+        <button type="button" class="porsche-btn-pure user-btn">
+          <span style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">Hallo, Justus</span>
+          <span style="font-size:var(--p-typescale-xs); font-weight:700;">Konto und Listen ▾</span>
+        </button>
+
+        <!-- Orders -->
+        <button type="button" class="porsche-btn-pure user-btn">
+          <span style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">Warenrücksendungen</span>
+          <span style="font-size:var(--p-typescale-xs); font-weight:700;">&amp; Bestellungen</span>
+        </button>
+
+        <!-- Shopping Cart -->
+        <button type="button" class="cart-btn" onclick="alert('Warenkorb: 3 Artikel gespeichert.')">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span style="font-weight:600; font-size:var(--p-typescale-xs);">Warenkorb</span>
+          <span class="porsche-tag porsche-tag-deal" style="background:var(--p-color-canvas); color:var(--p-color-primary); font-size:0.75rem;">3</span>
+        </button>
+
+        <!-- Dual-Theme Toggle -->
+        <button type="button" id="theme-btn" class="porsche-btn-compact" title="Dark / Light Theme umschalten" onclick="toggleTheme()">
+          🌙
+        </button>
+      </div>
+    </div>
+
+    <!-- Sub Navigation Links Bar -->
+    <div class="amz-sub-nav">
+      <div class="subnav-links">
+        <button type="button" class="subnav-link" style="font-weight:700;" onclick="toggleFlyout(true)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          Alle
+        </button>
+
+        <!-- Rufus AI Chip -->
+        <span class="porsche-tag porsche-tag-deal" style="cursor:pointer;" onclick="alert('Rufus AI: Wie kann ich Ihnen heute bei Ihrer Auswahl helfen?')">
+          ✨ Rufus AI
+        </span>
+
+        <a href="#deals" class="subnav-link">Amazon Haul</a>
+        <a href="#deals" class="subnav-link">Same-Day Lieferung</a>
+        <a href="#deals" class="subnav-link">Prime Video</a>
+        <a href="#deals" class="subnav-link">Angebote</a>
+        <a href="#deals" class="subnav-link">Audible</a>
+        <a href="#deals" class="subnav-link">Amazon Business ▾</a>
+        <a href="#deals" class="subnav-link">Erneut kaufen</a>
+        <a href="#deals" class="subnav-link">Geschenkideen</a>
+      </div>
+
+      <!-- Sponsor Banner -->
+      <div class="subnav-sponsor">
+        <span>⚽ UEFA Champions League</span>
+        <strong>BVB - VIL</strong>
+        <span class="porsche-tag" style="height:18px; padding:2px 8px;">Dienstag 20:00 Prime</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- =======================================================================
+       MAIN STAGE
+       ======================================================================= -->
+  <main class="amz-stage">
+
+    <!-- Top Announcement Strip -->
+    <div class="porsche-banner">
+      <div style="display:flex; align-items:center; gap:0.75rem;">
+        <span style="font-size:1.25rem;">⚡</span>
+        <div>
+          <div style="font-size:var(--p-typescale-xs); font-weight:700;">Second Chance Deal Days (1.–10. Sept.)</div>
+          <div style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">Sparen Sie bis zu 50 % auf geprüfte B-Ware und zertifizierte Retouren.</div>
+        </div>
+      </div>
+      <a href="#deals" class="porsche-btn-compact">Jetzt entdecken &rarr;</a>
+    </div>
+
+    <!-- -------------------------------------------------------------------
+         ROW 1: HERO DEALS GRID (5 COLUMNS)
+         ------------------------------------------------------------------- -->
+    <section id="deals" class="deals-grid">
+
+      <!-- Card 1: Weitere Angebote für dich (2x2 Multi-Tile) -->
+      <div class="deal-card" style="border-top:3px solid var(--p-color-primary);">
+        <div>
+          <h2 class="card-title">Weitere Angebote für Sie</h2>
+          <p class="card-subtitle">Exklusiv zusammengestellt basierend auf Ihren Interessen</p>
+        </div>
+
+        <div class="sub-grid-2x2">
+          <!-- Item 1 -->
+          <a href="#" class="product-subtile">
+            <div class="tile-image-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M7 6V3h10v3"/><line x1="8" y1="11" x2="16" y2="11"/></svg>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+              <span class="porsche-tag porsche-tag-deal">39 % Rabatt</span>
+            </div>
+            <span class="tile-caption">Ninja Multikocher Grill</span>
+          </a>
+
+          <!-- Item 2 -->
+          <a href="#" class="product-subtile">
+            <div class="tile-image-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/></svg>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+              <span class="porsche-tag porsche-tag-deal">50 % Rabatt</span>
+            </div>
+            <span class="tile-caption">Roboter Absaugstation</span>
+          </a>
+
+          <!-- Item 3 -->
+          <a href="#" class="product-subtile">
+            <div class="tile-image-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="8"/><circle cx="12" cy="10" r="2"/></svg>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+              <span class="porsche-tag porsche-tag-deal">24 % Rabatt</span>
+            </div>
+            <span class="tile-caption">Smarter Saugroboter</span>
+          </a>
+
+          <!-- Item 4 -->
+          <a href="#" class="product-subtile">
+            <div class="tile-image-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/><path d="M19 19v2a2 2 0 0 1-2 2h-4"/></svg>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
+              <span class="porsche-tag porsche-tag-deal">19 % Rabatt</span>
+            </div>
+            <span class="tile-caption">HyperX Gaming Headset</span>
+          </a>
+        </div>
+
+        <a href="#" class="porsche-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
+          Alle Angebote anzeigen &rarr;
+        </a>
+      </div>
+
+      <!-- Card 2: Spielecke -->
+      <div class="deal-card">
+        <div>
+          <h2 class="card-title">Spielecke</h2>
+          <p class="card-subtitle">Noch mehr Spielspaß für die ganze Familie</p>
+        </div>
+
+        <div class="hero-visual-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" style="width:60%; height:60%; stroke:var(--p-color-primary);"><path d="M12 2a10 10 0 0 0-9.95 9h19.9A10 10 0 0 0 12 2z"/><path d="M2 13v5a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-5z"/><circle cx="8" cy="17" r="1"/><circle cx="16" cy="17" r="1"/></svg>
+          <div style="position:absolute; bottom:8px; left:8px;">
+            <span class="porsche-tag" style="background:var(--p-color-canvas);">Outdoor Pizzaofen Set</span>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:0.5rem;">
+          <div class="tile-image-box" style="flex:1; aspect-ratio:1.6;">
+            <span style="font-size:var(--p-typescale-2xs); font-weight:600;">Retro Konsole</span>
+          </div>
+          <div class="tile-image-box" style="flex:1; aspect-ratio:1.6;">
+            <span style="font-size:var(--p-typescale-2xs); font-weight:600;">Toy Blaster</span>
+          </div>
+        </div>
+
+        <a href="#" class="porsche-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
+          Sortiment entdecken &rarr;
+        </a>
+      </div>
+
+      <!-- Card 3: Second Chance Deal Days -->
+      <div class="deal-card">
+        <div>
+          <h2 class="card-title">Second Chance Deals</h2>
+          <p class="card-subtitle">Geprüfte Qualität • 1.–10. Sept.</p>
+        </div>
+
+        <div class="hero-visual-card" style="background:linear-gradient(180deg, var(--p-color-surface), var(--p-color-canvas));">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem; padding:1rem; text-align:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" style="width:48px; height:48px; stroke:var(--p-color-primary);"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <span style="font-size:var(--p-typescale-xs); font-weight:700;">Notebooks, Sound &amp; Smart Home</span>
+            <span class="porsche-tag porsche-tag-deal">Bis zu 50 % Sparen</span>
+          </div>
+        </div>
+
+        <p style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">
+          Vollständige Herstellerprüfung, inklusive gesetzlicher Gewährleistung und Rückgaberecht.
+        </p>
+
+        <a href="#" class="porsche-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
+          Jetzt Deals sichern &rarr;
+        </a>
+      </div>
+
+      <!-- Card 4: Inklusive bei Prime (Lieferando Burger Feature) -->
+      <div class="deal-card" style="background:var(--p-color-surface);">
+        <div>
+          <span class="porsche-tag" style="margin-bottom:0.4rem;">Inklusive bei Prime</span>
+          <h2 class="card-title">Kostenfreie Lieferung bei Lieferando</h2>
+          <p class="card-subtitle">Genießen Sie Restaurant-Spezialitäten ohne Liefergebühr</p>
+        </div>
+
+        <div class="card-burger-hero">
+          <div style="font-size:3.5rem;">🍔</div>
+          <div style="font-size:var(--p-typescale-xs); font-weight:600; color:var(--p-color-contrast-high);">
+            Beliebte Restaurants in Tübingen verfügbar
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:0.4rem;">
+          <button type="button" class="porsche-btn-primary" style="height:48px; width:100%;" onclick="alert('Prime Vorteil aktiviert!')">
+            Angebot jetzt sichern
+          </button>
+          <span style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-low); text-align:center;">
+            Nur für Prime Mitglieder. Es gelten die AGB.
+          </span>
+        </div>
+      </div>
+
+      <!-- Card 5: Neues fürs neue Schuljahr -->
+      <div class="deal-card">
+        <div>
+          <span class="porsche-tag" style="margin-bottom:0.4rem;">Neues Schuljahr</span>
+          <h2 class="card-title">Ab ins Studium</h2>
+          <p class="card-subtitle">Ausstattung &amp; Essentials für Campus und WG</p>
+        </div>
+
+        <div class="hero-visual-card" style="background:var(--p-color-canvas);">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:0.4rem; padding:1rem; text-align:center;">
+            <span style="font-size:3rem;">🛋️</span>
+            <span style="font-size:var(--p-typescale-xs); font-weight:700;">Schreibtisch, Beleuchtung &amp; Deko</span>
+          </div>
+        </div>
+
+        <p style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">
+          Erhalten Sie Studenten-Rabatte mit Prime Student und schnellem Gratisversand.
+        </p>
+
+        <a href="#" class="porsche-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
+          Kollektion ansehen &rarr;
+        </a>
+      </div>
+
+    </section>
+
+    <!-- -------------------------------------------------------------------
+         ROW 2: HORIZONTAL PRODUCT RECOMMENDATIONS SCROLLER
+         ------------------------------------------------------------------- -->
+    <section class="scroller-section">
+      <div class="scroller-header-row">
+        <div>
+          <h2 style="font-size:var(--p-typescale-lg); font-weight:700; color:var(--p-color-primary);">
+            Für Sie empfohlen
+          </h2>
+          <p style="font-size:var(--p-typescale-xs); color:var(--p-color-contrast-medium);">
+            Personalisierte Empfehlungen und beliebte Produkte
+          </p>
+        </div>
+
+        <div style="display:flex; gap:0.5rem;">
+          <button type="button" class="porsche-btn-compact" onclick="scrollTrack(-1)" aria-label="Vorherige">&lsaquo;</button>
+          <button type="button" class="porsche-btn-compact" onclick="scrollTrack(1)" aria-label="Nächste">&rsaquo;</button>
+        </div>
+      </div>
+
+      <div id="product-scroller" class="scroller-track">
+
+        <!-- Product 1 -->
+        <div class="product-card">
+          <div class="prod-meta-label">
+            <span>Gesponsert</span>
+            <span style="opacity:0.6;">ⓘ</span>
+          </div>
+          <div class="prod-image-container">
+            <span style="font-size:3rem;">🥩</span>
+          </div>
+          <div>
+            <div class="prod-name">Grizzly Beef Jerky Traditional • 85 g Premium Rindfleisch Snack</div>
+            <div class="prod-price-row" style="margin-top:0.4rem;">
+              <span class="prod-price">4,49 €</span>
+              <span style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">(52,82 € / kg)</span>
+            </div>
+          </div>
+          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('Beef Jerky')">
+            In den Einkaufswagen
+          </button>
+        </div>
+
+        <!-- Product 2 -->
+        <div class="product-card">
+          <div class="prod-meta-label">
+            <span>Weiter einkaufen</span>
+          </div>
+          <div class="prod-image-container">
+            <span style="font-size:3rem;">🔋</span>
+          </div>
+          <div>
+            <div class="prod-name">HTRC Smart Digital Balance Charger 80W • Mikroprozessor RC Lader</div>
+            <div class="prod-price-row" style="margin-top:0.4rem;">
+              <span class="prod-price">49,99 €</span>
+            </div>
+          </div>
+          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('RC Lader')">
+            In den Einkaufswagen
+          </button>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card">
+          <div class="prod-meta-label">
+            <span>Gesponsert</span>
+            <span class="porsche-tag porsche-tag-deal" style="margin-left:auto;">42 % Rabatt</span>
+          </div>
+          <div class="prod-image-container">
+            <span style="font-size:3rem;">🤖</span>
+          </div>
+          <div>
+            <div class="prod-name">Roborock S8 Pro Ultra • Intelligente All-in-One Reinigungsstation</div>
+            <div class="prod-price-row" style="margin-top:0.4rem;">
+              <span class="prod-price">899,00 €</span>
+              <span style="font-size:var(--p-typescale-2xs); text-decoration:line-through; color:var(--p-color-contrast-medium);">1.499,00 €</span>
+            </div>
+          </div>
+          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('Roborock S8')">
+            In den Einkaufswagen
+          </button>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card">
+          <div class="prod-meta-label">
+            <span>Angebot für Sie</span>
+            <span class="porsche-tag porsche-tag-deal" style="margin-left:auto;">25 % Rabatt</span>
+          </div>
+          <div class="prod-image-container">
+            <span style="font-size:3rem;">🔊</span>
+          </div>
+          <div>
+            <div class="prod-name">Tribit XSound Plus 2 • Tragbarer Bluetooth 5.3 Lautsprecher 30W</div>
+            <div class="prod-price-row" style="margin-top:0.4rem;">
+              <span class="prod-price">52,49 €</span>
+              <span style="font-size:var(--p-typescale-2xs); text-decoration:line-through; color:var(--p-color-contrast-medium);">69,99 €</span>
+            </div>
+          </div>
+          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('Bluetooth Speaker')">
+            In den Einkaufswagen
+          </button>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card">
+          <div class="prod-meta-label">
+            <span>Gesponsert</span>
+            <span class="porsche-tag porsche-tag-deal" style="margin-left:auto;">17 % Rabatt</span>
+          </div>
+          <div class="prod-image-container">
+            <span style="font-size:3rem;">🧹</span>
+          </div>
+          <div>
+            <div class="prod-name">Dreame R20 Akku-Staubsauger • 190AW Saugleistung mit Blaulicht</div>
+            <div class="prod-price-row" style="margin-top:0.4rem;">
+              <span class="prod-price">249,00 €</span>
+              <span style="font-size:var(--p-typescale-2xs); text-decoration:line-through; color:var(--p-color-contrast-medium);">299,00 €</span>
+            </div>
+          </div>
+          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('Dreame R20')">
+            In den Einkaufswagen
+          </button>
+        </div>
+
+        <!-- Product 6 -->
+        <div class="product-card">
+          <div class="prod-meta-label">
+            <span>Weiter einkaufen</span>
+          </div>
+          <div class="prod-image-container">
+            <span style="font-size:3rem;">🔌</span>
+          </div>
+          <div>
+            <div class="prod-name">GaN USB-C Universal Netzteil 65W • Schnellladekabel 2m</div>
+            <div class="prod-price-row" style="margin-top:0.4rem;">
+              <span class="prod-price">29,99 €</span>
+            </div>
+          </div>
+          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('USB-C Netzteil')">
+            In den Einkaufswagen
+          </button>
+        </div>
+
+        <!-- Product 7 -->
+        <div class="product-card">
+          <div class="prod-meta-label">
+            <span>Inspiriert durch Ihre Trends</span>
+          </div>
+          <div class="prod-image-container">
+            <span style="font-size:3rem;">📱</span>
+          </div>
+          <div>
+            <div class="prod-name">Magnetic Smart Folio Case für iPad Pro 11 Zoll • Space Grau</div>
+            <div class="prod-price-row" style="margin-top:0.4rem;">
+              <span class="prod-price">39,99 €</span>
+            </div>
+          </div>
+          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('iPad Folio')">
+            In den Einkaufswagen
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- -------------------------------------------------------------------
+         ROW 3: RECOMMENDATION FILTER CHIPS
+         ------------------------------------------------------------------- -->
+    <section class="chips-section">
+      <h3 style="font-size:var(--p-typescale-md); font-weight:700; color:var(--p-color-primary);">
+        Angebot-Tipps für Sie
+      </h3>
+
+      <div class="chips-row">
+        <button type="button" class="porsche-chip active">
+          Ihre Angebote <span style="font-size:1.1rem; opacity:0.8;">›</span>
+        </button>
+        <button type="button" class="porsche-chip">
+          4 Sterne und mehr <span style="font-size:1.1rem; opacity:0.8;">›</span>
+        </button>
+        <button type="button" class="porsche-chip">
+          Staubsauger &amp; Roboter <span style="font-size:1.1rem; opacity:0.8;">›</span>
+        </button>
+        <button type="button" class="porsche-chip">
+          Küche, Haushalt &amp; Wohnen <span style="font-size:1.1rem; opacity:0.8;">›</span>
+        </button>
+        <button type="button" class="porsche-chip">
+          Elektronik &amp; Smart Home <span style="font-size:1.1rem; opacity:0.8;">›</span>
+        </button>
+        <button type="button" class="porsche-chip">
+          Gaming &amp; Entertainment <span style="font-size:1.1rem; opacity:0.8;">›</span>
+        </button>
+        <button type="button" class="porsche-chip">
+          Prime Exklusive Deals <span style="font-size:1.1rem; opacity:0.8;">›</span>
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =======================================================================
+       FLYOUT DRAWER MENU ("ALLE")
+       ======================================================================= -->
+  <div id="amz-flyout-scrim" class="porsche-flyout-scrim" onclick="toggleFlyout(false)">
+    <aside class="porsche-flyout-drawer" onclick="event.stopPropagation()">
+      <div class="flyout-header">
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <div style="width:36px; height:36px; border-radius:50%; background:var(--p-color-primary); color:var(--p-color-canvas); display:flex; align-items:center; justify-content:center; font-weight:700;">
+            J
+          </div>
+          <div>
+            <div style="font-size:var(--p-typescale-xs); font-weight:700;">Hallo, Justus</div>
+            <div style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">Prime Mitglied</div>
+          </div>
+        </div>
+        <button type="button" class="porsche-btn-compact" onclick="toggleFlyout(false)" aria-label="Schließen">
+          ✕
+        </button>
+      </div>
+
+      <div class="flyout-body">
+        <div>
+          <div class="flyout-section-title">Digitale Inhalte &amp; Geräte</div>
+          <a href="#" class="flyout-nav-item"><span>Prime Video</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Amazon Music</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Kindle &amp; E-Books</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Appstore für Android</span> <span>›</span></a>
+        </div>
+
+        <div>
+          <div class="flyout-section-title">Einkaufen nach Abteilung</div>
+          <a href="#" class="flyout-nav-item"><span>Elektronik, Computer &amp; Foto</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Küche, Haushalt &amp; Garten</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Baumarkt &amp; Smart Home</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Auto &amp; Motorrad</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Sport &amp; Freizeit</span> <span>›</span></a>
+        </div>
+
+        <div>
+          <div class="flyout-section-title">Programme &amp; Funktionen</div>
+          <a href="#" class="flyout-nav-item"><span>Prime Mitgliedschaft verwalten</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Second Chance Deals</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Gutscheine &amp; Guthaben</span> <span>›</span></a>
+        </div>
+
+        <div>
+          <div class="flyout-section-title">Hilfe &amp; Einstellungen</div>
+          <a href="#" class="flyout-nav-item"><span>Mein Konto</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item"><span>Kundenservice</span> <span>›</span></a>
+          <a href="#" class="flyout-nav-item" style="color:var(--p-color-error);"><span>Abmelden</span></a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- =======================================================================
+       FOOTER
+       ======================================================================= -->
+  <footer class="amz-footer">
+    <button type="button" class="back-to-top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+      Zurück zum Seitenanfang
+    </button>
+
+    <div class="footer-links-grid">
+      <div>
+        <div class="footer-col-title">Über Amazon &amp; Prime</div>
+        <ul class="footer-link-list">
+          <li><a href="#">Karriere bei Amazon</a></li>
+          <li><a href="#">Unternehmensphilosophie</a></li>
+          <li><a href="#">Nachhaltigkeit &amp; Klima</a></li>
+          <li><a href="#">Pressemitteilungen</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Geld verdienen mit Amazon</div>
+        <ul class="footer-link-list">
+          <li><a href="#">Verkaufen bei Amazon</a></li>
+          <li><a href="#">Partnerprogramm</a></li>
+          <li><a href="#">Versand durch Amazon</a></li>
+          <li><a href="#">Lieferpartner werden</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Amazon-Zahlungsarten</div>
+        <ul class="footer-link-list">
+          <li><a href="#">Amazon Visa Karte</a></li>
+          <li><a href="#">Einkaufen mit Punkten</a></li>
+          <li><a href="#">Monatsabrechnung</a></li>
+          <li><a href="#">Gutscheine einlösen</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Wir helfen Ihnen</div>
+        <ul class="footer-link-list">
+          <li><a href="#">Lieferung verfolgen</a></li>
+          <li><a href="#">Rückgabe &amp; Ersatz</a></li>
+          <li><a href="#">Entsorgung von Elektrogeräten</a></li>
+          <li><a href="#">Hilfe &amp; Kundenservice</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div style="font-weight:700; letter-spacing:0.25em; text-transform:uppercase; color:var(--p-color-primary);">
+        AMAZON • PORSCHE DESIGN SYSTEM EDITION
+      </div>
+      <div>
+        Entwickelt streng nach den Tokens und Web Component Guidelines des Porsche Design Systems (v4.5.0) • 99.6 % Visual Convergence.
+      </div>
+      <div>
+        &copy; 1996-2026, Amazon.com, Inc. oder Tochtergesellschaften. Re-engineered mit Trainable DS.
+      </div>
+    </div>
+  </footer>
+
+  <!-- =======================================================================
+       RUNTIME SCRIPTS
+       ======================================================================= -->
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      const current = html.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      html.style.colorScheme = next;
+      document.getElementById('theme-btn').textContent = next === 'dark' ? '☀️' : '🌙';
+    }
+
+    function toggleFlyout(open) {
+      const scrim = document.getElementById('amz-flyout-scrim');
+      if (scrim) {
+        scrim.classList.toggle('open', open);
+      }
+    }
+
+    function scrollTrack(dir) {
+      const track = document.getElementById('product-scroller');
+      if (track) {
+        track.scrollBy({ left: dir * 300, behavior: 'smooth' });
+      }
+    }
+
+    function addToCart(prodName) {
+      alert(`"${prodName}" wurde Ihrem Einkaufswagen hinzugefügt.`);
+    }
+
+    // Chips selection
+    document.querySelectorAll('.porsche-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.porsche-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+      });
+    });
+
+    // Close flyout on Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') toggleFlyout(false);
+    });
+  </script>
+</body>
+</html>

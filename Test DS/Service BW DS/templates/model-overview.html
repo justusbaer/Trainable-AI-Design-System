@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modellübersicht — Serviceportal Baden-Württemberg</title>
+  <link rel="stylesheet" href="../service-bw.css">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--bw-font-sans);
+      background-color: var(--bw-color-surface);
+      color: var(--bw-color-charcoal);
+      line-height: 1.5;
+    }
+
+    /* Official Federal Bar */
+    .bund-bar {
+      height: 32px;
+      background-color: var(--bw-header-bund-bg);
+      border-bottom: 1px solid var(--bw-color-border);
+      display: flex;
+      align-items: center;
+      padding-inline: 32px;
+      font-size: 13px;
+    }
+
+    /* Official State Yellow Header */
+    .header-yellow {
+      background-color: var(--bw-color-highlight);
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-inline: 32px;
+      padding-block: 12px;
+      gap: 20px;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--bw-color-charcoal);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-tools {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-konto {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding-inline: 16px;
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      border-radius: var(--bw-button-radius);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .btn-konto:hover {
+      background-color: var(--bw-color-call2action-contrast);
+    }
+
+    /* Main Container */
+    .page-container {
+      max-width: 1340px;
+      margin: 0 auto;
+      padding-inline: 32px;
+      padding-bottom: 80px;
+    }
+
+    /* Breadcrumbs */
+    .bw-breadcrumb {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: var(--bw-typescale-body-sm-size);
+      color: var(--bw-color-call2action-contrast);
+      margin-block: 20px;
+    }
+
+    .bw-breadcrumb a {
+      color: var(--bw-color-charcoal);
+      text-decoration: none;
+    }
+
+    .bw-breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .bw-breadcrumb__separator {
+      color: var(--bw-color-border);
+      user-select: none;
+    }
+
+    /* Header Title Row */
+    .title-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--bw-color-border);
+    }
+
+    .page-headline {
+      font-family: var(--bw-font-serif);
+      font-size: 2.25rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--bw-color-charcoal);
+      margin-bottom: 8px;
+    }
+
+    .page-subheadline {
+      font-size: 1.125rem;
+      color: var(--bw-color-charcoal);
+    }
+
+    .btn-saved-config {
+      min-height: var(--bw-button-height);
+      padding-inline: 20px;
+      background-color: var(--bw-color-surface);
+      color: var(--bw-color-charcoal);
+      border: 2px solid var(--bw-color-charcoal);
+      border-radius: var(--bw-button-radius);
+      font-family: var(--bw-font-sans);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      transition: background-color 0.15s;
+    }
+
+    .btn-saved-config:hover {
+      background-color: var(--bw-color-surface-container);
+    }
+
+    /* 2-Column Catalog Grid */
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .catalog-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Filter Sidebar */
+    .filter-sidebar {
+      background-color: var(--bw-color-surface-container);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-card-radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .filter-group-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--bw-color-border);
+    }
+
+    .filter-options-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .filter-option-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      border-radius: var(--bw-button-radius);
+      font-size: 15px;
+      cursor: pointer;
+      color: var(--bw-color-charcoal);
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .filter-option-label:hover {
+      background-color: var(--bw-color-surface-container-high);
+    }
+
+    .filter-option-label--active {
+      background-color: var(--bw-color-highlight);
+      border-color: var(--bw-color-border);
+      font-weight: 700;
+    }
+
+    .filter-radio-radio {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .filter-radio-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--bw-color-charcoal);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bw-color-surface);
+    }
+
+    .filter-option-label--active .filter-radio-dot::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--bw-color-charcoal);
+    }
+
+    .filter-count-pill {
+      font-size: 13px;
+      color: var(--bw-color-call2action-contrast);
+    }
+
+    /* Sidebar Info Box */
+    .filter-info-box {
+      background-color: var(--bw-color-surface);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-card-radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-disabled {
+      min-height: var(--bw-button-height);
+      padding-inline: 16px;
+      background-color: var(--bw-color-disabled);
+      color: var(--bw-color-on-disabled, var(--bw-color-call2action-contrast));
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-button-radius);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: not-allowed;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* Accordions */
+    details.filter-accordion {
+      border-top: 1px solid var(--bw-color-border);
+      padding-top: 12px;
+    }
+
+    details.filter-accordion summary {
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+    }
+
+    details.filter-accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    details.filter-accordion summary::after {
+      content: "▼";
+      font-size: 11px;
+      transition: transform 0.2s;
+    }
+
+    details.filter-accordion[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .filter-accordion-content {
+      padding-top: 12px;
+      font-size: 14px;
+      color: var(--bw-color-call2action-contrast);
+    }
+
+    /* Main Models Section */
+    .models-section-title {
+      font-family: var(--bw-font-sans);
+      font-size: 1.625rem;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+      margin-bottom: 24px;
+    }
+
+    /* 2-Column Cards Grid */
+    .models-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+      gap: 32px;
+    }
+
+    @media (max-width: 540px) {
+      .models-cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Vehicle Model Card */
+    .model-card {
+      background-color: var(--bw-color-surface-container);
+      border: 1px solid var(--bw-color-border);
+      border-radius: var(--bw-card-radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .model-card-image-wrapper {
+      background-color: var(--bw-color-surface);
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--bw-color-border);
+      padding: 16px;
+      position: relative;
+    }
+
+    .model-card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      gap: 16px;
+    }
+
+    .model-card-title {
+      font-family: var(--bw-font-sans);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+    }
+
+    .model-card-price-row {
+      font-size: 14px;
+      color: var(--bw-color-charcoal);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .model-card-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .model-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: var(--bw-badge-radius);
+      border: 1px solid var(--bw-color-border);
+      background-color: var(--bw-color-surface);
+      color: var(--bw-color-charcoal);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .model-badge--year {
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      border-color: var(--bw-color-charcoal);
+    }
+
+    /* Specs Matrix */
+    .specs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-block: 8px;
+      border-top: 1px solid var(--bw-color-border);
+      border-bottom: 1px solid var(--bw-color-border);
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .spec-value {
+      font-family: var(--bw-font-sans);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--bw-color-charcoal);
+    }
+
+    .spec-label {
+      font-size: 12px;
+      color: var(--bw-color-call2action-contrast);
+    }
+
+    .model-card-footnote {
+      font-size: 11px;
+      color: var(--bw-color-call2action-contrast);
+      line-height: 1.4;
+    }
+
+    .model-card-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: auto;
+      padding-top: 8px;
+    }
+
+    .btn-configure {
+      min-height: var(--bw-button-height);
+      padding-inline: 20px;
+      background-color: var(--bw-color-call2action);
+      color: var(--bw-color-surface);
+      border: 2px solid var(--bw-color-call2action);
+      border-radius: var(--bw-button-radius);
+      font-family: var(--bw-font-sans);
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.15s;
+    }
+
+    .btn-configure:hover {
+      background-color: var(--bw-color-call2action-contrast);
+      border-color: var(--bw-color-call2action-contrast);
+    }
+
+    .btn-configure:focus-visible {
+      outline: var(--bw-focus-outline);
+      box-shadow: 0 0 0 3px var(--bw-color-highlight);
+    }
+
+    .tech-details-link {
+      font-size: 13px;
+      color: var(--bw-color-charcoal);
+      text-decoration: underline;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      align-self: center;
+    }
+
+    .tech-details-link:hover {
+      color: var(--bw-color-call2action);
+    }
+
+    /* Back To Top FAB */
+    .bw-fab {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 24px;
+      box-shadow: 0 4px 12px rgba(42, 38, 35, 0.2);
+    }
+
+    .bw-fab:hover {
+      background-color: var(--bw-color-call2action-contrast);
+    }
+
+    /* Footer */
+    .portal-footer {
+      background-color: var(--bw-color-charcoal);
+      color: var(--bw-color-surface);
+      padding: 48px 32px;
+      margin-top: 64px;
+    }
+
+    .footer-inner {
+      max-width: 1340px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--bw-color-surface);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Official German Federal Provenance Bar -->
+  <div class="bund-bar">
+    <span>Offizielle Website – Bundesrepublik Deutschland</span>
+  </div>
+
+  <!-- State Yellow Header with Sovereign Crest -->
+  <header class="header-yellow">
+    <a href="../index.html" class="brand-title">
+      <svg width="40" height="40" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <rect width="100" height="100" rx="6" fill="var(--bw-color-highlight)"/>
+        <path d="M22 26h56v8H22zM22 46h56v8H22zM22 66h56v8H22z" fill="var(--bw-color-charcoal)"/>
+      </svg>
+      <span>Serviceportal Baden-Württemberg</span>
+    </a>
+
+    <div class="header-tools">
+      <a href="./servicekonto.html" class="btn-konto">Zum Servicekonto</a>
+      <a href="#" class="btn-konto" style="background-color:transparent; color:var(--bw-color-charcoal); border:1px solid var(--bw-color-charcoal);">DE 🇩🇪</a>
+    </div>
+  </header>
+
+  <!-- Page Main Container -->
+  <main class="page-container">
+
+    <!-- Breadcrumb Path -->
+    <nav class="bw-breadcrumb" aria-label="Breadcrumbs">
+      <a href="../index.html">Startseite</a>
+      <span class="bw-breadcrumb__separator">→</span>
+      <a href="./lebenslagen.html">Wirtschaft und Mobilität</a>
+      <span class="bw-breadcrumb__separator">→</span>
+      <span style="font-weight:700;">Modellübersicht</span>
+    </nav>
+
+    <!-- Title Banner Row -->
+    <div class="title-banner">
+      <div>
+        <h1 class="page-headline">Modellübersicht</h1>
+        <p class="page-subheadline">Konfigurieren Sie Ihren Traum Porsche</p>
+      </div>
+
+      <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px;">
+        <span style="font-size:13px; color:var(--bw-color-charcoal);">Sie haben bereits eine Konfiguration?</span>
+        <a href="#" class="btn-saved-config">
+          <span>Gespeicherte Konfiguration laden</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 2-Column Catalog Layout -->
+    <div class="catalog-layout">
+
+      <!-- Left Filter Sidebar -->
+      <aside class="filter-sidebar" aria-label="Modellfilter">
+        <div>
+          <h2 class="filter-group-title">Modellreihe</h2>
+          <ul class="filter-options-list">
+            <li>
+              <div class="filter-option-label filter-option-label--active">
+                <span class="filter-radio-radio">
+                  <span class="filter-radio-dot"></span>
+                  <span>Alle</span>
+                </span>
+                <span class="filter-count-pill">(85)</span>
+              </div>
+            </li>
+            <li>
+              <div class="filter-option-label">
+                <span class="filter-radio-radio">
+                  <span class="filter-radio-dot"></span>
+                  <span>718</span>
+                </span>
+                <span class="filter-count-pill">(2)</span>
+              </div>
+            </li>
+            <li>
+              <div class="filter-option-label">
+                <span class="filter-radio-radio">
+                  <span class="filter-radio-dot"></span>
+                  <span>911</span>
+                </span>
+                <span class="filter-count-pill">(22)</span>
+              </div>
+            </li>
+            <li>
+              <div class="filter-option-label">
+                <span class="filter-radio-radio">
+                  <span class="filter-radio-dot"></span>
+                  <span>Taycan</span>
+                </span>
+                <span class="filter-count-pill">(22)</span>
+              </div>
+            </li>
+            <li>
+              <div class="filter-option-label">
+                <span class="filter-radio-radio">
+                  <span class="filter-radio-dot"></span>
+                  <span>Panamera</span>
+                </span>
+                <span class="filter-count-pill">(9)</span>
+              </div>
+            </li>
+            <li>
+              <div class="filter-option-label">
+                <span class="filter-radio-radio">
+                  <span class="filter-radio-dot"></span>
+                  <span>Macan</span>
+                </span>
+                <span class="filter-count-pill">(5)</span>
+              </div>
+            </li>
+            <li>
+              <div class="filter-option-label">
+                <span class="filter-radio-radio">
+                  <span class="filter-radio-dot"></span>
+                  <span>Cayenne</span>
+                </span>
+                <span class="filter-count-pill">(25)</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Info Callout -->
+        <div class="filter-info-box">
+          <p style="font-size:13px; color:var(--bw-color-charcoal); line-height:1.5;">
+            Um die Unterschiede zwischen den Karosserieformen zu entdecken, wählen Sie zunächst eine Modellreihe aus.
+          </p>
+          <div class="btn-disabled">
+            Verstehen Sie die Unterschiede
+          </div>
+        </div>
+
+        <!-- Filter Accordions -->
+        <details class="filter-accordion">
+          <summary>Karosserie</summary>
+          <div class="filter-accordion-content">
+            Limousine, Sport Turismo, Cross Turismo
+          </div>
+        </details>
+
+        <details class="filter-accordion">
+          <summary>Sitze</summary>
+          <div class="filter-accordion-content">
+            4 Sitze, 4+1 Sitze
+          </div>
+        </details>
+
+        <details class="filter-accordion">
+          <summary>Antrieb</summary>
+          <div class="filter-accordion-content">
+            Hinterradantrieb, Allradantrieb
+          </div>
+        </details>
+      </aside>
+
+      <!-- Right Main Models Grid -->
+      <section aria-label="Modellvarianten">
+        <h2 class="models-section-title">Taycan Modellvarianten</h2>
+
+        <div class="models-cards-grid">
+
+          <!-- Card 1: Taycan -->
+          <article class="model-card">
+            <div class="model-card-image-wrapper">
+              <!-- Scaled Vector Car Graphic in Sage Green (reflecting original reference) -->
+              <svg width="340" height="150" viewBox="0 0 400 180" fill="none" aria-label="Porsche Taycan Silhouette">
+                <!-- Shadow -->
+                <ellipse cx="200" cy="155" rx="170" ry="10" fill="var(--bw-color-border)" opacity="0.6"/>
+                <!-- Body -->
+                <path d="M45 130 C60 110, 100 85, 160 70 C220 55, 300 65, 345 95 C365 110, 370 125, 370 135 L30 135 C30 132, 38 131, 45 130 Z" fill="var(--bw-color-surface-container-high)"/>
+                <!-- Cabin -->
+                <path d="M120 78 C155 60, 240 55, 290 75 C310 83, 315 90, 320 100 L110 100 C110 90, 115 82, 120 78 Z" fill="var(--bw-color-charcoal)"/>
+                <!-- Windows -->
+                <path d="M140 80 C170 65, 230 63, 275 78 L270 95 L135 95 Z" fill="var(--bw-color-surface)"/>
+                <!-- Wheels -->
+                <circle cx="100" cy="140" r="28" fill="var(--bw-color-charcoal)"/>
+                <circle cx="100" cy="140" r="18" fill="var(--bw-color-border)"/>
+                <circle cx="100" cy="140" r="7" fill="var(--bw-color-charcoal)"/>
+                <circle cx="295" cy="140" r="28" fill="var(--bw-color-charcoal)"/>
+                <circle cx="295" cy="140" r="18" fill="var(--bw-color-border)"/>
+                <circle cx="295" cy="140" r="7" fill="var(--bw-color-charcoal)"/>
+              </svg>
+            </div>
+
+            <div class="model-card-body">
+              <h3 class="model-card-title">Taycan</h3>
+
+              <div class="model-card-price-row">
+                <span>Ab EUR 102.600,00 inkl. MwSt.</span>
+                <span>|</span>
+                <span>z.B. 1.246,00 € mtl.</span>
+                <span title="Preisdetails" style="cursor:pointer; color:var(--bw-color-call2action-contrast);">ⓘ</span>
+              </div>
+
+              <!-- Badges -->
+              <div class="model-card-badges">
+                <span class="model-badge model-badge--year">2027</span>
+                <span class="model-badge">Elektro</span>
+                <span class="model-badge">Heckantrieb</span>
+                <span class="model-badge">Automatik</span>
+              </div>
+
+              <!-- Specifications -->
+              <div class="specs-list">
+                <div class="spec-item">
+                  <span class="spec-value">4,8 s</span>
+                  <span class="spec-label">Beschleunigung 0 - 100 km/h bei Launch Control</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-value">300 kW / 408 PS</span>
+                  <span class="spec-label">Leistung bis zu (kW) / Leistung bis zu (PS)</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-value">230 km/h</span>
+                  <span class="spec-label">Höchstgeschwindigkeit</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-value">520 – 609 km</span>
+                  <span class="spec-label">Elektrische Reichweite kombiniert (WLTP)</span>
+                </div>
+              </div>
+
+              <div class="model-card-footnote">
+                (Performancebatterie) Stromverbrauch kombiniert: 19,1 – 16,1 kWh/100 km, CO₂-Emissionen kombiniert: 0 g/km, CO₂-Klasse: A
+              </div>
+
+              <div class="model-card-actions">
+                <a href="#" class="tech-details-link">Technische Daten und Serienausstattung →</a>
+                <a href="#" class="btn-configure">
+                  <span>Modell konfigurieren</span>
+                  <span>➔</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: Taycan 4 -->
+          <article class="model-card">
+            <div class="model-card-image-wrapper">
+              <!-- Scaled Vector Car Graphic in Sage Green -->
+              <svg width="340" height="150" viewBox="0 0 400 180" fill="none" aria-label="Porsche Taycan 4 Silhouette">
+                <!-- Shadow -->
+                <ellipse cx="200" cy="155" rx="170" ry="10" fill="var(--bw-color-border)" opacity="0.6"/>
+                <!-- Body -->
+                <path d="M45 130 C60 110, 100 85, 160 70 C220 55, 300 65, 345 95 C365 110, 370 125, 370 135 L30 135 C30 132, 38 131, 45 130 Z" fill="var(--bw-color-surface-container-high)"/>
+                <!-- Cabin -->
+                <path d="M120 78 C155 60, 240 55, 290 75 C310 83, 315 90, 320 100 L110 100 C110 90, 115 82, 120 78 Z" fill="var(--bw-color-charcoal)"/>
+                <!-- Windows -->
+                <path d="M140 80 C170 65, 230 63, 275 78 L270 95 L135 95 Z" fill="var(--bw-color-surface)"/>
+                <!-- Wheels (Aero Design) -->
+                <circle cx="100" cy="140" r="28" fill="var(--bw-color-charcoal)"/>
+                <circle cx="100" cy="140" r="18" fill="var(--bw-color-highlight)"/>
+                <circle cx="100" cy="140" r="7" fill="var(--bw-color-charcoal)"/>
+                <circle cx="295" cy="140" r="28" fill="var(--bw-color-charcoal)"/>
+                <circle cx="295" cy="140" r="18" fill="var(--bw-color-highlight)"/>
+                <circle cx="295" cy="140" r="7" fill="var(--bw-color-charcoal)"/>
+              </svg>
+            </div>
+
+            <div class="model-card-body">
+              <h3 class="model-card-title">Taycan 4</h3>
+
+              <div class="model-card-price-row">
+                <span>Ab EUR 107.300,00 inkl. MwSt.</span>
+                <span>|</span>
+                <span>z.B. 1.303,09 € mtl.</span>
+                <span title="Preisdetails" style="cursor:pointer; color:var(--bw-color-call2action-contrast);">ⓘ</span>
+              </div>
+
+              <!-- Badges -->
+              <div class="model-card-badges">
+                <span class="model-badge model-badge--year">2027</span>
+                <span class="model-badge">Elektro</span>
+                <span class="model-badge">Allradantrieb</span>
+                <span class="model-badge">Automatik</span>
+              </div>
+
+              <!-- Specifications -->
+              <div class="specs-list">
+                <div class="spec-item">
+                  <span class="spec-value">4,6 s</span>
+                  <span class="spec-label">Beschleunigung 0 - 100 km/h bei Launch Control</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-value">300 kW / 408 PS</span>
+                  <span class="spec-label">Leistung bis zu (kW) / Leistung bis zu (PS)</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-value">230 km/h</span>
+                  <span class="spec-label">Höchstgeschwindigkeit</span>
+                </div>
+                <div class="spec-item">
+                  <span class="spec-value">494 – 560 km</span>
+                  <span class="spec-label">Elektrische Reichweite kombiniert (WLTP)</span>
+                </div>
+              </div>
+
+              <div class="model-card-footnote">
+                (Performancebatterie) Stromverbrauch kombiniert: 20,0 – 17,6 kWh/100 km, CO₂-Emissionen kombiniert: 0 g/km, CO₂-Klasse: A
+              </div>
+
+              <div class="model-card-actions">
+                <a href="#" class="tech-details-link">Technische Daten und Serienausstattung →</a>
+                <a href="#" class="btn-configure">
+                  <span>Modell konfigurieren</span>
+                  <span>➔</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Back to top FAB -->
+  <a href="#" class="bw-fab" title="Nach oben scrollen" aria-label="Nach oben scrollen">↑</a>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="footer-inner">
+      <div>© 2026 Land Baden-Württemberg — Serviceportal</div>
+      <div class="footer-links">
+        <a href="#">Datenschutz</a>
+        <a href="#">Barrierefreiheit</a>
+        <a href="#">Impressum</a>
+        <a href="#">Support & Feedback</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

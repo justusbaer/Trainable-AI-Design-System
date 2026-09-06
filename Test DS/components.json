@@ -11,10 +11,24 @@
       "description": "Standard interactive primary or secondary action button with high-contrast pill styling, optional icon, and loading state.",
       "anatomy": {
         "container": {
-          "minTouchTarget": "48px (enforced)",
-          "height": "56px (default) / 40px (compact)",
-          "borderRadius": "var(--p-radius-xl) / var(--p-radius-full)",
-          "padding": "16px 28px"
+          "standard": {
+            "minTouchTarget": "48px (enforced)",
+            "height": "56px",
+            "padding": "16px 28px",
+            "borderRadius": "var(--p-radius-xl) /* 12px */"
+          },
+          "compact": {
+            "minTouchTarget": "48px (enforced via hit-box)",
+            "height": "36px",
+            "padding": "6px 16px",
+            "borderRadius": "var(--p-radius-lg) /* 8px */"
+          },
+          "iconOnly": {
+            "width": "56px",
+            "height": "56px",
+            "padding": "16px",
+            "borderRadius": "var(--p-radius-full) /* calc(infinity * 1px) / 1.67772e+07px */"
+          }
         },
         "content": {
           "label": "var(--p-typescale-sm) var(--p-font-porsche-next)",
@@ -26,12 +40,14 @@
         "primary": {
           "background": "var(--p-color-primary)",
           "color": "var(--p-color-canvas) / #ffffff",
-          "hover": "var(--p-color-contrast-high)"
+          "hover": "var(--p-color-contrast-high)",
+          "backdropFilter": "var(--p-blur-frosted) /* blur(32px) */"
         },
         "secondary": {
           "background": "var(--p-color-frosted-strong)",
           "color": "var(--p-color-primary)",
-          "hover": "var(--p-color-frosted)"
+          "hover": "var(--p-color-frosted)",
+          "backdropFilter": "var(--p-blur-frosted) /* blur(32px) */"
         }
       },
       "observedAttributes": [
@@ -51,7 +67,9 @@
       "a11y": {
         "minTouchTarget": "48x48px",
         "focusIndicator": "2px outline var(--p-color-focus) with 2px offset",
-        "requiredAria": ["aria-label (when hide-label=true)"]
+        "requiredAria": [
+          "aria-label (when hide-label=true)"
+        ]
       },
       "rules": [
         "Always use <p-button> instead of raw HTML <button>.",
@@ -71,10 +89,14 @@
       "family": "actions",
       "description": "Minimal text-only or icon button without container background, with optional underline and active highlight.",
       "anatomy": {
-        "container": { "minTouchTarget": "48px (enforced via hit-box)" }
+        "container": {
+          "minTouchTarget": "48px (enforced via hit-box)"
+        }
       },
       "variants": {
-        "default": { "color": "var(--p-color-primary)" }
+        "default": {
+          "color": "var(--p-color-primary)"
+        }
       },
       "observedAttributes": [
         "value",
@@ -112,11 +134,20 @@
       "family": "navigation",
       "description": "Primary or secondary navigational link styled with button-like appearance or link pill.",
       "anatomy": {
-        "container": { "minTouchTarget": "48px (enforced)", "height": "56px / 40px" }
+        "container": {
+          "minTouchTarget": "48px (enforced)",
+          "height": "56px / 40px"
+        }
       },
       "variants": {
-        "primary": { "background": "var(--p-color-primary)", "color": "var(--p-color-canvas)" },
-        "secondary": { "background": "var(--p-color-frosted-strong)", "color": "var(--p-color-primary)" }
+        "primary": {
+          "background": "var(--p-color-primary)",
+          "color": "var(--p-color-canvas)"
+        },
+        "secondary": {
+          "background": "var(--p-color-frosted-strong)",
+          "color": "var(--p-color-primary)"
+        }
       },
       "observedAttributes": [
         "variant",
@@ -148,10 +179,14 @@
       "family": "navigation",
       "description": "Pure text link with optional icon and animated hover underline.",
       "anatomy": {
-        "container": { "minTouchTarget": "48px" }
+        "container": {
+          "minTouchTarget": "48px"
+        }
       },
       "variants": {
-        "default": { "color": "var(--p-color-primary)" }
+        "default": {
+          "color": "var(--p-color-primary)"
+        }
       },
       "observedAttributes": [
         "align-label",
@@ -185,12 +220,17 @@
       "family": "navigation",
       "description": "High-impact visual card tile combining media, gradient overlay, title, and link navigation.",
       "anatomy": {
-        "container": { "borderRadius": "var(--p-radius-xl)", "overflow": "hidden" },
+        "container": {
+          "borderRadius": "var(--p-radius-3xl) /* 24px */",
+          "overflow": "hidden"
+        },
         "media": "img, video, or picture slot",
         "overlay": "linear-gradient / frosted backdrop"
       },
       "variants": {
-        "default": { "aspectRatio": "16:9 / 4:3 / 1:1" }
+        "default": {
+          "aspectRatio": "16:9 / 4:3 / 3:4 / 1:1"
+        }
       },
       "observedAttributes": [
         "size",
@@ -207,8 +247,14 @@
         "rel",
         "aria"
       ],
-      "a11y": { "requiredAria": ["aria-label"] },
-      "rules": ["Enclose media inside <p-link-tile> and pass label as descriptive text."],
+      "a11y": {
+        "requiredAria": [
+          "aria-label"
+        ]
+      },
+      "rules": [
+        "Enclose media inside <p-link-tile> and pass label as descriptive text."
+      ],
       "examples": [
         "<p-link-tile href=\"/eyewear\" label=\"Discover eyewear\" description=\"Porsche Design Collection\">\n  <img src=\"/images/eyewear.jpg\" alt=\"Porsche Eyewear\" />\n</p-link-tile>"
       ]
@@ -218,8 +264,14 @@
       "tag": "p-link-tile-product",
       "family": "navigation",
       "description": "E-commerce product card tile displaying price, original price, description, and wishlist like-button.",
-      "anatomy": { "container": { "borderRadius": "var(--p-radius-xl)" } },
-      "variants": { "default": {} },
+      "anatomy": {
+        "container": {
+          "borderRadius": "var(--p-radius-xl)"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
       "observedAttributes": [
         "heading",
         "price",
@@ -232,8 +284,12 @@
         "target",
         "rel"
       ],
-      "a11y": { "minTouchTarget": "48x48px" },
-      "rules": ["Must format price according to locale."],
+      "a11y": {
+        "minTouchTarget": "48x48px"
+      },
+      "rules": [
+        "Must format price according to locale."
+      ],
       "examples": [
         "<p-link-tile-product heading=\"Chronograph 1\" price=\"€9,950\" href=\"/shop/chronograph\">\n  <img src=\"/watch.jpg\" alt=\"Chronograph 1\" />\n</p-link-tile-product>"
       ]
@@ -243,15 +299,33 @@
       "tag": "p-display",
       "family": "typography",
       "description": "Massive stage display typography for hero headers and splash showcases.",
-      "anatomy": { "typography": "Porsche Next, 3xl - 5xl fluid scale" },
-      "variants": {
-        "small": { "size": "var(--p-typescale-3xl)" },
-        "medium": { "size": "var(--p-typescale-4xl)" },
-        "large": { "size": "var(--p-typescale-5xl)" }
+      "anatomy": {
+        "typography": "Porsche Next, 3xl - 5xl fluid scale"
       },
-      "observedAttributes": ["tag", "size", "align", "color", "ellipsis"],
-      "a11y": { "headingOrder": "Match tag to semantic document hierarchy (h1-h6)" },
-      "rules": ["Never use display typography for body text."],
+      "variants": {
+        "small": {
+          "size": "var(--p-typescale-3xl)"
+        },
+        "medium": {
+          "size": "var(--p-typescale-4xl)"
+        },
+        "large": {
+          "size": "var(--p-typescale-5xl)"
+        }
+      },
+      "observedAttributes": [
+        "tag",
+        "size",
+        "align",
+        "color",
+        "ellipsis"
+      ],
+      "a11y": {
+        "headingOrder": "Match tag to semantic document hierarchy (h1-h6)"
+      },
+      "rules": [
+        "Never use display typography for body text."
+      ],
       "examples": [
         "<p-display tag=\"h1\" size=\"medium\">Cayenne Turbo Coupé Electric.</p-display>"
       ]
@@ -261,17 +335,41 @@
       "tag": "p-heading",
       "family": "typography",
       "description": "Standard section and screen heading component.",
-      "anatomy": { "typography": "Porsche Next, xs - 2xl fluid scale" },
-      "variants": {
-        "small": { "size": "var(--p-typescale-sm)" },
-        "medium": { "size": "var(--p-typescale-md)" },
-        "large": { "size": "var(--p-typescale-lg)" },
-        "xl": { "size": "var(--p-typescale-xl)" },
-        "2xl": { "size": "var(--p-typescale-2xl)" }
+      "anatomy": {
+        "typography": "Porsche Next, xs - 2xl fluid scale"
       },
-      "observedAttributes": ["tag", "size", "weight", "align", "color", "hyphens", "ellipsis"],
-      "a11y": { "headingOrder": "Enforce semantic heading structure" },
-      "rules": ["Headings must use sentence case."],
+      "variants": {
+        "small": {
+          "size": "var(--p-typescale-sm)"
+        },
+        "medium": {
+          "size": "var(--p-typescale-md)"
+        },
+        "large": {
+          "size": "var(--p-typescale-lg)"
+        },
+        "xl": {
+          "size": "var(--p-typescale-xl)"
+        },
+        "2xl": {
+          "size": "var(--p-typescale-2xl)"
+        }
+      },
+      "observedAttributes": [
+        "tag",
+        "size",
+        "weight",
+        "align",
+        "color",
+        "hyphens",
+        "ellipsis"
+      ],
+      "a11y": {
+        "headingOrder": "Enforce semantic heading structure"
+      },
+      "rules": [
+        "Headings must use sentence case."
+      ],
       "examples": [
         "<p-heading tag=\"h2\" size=\"xl\" weight=\"semibold\">Find your new or pre-owned Porsche.</p-heading>"
       ]
@@ -281,16 +379,36 @@
       "tag": "p-text",
       "family": "typography",
       "description": "General interface body text, captions, and disclaimers.",
-      "anatomy": { "typography": "Porsche Next, 2xs - sm" },
-      "variants": {
-        "xx-small": { "size": "var(--p-typescale-2xs)" },
-        "x-small": { "size": "var(--p-typescale-xs)" },
-        "small": { "size": "var(--p-typescale-sm)" },
-        "medium": { "size": "var(--p-typescale-md)" }
+      "anatomy": {
+        "typography": "Porsche Next, 2xs - sm"
       },
-      "observedAttributes": ["tag", "size", "weight", "align", "color", "hyphens", "ellipsis"],
+      "variants": {
+        "xx-small": {
+          "size": "var(--p-typescale-2xs)"
+        },
+        "x-small": {
+          "size": "var(--p-typescale-xs)"
+        },
+        "small": {
+          "size": "var(--p-typescale-sm)"
+        },
+        "medium": {
+          "size": "var(--p-typescale-md)"
+        }
+      },
+      "observedAttributes": [
+        "tag",
+        "size",
+        "weight",
+        "align",
+        "color",
+        "hyphens",
+        "ellipsis"
+      ],
       "a11y": {},
-      "rules": ["Use contrast-high for readability on light or dark surfaces."],
+      "rules": [
+        "Use contrast-high for readability on light or dark surfaces."
+      ],
       "examples": [
         "<p-text size=\"small\" color=\"contrast-high\">Experience pure driving dynamics.</p-text>",
         "<p-text size=\"xx-small\" color=\"contrast-low\">Combined power consumption: 22.0 – 20.0 kWh/100 km.</p-text>"
@@ -301,15 +419,33 @@
       "tag": "p-icon",
       "family": "communication",
       "description": "Official Porsche icon glyph rendering standard navigational and vehicle icons.",
-      "anatomy": { "box": "24x24px" },
-      "variants": {
-        "small": { "size": "16px" },
-        "medium": { "size": "24px" },
-        "large": { "size": "32px" }
+      "anatomy": {
+        "box": "24x24px"
       },
-      "observedAttributes": ["name", "source", "color", "size", "aria"],
-      "a11y": { "decorative": "aria-hidden=\"true\" when paired with text label" },
-      "rules": ["Always accompany icon-only buttons with an aria-label."],
+      "variants": {
+        "small": {
+          "size": "16px"
+        },
+        "medium": {
+          "size": "24px"
+        },
+        "large": {
+          "size": "32px"
+        }
+      },
+      "observedAttributes": [
+        "name",
+        "source",
+        "color",
+        "size",
+        "aria"
+      ],
+      "a11y": {
+        "decorative": "aria-hidden=\"true\" when paired with text label"
+      },
+      "rules": [
+        "Always accompany icon-only buttons with an aria-label."
+      ],
       "examples": [
         "<p-icon name=\"arrow-right\" size=\"medium\"></p-icon>",
         "<p-icon name=\"locate\" size=\"small\"></p-icon>"
@@ -321,15 +457,32 @@
       "family": "communication",
       "description": "Categorical badge or chip used for vehicle fuel types, features, and model tags.",
       "anatomy": {
-        "container": { "borderRadius": "var(--p-radius-sm)", "padding": "4px 8px" }
+        "container": {
+          "height": "22px (21.75px computed)",
+          "padding": "4px 12px",
+          "borderRadius": "var(--p-radius-full) /* 14.875px pill */",
+          "backdropFilter": "var(--p-blur-frosted) /* blur(32px) */"
+        }
       },
       "variants": {
-        "primary": { "background": "var(--p-color-surface)", "color": "var(--p-color-primary)" },
-        "compact": { "padding": "2px 6px" }
+        "primary": {
+          "background": "var(--p-color-surface)",
+          "color": "var(--p-color-primary)"
+        },
+        "compact": {
+          "padding": "2px 6px"
+        }
       },
-      "observedAttributes": ["variant", "icon", "icon-source", "compact"],
+      "observedAttributes": [
+        "variant",
+        "icon",
+        "icon-source",
+        "compact"
+      ],
       "a11y": {},
-      "rules": ["Keep labels brief and clear."],
+      "rules": [
+        "Keep labels brief and clear."
+      ],
       "examples": [
         "<p-tag color=\"primary\">Petrol</p-tag>",
         "<p-tag color=\"primary\" icon=\"lightning\">Electric</p-tag>"
@@ -340,12 +493,28 @@
       "tag": "p-tag-dismissible",
       "family": "communication",
       "description": "Interactive filter chip with dismiss action.",
-      "anatomy": { "container": { "minTouchTarget": "48px" } },
-      "variants": { "default": {} },
-      "observedAttributes": ["label", "aria", "compact"],
-      "a11y": { "touchTarget": ">= 48px dismiss tap target" },
-      "rules": ["Emit dismissal event on click."],
-      "examples": ["<p-tag-dismissible label=\"Transmission: Automatic\"></p-tag-dismissible>"]
+      "anatomy": {
+        "container": {
+          "minTouchTarget": "48px"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "label",
+        "aria",
+        "compact"
+      ],
+      "a11y": {
+        "touchTarget": ">= 48px dismiss tap target"
+      },
+      "rules": [
+        "Emit dismissal event on click."
+      ],
+      "examples": [
+        "<p-tag-dismissible label=\"Transmission: Automatic\"></p-tag-dismissible>"
+      ]
     },
     "Modal": {
       "name": "Modal",
@@ -353,10 +522,17 @@
       "family": "containment",
       "description": "Dialog overlay with frosted backdrop scrim and focus trapping.",
       "anatomy": {
-        "container": { "borderRadius": "var(--p-radius-xl)", "background": "var(--p-color-canvas)", "padding": "var(--p-spacing-static-lg)" },
+        "container": {
+          "borderRadius": "var(--p-radius-xl)",
+          "background": "var(--p-color-canvas)",
+          "padding": "var(--p-spacing-static-lg)"
+        },
         "backdrop": "var(--p-color-backdrop) with blur(32px)"
       },
-      "variants": { "default": {}, "fullscreen": {} },
+      "variants": {
+        "default": {},
+        "fullscreen": {}
+      },
       "observedAttributes": [
         "open",
         "dismiss-button",
@@ -366,8 +542,14 @@
         "fullscreen",
         "aria"
       ],
-      "a11y": { "role": "dialog", "ariaModal": "true", "focusTrap": "true" },
-      "rules": ["Ensure escape key closes the modal."],
+      "a11y": {
+        "role": "dialog",
+        "ariaModal": "true",
+        "focusTrap": "true"
+      },
+      "rules": [
+        "Ensure escape key closes the modal."
+      ],
       "examples": [
         "<p-modal open=\"true\" heading=\"Cookie Preferences\">\n  <p-text>Manage your privacy settings.</p-text>\n</p-modal>"
       ]
@@ -377,8 +559,18 @@
       "tag": "p-flyout",
       "family": "containment",
       "description": "Slide-out panel drawer anchored to start, end, top, or bottom.",
-      "anatomy": { "container": { "background": "var(--p-color-surface)", "shadow": "var(--p-shadow-lg)" } },
-      "variants": { "start": {}, "end": {}, "top": {}, "bottom": {} },
+      "anatomy": {
+        "container": {
+          "background": "var(--p-color-surface)",
+          "shadow": "var(--p-shadow-lg)"
+        }
+      },
+      "variants": {
+        "start": {},
+        "end": {},
+        "top": {},
+        "bottom": {}
+      },
       "observedAttributes": [
         "open",
         "position",
@@ -389,8 +581,12 @@
         "fullscreen",
         "aria"
       ],
-      "a11y": { "focusTrap": "true" },
-      "rules": ["Use for mobile navigation, filter panels, and configuration drawers."],
+      "a11y": {
+        "focusTrap": "true"
+      },
+      "rules": [
+        "Use for mobile navigation, filter panels, and configuration drawers."
+      ],
       "examples": [
         "<p-flyout open=\"true\" position=\"end\">\n  <p-heading size=\"large\">Filter results</p-heading>\n</p-flyout>"
       ]
@@ -400,8 +596,14 @@
       "tag": "p-accordion",
       "family": "containment",
       "description": "Collapsible disclosure section for FAQs and technical specifications.",
-      "anatomy": { "border": "1px solid var(--p-color-contrast-lower)" },
-      "variants": { "default": {}, "compact": {} },
+      "anatomy": {
+        "detailsRadius": "var(--p-radius-2xl) /* 16px */",
+        "border": "1px solid var(--p-color-contrast-lower)"
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
       "observedAttributes": [
         "open",
         "align-marker",
@@ -413,8 +615,13 @@
         "heading-tag",
         "sticky"
       ],
-      "a11y": { "ariaExpanded": "true/false", "keyboardAccessible": "true" },
-      "rules": ["Always use semantic heading tags inside."],
+      "a11y": {
+        "ariaExpanded": "true/false",
+        "keyboardAccessible": "true"
+      },
+      "rules": [
+        "Always use semantic heading tags inside."
+      ],
       "examples": [
         "<p-accordion heading=\"Technical Specs\" heading-tag=\"h3\">\n  <p-text>Top speed: 305 km/h</p-text>\n</p-accordion>"
       ]
@@ -424,24 +631,57 @@
       "tag": "p-divider",
       "family": "containment",
       "description": "1px subtle boundary divider between layout blocks.",
-      "anatomy": { "height": "1px", "color": "var(--p-color-contrast-lower)" },
-      "variants": { "horizontal": {}, "vertical": {} },
-      "observedAttributes": ["color", "direction"],
-      "a11y": { "role": "separator" },
-      "rules": ["Do not use heavy contrasting borders where a divider suffices."],
-      "examples": ["<p-divider></p-divider>"]
+      "anatomy": {
+        "height": "1px",
+        "color": "var(--p-color-contrast-lower)"
+      },
+      "variants": {
+        "horizontal": {},
+        "vertical": {}
+      },
+      "observedAttributes": [
+        "color",
+        "direction"
+      ],
+      "a11y": {
+        "role": "separator"
+      },
+      "rules": [
+        "Do not use heavy contrasting borders where a divider suffices."
+      ],
+      "examples": [
+        "<p-divider></p-divider>"
+      ]
     },
     "Table": {
       "name": "Table",
       "tag": "p-table",
       "family": "containment",
       "description": "Data table container with sticky header support and responsive scrolling.",
-      "anatomy": { "container": { "borderRadius": "var(--p-radius-md)" } },
-      "variants": { "default": {}, "compact": {} },
-      "observedAttributes": ["caption", "compact", "layout", "sticky"],
-      "a11y": { "caption": "Required caption or aria-label" },
-      "rules": ["Include descriptive caption."],
-      "examples": ["<p-table caption=\"Fuel consumption data\"></p-table>"]
+      "anatomy": {
+        "container": {
+          "borderRadius": "var(--p-radius-md)"
+        }
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "caption",
+        "compact",
+        "layout",
+        "sticky"
+      ],
+      "a11y": {
+        "caption": "Required caption or aria-label"
+      },
+      "rules": [
+        "Include descriptive caption."
+      ],
+      "examples": [
+        "<p-table caption=\"Fuel consumption data\"></p-table>"
+      ]
     },
     "InputSearch": {
       "name": "InputSearch",
@@ -449,9 +689,16 @@
       "family": "text-inputs",
       "description": "Interactive search input with search glyph, clear button, and autocomplete support.",
       "anatomy": {
-        "container": { "minHeight": "48px", "borderRadius": "var(--p-radius-md)", "background": "var(--p-color-canvas)" }
+        "container": {
+          "minHeight": "48px",
+          "borderRadius": "var(--p-radius-md)",
+          "background": "var(--p-color-canvas)"
+        }
       },
-      "variants": { "default": {}, "compact": {} },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
       "observedAttributes": [
         "value",
         "label",
@@ -474,8 +721,13 @@
         "hide-label",
         "aria"
       ],
-      "a11y": { "minTouchTarget": "48x48px", "labelConnected": "true" },
-      "rules": ["Always provide accessible label even if visually hidden."],
+      "a11y": {
+        "minTouchTarget": "48x48px",
+        "labelConnected": "true"
+      },
+      "rules": [
+        "Always provide accessible label even if visually hidden."
+      ],
       "examples": [
         "<p-input-search label=\"Search dealer location\" placeholder=\"Postal code or city\" clear=\"true\"></p-input-search>"
       ]
@@ -485,288 +737,744 @@
       "tag": "p-text-field",
       "family": "text-inputs",
       "description": "Single-line form input with floating label, validation states, and message slots.",
-      "anatomy": { "minHeight": "48px", "borderRadius": "var(--p-radius-md)" },
-      "variants": { "default": {}, "compact": {} },
-      "observedAttributes": ["value", "label", "description", "placeholder", "name", "disabled", "required", "state", "message"],
-      "a11y": { "focusIndicator": "2px outline var(--p-color-focus)" },
-      "rules": ["Show validation message when state is error."],
-      "examples": ["<p-text-field label=\"Full name\" placeholder=\"Enter your name\"></p-text-field>"]
+      "anatomy": {
+        "minHeight": "48px",
+        "borderRadius": "var(--p-radius-md)"
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "value",
+        "label",
+        "description",
+        "placeholder",
+        "name",
+        "disabled",
+        "required",
+        "state",
+        "message"
+      ],
+      "a11y": {
+        "focusIndicator": "2px outline var(--p-color-focus)"
+      },
+      "rules": [
+        "Show validation message when state is error."
+      ],
+      "examples": [
+        "<p-text-field label=\"Full name\" placeholder=\"Enter your name\"></p-text-field>"
+      ]
     },
     "Textarea": {
       "name": "Textarea",
       "tag": "p-textarea",
       "family": "text-inputs",
       "description": "Multi-line text input with character counter and auto-resizing.",
-      "anatomy": { "borderRadius": "var(--p-radius-md)" },
-      "variants": { "default": {} },
-      "observedAttributes": ["value", "label", "description", "compact", "name", "state", "message", "counter", "rows", "max-length"],
+      "anatomy": {
+        "borderRadius": "var(--p-radius-md)"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "value",
+        "label",
+        "description",
+        "compact",
+        "name",
+        "state",
+        "message",
+        "counter",
+        "rows",
+        "max-length"
+      ],
       "a11y": {},
-      "rules": ["Clearly state max character length."],
-      "examples": ["<p-textarea label=\"Inquiry details\" counter=\"true\" max-length=\"500\"></p-textarea>"]
+      "rules": [
+        "Clearly state max character length."
+      ],
+      "examples": [
+        "<p-textarea label=\"Inquiry details\" counter=\"true\" max-length=\"500\"></p-textarea>"
+      ]
     },
     "Select": {
       "name": "Select",
       "tag": "p-select",
       "family": "text-inputs",
       "description": "Dropdown selection control with custom chevron indicator.",
-      "anatomy": { "minHeight": "48px", "borderRadius": "var(--p-radius-md)" },
-      "variants": { "default": {}, "compact": {} },
-      "observedAttributes": ["value", "isOpen", "label", "description", "name", "state", "message", "disabled", "required"],
-      "a11y": { "minTouchTarget": "48x48px" },
-      "rules": ["Group complex choices using <p-optgroup>."],
-      "examples": ["<p-select label=\"Select vehicle model\"><p-option value=\"911\">911</p-option></p-select>"]
+      "anatomy": {
+        "minHeight": "48px",
+        "borderRadius": "var(--p-radius-md)"
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "value",
+        "isOpen",
+        "label",
+        "description",
+        "name",
+        "state",
+        "message",
+        "disabled",
+        "required"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px"
+      },
+      "rules": [
+        "Group complex choices using <p-optgroup>."
+      ],
+      "examples": [
+        "<p-select label=\"Select vehicle model\"><p-option value=\"911\">911</p-option></p-select>"
+      ]
     },
     "MultiSelect": {
       "name": "MultiSelect",
       "tag": "p-multi-select",
       "family": "text-inputs",
       "description": "Multi-item selection control with checkbox dropdown.",
-      "anatomy": { "minHeight": "48px" },
-      "variants": { "default": {} },
-      "observedAttributes": ["value", "isOpen", "label", "description", "name", "state", "message", "disabled", "required"],
+      "anatomy": {
+        "minHeight": "48px"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "value",
+        "isOpen",
+        "label",
+        "description",
+        "name",
+        "state",
+        "message",
+        "disabled",
+        "required"
+      ],
       "a11y": {},
-      "rules": ["Displays selected count or pill summary."],
-      "examples": ["<p-multi-select label=\"Select exterior packages\"></p-multi-select>"]
+      "rules": [
+        "Displays selected count or pill summary."
+      ],
+      "examples": [
+        "<p-multi-select label=\"Select exterior packages\"></p-multi-select>"
+      ]
     },
     "PinCode": {
       "name": "PinCode",
       "tag": "p-pin-code",
       "family": "text-inputs",
       "description": "Discrete digit input boxes for 2FA and verification codes.",
-      "anatomy": { "minHeight": "48px" },
-      "variants": { "default": {} },
-      "observedAttributes": ["label", "length", "type", "value", "state", "disabled"],
+      "anatomy": {
+        "minHeight": "48px"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "label",
+        "length",
+        "type",
+        "value",
+        "state",
+        "disabled"
+      ],
       "a11y": {},
-      "rules": ["Automatically focus next field upon input."],
-      "examples": ["<p-pin-code length=\"6\" label=\"Verification code\"></p-pin-code>"]
+      "rules": [
+        "Automatically focus next field upon input."
+      ],
+      "examples": [
+        "<p-pin-code length=\"6\" label=\"Verification code\"></p-pin-code>"
+      ]
     },
     "Checkbox": {
       "name": "Checkbox",
       "tag": "p-checkbox",
       "family": "selection",
       "description": "Form checkbox with indeterminate state and touch target area.",
-      "anatomy": { "touchTarget": "48x48px", "box": "20x20px" },
-      "variants": { "default": {}, "compact": {} },
-      "observedAttributes": ["checked", "indeterminate", "disabled", "required", "name", "value", "label", "state", "message"],
-      "a11y": { "minTouchTarget": "48x48px" },
-      "rules": ["Always wrap within 48x48px hit area."],
-      "examples": ["<p-checkbox label=\"I accept the terms and conditions\"></p-checkbox>"]
+      "anatomy": {
+        "touchTarget": "48x48px",
+        "box": "28x28px",
+        "borderRadius": "var(--p-radius-lg) /* 8px */"
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "checked",
+        "indeterminate",
+        "disabled",
+        "required",
+        "name",
+        "value",
+        "label",
+        "state",
+        "message"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px"
+      },
+      "rules": [
+        "Always wrap within 48x48px hit area."
+      ],
+      "examples": [
+        "<p-checkbox label=\"I accept the terms and conditions\"></p-checkbox>"
+      ]
     },
     "RadioButton": {
       "name": "RadioButton",
       "tag": "p-radio-button",
       "family": "selection",
       "description": "Single-choice radio selection control.",
-      "anatomy": { "touchTarget": "48x48px", "circle": "20x20px" },
-      "variants": { "default": {} },
-      "observedAttributes": ["checked", "disabled", "required", "name", "value", "label"],
-      "a11y": { "minTouchTarget": "48x48px" },
-      "rules": ["Group inside fieldset with common name."],
-      "examples": ["<p-radio-button name=\"transmission\" value=\"pdk\" label=\"Porsche Doppelkupplung (PDK)\"></p-radio-button>"]
+      "anatomy": {
+        "touchTarget": "48x48px",
+        "circle": "28x28px",
+        "borderRadius": "var(--p-radius-full) /* calc(infinity * 1px) */"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "checked",
+        "disabled",
+        "required",
+        "name",
+        "value",
+        "label"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px"
+      },
+      "rules": [
+        "Group inside fieldset with common name."
+      ],
+      "examples": [
+        "<p-radio-button name=\"transmission\" value=\"pdk\" label=\"Porsche Doppelkupplung (PDK)\"></p-radio-button>"
+      ]
     },
     "Switch": {
       "name": "Switch",
       "tag": "p-switch",
       "family": "selection",
       "description": "Toggle switch for binary settings and preferences.",
-      "anatomy": { "touchTarget": "48x48px", "track": "44x24px" },
-      "variants": { "default": {} },
-      "observedAttributes": ["checked", "disabled", "loading", "align-label", "stretch"],
-      "a11y": { "role": "switch", "ariaChecked": "true/false" },
-      "rules": ["Use for instant state changes without form submission."],
-      "examples": ["<p-switch label=\"Sport exhaust system\"></p-switch>"]
+      "anatomy": {
+        "touchTarget": "48x48px",
+        "track": "44x28px",
+        "borderRadius": "var(--p-radius-full) /* calc(infinity * 1px) */",
+        "backgroundColor": "var(--p-color-frosted-soft)"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "checked",
+        "disabled",
+        "loading",
+        "align-label",
+        "stretch"
+      ],
+      "a11y": {
+        "role": "switch",
+        "ariaChecked": "true/false"
+      },
+      "rules": [
+        "Use for instant state changes without form submission."
+      ],
+      "examples": [
+        "<p-switch label=\"Sport exhaust system\"></p-switch>"
+      ]
     },
     "SegmentedControl": {
       "name": "SegmentedControl",
       "tag": "p-segmented-control",
       "family": "selection",
       "description": "Mutually exclusive pill selector for switching modes or views.",
-      "anatomy": { "borderRadius": "var(--p-radius-full)", "background": "var(--p-color-frosted-soft)" },
-      "variants": { "default": {}, "compact": {} },
-      "observedAttributes": ["value", "label", "description", "name", "compact", "columns", "disabled", "no-wrap"],
-      "a11y": { "role": "radiogroup" },
-      "rules": ["Keep segments to 2-5 options maximum."],
-      "examples": ["<p-segmented-control value=\"grid\"><p-segmented-control-item value=\"grid\">Grid</p-segmented-control-item><p-segmented-control-item value=\"list\">List</p-segmented-control-item></p-segmented-control>"]
+      "anatomy": {
+        "container": {
+          "height": "52px",
+          "background": "transparent"
+        },
+        "item": {
+          "height": "52px",
+          "padding": "8px 12px",
+          "borderRadius": "var(--p-radius-xl) /* 12px */",
+          "background": "rgba(175, 175, 182, 0.15) /* frosted item fill */"
+        }
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "value",
+        "label",
+        "description",
+        "name",
+        "compact",
+        "columns",
+        "disabled",
+        "no-wrap"
+      ],
+      "a11y": {
+        "role": "radiogroup"
+      },
+      "rules": [
+        "Keep segments to 2-5 options maximum."
+      ],
+      "examples": [
+        "<p-segmented-control value=\"grid\"><p-segmented-control-item value=\"grid\">Grid</p-segmented-control-item><p-segmented-control-item value=\"list\">List</p-segmented-control-item></p-segmented-control>"
+      ]
     },
     "Tabs": {
       "name": "Tabs",
       "tag": "p-tabs",
       "family": "navigation",
       "description": "Tabbed content navigation switching between views.",
-      "anatomy": { "indicator": "2px solid var(--p-color-primary)", "height": "48px" },
-      "variants": { "default": {}, "compact": {} },
-      "observedAttributes": ["activeTabIndex", "active-tab-index", "size", "background", "weight"],
-      "a11y": { "role": "tablist", "keyboardAccessible": "Arrow keys navigation" },
-      "rules": ["Include matching tab panels."],
-      "examples": ["<p-tabs active-tab-index=\"0\"><p-tabs-item label=\"Overview\">Content</p-tabs-item></p-tabs>"]
+      "anatomy": {
+        "indicator": "2px solid var(--p-color-primary)",
+        "height": "48px"
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "activeTabIndex",
+        "active-tab-index",
+        "size",
+        "background",
+        "weight"
+      ],
+      "a11y": {
+        "role": "tablist",
+        "keyboardAccessible": "Arrow keys navigation"
+      },
+      "rules": [
+        "Include matching tab panels."
+      ],
+      "examples": [
+        "<p-tabs active-tab-index=\"0\"><p-tabs-item label=\"Overview\">Content</p-tabs-item></p-tabs>"
+      ]
     },
     "TabsBar": {
       "name": "TabsBar",
       "tag": "p-tabs-bar",
       "family": "navigation",
       "description": "Header navigation tab bar without embedded content panels.",
-      "anatomy": { "height": "48px" },
-      "variants": { "default": {} },
-      "observedAttributes": ["activeTabIndex", "active-tab-index", "size", "weight"],
-      "a11y": { "role": "tablist" },
-      "rules": ["Synchronize active index with route changes."],
-      "examples": ["<p-tabs-bar active-tab-index=\"0\"><button type=\"button\">Exterior</button><button type=\"button\">Interior</button></p-tabs-bar>"]
+      "anatomy": {
+        "container": {
+          "scrollerRadius": "var(--p-radius-xl) /* 12px */",
+          "innerDivRadius": "var(--p-radius-lg) /* 8px */",
+          "scrollerPadding": "4px",
+          "background": "var(--p-color-surface) /* rgb(241, 241, 244) */"
+        },
+        "button": {
+          "touchTarget": "48px (enforced)",
+          "height": "24px",
+          "padding": "12px 24px"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "activeTabIndex",
+        "active-tab-index",
+        "size",
+        "weight"
+      ],
+      "a11y": {
+        "role": "tablist"
+      },
+      "rules": [
+        "Synchronize active index with route changes."
+      ],
+      "examples": [
+        "<p-tabs-bar active-tab-index=\"0\"><button type=\"button\">Exterior</button><button type=\"button\">Interior</button></p-tabs-bar>"
+      ]
     },
     "Pagination": {
       "name": "Pagination",
       "tag": "p-pagination",
       "family": "navigation",
       "description": "Multi-page navigation controls with previous, next, and numbered page jumps.",
-      "anatomy": { "buttonTarget": "48x48px" },
-      "variants": { "default": {} },
-      "observedAttributes": ["total-items-count", "items-per-page", "active-page", "show-last-page", "intl"],
-      "a11y": { "navLabel": "aria-label=\"Pagination\"" },
-      "rules": ["Provide localized labels for accessibility."],
-      "examples": ["<p-pagination total-items-count=\"120\" items-per-page=\"12\" active-page=\"1\"></p-pagination>"]
+      "anatomy": {
+        "buttonTarget": "48x48px"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "total-items-count",
+        "items-per-page",
+        "active-page",
+        "show-last-page",
+        "intl"
+      ],
+      "a11y": {
+        "navLabel": "aria-label=\"Pagination\""
+      },
+      "rules": [
+        "Provide localized labels for accessibility."
+      ],
+      "examples": [
+        "<p-pagination total-items-count=\"120\" items-per-page=\"12\" active-page=\"1\"></p-pagination>"
+      ]
     },
     "Scroller": {
       "name": "Scroller",
       "tag": "p-scroller",
       "family": "navigation",
       "description": "Horizontal carousel / content scroller with scroll indicators and snap points.",
-      "anatomy": { "scrollBar": "custom / hidden", "indicators": "arrow buttons" },
-      "variants": { "default": {} },
-      "observedAttributes": ["scrollToPosition", "scrollbar", "compact", "sticky", "align-scroll-indicator"],
+      "anatomy": {
+        "scrollBar": "custom / hidden",
+        "indicators": "arrow buttons"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "scrollToPosition",
+        "scrollbar",
+        "compact",
+        "sticky",
+        "align-scroll-indicator"
+      ],
       "a11y": {},
-      "rules": ["Support keyboard horizontal scroll."],
-      "examples": ["<p-scroller><div class=\"item\">1</div><div class=\"item\">2</div></p-scroller>"]
+      "rules": [
+        "Support keyboard horizontal scroll."
+      ],
+      "examples": [
+        "<p-scroller><div class=\"item\">1</div><div class=\"item\">2</div></p-scroller>"
+      ]
     },
     "Banner": {
       "name": "Banner",
       "tag": "p-banner",
       "family": "communication",
       "description": "Prominent top banner for site-wide announcements, recalls, or promotions.",
-      "anatomy": { "background": "var(--p-color-frosted-strong)", "padding": "var(--p-spacing-static-md)" },
-      "variants": { "info": {}, "warning": {}, "error": {} },
-      "observedAttributes": ["open", "heading", "heading-tag", "description", "position", "state", "dismiss-button"],
-      "a11y": { "role": "status" },
-      "rules": ["Include dismiss button when dismissible."],
-      "examples": ["<p-banner state=\"info\" heading=\"World Premiere\" description=\"Watch live now.\"></p-banner>"]
+      "anatomy": {
+        "background": "var(--p-color-frosted-strong)",
+        "padding": "var(--p-spacing-static-md)"
+      },
+      "variants": {
+        "info": {},
+        "warning": {},
+        "error": {}
+      },
+      "observedAttributes": [
+        "open",
+        "heading",
+        "heading-tag",
+        "description",
+        "position",
+        "state",
+        "dismiss-button"
+      ],
+      "a11y": {
+        "role": "status"
+      },
+      "rules": [
+        "Include dismiss button when dismissible."
+      ],
+      "examples": [
+        "<p-banner state=\"info\" heading=\"World Premiere\" description=\"Watch live now.\"></p-banner>"
+      ]
     },
     "InlineNotification": {
       "name": "InlineNotification",
       "tag": "p-inline-notification",
       "family": "communication",
       "description": "In-context message box indicating status, error, warning, or action required.",
-      "anatomy": { "borderRadius": "var(--p-radius-lg)", "padding": "16px" },
-      "variants": { "info": {}, "success": {}, "warning": {}, "error": {} },
-      "observedAttributes": ["heading", "heading-tag", "description", "state", "dismiss-button", "action-label", "action-loading"],
-      "a11y": { "role": "alert" },
-      "rules": ["Use appropriate state color icon."],
-      "examples": ["<p-inline-notification state=\"warning\" heading=\"Delivery delayed\" description=\"Estimated delivery in 4 weeks.\"></p-inline-notification>"]
+      "anatomy": {
+        "borderRadius": "var(--p-radius-lg)",
+        "padding": "16px"
+      },
+      "variants": {
+        "info": {},
+        "success": {},
+        "warning": {},
+        "error": {}
+      },
+      "observedAttributes": [
+        "heading",
+        "heading-tag",
+        "description",
+        "state",
+        "dismiss-button",
+        "action-label",
+        "action-loading"
+      ],
+      "a11y": {
+        "role": "alert"
+      },
+      "rules": [
+        "Use appropriate state color icon."
+      ],
+      "examples": [
+        "<p-inline-notification state=\"warning\" heading=\"Delivery delayed\" description=\"Estimated delivery in 4 weeks.\"></p-inline-notification>"
+      ]
     },
     "Spinner": {
       "name": "Spinner",
       "tag": "p-spinner",
       "family": "communication",
       "description": "Circular indeterminate loading spinner.",
-      "anatomy": { "size": "24px / 48px" },
-      "variants": { "small": { "size": "16px" }, "medium": { "size": "24px" }, "large": { "size": "48px" } },
-      "observedAttributes": ["color", "size", "aria"],
-      "a11y": { "role": "status", "ariaLabel": "Loading" },
-      "rules": ["Always provide accessible description."],
-      "examples": ["<p-spinner size=\"medium\" aria='{\"aria-label\": \"Loading model data\"}'></p-spinner>"]
+      "anatomy": {
+        "size": "24px / 48px"
+      },
+      "variants": {
+        "small": {
+          "size": "16px"
+        },
+        "medium": {
+          "size": "24px"
+        },
+        "large": {
+          "size": "48px"
+        }
+      },
+      "observedAttributes": [
+        "color",
+        "size",
+        "aria"
+      ],
+      "a11y": {
+        "role": "status",
+        "ariaLabel": "Loading"
+      },
+      "rules": [
+        "Always provide accessible description."
+      ],
+      "examples": [
+        "<p-spinner size=\"medium\" aria='{\"aria-label\": \"Loading model data\"}'></p-spinner>"
+      ]
     },
     "Toast": {
       "name": "Toast",
       "tag": "p-toast",
       "family": "communication",
       "description": "Transient notification toast appearing in screen corner.",
-      "anatomy": { "position": "fixed bottom-right", "borderRadius": "var(--p-radius-lg)" },
-      "variants": { "default": {} },
+      "anatomy": {
+        "position": "fixed bottom-right",
+        "borderRadius": "var(--p-radius-lg)"
+      },
+      "variants": {
+        "default": {}
+      },
       "observedAttributes": [],
-      "a11y": { "role": "status" },
-      "rules": ["Auto-dismiss within 4-6 seconds."],
-      "examples": ["<p-toast></p-toast>"]
+      "a11y": {
+        "role": "status"
+      },
+      "rules": [
+        "Auto-dismiss within 4-6 seconds."
+      ],
+      "examples": [
+        "<p-toast></p-toast>"
+      ]
     },
     "Popover": {
       "name": "Popover",
       "tag": "p-popover",
       "family": "communication",
       "description": "Contextual floating tooltip / popover triggered on click or hover.",
-      "anatomy": { "borderRadius": "var(--p-radius-md)", "background": "var(--p-color-canvas)" },
-      "variants": { "top": {}, "bottom": {}, "left": {}, "right": {} },
-      "observedAttributes": ["open", "direction", "description", "compact", "aria"],
-      "a11y": { "role": "tooltip" },
-      "rules": ["Dismiss on escape key or outside click."],
-      "examples": ["<p-popover description=\"Detailed aerodynamic package explanation\"><p-button-pure icon=\"information\">Info</p-button-pure></p-popover>"]
+      "anatomy": {
+        "borderRadius": "var(--p-radius-md)",
+        "background": "var(--p-color-canvas)"
+      },
+      "variants": {
+        "top": {},
+        "bottom": {},
+        "left": {},
+        "right": {}
+      },
+      "observedAttributes": [
+        "open",
+        "direction",
+        "description",
+        "compact",
+        "aria"
+      ],
+      "a11y": {
+        "role": "tooltip"
+      },
+      "rules": [
+        "Dismiss on escape key or outside click."
+      ],
+      "examples": [
+        "<p-popover description=\"Detailed aerodynamic package explanation\"><p-button-pure icon=\"information\">Info</p-button-pure></p-popover>"
+      ]
     },
     "StepperHorizontal": {
       "name": "StepperHorizontal",
       "tag": "p-stepper-horizontal",
       "family": "navigation",
       "description": "Step-by-step progress indicator for configuration flows and checkout.",
-      "anatomy": { "line": "2px solid var(--p-color-contrast-lower)" },
-      "variants": { "small": {}, "medium": {} },
-      "observedAttributes": ["size"],
-      "a11y": { "ariaCurrent": "step" },
-      "rules": ["Indicate completed, active, and upcoming steps."],
-      "examples": ["<p-stepper-horizontal size=\"medium\"><p-stepper-horizontal-item state=\"complete\">Model</p-stepper-horizontal-item><p-stepper-horizontal-item state=\"current\">Exterior</p-stepper-horizontal-item></p-stepper-horizontal>"]
+      "anatomy": {
+        "line": "2px solid var(--p-color-contrast-lower)"
+      },
+      "variants": {
+        "small": {},
+        "medium": {}
+      },
+      "observedAttributes": [
+        "size"
+      ],
+      "a11y": {
+        "ariaCurrent": "step"
+      },
+      "rules": [
+        "Indicate completed, active, and upcoming steps."
+      ],
+      "examples": [
+        "<p-stepper-horizontal size=\"medium\"><p-stepper-horizontal-item state=\"complete\">Model</p-stepper-horizontal-item><p-stepper-horizontal-item state=\"current\">Exterior</p-stepper-horizontal-item></p-stepper-horizontal>"
+      ]
     },
     "Crest": {
       "name": "Crest",
       "tag": "p-crest",
       "family": "brand",
       "description": "Official Porsche coat of arms crest emblem.",
-      "anatomy": { "ratio": "traditional crest shield" },
-      "variants": { "default": {} },
-      "observedAttributes": ["href", "target", "aria"],
-      "a11y": { "alt": "Porsche Crest" },
-      "rules": ["Do not alter colors or aspect ratio."],
-      "examples": ["<p-crest href=\"https://www.porsche.de\"></p-crest>"]
+      "anatomy": {
+        "ratio": "traditional crest shield"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "href",
+        "target",
+        "aria"
+      ],
+      "a11y": {
+        "alt": "Porsche Crest"
+      },
+      "rules": [
+        "Do not alter colors or aspect ratio."
+      ],
+      "examples": [
+        "<p-crest href=\"https://www.porsche.de\"></p-crest>"
+      ]
     },
     "Wordmark": {
       "name": "Wordmark",
       "tag": "p-wordmark",
       "family": "brand",
       "description": "Official PORSCHE typographic brand wordmark.",
-      "anatomy": { "lettering": "Monospaced luxury brand lettering" },
-      "variants": { "small": {}, "medium": {}, "large": {} },
-      "observedAttributes": ["size", "href", "target", "aria"],
-      "a11y": { "alt": "Porsche" },
-      "rules": ["Never re-type 'PORSCHE' using standard fonts; always use <p-wordmark>."],
-      "examples": ["<p-wordmark size=\"medium\" href=\"/\"></p-wordmark>"]
+      "anatomy": {
+        "lettering": "Monospaced luxury brand lettering"
+      },
+      "variants": {
+        "small": {},
+        "medium": {},
+        "large": {}
+      },
+      "observedAttributes": [
+        "size",
+        "href",
+        "target",
+        "aria"
+      ],
+      "a11y": {
+        "alt": "Porsche"
+      },
+      "rules": [
+        "Never re-type 'PORSCHE' using standard fonts; always use <p-wordmark>."
+      ],
+      "examples": [
+        "<p-wordmark size=\"medium\" href=\"/\"></p-wordmark>"
+      ]
     },
     "ModelSignature": {
       "name": "ModelSignature",
       "tag": "p-model-signature",
       "family": "brand",
       "description": "Official vector lettering script for Porsche model designations (911, Cayenne, Taycan, Panamera, Macan, 718).",
-      "anatomy": { "color": "var(--p-model-signature-color)" },
-      "variants": { "911": {}, "taycan": {}, "cayenne": {}, "panamera": {}, "macan": {}, "718": {} },
-      "observedAttributes": ["model", "safe-zone", "fetch-priority", "lazy", "size", "color"],
-      "a11y": { "alt": "Model designation" },
-      "rules": ["Use model-specific signature rather than regular text."],
-      "examples": ["<p-model-signature model=\"911\" size=\"medium\"></p-model-signature>"]
+      "anatomy": {
+        "color": "var(--p-model-signature-color)"
+      },
+      "variants": {
+        "718": {},
+        "911": {},
+        "taycan": {},
+        "cayenne": {},
+        "panamera": {},
+        "macan": {}
+      },
+      "observedAttributes": [
+        "model",
+        "safe-zone",
+        "fetch-priority",
+        "lazy",
+        "size",
+        "color"
+      ],
+      "a11y": {
+        "alt": "Model designation"
+      },
+      "rules": [
+        "Use model-specific signature rather than regular text."
+      ],
+      "examples": [
+        "<p-model-signature model=\"911\" size=\"medium\"></p-model-signature>"
+      ]
     },
     "Canvas": {
       "name": "Canvas",
       "tag": "p-canvas",
       "family": "containment",
       "description": "Root layout shell component providing sidebars, navigation slots, and safe zones.",
-      "anatomy": { "safeZone": "var(--pds-internal-grid-safe-zone)" },
-      "variants": { "default": {} },
-      "observedAttributes": ["sidebar-start-open", "sidebar-end-open", "background"],
-      "a11y": { "role": "main" },
-      "rules": ["Enforces Porsche safe-zone padding."],
-      "examples": ["<p-canvas background=\"surface\"><slot></slot></p-canvas>"]
+      "anatomy": {
+        "safeZone": "var(--pds-internal-grid-safe-zone)"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "sidebar-start-open",
+        "sidebar-end-open",
+        "background"
+      ],
+      "a11y": {
+        "role": "main"
+      },
+      "rules": [
+        "Enforces Porsche safe-zone padding."
+      ],
+      "examples": [
+        "<p-canvas background=\"surface\"><slot></slot></p-canvas>"
+      ]
     },
     "Fieldset": {
       "name": "Fieldset",
       "tag": "p-fieldset",
       "family": "containment",
       "description": "Accessible semantic container grouping related form inputs.",
-      "anatomy": { "margin": "var(--p-spacing-static-md)" },
-      "variants": { "default": {} },
-      "observedAttributes": ["label", "label-size", "required", "state", "message", "aria"],
-      "a11y": { "role": "group" },
-      "rules": ["Provide descriptive legend/label."],
-      "examples": ["<p-fieldset label=\"Personal Information\"></p-fieldset>"]
+      "anatomy": {
+        "margin": "var(--p-spacing-static-md)"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "label",
+        "label-size",
+        "required",
+        "state",
+        "message",
+        "aria"
+      ],
+      "a11y": {
+        "role": "group"
+      },
+      "rules": [
+        "Provide descriptive legend/label."
+      ],
+      "examples": [
+        "<p-fieldset label=\"Personal Information\"></p-fieldset>"
+      ]
     }
   }
 }

@@ -31,6 +31,7 @@
 
       <nav>
         <ul class="nav-links">
+          <li><a href="#extract" class="nav-link" style="color:var(--md-sys-color-primary); font-weight:600;">Extract from URL</a></li>
           <li><a href="#foundations" class="nav-link">Foundations</a></li>
           <li><a href="#components" class="nav-link">Components</a></li>
           <li><a href="#evaluator" class="nav-link">Live Evaluator</a></li>
@@ -55,35 +56,77 @@
         <span class="badge" style="margin-block-end:0.75rem;">AI Developer Portal & System Hub</span>
         <h1 class="hero-title">The Living Source of Truth for Humans & AI Agents</h1>
         <p class="hero-subtitle">
-          Train, govern, and enforce design systems at full <strong>Material Design 3 (M3)</strong> depth.
-          Point any AI agent to this URL and it immediately understands all design tokens, component contracts, and compliance rules.
+          Extract, govern, and enforce design systems at full <strong>Material Design 3 (M3)</strong> depth.
+          Tell any AI agent to extract from a URL or point it to this portal for 100% compliant UI generation.
         </p>
       </div>
 
-      <!-- Agent Connect Banner (Astryx Parity) -->
+      <!-- Agent Banner (Dual Mode: Extract or Connect) -->
       <div class="agent-banner">
-        <div class="agent-banner-header">
-          <div class="agent-banner-title">
-            <span>⚡ One-Click Agent Integration</span>
-            <span class="badge" style="background:#e0e7ff; color:#3730a3;">Universal Protocol</span>
-          </div>
-          <span style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">Copy & paste this into Claude, Cursor, Antigravity, or ChatGPT:</span>
-        </div>
-
-        <div class="prompt-copy-container">
-          <code id="agent-prompt-code" class="prompt-code">Connect to Trainable DS from current origin and follow /DESIGN.md for all UI generation.</code>
-          <button type="button" id="copy-agent-prompt" class="btn-primary">
-            📋 Copy Prompt
+        <div class="banner-mode-tabs">
+          <button type="button" id="tab-btn-extract" class="banner-mode-btn active">
+            🌐 Extract from Website (One Prompt)
+          </button>
+          <button type="button" id="tab-btn-connect" class="banner-mode-btn">
+            ⚡ Connect for UI Generation
           </button>
         </div>
 
-        <div class="surfaces-taglist">
-          <span>Rooted in:</span>
-          <span class="surface-chip">Claude Code / Desktop</span>
-          <span class="surface-chip">Cursor (.cursor/rules)</span>
-          <span class="surface-chip">Google Antigravity</span>
-          <span class="surface-chip">Figma AI</span>
-          <span class="surface-chip">Model Context Protocol (MCP)</span>
+        <!-- Mode 1: Extraction -->
+        <div id="panel-extract" style="display:flex; flex-direction:column; gap:0.75rem;">
+          <div class="agent-banner-header">
+            <div class="agent-banner-title">
+              <span>🌐 Extract Design System from Any Website</span>
+              <span class="badge" style="background:#dcfce7; color:#166534;">Zero Process Knowledge Required</span>
+            </div>
+            <span style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">Enter target website URL:</span>
+          </div>
+
+          <div class="prompt-url-row">
+            <input type="url" id="extract-url-input" class="prompt-url-input" value="https://www.porsche.com/germany/" placeholder="https://example.com">
+          </div>
+
+          <div class="prompt-copy-container">
+            <code id="extract-prompt-code" class="prompt-code">Use Trainable Design System to extract the design system from https://www.porsche.com/germany/</code>
+            <button type="button" id="copy-extract-prompt" class="btn-primary">
+              📋 Copy Extraction Prompt
+            </button>
+          </div>
+
+          <div class="surfaces-taglist">
+            <span>Autonomous Pipeline:</span>
+            <span class="surface-chip">Auto-Discovers Subpages</span>
+            <span class="surface-chip">Harvests Fonts & Shadow-DOM SVGs</span>
+            <span class="surface-chip">Iterative Alignment Loops (≥95%)</span>
+            <span class="surface-chip">Generates overview.html with Live Overrides</span>
+          </div>
+        </div>
+
+        <!-- Mode 2: Connect for Generation -->
+        <div id="panel-connect" style="display:none; flex-direction:column; gap:0.75rem;">
+          <div class="agent-banner-header">
+            <div class="agent-banner-title">
+              <span>⚡ Connect AI Agent for UI Generation</span>
+              <span class="badge" style="background:#e0e7ff; color:#3730a3;">Universal Protocol</span>
+            </div>
+            <span style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">Paste into Claude, Cursor, Antigravity, or ChatGPT:</span>
+          </div>
+
+          <div class="prompt-copy-container">
+            <code id="agent-prompt-code" class="prompt-code">Connect to Trainable DS from current origin and follow /DESIGN.md for all UI generation.</code>
+            <button type="button" id="copy-agent-prompt" class="btn-primary">
+              📋 Copy Prompt
+            </button>
+          </div>
+
+          <div class="surfaces-taglist">
+            <span>Rooted in:</span>
+            <span class="surface-chip">Claude Code / Desktop</span>
+            <span class="surface-chip">Cursor (.cursor/rules)</span>
+            <span class="surface-chip">Google Antigravity</span>
+            <span class="surface-chip">Figma AI</span>
+            <span class="surface-chip">Model Context Protocol (MCP)</span>
+          </div>
         </div>
       </div>
 
@@ -104,6 +147,57 @@
         <div class="metric-card">
           <span class="metric-value">100%</span>
           <span class="metric-label">Closed-Loop Evaluator Enforcement</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Website Extraction Section -->
+    <section id="extract">
+      <div class="section-header">
+        <span class="badge" style="margin-block-end:0.5rem; background:#dbeafe; color:#1e40af;">One-Prompt Website Harvester</span>
+        <h2 class="section-title">Zero-Touch Website Extraction</h2>
+        <p class="section-desc">
+          You do not need to know the crawling, font harvesting, or alignment process. Simply give your agent this prompt:
+          <br>
+          <strong style="color:var(--md-sys-color-primary);">"Use Trainable Design System to extract the design system from &lt;website url&gt;"</strong>
+        </p>
+      </div>
+
+      <div class="workflow-steps-grid">
+        <!-- Step 1 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge">1</div>
+          <div class="step-title">Multi-Page Discovery</div>
+          <p class="step-desc">
+            The agent automatically discovers <code>/sitemap.xml</code> and navigation links, classifying internal subpages into UX archetypes (<code>home</code>, <code>listing</code>, <code>detail</code>, <code>form</code>, <code>content</code>) to capture the full breadth of the system.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge">2</div>
+          <div class="step-title">Deep Font & Icon Harvesting</div>
+          <p class="step-desc">
+            Captures origin typography by extracting <code>@font-face</code> CDN <code>.woff2</code> URLs into <code>fonts.json</code>, and pierces Web Component Shadow DOMs (like <code>&lt;p-icon&gt;</code>) to extract vector SVGs into <code>icons.json</code>.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge">3</div>
+          <div class="step-title">Iterative Alignment Loops (≥95%)</div>
+          <p class="step-desc">
+            Executes autonomous visual alignment feedback loops comparing live computed styles against M3 tokens. Automatically patches discrepancies until cross-page compliance meets or exceeds 95%.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge">4</div>
+          <div class="step-title">Human Overview & Live Overrides</div>
+          <p class="step-desc">
+            Outputs machine-ready assets (<code>tokens.json</code>, <code>components.json</code>, <code>DESIGN.md</code>) and launches <code>overview.html</code> where humans can visually review and live-override any token with permanent disk locking (<code>tds:locked: true</code>).
+          </p>
         </div>
       </div>
     </section>
