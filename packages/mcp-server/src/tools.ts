@@ -140,6 +140,49 @@ export const TOOLS: ToolDefinition[] = [
       required: ["source_url"],
     },
   },
+  {
+    name: "discover_subpages",
+    description:
+      "Discover, analyze, and categorize sub-pages of a target website by archetype (home, listing, detail, form, content) for comprehensive multi-page design system extraction.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        root_url: {
+          type: "string",
+          description: "Root website URL (e.g. https://www.porsche.com/germany/)",
+        },
+      },
+      required: ["root_url"],
+    },
+  },
+  {
+    name: "harvest_design_system_site",
+    description:
+      "Run multi-page design system extraction and iterative alignment across multiple pages. Harvests @font-face rules, woff2 font URLs, SVG icons, and generates an interactive overview.html reviewer portal with live overrides.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        root_url: {
+          type: "string",
+          description: "Target website root URL",
+        },
+        pages: {
+          type: "array",
+          items: { type: "string" },
+          description: "Optional list of approved sub-page URLs to crawl",
+        },
+        max_loops: {
+          type: "number",
+          description: "Maximum convergence loops (default: 3)",
+        },
+        threshold: {
+          type: "number",
+          description: "Target convergence score percentage (default: 95)",
+        },
+      },
+      required: ["root_url"],
+    },
+  },
 ];
 
 export interface ToolExecutionContext {
@@ -450,6 +493,47 @@ export async function executeTool(
       const result = await runVisualAlignmentLoop({
         sourceUrl,
         templatePath,
+        maxLoops,
+        threshold,
+        dsDirectory: workspaceDir,
+      });
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2),
+          },
+        ],
+      };
+    }
+
+    case "discover_subpages": {
+      const rootUrl = String(args.root_url || "");
+      const { parseDiscoveredLinks, selectRepresentativePages } = await import("@trainable-ds/compiler");
+      const discovered = parseDiscoveredLinks({ discoveredLinks: [] }, rootUrl);
+      const recommended = selectRepresentativePages(discovered, 5);
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({ rootUrl, allDiscovered: discovered, recommended }, null, 2),
+          },
+        ],
+      };
+    }
+
+    case "harvest_design_system_site": {
+      const rootUrl = String(args.root_url || "");
+      const pages = Array.isArray(args.pages) ? args.pages.map(String) : [rootUrl];
+      const maxLoops = typeof args.max_loops === "number" ? args.max_loops : 3;
+      const threshold = typeof args.threshold === "number" ? args.threshold : 95;
+
+      const { runMultiPageAlignment } = await import("@trainable-ds/compiler");
+      const result = await runMultiPageAlignment({
+        rootUrl,
+        pages,
         maxLoops,
         threshold,
         dsDirectory: workspaceDir,

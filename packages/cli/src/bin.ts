@@ -23,10 +23,14 @@ program
 
 program
   .command("train")
-  .description("Derive and extract design system at M3 fidelity from code & docs")
+  .description("Derive and extract design system at M3 fidelity from code, docs, or a live website")
   .option("--src <path>", "Source code directory to scan", "./src")
   .option("--docs <path>", "Documentation directory", "./docs")
+  .option("--url <url>", "Train directly on a live website with multi-page discovery and asset extraction")
+  .option("--pages <list>", "Comma-separated list of approved subpage URLs to crawl")
   .option("--align <url>", "Immediately run visual alignment loops against source URL")
+  .option("--max-loops <n>", "Maximum alignment refinement loops (default: 3)", "3")
+  .option("--threshold <pct>", "Target convergence percentage threshold (default: 95)", "95")
   .action(async (options) => {
     await runTrain(options);
   });

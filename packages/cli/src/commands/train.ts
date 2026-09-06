@@ -19,13 +19,69 @@ export interface TrainOptions {
   src?: string;
   docs?: string;
   align?: string;
+  url?: string;
+  pages?: string;
+  maxLoops?: string | number;
+  threshold?: string | number;
+  open?: boolean;
 }
 
 /**
- * Extracts and "trains" an M3 design system from source code files.
+ * Extracts and "trains" an M3 design system from source code files or a live website URL.
  */
 export async function runTrain(options: TrainOptions) {
   const cwd = process.cwd();
+
+  // Handle Web URL multi-page extraction and convergence
+  if (options.url) {
+    const { runMultiPageAlignment, parseDiscoveredLinks, selectRepresentativePages } = await import("@trainable-ds/compiler");
+
+    console.log(pc.bold(pc.cyan("\n🌐 Web Design System Training & Multi-Page Alignment")));
+    console.log(pc.gray("---------------------------------------------------------------"));
+    console.log(`${pc.bold("Target Website:")} ${pc.underline(options.url)}`);
+
+    let targetPages: string[] = [];
+    if (options.pages) {
+      targetPages = options.pages.split(",").map(p => p.trim());
+    } else {
+      console.log(pc.cyan("🔍 Discovering site map and sub-pages..."));
+      const discovered = parseDiscoveredLinks({ discoveredLinks: [] }, options.url);
+      const representative = selectRepresentativePages(discovered, 4);
+      targetPages = representative.map(p => p.url);
+    }
+
+    console.log(pc.green(`✔ Selected ${targetPages.length} representative page(s) for extraction:`));
+    targetPages.forEach(p => console.log(`   • ${pc.underline(p)}`));
+
+    const maxLoops = options.maxLoops ? Number(options.maxLoops) : 3;
+    const threshold = options.threshold ? Number(options.threshold) : 95;
+
+    console.log(pc.cyan(`\n⚡ Running multi-page extraction & iterative convergence loops (Target: ${threshold}%)...`));
+    const result = await runMultiPageAlignment({
+      rootUrl: options.url,
+      pages: targetPages,
+      maxLoops,
+      threshold,
+      dsDirectory: cwd,
+      onProgress: (stage, data) => {
+        if (stage === "crawling") {
+          console.log(`  Crawling [${data.index}/${data.total}]: ${data.page}`);
+        } else if (stage === "loop") {
+          const scoreColor = data.report.score >= 90 ? pc.green : data.report.score >= 70 ? pc.yellow : pc.red;
+          console.log(`  [Loop ${data.loop}/${data.maxLoops}] Cross-Page Compliance: ${scoreColor(`${data.report.score}%`)}`);
+        }
+      }
+    });
+
+    console.log(pc.gray("---------------------------------------------------------------"));
+    console.log(pc.bold(pc.green(`🎉 Extraction & Alignment Complete! Final Compliance: ${result.finalScore}%`)));
+    console.log(`  ✔ Extracted ${Object.keys(result.fonts.families).length} brand font family(s) with @font-face rules`);
+    console.log(`  ✔ Extracted ${result.icons.length} SVG icon(s) across shadow roots`);
+    console.log(`  ✔ Generated interactive reviewer overview: ${pc.bold(result.overviewHtmlPath)}`);
+    console.log(`  ✔ Synchronized tokens.json, components.json, and DESIGN.md`);
+    return;
+  }
+
   const srcDir = path.resolve(cwd, options.src || "./src");
   console.log(pc.cyan("🔬 Training Design System from:") + ` ${srcDir}`);
 

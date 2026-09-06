@@ -141,7 +141,84 @@ export function createPortalServer(options: ServeOptions = {}): http.Server {
       return;
     }
 
-    // 3. API Endpoint: POST /api/v1/mcp/message
+    // 3. API Endpoint: POST /api/v1/override (Human Reviewer Overrides Sync)
+    if (pathname === "/api/v1/override" && req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => (body += chunk));
+      req.on("end", async () => {
+        try {
+          const payload = JSON.parse(body);
+          const overrides: Record<string, { value: any; locked?: boolean }> = payload.overrides || {};
+
+          const tokensFile = fs.existsSync(path.join(cwd, "tokens.json"))
+            ? path.join(cwd, "tokens.json")
+            : path.join(cwd, ".design-system", "tokens.json");
+          const componentsFile = fs.existsSync(path.join(cwd, "components.json"))
+            ? path.join(cwd, "components.json")
+            : path.join(cwd, ".design-system", "components.json");
+
+          let tokens = fs.existsSync(tokensFile) ? JSON.parse(fs.readFileSync(tokensFile, "utf-8")) : {};
+          let components = fs.existsSync(componentsFile) ? JSON.parse(fs.readFileSync(componentsFile, "utf-8")) : {};
+
+          let appliedCount = 0;
+          for (const [key, item] of Object.entries(overrides)) {
+            appliedCount++;
+            if (!tokens[key]) {
+              tokens[key] = { "$value": item.value };
+            } else {
+              tokens[key]["$value"] = item.value;
+            }
+            if (!tokens[key]["$extensions"]) tokens[key]["$extensions"] = {};
+            tokens[key]["$extensions"]["tds:locked"] = true;
+            tokens[key]["$extensions"]["tds:overridden"] = true;
+
+            if (key === "comp.button.shape.corner" && components.button) {
+              if (!components.button.anatomy) components.button.anatomy = {};
+              const isPill = String(item.value).includes("pill") || String(item.value).includes("9999");
+              components.button.anatomy.container = {
+                ...components.button.anatomy.container,
+                shape: isPill ? "full-pill" : "rounded-rect",
+                borderRadius: item.value
+              };
+            }
+          }
+
+          if (fs.existsSync(path.dirname(tokensFile))) {
+            fs.writeFileSync(tokensFile, JSON.stringify(tokens, null, 2), "utf-8");
+          }
+          if (fs.existsSync(path.dirname(componentsFile))) {
+            fs.writeFileSync(componentsFile, JSON.stringify(components, null, 2), "utf-8");
+          }
+
+          // Recompile DESIGN.md
+          const { compileDesignMd } = await import("@trainable-ds/compiler");
+          const { TrainableDsConfigSchema, M3_TYPESCALE_DEFAULTS, M3_STATE_DEFAULTS, M3_ELEVATION_DEFAULTS } = await import("@trainable-ds/core");
+          const cfg = TrainableDsConfigSchema.parse({
+            name: components.name || "Design System",
+            version: "1.7.0"
+          });
+          const compiledMd = compileDesignMd({
+            config: cfg,
+            colors: (tokens.sys && tokens.sys.color) || { light: {}, dark: {} },
+            typescale: (tokens.sys && tokens.sys.typescale) || M3_TYPESCALE_DEFAULTS,
+            state: (tokens.sys && tokens.sys.state) || M3_STATE_DEFAULTS,
+            elevation: (tokens.sys && tokens.sys.elevation) || M3_ELEVATION_DEFAULTS,
+            components: components.components ? components : undefined
+          });
+          fs.writeFileSync(path.join(cwd, "DESIGN.md"), compiledMd, "utf-8");
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true, count: appliedCount, recompiled: true }));
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : String(err);
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: msg }));
+        }
+      });
+      return;
+    }
+
+    // 4. API Endpoint: POST /api/v1/mcp/message
     if (pathname === "/api/v1/mcp/message" && req.method === "POST") {
       let body = "";
       req.on("data", (chunk) => (body += chunk));
@@ -159,19 +236,25 @@ export function createPortalServer(options: ServeOptions = {}): http.Server {
       return;
     }
 
-    // 4. Static Files Resolution
+    // 5. Static Files Resolution
     if (pathname === "/") {
       pathname = "/index.html";
     }
 
     let filePath = path.join(publicDir, pathname);
 
-    // Fallback: check workspace root for DESIGN.md
+    // Fallback: check workspace root for DESIGN.md, overview.html, fonts.json, icons.json
     if (!fs.existsSync(filePath) && pathname === "/DESIGN.md") {
       const rootDesignMd = path.join(cwd, "DESIGN.md");
-      if (fs.existsSync(rootDesignMd)) {
-        filePath = rootDesignMd;
-      }
+      if (fs.existsSync(rootDesignMd)) filePath = rootDesignMd;
+    }
+    if (!fs.existsSync(filePath) && (pathname === "/overview.html" || pathname === "/overview")) {
+      const rootOverview = path.join(cwd, "overview.html");
+      if (fs.existsSync(rootOverview)) filePath = rootOverview;
+    }
+    if (!fs.existsSync(filePath) && (pathname === "/fonts.json" || pathname === "/icons.json")) {
+      const rootAsset = path.join(cwd, path.basename(pathname));
+      if (fs.existsSync(rootAsset)) filePath = rootAsset;
     }
 
     // Fallback: check .design-system for tokens.json and components.json

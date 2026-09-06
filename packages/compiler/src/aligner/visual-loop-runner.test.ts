@@ -1,8 +1,15 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, afterEach } from "vitest";
+import os from "node:os";
+import fs from "node:fs";
+import path from "node:path";
 import { runVisualAlignmentLoop } from "./visual-loop-runner.js";
 import { HarvestedSystemSnapshot } from "./deep-harvester.js";
 
 describe("visual-loop-runner", () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "visual-loop-test-"));
+  afterEach(() => {
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  });
   const mockSourceSnapshot: HarvestedSystemSnapshot = {
     url: "https://porsche.com",
     timestamp: Date.now(),
@@ -70,6 +77,7 @@ describe("visual-loop-runner", () => {
       sourceUrl: "https://porsche.com",
       mockSourceSnapshot,
       mockExtractedSnapshot,
+      dsDirectory: tempDir,
       maxLoops: 2,
       threshold: 95,
       onProgress: (loop: number, report: any) => {
