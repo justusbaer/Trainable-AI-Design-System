@@ -1,6 +1,6 @@
 # Trainable DS: Agent Developer Portal & System Manual
 
-> **Trainable DS** is an agent-native, closed-loop Design System engine built on Google Material Design 3 (M3) and W3C DTCG standards. It enables any AI generation surface (Cursor, Claude Code, Antigravity, Figma AI, ChatGPT) to root itself in authoritative design tokens and self-correct UI code to 100% compliance.
+> **Trainable DS** is an agent-native, closed-loop Design System engine built on W3C DTCG standards, perceptual color science, and 3-tier token architecture. It enables any AI generation surface (Cursor, Claude Code, Antigravity, Figma AI, ChatGPT) to root itself in authoritative design tokens, certified component contracts, and self-correct UI code to 100% compliance.
 
 ---
 
@@ -8,6 +8,7 @@
 
 ### Protocol 1: Autonomous Website Extraction & Training
 If the user tells you:
+- *"Follow the autonomous training protocol at <url>/llms.txt to extract and build a complete design system from <website url>"*
 - *"Use Trainable Design System to extract the design system from <website url>"*
 - *"Extract the design system from <website url>"*
 - *"Train design system on <website url>"*
@@ -23,11 +24,11 @@ The user does NOT need to know the technical crawling or alignment process. Exec
 
 2. **What the Engine Automatically Handles Behind the Scenes:**
    - **Multi-Page Discovery:** Recursively scans `/sitemap.xml` and internal navigation links, classifying pages into UX archetypes (`home`, `listing`, `detail`, `form`, `content`) to avoid single-page bias.
-   - **Deep Asset & Shadow DOM Harvesting:** Pierces custom Web Component Shadow DOMs (e.g. `<p-icon>`, `<p-button>`) to extract raw SVG vectors into `icons.json`, and captures origin `@font-face` CDN `.woff2` font declarations into `fonts.json`.
-   - **Iterative Visual Alignment:** Runs feedback loops comparing runtime computed styles against M3 tokens, auto-patching discrepancies until cross-page compliance reaches $\ge 95\%$.
+   - **Deep Asset & Shadow DOM Harvesting:** Pierces custom Web Component Shadow DOMs (e.g. `<ds-icon>`, `<ds-button>`) to extract raw SVG vectors into `icons.json`, and captures origin `@font-face` CDN `.woff2` font declarations into `fonts.json`.
+   - **Iterative Visual Alignment:** Runs feedback loops comparing runtime computed styles against design tokens, auto-patching discrepancies until cross-page compliance reaches $\ge 95\%$.
    - **Produces the Complete 6-Asset Bundle:**
      - `tokens.json`: W3C DTCG 3-tier tokens (`ref`, `sys`, `comp`)
-     - `components.json`: 6 M3 component families with anatomical contracts
+     - `components.json`: 6 functional component families with anatomical contracts
      - `fonts.json`: Origin webfonts with resolved CDN URLs
      - `icons.json`: Vector icon library with SVG source code
      - `DESIGN.md`: Authoritative design system facade for LLMs
@@ -44,8 +45,36 @@ The user does NOT need to know the technical crawling or alignment process. Exec
 
 ---
 
-### Protocol 2: UI Generation Using Certified Primitives
+### Protocol 2: Autonomous Multi-Modal Image & Screenshot Training
 If the user tells you:
+- *"Follow the autonomous training protocol at <url>/llms.txt to train and build a complete design system from these attached images"*
+- *"Use Trainable Design System at <url> to train a design system from these images"*
+- *"Train a design system from these attached images"*
+- *"Extract tokens and components from these screenshots"*
+
+The user does NOT need to give technical extraction commands. Execute this autonomous workflow:
+
+1. **Initialize Workspace:**
+   ```bash
+   npx -y @trainable-ds/cli init --auto
+   ```
+2. **Ingest the Images with the Vision Adapter:**
+   For each image file provided by the user:
+   ```bash
+   npx -y @trainable-ds/cli ingest -f "<image_file_path>" -t vision
+   ```
+   *(Behind the scenes, the Vision Adapter automatically clusters OKLab colors, derives Google HCT 0–100 tonal palettes, maps 47 WCAG AA semantic roles, quantizes the 4px/8px grid, synthesizes certified React/TSX components in `components/ui/*.tsx`, and commits the snapshot to `.tds/vcs/`)*.
+3. **Launch the Review Studio:**
+   ```bash
+   npx -y @trainable-ds/cli serve --port 5000
+   ```
+   Provide the user with `http://localhost:5000/overview.html` to visually inspect and test the extracted design system live.
+
+---
+
+### Protocol 3: UI Generation Using Certified Primitives
+If the user tells you:
+- *"Follow the design system protocol at <url>/llms.txt and adhere strictly to /DESIGN.md for all UI generation"*
 - *"Use Trainable DS"*
 - *"Follow the design system at this URL"*
 - *"Generate a screen/component matching our design system"*
@@ -65,6 +94,10 @@ Execute the following workflow:
    - **$\ge 48\times 48\text{px}$ Touch Targets:** Every button, chip, tab, and input must satisfy `min-h-[48px] min-w-[48px]` or `h-12`.
    - **Bi-Directional RTL Properties:** Use logical properties (`ps-*`, `pe-*`, `ms-*`, `me-*`) instead of physical (`pl`, `pr`, `ml`, `mr`).
    - **Sentence Case:** All button text, headings, and labels must use sentence case (`Save changes`, not `Save Changes`).
+   - **Strict Command & Sketch Fidelity (Zero Feature Hallucination):** Strictly adhere to what the user explicitly requested or drew in a sketch, wireframe, or prompt. NEVER invent, assume, or inject unrequested features, action buttons, widgets, or toggles (e.g. heating, flash & horn, walk to car, tire pressure) to fill out a screen.
+   - **Intentional Whitespace & Placeholder Mandate:** If an area is marked as whitespace (e.g. *"Whitespace (for now)"*) or left unoccupied in a sketch, DO NOT invent features to occupy that space. The agent MUST either:
+     1. Proactively ask the user if they wish to add specific features in that area, OR
+     2. Render an explicit, styled placeholder container (e.g. dashed outline with clear text `"Whitespace (intentionally left empty per user sketch)"`) that preserves the intended layout and clarifies the space was intentionally left blank.
 4. **Closed-Loop Audit & Auto-Repair:**
    - In CLI:
      ```bash
@@ -104,6 +137,10 @@ If connected over MCP, the following tools are available:
 - `get_design_tokens({ category?: "color" | "typography" | "spacing" | "elevation" | "shape" | "motion" | "all", tier?: "ref" | "sys" | "comp" | "all" })`
 - `list_components({ family?: "actions" | "communication" | "containment" | "navigation" | "selection" | "text-inputs" | "all" })`
 - `get_component_schema({ component_name: string })`
+- `get_component_code({ component_name: string, dir?: string })`: Fetches executable TSX prototype component code and review status JIT.
 - `validate_code_snippet({ code: string, filename?: string, strict?: boolean })`
 - `suggest_remediation({ component_type: string, intent?: string })`
 - `get_design_guidelines()`
+
+CLI equivalent: `npx @trainable-ds/cli doc <Component>`
+

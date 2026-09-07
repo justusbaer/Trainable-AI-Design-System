@@ -4,6 +4,7 @@
     "indexes": "firebase/firestore.indexes.json"
   },
   "hosting": {
+    "site": "trainable-ds-2026",
     "public": "firebase/public",
     "ignore": [
       "firebase.json",

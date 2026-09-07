@@ -4,13 +4,13 @@ import { HarvestedSystemSnapshot } from "./deep-harvester.js";
 
 describe("discrepancy-analyzer", () => {
   const mockSourceSnapshot: HarvestedSystemSnapshot = {
-    url: "https://porsche.com",
+    url: "https://example.com",
     timestamp: Date.now(),
-    title: "Porsche Official",
+    title: "Brand Official",
     elements: [
       {
-        selector: "p-button.primary",
-        tagName: "p-button",
+        selector: "ds-button.primary",
+        tagName: "ds-button",
         isShadowRoot: false,
         family: "actions",
         role: "button.primary",
@@ -22,8 +22,8 @@ describe("discrepancy-analyzer", () => {
           isPill: true
         },
         typography: {
-          fontFamily: "Porsche Next, sans-serif",
-          primaryFont: "Porsche Next",
+          fontFamily: "Brand Sans, sans-serif",
+          primaryFont: "Brand Sans",
           fontSize: 16,
           fontWeight: 400,
           lineHeight: 24,
@@ -91,7 +91,7 @@ describe("discrepancy-analyzer", () => {
 
     const fontDisc = report.discrepancies.find((d: DiscrepancyItem) => d.property === "fontFamily");
     expect(fontDisc).toBeDefined();
-    expect(fontDisc?.observedValue).toBe("Porsche Next");
+    expect(fontDisc?.observedValue).toBe("Brand Sans");
   });
 
   it("reports convergence when extracted system matches source", () => {

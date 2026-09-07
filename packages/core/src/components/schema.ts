@@ -64,6 +64,14 @@ export const ComponentVariantSchema = z.object({
 
 export type ComponentVariant = z.infer<typeof ComponentVariantSchema>;
 
+export const AuthoritativeSourceSchema = z.object({
+  type: z.enum(["generated", "authoritative-library", "custom"]).default("generated"),
+  packageName: z.string().optional(),
+  exportName: z.string().optional(),
+  notes: z.string().optional(),
+});
+export type AuthoritativeSource = z.infer<typeof AuthoritativeSourceSchema>;
+
 export const ComponentDefinitionSchema = z.object({
   name: z.string(),
   path: z.string(),
@@ -79,6 +87,10 @@ export const ComponentDefinitionSchema = z.object({
   }),
   rules: z.array(z.string()).default([]),
   examples: z.array(z.string()).default([]),
+  code: z.string().optional(),
+  authoritativeSource: AuthoritativeSourceSchema.optional(),
+  locked: z.boolean().optional(),
+  humanNotes: z.string().optional(),
 });
 
 export type ComponentDefinition = z.infer<typeof ComponentDefinitionSchema>;

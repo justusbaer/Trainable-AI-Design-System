@@ -4,6 +4,16 @@ import path from "node:path";
 import pc from "picocolors";
 import { evaluateCode, type EvaluateOptions } from "@trainable-ds/evaluator";
 import { McpServer } from "@trainable-ds/mcp-server";
+import { 
+  VCSStore, 
+  SemanticMerger, 
+  MergeGatekeeper, 
+  TableAdapter, 
+  DocumentAdapter, 
+  VisionAdapter, 
+  ConversationAdapter, 
+  FusionEngine 
+} from "@trainable-ds/compiler";
 
 export interface ServeOptions {
   port?: string | number;
@@ -149,6 +159,20 @@ export function createPortalServer(options: ServeOptions = {}): http.Server {
         try {
           const payload = JSON.parse(body);
           const overrides: Record<string, { value: any; locked?: boolean }> = payload.overrides || {};
+          const componentOverrides: Record<
+            string,
+            {
+              code?: string;
+              authoritativeSource?: {
+                type: "generated" | "authoritative-library" | "custom";
+                packageName?: string;
+                exportName?: string;
+                notes?: string;
+              };
+              locked?: boolean;
+              humanNotes?: string;
+            }
+          > = payload.components || {};
 
           const tokensFile = fs.existsSync(path.join(cwd, "tokens.json"))
             ? path.join(cwd, "tokens.json")
@@ -159,6 +183,20 @@ export function createPortalServer(options: ServeOptions = {}): http.Server {
 
           let tokens = fs.existsSync(tokensFile) ? JSON.parse(fs.readFileSync(tokensFile, "utf-8")) : {};
           let components = fs.existsSync(componentsFile) ? JSON.parse(fs.readFileSync(componentsFile, "utf-8")) : {};
+
+          if (!components.components && typeof components === "object") {
+            components = {
+              version: "1.7.0",
+              lastUpdated: new Date().toISOString(),
+              components: { ...components },
+            };
+          } else if (!components.components) {
+            components = {
+              version: "1.7.0",
+              lastUpdated: new Date().toISOString(),
+              components: {},
+            };
+          }
 
           let appliedCount = 0;
           for (const [key, item] of Object.entries(overrides)) {
@@ -172,14 +210,68 @@ export function createPortalServer(options: ServeOptions = {}): http.Server {
             tokens[key]["$extensions"]["tds:locked"] = true;
             tokens[key]["$extensions"]["tds:overridden"] = true;
 
-            if (key === "comp.button.shape.corner" && components.button) {
-              if (!components.button.anatomy) components.button.anatomy = {};
+            if (key === "comp.button.shape.corner" && components.components?.Button) {
+              if (!components.components.Button.anatomy) components.components.Button.anatomy = {};
               const isPill = String(item.value).includes("pill") || String(item.value).includes("9999");
-              components.button.anatomy.container = {
-                ...components.button.anatomy.container,
+              components.components.Button.anatomy.container = {
+                ...components.components.Button.anatomy.container,
                 shape: isPill ? "full-pill" : "rounded-rect",
                 borderRadius: item.value
               };
+            }
+          }
+
+          for (const [compName, compData] of Object.entries(componentOverrides)) {
+            appliedCount++;
+            let existingKey = Object.keys(components.components).find(
+              (k) => k.toLowerCase() === compName.toLowerCase()
+            ) || compName;
+
+            let compDef = components.components[existingKey];
+            if (!compDef) {
+              compDef = {
+                name: compName,
+                path: `components/ui/${compName}.tsx`,
+                family: "actions",
+                description: `Certified ${compName} component`,
+                anatomy: {},
+                variants: {},
+                props: {},
+                a11y: {
+                  minTouchTarget: "48x48px",
+                  requiredAria: [],
+                  focusIndicator: "3px outline with 2px offset",
+                },
+                rules: [],
+                examples: [],
+              };
+              components.components[existingKey] = compDef;
+            }
+
+            if (compData.code !== undefined) {
+              compDef.code = compData.code;
+              const relPath = compDef.path || `components/ui/${compName}.tsx`;
+              const absCodePath = path.isAbsolute(relPath) ? relPath : path.join(cwd, relPath);
+              try {
+                fs.mkdirSync(path.dirname(absCodePath), { recursive: true });
+                fs.writeFileSync(absCodePath, compData.code, "utf-8");
+              } catch {
+                // Non-fatal if filesystem write is restricted
+              }
+            }
+
+            if (compData.authoritativeSource !== undefined) {
+              compDef.authoritativeSource = compData.authoritativeSource;
+            }
+
+            if (compData.humanNotes !== undefined) {
+              compDef.humanNotes = compData.humanNotes;
+            }
+
+            if (compData.locked !== undefined) {
+              compDef.locked = compData.locked;
+            } else {
+              compDef.locked = true;
             }
           }
 
@@ -236,7 +328,287 @@ export function createPortalServer(options: ServeOptions = {}): http.Server {
       return;
     }
 
-    // 5. Static Files Resolution
+    // 5. API Endpoint: GET /api/v1/branches
+    if (pathname === "/api/v1/branches" && req.method === "GET") {
+      try {
+        const store = new VCSStore(cwd);
+        await store.init();
+        const branches = await store.listBranches();
+        const currentBranch = await store.getCurrentBranch();
+        const history = await store.getHistory(currentBranch, 20);
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ currentBranch, branches, history }));
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: msg }));
+      }
+      return;
+    }
+
+    // 6. API Endpoint: POST /api/v1/branch/switch
+    if (pathname === "/api/v1/branch/switch" && req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => (body += chunk));
+      req.on("end", async () => {
+        try {
+          const { branch } = JSON.parse(body || "{}");
+          if (!branch) throw new Error("Branch name is required");
+
+          const store = new VCSStore(cwd);
+          await store.init();
+          const snapshot = await store.switchBranch(branch);
+
+          // Sync tokens.json
+          try {
+            fs.writeFileSync(path.join(cwd, "tokens.json"), JSON.stringify(snapshot.tokens, null, 2), "utf-8");
+          } catch {
+            // VCS authoritative
+          }
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true, currentBranch: branch, snapshot }));
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : String(err);
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: msg }));
+        }
+      });
+      return;
+    }
+
+    // 7. API Endpoint: POST /api/v1/branch/create
+    if (pathname === "/api/v1/branch/create" && req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => (body += chunk));
+      req.on("end", async () => {
+        try {
+          const { name, from } = JSON.parse(body || "{}");
+          if (!name) throw new Error("Branch name is required");
+
+          const store = new VCSStore(cwd);
+          await store.init();
+          const branch = await store.createBranch(name, from);
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ success: true, branch }));
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : String(err);
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: msg }));
+        }
+      });
+      return;
+    }
+
+    // 8. API Endpoint: POST /api/v1/branch/merge
+    if (pathname === "/api/v1/branch/merge" && req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => (body += chunk));
+      req.on("end", async () => {
+        try {
+          const { source, target, skipGates } = JSON.parse(body || "{}");
+          if (!source) throw new Error("Source branch is required");
+
+          const store = new VCSStore(cwd);
+          await store.init();
+
+          const targetBranch = target || await store.getCurrentBranch();
+          const targetSnapshot = await store.getHeadSnapshot(targetBranch);
+          const sourceSnapshot = await store.getHeadSnapshot(source);
+
+          if (!sourceSnapshot) throw new Error(`Source branch '${source}' not found.`);
+          if (!targetSnapshot) throw new Error(`Target branch '${targetBranch}' not found.`);
+
+          const merger = new SemanticMerger();
+          const mergeResult = merger.merge(targetSnapshot, targetSnapshot, sourceSnapshot);
+
+          if (!mergeResult.success) {
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ 
+              success: false, 
+              conflicts: {
+                tokens: mergeResult.tokenConflicts,
+                components: mergeResult.componentConflicts
+              },
+              summary: mergeResult.summary
+            }));
+            return;
+          }
+
+          const gatekeeper = new MergeGatekeeper();
+          const gateResult = gatekeeper.check(mergeResult.mergedSnapshot);
+
+          if (!gateResult.passed && !skipGates) {
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify({ 
+              success: false, 
+              gateBlocked: true,
+              gateResult,
+              summary: `Blocked by Quality & A11y Gatekeeper (${gateResult.violations.length} violations).`
+            }));
+            return;
+          }
+
+          await store.switchBranch(targetBranch);
+          const commit = await store.commit(
+            `Merge branch '${source}' into '${targetBranch}'`,
+            mergeResult.mergedSnapshot,
+            "web-review-merge"
+          );
+
+          try {
+            fs.writeFileSync(path.join(cwd, "tokens.json"), JSON.stringify(mergeResult.mergedSnapshot.tokens, null, 2), "utf-8");
+          } catch {
+            // VCS authoritative
+          }
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ 
+            success: true, 
+            commitId: commit.id,
+            gateResult,
+            summary: `Successfully merged '${source}' into '${targetBranch}'.`
+          }));
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : String(err);
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: msg }));
+        }
+      });
+      return;
+    }
+
+    // 9. API Endpoint: POST /api/v1/refine
+    if (pathname === "/api/v1/refine" && req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => (body += chunk));
+      req.on("end", async () => {
+        try {
+          const { prompt, branch, force } = JSON.parse(body || "{}");
+          if (!prompt) throw new Error("Prompt is required");
+
+          const store = new VCSStore(cwd);
+          await store.init();
+
+          const targetBranch = branch || await store.getCurrentBranch();
+          if (branch && branch !== (await store.getCurrentBranch())) {
+            await store.switchBranch(branch);
+          }
+
+          const adapter = new ConversationAdapter();
+          const ingestResult = await adapter.ingest(prompt);
+
+          let snapshot = await store.getHeadSnapshot(targetBranch);
+          if (!snapshot) {
+            snapshot = { tokens: {}, components: {}, guidelines: "", fonts: {}, icons: [] };
+          }
+
+          const fusion = new FusionEngine();
+          const fused = fusion.fuse(snapshot, [ingestResult], { force });
+
+          const commit = await store.commit(
+            `Refine: "${prompt.slice(0, 60)}"`,
+            fused.snapshot,
+            "web-refine"
+          );
+
+          try {
+            fs.writeFileSync(path.join(cwd, "tokens.json"), JSON.stringify(fused.snapshot.tokens, null, 2), "utf-8");
+          } catch {
+            // VCS authoritative
+          }
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({
+            success: true,
+            commitId: commit.id,
+            branch: targetBranch,
+            patches: {
+              tokens: ingestResult.tokens,
+              components: ingestResult.components
+            },
+            summary: ingestResult.summary
+          }));
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : String(err);
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: msg }));
+        }
+      });
+      return;
+    }
+
+    // 10. API Endpoint: POST /api/v1/ingest
+    if (pathname === "/api/v1/ingest" && req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => (body += chunk));
+      req.on("end", async () => {
+        try {
+          const { content, type, fileName, branch, force } = JSON.parse(body || "{}");
+          if (!content) throw new Error("Content is required");
+
+          const store = new VCSStore(cwd);
+          await store.init();
+
+          const targetBranch = branch || await store.getCurrentBranch();
+          const sourceType = type || "document";
+
+          let ingestResult;
+          if (sourceType === "table") {
+            const adapter = new TableAdapter();
+            ingestResult = await adapter.ingest({ content, sourceName: fileName || "table-data" });
+          } else if (sourceType === "vision") {
+            const adapter = new VisionAdapter();
+            ingestResult = await adapter.ingest(content);
+          } else {
+            const adapter = new DocumentAdapter();
+            ingestResult = await adapter.ingest({ content, documentTitle: fileName || "guidelines.md" });
+          }
+
+          let snapshot = await store.getHeadSnapshot(targetBranch);
+          if (!snapshot) {
+            snapshot = { tokens: {}, components: {}, guidelines: "", fonts: {}, icons: [] };
+          }
+
+          const fusion = new FusionEngine();
+          const fused = fusion.fuse(snapshot, [ingestResult], { force });
+
+          const commit = await store.commit(
+            `Ingest ${sourceType}: ${fileName || "upload"}`,
+            fused.snapshot,
+            "web-ingest"
+          );
+
+          try {
+            fs.writeFileSync(path.join(cwd, "tokens.json"), JSON.stringify(fused.snapshot.tokens, null, 2), "utf-8");
+          } catch {
+            // VCS authoritative
+          }
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({
+            success: true,
+            commitId: commit.id,
+            branch: targetBranch,
+            count: {
+              tokens: fused.appliedTokensCount,
+              components: fused.appliedComponentsCount,
+              guidelines: fused.appliedGuidelinesCount
+            },
+            summary: fused.summary
+          }));
+        } catch (err: unknown) {
+          const msg = err instanceof Error ? err.message : String(err);
+          res.writeHead(400, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({ error: msg }));
+        }
+      });
+      return;
+    }
+
+    // 11. Static Files Resolution
     if (pathname === "/") {
       pathname = "/index.html";
     }

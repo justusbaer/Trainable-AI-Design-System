@@ -1,6 +1,9 @@
 import { describe, it, expect } from "vitest";
 import { EventEmitter } from "node:events";
 import type { IncomingMessage, ServerResponse } from "node:http";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as os from "node:os";
 import { createPortalServer } from "./serve.js";
 
 interface MockResponse {
@@ -76,7 +79,7 @@ describe("Trainable DS Portal Server (serve)", () => {
     const res = await dispatchMockRequest(server, "GET", "/llms-full.txt");
     expect(res.statusCode).toBe(200);
     expect(res.headers["content-type"]).toContain("text/plain");
-    expect(res.body).toContain("M3 Semantic Color Taxonomy");
+    expect(res.body).toContain("Semantic Color Taxonomy");
     expect(res.body).toContain("15-Tier Typography Scale");
   });
 
@@ -141,7 +144,132 @@ describe("Trainable DS Portal Server (serve)", () => {
     expect(res.statusCode).toBe(200);
     const data = JSON.parse(res.body);
     expect(data.success).toBe(true);
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  });
+
+  it("handles component code and authoritative binding override via POST /api/v1/override", async () => {
+    const os = await import("node:os");
+    const fs = await import("node:fs");
+    const path = await import("node:path");
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "serve-comp-test-"));
+    fs.writeFileSync(path.join(tempDir, "tokens.json"), JSON.stringify({}), "utf-8");
+    fs.writeFileSync(path.join(tempDir, "components.json"), JSON.stringify({
+      version: "1.7.0",
+      components: {
+        Button: {
+          name: "Button",
+          path: "components/ui/Button.tsx",
+          family: "actions",
+          description: "Button component",
+          anatomy: {},
+          variants: {},
+          props: {},
+          a11y: { minTouchTarget: "48x48px", requiredAria: [], focusIndicator: "3px" },
+          rules: [],
+          examples: []
+        }
+      }
+    }), "utf-8");
+    fs.writeFileSync(path.join(tempDir, "DESIGN.md"), "# Design System", "utf-8");
+
+    const tempServer = createPortalServer({ dir: tempDir });
+    const res = await dispatchMockRequest(tempServer, "POST", "/api/v1/override", {
+      components: {
+        Button: {
+          code: "export const Button = () => <button>Custom Button</button>;",
+          authoritativeSource: {
+            type: "authoritative-library",
+            packageName: "@mui/material",
+            exportName: "Button"
+          },
+          humanNotes: "Use for high-conversion primary action buttons.",
+          locked: true
+        }
+      }
+    });
+
+    expect(res.statusCode).toBe(200);
+    const data = JSON.parse(res.body);
+    expect(data.success).toBe(true);
     expect(data.count).toBe(1);
+
+    // Verify written TSX file on disk
+    const writtenCode = fs.readFileSync(path.join(tempDir, "components/ui/Button.tsx"), "utf-8");
+    expect(writtenCode).toBe("export const Button = () => <button>Custom Button</button>;");
+
+    // Verify updated components.json
+    const updatedManifest = JSON.parse(fs.readFileSync(path.join(tempDir, "components.json"), "utf-8"));
+    expect(updatedManifest.components.Button.locked).toBe(true);
+    expect(updatedManifest.components.Button.authoritativeSource.packageName).toBe("@mui/material");
+    expect(updatedManifest.components.Button.humanNotes).toBe("Use for high-conversion primary action buttons.");
+
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  });
+
+  it("handles /api/v1/branches, /api/v1/branch/create, /api/v1/refine, and /api/v1/branch/merge endpoints", async () => {
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), "tds-portal-vcs-"));
+    fs.writeFileSync(
+      path.join(tempDir, "tokens.json"),
+      JSON.stringify({
+        sys: {
+          color: {
+            primary: { value: "#0055ff" },
+            onPrimary: { value: "#ffffff" },
+            background: { value: "#ffffff" },
+            onBackground: { value: "#000000" }
+          }
+        }
+      }, null, 2),
+      "utf-8"
+    );
+
+    const tempServer = createPortalServer({ dir: tempDir });
+
+    // 1. GET /api/v1/branches
+    const branchesRes = await dispatchMockRequest(tempServer, "GET", "/api/v1/branches");
+    expect(branchesRes.statusCode).toBe(200);
+    const branchesData = JSON.parse(branchesRes.body);
+    expect(branchesData.currentBranch).toBe("main");
+    expect(branchesData.branches.length).toBeGreaterThanOrEqual(1);
+
+    // 2. POST /api/v1/branch/create
+    const createRes = await dispatchMockRequest(tempServer, "POST", "/api/v1/branch/create", {
+      name: "staging-theme"
+    });
+    expect(createRes.statusCode).toBe(200);
+    const createData = JSON.parse(createRes.body);
+    expect(createData.success).toBe(true);
+    expect(createData.branch.name).toBe("staging-theme");
+
+    // 3. POST /api/v1/refine on staging-theme
+    const refineRes = await dispatchMockRequest(tempServer, "POST", "/api/v1/refine", {
+      branch: "staging-theme",
+      prompt: "Change primary color to #0033aa"
+    });
+    expect(refineRes.statusCode).toBe(200);
+    const refineData = JSON.parse(refineRes.body);
+    expect(refineData.success).toBe(true);
+    expect(refineData.patches.tokens.some((t: any) => t.path === "sys.color.primary" && t.value === "#0033aa")).toBe(true);
+
+    // 4. POST /api/v1/branch/merge
+    const mergeRes = await dispatchMockRequest(tempServer, "POST", "/api/v1/branch/merge", {
+      source: "staging-theme",
+      target: "main"
+    });
+    expect(mergeRes.statusCode).toBe(200);
+    const mergeData = JSON.parse(mergeRes.body);
+    expect(mergeData.success).toBe(true);
+
+    // 5. POST /api/v1/ingest
+    const ingestRes = await dispatchMockRequest(tempServer, "POST", "/api/v1/ingest", {
+      type: "table",
+      content: "token,value\nsys.color.accent,#e11d48",
+      fileName: "accent.csv"
+    });
+    expect(ingestRes.statusCode).toBe(200);
+    const ingestData = JSON.parse(ingestRes.body);
+    expect(ingestData.success).toBe(true);
+    expect(ingestData.count.tokens).toBe(1);
 
     fs.rmSync(tempDir, { recursive: true, force: true });
   });

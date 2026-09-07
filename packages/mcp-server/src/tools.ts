@@ -9,6 +9,16 @@ import {
   M3_SHAPE_DEFAULTS,
   M3_EASING_DEFAULTS,
 } from "@trainable-ds/core";
+import {
+  VCSStore,
+  SemanticMerger,
+  MergeGatekeeper,
+  TableAdapter,
+  DocumentAdapter,
+  VisionAdapter,
+  ConversationAdapter,
+  FusionEngine,
+} from "@trainable-ds/compiler";
 import type { ToolDefinition, CallToolResult } from "./types.js";
 
 export const TOOLS: ToolDefinition[] = [
@@ -57,6 +67,21 @@ export const TOOLS: ToolDefinition[] = [
         component_name: {
           type: "string",
           description: "Name of the component (e.g. Button, Card, TextField, NavigationBar)",
+        },
+      },
+      required: ["component_name"],
+    },
+  },
+  {
+    name: "get_component_code",
+    description:
+      "Retrieve executable React/TSX source code, prop contract, authoritative upstream library binding, and human reviewer notes for a specific design system component.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        component_name: {
+          type: "string",
+          description: "Name of the component (e.g. Button, Card, TextField, Badge, Chip, Icon)",
         },
       },
       required: ["component_name"],
@@ -149,7 +174,7 @@ export const TOOLS: ToolDefinition[] = [
       properties: {
         root_url: {
           type: "string",
-          description: "Root website URL (e.g. https://www.porsche.com/germany/)",
+          description: "Root website URL (e.g. https://example.com/)",
         },
       },
       required: ["root_url"],
@@ -181,6 +206,93 @@ export const TOOLS: ToolDefinition[] = [
         },
       },
       required: ["root_url"],
+    },
+  },
+  {
+    name: "ingest_design_source",
+    description:
+      "Ingest tokens, guidelines, or component specs from multi-modal sources (CSV, tokens JSON, markdown docs, screenshots/SVGs).",
+    inputSchema: {
+      type: "object",
+      properties: {
+        content: {
+          type: "string",
+          description: "Raw content or file payload to ingest",
+        },
+        type: {
+          type: "string",
+          description: "Source type: table (CSV/JSON), document (Markdown/text), vision (SVG/screenshot), or conversation",
+          enum: ["table", "document", "vision", "conversation"],
+        },
+        file_name: {
+          type: "string",
+          description: "Optional file name for provenance tracking",
+        },
+        branch: {
+          type: "string",
+          description: "Target VCS branch (default: active branch)",
+        },
+        force: {
+          type: "boolean",
+          description: "Force overwrite locked tokens",
+        },
+      },
+      required: ["content", "type"],
+    },
+  },
+  {
+    name: "refine_design_system",
+    description:
+      "Conversational refinement of design tokens, components, and rules using natural language directives.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        prompt: {
+          type: "string",
+          description: "Natural language refinement instruction (e.g., 'Change primary color to #008080 and card radius to 12px')",
+        },
+        branch: {
+          type: "string",
+          description: "Target VCS branch (default: active branch)",
+        },
+        force: {
+          type: "boolean",
+          description: "Force overwrite locked tokens",
+        },
+      },
+      required: ["prompt"],
+    },
+  },
+  {
+    name: "manage_ds_branches",
+    description:
+      "Manage design system version branches: list, create, switch, diff, or merge branches with automated WCAG contrast and touch target gates.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        action: {
+          type: "string",
+          description: "Branch action to perform",
+          enum: ["list", "create", "switch", "diff", "merge"],
+        },
+        branch_name: {
+          type: "string",
+          description: "Branch name for create, switch, or merge source",
+        },
+        from_branch: {
+          type: "string",
+          description: "Source branch for create action",
+        },
+        target_branch: {
+          type: "string",
+          description: "Target branch for diff or merge action",
+        },
+        skip_gates: {
+          type: "boolean",
+          description: "Bypass WCAG contrast and touch target merge gatekeeper",
+        },
+      },
+      required: ["action"],
     },
   },
 ];
@@ -389,6 +501,72 @@ export async function executeTool(
       };
     }
 
+    case "get_component_code": {
+      const compName = String(args.component_name || "").trim();
+      const compFiles = [
+        path.join(workspaceDir, "components.json"),
+        path.join(workspaceDir, ".design-system", "components.json"),
+        path.join(workspaceDir, "Test DS", "components.json"),
+      ];
+
+      let manifest: Record<string, any> = {};
+      for (const f of compFiles) {
+        if (fs.existsSync(f)) {
+          try {
+            const parsed = JSON.parse(fs.readFileSync(f, "utf-8"));
+            manifest = parsed.components || parsed;
+            break;
+          } catch {
+            // fallback
+          }
+        }
+      }
+
+      const { generatePrototypeComponentLibrary } = await import("@trainable-ds/compiler");
+      const defaultLib = generatePrototypeComponentLibrary();
+      for (const [k, meta] of Object.entries(defaultLib.manifest)) {
+        if (!manifest[k]) {
+          manifest[k] = meta;
+        }
+      }
+
+      const matchKey = Object.keys(manifest).find(
+        (k) => k.toLowerCase() === compName.toLowerCase()
+      );
+
+      if (!matchKey) {
+        return {
+          isError: true,
+          content: [
+            {
+              type: "text",
+              text: `Component "${compName}" not found in design system catalog. Available: ${Object.keys(manifest).join(", ")}`,
+            },
+          ],
+        };
+      }
+
+      const comp = { ...manifest[matchKey] };
+      const relPath = comp.path || `components/ui/${comp.name}.tsx`;
+      const absCodePath = path.isAbsolute(relPath) ? relPath : path.join(workspaceDir, relPath);
+      if (fs.existsSync(absCodePath)) {
+        try {
+          comp.code = fs.readFileSync(absCodePath, "utf-8");
+        } catch {
+          // Keep existing code
+        }
+      }
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(comp, null, 2),
+          },
+        ],
+      };
+    }
+
     case "validate_code_snippet": {
       const code = String(args.code || "");
       const filename = (args.filename as string) || "Snippet.tsx";
@@ -547,6 +725,252 @@ export async function executeTool(
           },
         ],
       };
+    }
+
+    case "ingest_design_source": {
+      const content = String(args.content || "");
+      const type = String(args.type || "document");
+      const fileName = args.file_name ? String(args.file_name) : undefined;
+      const branch = args.branch ? String(args.branch) : undefined;
+      const force = Boolean(args.force);
+
+      const store = new VCSStore(workspaceDir);
+      await store.init();
+      const targetBranch = branch || await store.getCurrentBranch();
+
+      let ingestResult;
+      if (type === "table") {
+        const adapter = new TableAdapter();
+        ingestResult = await adapter.ingest({ content, sourceName: fileName || "table-data" });
+      } else if (type === "vision") {
+        const adapter = new VisionAdapter();
+        ingestResult = await adapter.ingest(content);
+      } else if (type === "conversation") {
+        const adapter = new ConversationAdapter();
+        ingestResult = await adapter.ingest(content);
+      } else {
+        const adapter = new DocumentAdapter();
+        ingestResult = await adapter.ingest({ content, documentTitle: fileName || "guidelines.md" });
+      }
+
+      let snapshot = await store.getHeadSnapshot(targetBranch) || {
+        tokens: {},
+        components: {},
+        guidelines: "",
+        fonts: {},
+        icons: []
+      };
+
+      const fusion = new FusionEngine();
+      const fused = fusion.fuse(snapshot, [ingestResult], { force });
+
+      const commit = await store.commit(
+        `MCP Ingest ${type}: ${fileName || "payload"}`,
+        fused.snapshot,
+        "mcp-agent"
+      );
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({
+              success: true,
+              commitId: commit.id,
+              branch: targetBranch,
+              summary: fused.summary,
+              appliedTokens: fused.appliedTokensCount,
+              skippedLockedTokens: fused.skippedLockedTokensCount,
+              appliedComponents: fused.appliedComponentsCount
+            }, null, 2),
+          },
+        ],
+      };
+    }
+
+    case "refine_design_system": {
+      const prompt = String(args.prompt || "");
+      const branch = args.branch ? String(args.branch) : undefined;
+      const force = Boolean(args.force);
+
+      const store = new VCSStore(workspaceDir);
+      await store.init();
+      const targetBranch = branch || await store.getCurrentBranch();
+
+      const adapter = new ConversationAdapter();
+      const ingestResult = await adapter.ingest(prompt);
+
+      let snapshot = await store.getHeadSnapshot(targetBranch) || {
+        tokens: {},
+        components: {},
+        guidelines: "",
+        fonts: {},
+        icons: []
+      };
+
+      const fusion = new FusionEngine();
+      const fused = fusion.fuse(snapshot, [ingestResult], { force });
+
+      const commit = await store.commit(
+        `MCP Refine: "${prompt.slice(0, 60)}"`,
+        fused.snapshot,
+        "mcp-agent"
+      );
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify({
+              success: true,
+              commitId: commit.id,
+              branch: targetBranch,
+              patches: {
+                tokens: ingestResult.tokens,
+                components: ingestResult.components
+              },
+              summary: ingestResult.summary
+            }, null, 2),
+          },
+        ],
+      };
+    }
+
+    case "manage_ds_branches": {
+      const action = String(args.action || "list");
+      const branchName = args.branch_name ? String(args.branch_name) : undefined;
+      const fromBranch = args.from_branch ? String(args.from_branch) : undefined;
+      const targetBranch = args.target_branch ? String(args.target_branch) : undefined;
+      const skipGates = Boolean(args.skip_gates);
+
+      const store = new VCSStore(workspaceDir);
+      await store.init();
+
+      if (action === "list") {
+        const branches = await store.listBranches();
+        const currentBranch = await store.getCurrentBranch();
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({ currentBranch, branches }, null, 2),
+            },
+          ],
+        };
+      }
+
+      if (action === "create") {
+        if (!branchName) throw new Error("branch_name is required for action 'create'");
+        const branch = await store.createBranch(branchName, fromBranch);
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({ success: true, branch }, null, 2),
+            },
+          ],
+        };
+      }
+
+      if (action === "switch") {
+        if (!branchName) throw new Error("branch_name is required for action 'switch'");
+        const snapshot = await store.switchBranch(branchName);
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({ success: true, currentBranch: branchName, snapshotSummary: `${Object.keys(snapshot.tokens).length} tokens` }, null, 2),
+            },
+          ],
+        };
+      }
+
+      if (action === "diff") {
+        if (!branchName) throw new Error("branch_name (source) is required for action 'diff'");
+        const base = targetBranch || await store.getCurrentBranch();
+        const diff = await store.getDiff(base, branchName);
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({ baseBranch: base, sourceBranch: branchName, diff }, null, 2),
+            },
+          ],
+        };
+      }
+
+      if (action === "merge") {
+        if (!branchName) throw new Error("branch_name (source) is required for action 'merge'");
+        const target = targetBranch || await store.getCurrentBranch();
+        const targetSnapshot = await store.getHeadSnapshot(target);
+        const sourceSnapshot = await store.getHeadSnapshot(branchName);
+
+        if (!sourceSnapshot) throw new Error(`Source branch '${branchName}' not found.`);
+        if (!targetSnapshot) throw new Error(`Target branch '${target}' not found.`);
+
+        const merger = new SemanticMerger();
+        const mergeResult = merger.merge(targetSnapshot, targetSnapshot, sourceSnapshot);
+
+        if (!mergeResult.success) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: JSON.stringify({
+                  success: false,
+                  conflicts: {
+                    tokens: mergeResult.tokenConflicts,
+                    components: mergeResult.componentConflicts
+                  },
+                  summary: mergeResult.summary
+                }, null, 2),
+              },
+            ],
+          };
+        }
+
+        const gatekeeper = new MergeGatekeeper();
+        const gateResult = gatekeeper.check(mergeResult.mergedSnapshot);
+
+        if (!gateResult.passed && !skipGates) {
+          return {
+            content: [
+              {
+                type: "text",
+                text: JSON.stringify({
+                  success: false,
+                  gateBlocked: true,
+                  gateResult,
+                  summary: `Merge blocked by Quality & A11y Gatekeeper (${gateResult.violations.length} violations).`
+                }, null, 2),
+              },
+            ],
+          };
+        }
+
+        await store.switchBranch(target);
+        const commit = await store.commit(
+          `MCP Merge '${branchName}' into '${target}'`,
+          mergeResult.mergedSnapshot,
+          "mcp-agent"
+        );
+
+        return {
+          content: [
+            {
+              type: "text",
+              text: JSON.stringify({
+                success: true,
+                commitId: commit.id,
+                gateResult,
+                summary: `Successfully merged '${branchName}' into '${target}'.`
+              }, null, 2),
+            },
+          ],
+        };
+      }
+
+      throw new Error(`Unsupported branch action: ${action}`);
     }
 
     default:

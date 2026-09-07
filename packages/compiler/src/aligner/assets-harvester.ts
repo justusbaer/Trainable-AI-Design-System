@@ -113,13 +113,13 @@ export function getAssetsHarvesterScript(): string {
     function harvestIconsFromRoot(root) {
       if (!root) return;
 
-      // Find SVGs and custom icon elements (e.g. p-icon, mat-icon, etc.)
-      const candidates = root.querySelectorAll('svg, p-icon, [class*="icon"], [data-icon]');
+      // Find SVGs and custom icon elements (e.g. ds-icon, mat-icon, etc.)
+      const candidates = root.querySelectorAll('svg, ds-icon, [class*="icon"], [data-icon]');
       candidates.forEach((el, idx) => {
         let svgEl = el.tagName.toLowerCase() === 'svg' ? el : null;
         let iconName = el.getAttribute('name') || el.getAttribute('data-icon') || el.getAttribute('aria-label') || '';
 
-        // If custom element with shadow root (like Porsche <p-icon>), check shadowRoot
+        // If custom element with shadow root (like <ds-icon>), check shadowRoot
         if (!svgEl && el.shadowRoot) {
           svgEl = el.shadowRoot.querySelector('svg');
         }

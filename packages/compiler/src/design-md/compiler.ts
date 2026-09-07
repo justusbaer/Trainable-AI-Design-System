@@ -43,7 +43,9 @@ export function compileDesignMd(options: DesignMdCompileOptions): string {
       "NO REINVENTED PRIMITIVES: Always import certified components (<Button>, <TextField>) instead of raw HTML.",
       "SENTENCE CASE MANDATE: All button, navigation, and chip labels MUST be sentence case.",
       "ON-COLOR PAIRING: Backgrounds using sys.color.primary MUST use text colored with sys.color.on-primary.",
-      "MINIMUM TOUCH TARGET: All clickable elements must maintain at least 48x48px touch targets."
+      "MINIMUM TOUCH TARGET: All clickable elements must maintain at least 48x48px touch targets.",
+      "STRICT SPEC & SKETCH FIDELITY (ZERO FEATURE HALLUCINATION): Strictly adhere to user sketches, wireframes, and commands. Never invent unrequested features, buttons, or action tiles (e.g. flash & horn, heating, tire pressure) to fill empty space.",
+      "INTENTIONAL WHITESPACE & PLACEHOLDER MANDATE: When an area is marked 'Whitespace (for now)' or left empty in a sketch, do not invent features. Either ask the user proactively first or render an explicit visual placeholder making it clear the space is intentionally left empty."
     ]
   } = options;
 

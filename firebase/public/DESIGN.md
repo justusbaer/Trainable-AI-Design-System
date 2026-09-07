@@ -123,3 +123,7 @@ tokens:
 3. **SENTENCE CASE MANDATE:**  All button, navigation, and chip labels MUST be sentence case.
 4. **ON-COLOR PAIRING:**  Backgrounds using sys.color.primary MUST use text colored with sys.color.on-primary.
 5. **MINIMUM TOUCH TARGET:**  All clickable elements must maintain at least 48x48px touch targets.
+6. **STRICT SPEC & SKETCH FIDELITY (ZERO FEATURE HALLUCINATION):** Strictly adhere to what the user explicitly requested or drew in a sketch, wireframe, or prompt. NEVER invent, assume, or inject unrequested features, action buttons, widgets, or toggles (e.g. heating, flash & horn, walk to car, tire pressure) to fill out a screen.
+7. **INTENTIONAL WHITESPACE & PLACEHOLDER MANDATE:** If an area is marked as whitespace (e.g. "Whitespace (for now)") or left unoccupied in a sketch, DO NOT invent features to fill that space. The agent MUST either:
+   - Proactively ask the user if they wish to add specific features in that space, OR
+   - Render an explicit, styled placeholder container (e.g. dashed border with clear label "Whitespace (intentionally left empty)") that preserves layout composition without fabricating unauthorized features.

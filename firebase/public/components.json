@@ -1,68 +1,1590 @@
 {
   "version": "1.7.0",
-  "lastUpdated": "2026-09-05T12:17:53.798Z",
+  "system": "Trainable Design System",
+  "pdsVersion": "4.5.0",
+  "lastUpdated": "2026-09-05T14:05:00.000Z",
   "components": {
-    "CleanCard": {
-      "name": "CleanCard",
-      "path": "./playground/CleanCard.tsx",
-      "family": "containment",
-      "description": "Design system CleanCard component belonging to the containment family.",
+    "Button": {
+      "name": "Button",
+      "path": "./components/ui/Button.tsx",
+      "family": "actions",
+      "description": "Certified interactive action element with 48px touch target and brand corner radius.",
       "anatomy": {
         "container": {
-          "minTouchTarget": "48px (enforced)"
+          "shape": "full-pill",
+          "borderRadius": "9999px",
+          "height": 48,
+          "padding": "16px 28px"
         }
       },
       "variants": {
-        "default": {
-          "elevation": 0,
-          "description": "default variant"
+        "primary": {
+          "containerColor": "#010205",
+          "labelColor": "#ffffff"
+        },
+        "secondary": {
+          "containerColor": "rgba(156, 156, 159, 0.35)",
+          "labelColor": "#ffffff"
+        },
+        "outlined": {
+          "borderColor": "rgba(255, 255, 255, 0.2)",
+          "labelColor": "#ffffff"
+        },
+        "text": {
+          "containerColor": "transparent",
+          "labelColor": "#010205"
         }
       },
-      "props": {},
+      "props": {
+        "variant": {
+          "type": "'primary' | 'secondary' | 'outlined' | 'text'",
+          "default": "'primary'"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false"
+        },
+        "icon": {
+          "type": "React.ReactNode"
+        }
+      },
       "a11y": {
         "minTouchTarget": "48x48px",
         "requiredAria": [],
         "focusIndicator": "3px outline with 2px offset"
       },
       "rules": [
-        "Always use <CleanCard> instead of raw HTML elements.",
-        "Ensure touch target is at least 48x48px.",
-        "Use semantic M3 colors for background and text contrast pairing."
+        "TDS-TOUCH-TARGET-TOO-SMALL: Must satisfy min 48x48px touch target."
       ],
       "examples": [
-        "<CleanCard variant=\"default\">\n  Action text\n</CleanCard>"
-      ]
+        "<Button variant=\"primary\">Save changes</Button>"
+      ],
+      "code": "import React from \"react\";\n\nexport type ButtonVariant = \"primary\" | \"secondary\" | \"outlined\" | \"text\";\n\nexport interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: ButtonVariant;\n  icon?: React.ReactNode;\n  iconPosition?: \"start\" | \"end\";\n  children?: React.ReactNode;\n}\n\n/**\n * Trainable Design System Certified Button Component\n * - 8dp spatial quantum adherence\n * - Minimum 48x48px touch target\n * - Extracted corner radius: 9999px\n */\nexport const Button: React.FC<ButtonProps> = ({\n  variant = \"primary\",\n  icon,\n  iconPosition = \"start\",\n  children,\n  className = \"\",\n  style = {},\n  disabled = false,\n  ...props\n}) => {\n  const baseStyle: React.CSSProperties = {\n    fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n    display: \"inline-flex\",\n    alignItems: \"center\",\n    justifyContent: \"center\",\n    gap: \"8px\",\n    minHeight: \"48px\",\n    padding: \"16px 28px\",\n    borderRadius: \"9999px\",\n    fontSize: \"1rem\",\n    fontWeight: 600,\n    lineHeight: 1.5,\n    cursor: disabled ? \"not-allowed\" : \"pointer\",\n    transition: \"all 0.15s cubic-bezier(0.2, 0, 0, 1)\",\n    border: \"1px solid transparent\",\n    opacity: disabled ? 0.38 : 1,\n    outline: \"none\",\n    boxSizing: \"border-box\",\n    ...style,\n  };\n\n  let variantStyle: React.CSSProperties = {};\n  switch (variant) {\n    case \"primary\":\n      variantStyle = {\n        background: \"var(--sys-color-primary)\",\n        color: \"var(--sys-color-on-primary)\",\n        borderColor: \"transparent\",\n      };\n      break;\n    case \"secondary\":\n      variantStyle = {\n        background: \"var(--sys-color-surface-container-high)\",\n        color: \"var(--sys-color-on-surface)\",\n        backdropFilter: \"blur(16px)\",\n        WebkitBackdropFilter: \"blur(16px)\",\n        borderColor: \"var(--sys-color-outline-variant)\",\n      };\n      break;\n    case \"outlined\":\n      variantStyle = {\n        background: \"transparent\",\n        color: \"var(--sys-color-on-surface)\",\n        borderColor: \"var(--sys-color-outline)\",\n      };\n      break;\n    case \"text\":\n      variantStyle = {\n        background: \"transparent\",\n        color: \"var(--sys-color-primary)\",\n        borderColor: \"transparent\",\n        padding: \"8px 16px\",\n      };\n      break;\n  }\n\n  return (\n    <button\n      style={{ ...baseStyle, ...variantStyle }}\n      className={`tds-button tds-button--${variant} ${className}`}\n      disabled={disabled}\n      {...props}\n    >\n      {icon && iconPosition === \"start\" && <span className=\"tds-btn-icon\">{icon}</span>}\n      {children && <span className=\"tds-btn-label\">{children}</span>}\n      {icon && iconPosition === \"end\" && <span className=\"tds-btn-icon\">{icon}</span>}\n    </button>\n  );\n};\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false,
+      "humanNotes": "Use variant='primary' for the single primary call to action per view."
     },
-    "DirtyCard": {
-      "name": "DirtyCard",
-      "path": "./playground/DirtyCard.tsx",
-      "family": "containment",
-      "description": "Design system DirtyCard component belonging to the containment family.",
+    "ButtonPure": {
+      "name": "ButtonPure",
+      "family": "actions",
+      "description": "Minimal text-only or icon button without container background, with optional underline and active highlight.",
       "anatomy": {
         "container": {
-          "minTouchTarget": "48px (enforced)"
+          "minTouchTarget": "48px (enforced via hit-box)"
         }
       },
       "variants": {
         "default": {
-          "elevation": 0,
-          "description": "default variant"
+          "color": "var(--sys-color-primary)"
         }
       },
-      "props": {},
+      "observedAttributes": [
+        "value",
+        "type",
+        "name",
+        "disabled",
+        "loading",
+        "size",
+        "color",
+        "icon",
+        "icon-source",
+        "underline",
+        "active",
+        "hide-label",
+        "align-label",
+        "stretch",
+        "aria",
+        "form"
+      ],
       "a11y": {
         "minTouchTarget": "48x48px",
-        "requiredAria": [],
-        "focusIndicator": "3px outline with 2px offset"
+        "focusIndicator": "2px outline var(--sys-color-primary)"
       },
       "rules": [
-        "Always use <DirtyCard> instead of raw HTML elements.",
-        "Ensure touch target is at least 48x48px.",
-        "Use semantic M3 colors for background and text contrast pairing."
+        "Use for understated actions, inline triggers, or dialog dismissals."
       ],
       "examples": [
-        "<DirtyCard variant=\"default\">\n  Action text\n</DirtyCard>"
-      ]
+        "<ButtonPure icon=\"arrow-right\">Learn more</ButtonPure>",
+        "<ButtonPure underline={true}>View details</ButtonPure>"
+      ],
+      "path": "./components/ui/ButtonPure.tsx"
+    },
+    "Link": {
+      "name": "Link",
+      "family": "navigation",
+      "description": "Primary or secondary navigational link styled with button-like appearance or link pill.",
+      "anatomy": {
+        "container": {
+          "minTouchTarget": "48px (enforced)",
+          "height": "56px / 40px"
+        }
+      },
+      "variants": {
+        "primary": {
+          "background": "var(--sys-color-primary)",
+          "color": "var(--sys-color-surface)"
+        },
+        "secondary": {
+          "background": "var(--sys-color-surface-container-highest)",
+          "color": "var(--sys-color-primary)"
+        }
+      },
+      "observedAttributes": [
+        "variant",
+        "icon",
+        "icon-source",
+        "href",
+        "target",
+        "download",
+        "rel",
+        "hide-label",
+        "compact",
+        "aria"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px",
+        "focusIndicator": "2px outline var(--sys-color-primary)"
+      },
+      "rules": [
+        "Use Link for navigation between URLs; use Button for in-page actions."
+      ],
+      "examples": [
+        "<Link href=\"/dashboard\" variant=\"primary\">Explore dashboard</Link>",
+        "<Link href=\"/support\" variant=\"secondary\" icon=\"help-circle\">Support center</Link>"
+      ],
+      "path": "./components/ui/Link.tsx"
+    },
+    "LinkPure": {
+      "name": "LinkPure",
+      "family": "navigation",
+      "description": "Pure text link with optional icon and animated hover underline.",
+      "anatomy": {
+        "container": {
+          "minTouchTarget": "48px"
+        }
+      },
+      "variants": {
+        "default": {
+          "color": "var(--sys-color-primary)"
+        }
+      },
+      "observedAttributes": [
+        "align-label",
+        "stretch",
+        "size",
+        "color",
+        "icon",
+        "icon-source",
+        "underline",
+        "href",
+        "active",
+        "hide-label",
+        "target",
+        "download",
+        "rel",
+        "aria"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px"
+      },
+      "rules": [
+        "Ideal for card actions, inline references, and resource links."
+      ],
+      "examples": [
+        "<LinkPure href=\"/docs\" icon=\"arrow-right\">Read the documentation</LinkPure>"
+      ],
+      "path": "./components/ui/LinkPure.tsx"
+    },
+    "LinkTile": {
+      "name": "LinkTile",
+      "family": "navigation",
+      "description": "High-impact visual card tile combining media, gradient overlay, title, and link navigation.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "var(--sys-shape-corner-extra-large) /* 24px */",
+          "overflow": "hidden"
+        },
+        "media": "img, video, or picture slot",
+        "overlay": "linear-gradient / frosted backdrop"
+      },
+      "variants": {
+        "default": {
+          "aspectRatio": "16:9 / 4:3 / 3:4 / 1:1"
+        }
+      },
+      "observedAttributes": [
+        "size",
+        "weight",
+        "aspect-ratio",
+        "label",
+        "description",
+        "align",
+        "gradient",
+        "compact",
+        "href",
+        "target",
+        "download",
+        "rel",
+        "aria"
+      ],
+      "a11y": {
+        "requiredAria": [
+          "aria-label"
+        ]
+      },
+      "rules": [
+        "Enclose media inside LinkTile and pass label as descriptive text."
+      ],
+      "examples": [
+        "<LinkTile href=\"/showcase\" label=\"Component Library\" description=\"Production Design System\">\n  <img src=\"/images/showcase.jpg\" alt=\"Component Library Showcase\" />\n</LinkTile>"
+      ],
+      "path": "./components/ui/LinkTile.tsx"
+    },
+    "LinkTileProduct": {
+      "name": "LinkTileProduct",
+      "family": "navigation",
+      "description": "E-commerce product card tile displaying price, original price, description, and wishlist action.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "var(--sys-shape-corner-medium)"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "heading",
+        "price",
+        "price-original",
+        "description",
+        "like-button",
+        "liked",
+        "href",
+        "aspect-ratio",
+        "target",
+        "rel"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px"
+      },
+      "rules": [
+        "Must format price according to locale."
+      ],
+      "examples": [
+        "<LinkTileProduct heading=\"Enterprise Suite\" price=\"$299/mo\" href=\"/pricing\">\n  <img src=\"/images/product.jpg\" alt=\"Enterprise Suite\" />\n</LinkTileProduct>"
+      ],
+      "path": "./components/ui/LinkTileProduct.tsx"
+    },
+    "Display": {
+      "name": "Display",
+      "family": "typography",
+      "description": "Massive stage display typography for hero headers and splash showcases.",
+      "anatomy": {
+        "typography": "Display fluid scale (3xl - 5xl)"
+      },
+      "variants": {
+        "small": {
+          "size": "var(2.5rem)"
+        },
+        "medium": {
+          "size": "var(3rem)"
+        },
+        "large": {
+          "size": "var(3.5rem)"
+        }
+      },
+      "observedAttributes": [
+        "tag",
+        "size",
+        "align",
+        "color",
+        "ellipsis"
+      ],
+      "a11y": {
+        "headingOrder": "Match tag to semantic document hierarchy (h1-h6)"
+      },
+      "rules": [
+        "Never use display typography for body text."
+      ],
+      "examples": [
+        "<Display tag=\"h1\" size=\"medium\">Autonomous Design Systems for AI Agents.</Display>"
+      ],
+      "path": "./components/ui/Display.tsx"
+    },
+    "Heading": {
+      "name": "Heading",
+      "family": "typography",
+      "description": "Standard section and screen heading component.",
+      "anatomy": {
+        "typography": "Heading fluid scale (xs - 2xl)"
+      },
+      "variants": {
+        "small": {
+          "size": "var(1rem)"
+        },
+        "medium": {
+          "size": "var(1.25rem)"
+        },
+        "large": {
+          "size": "var(1.5rem)"
+        },
+        "xl": {
+          "size": "var(1.75rem)"
+        },
+        "2xl": {
+          "size": "var(2rem)"
+        }
+      },
+      "observedAttributes": [
+        "tag",
+        "size",
+        "weight",
+        "align",
+        "color",
+        "hyphens",
+        "ellipsis"
+      ],
+      "a11y": {
+        "headingOrder": "Enforce semantic heading structure"
+      },
+      "rules": [
+        "Headings must use sentence case."
+      ],
+      "examples": [
+        "<Heading tag=\"h2\" size=\"xl\" weight=\"semibold\">Component Library & Token Architecture</Heading>"
+      ],
+      "path": "./components/ui/Heading.tsx"
+    },
+    "Text": {
+      "name": "Text",
+      "family": "typography",
+      "description": "General interface body text, captions, and disclaimers.",
+      "anatomy": {
+        "typography": "Body fluid scale (2xs - md)"
+      },
+      "variants": {
+        "xx-small": {
+          "size": "var(0.75rem)"
+        },
+        "x-small": {
+          "size": "var(0.875rem)"
+        },
+        "small": {
+          "size": "var(1rem)"
+        },
+        "medium": {
+          "size": "var(1.25rem)"
+        }
+      },
+      "observedAttributes": [
+        "tag",
+        "size",
+        "weight",
+        "align",
+        "color",
+        "hyphens",
+        "ellipsis"
+      ],
+      "a11y": {},
+      "rules": [
+        "Use contrast-high for readability on light or dark surfaces."
+      ],
+      "examples": [
+        "<Text size=\"small\" color=\"contrast-high\">Streamline design tokens and component extraction directly from code.</Text>",
+        "<Text size=\"xx-small\" color=\"contrast-low\">Certified against WCAG 2.1 AA accessibility standards.</Text>"
+      ],
+      "path": "./components/ui/Text.tsx"
+    },
+    "Icon": {
+      "name": "Icon",
+      "path": "./components/ui/Icon.tsx",
+      "family": "communication",
+      "description": "Harvested vector icon catalog wrapper.",
+      "anatomy": {},
+      "variants": {},
+      "props": {
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "type": "number | string",
+          "default": "24"
+        }
+      },
+      "a11y": {
+        "minTouchTarget": "N/A",
+        "requiredAria": [],
+        "focusIndicator": "None"
+      },
+      "rules": [],
+      "examples": [
+        "<Icon name=\"arrow-right\" size={24} />"
+      ],
+      "code": "import React from \"react\";\n\nexport const HARVESTED_ICONS: Record<string, React.ReactNode> = {\n  \"arrow-right\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg>),\n  \"chevron-down\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M6 9l6 6 6-6\"/></svg>),\n  \"filter\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M3 4h18v2l-7 8v6l-4 2v-8L3 6V4z\"/></svg>),\n  \"heart\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg>),\n  \"user\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"7\" r=\"4\"/><path d=\"M6 21v-2a6 6 0 0 1 12 0v2\"/></svg>),\n  \"search\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"M21 21l-4.35-4.35\"/></svg>)\n};\n\nexport interface IconProps extends React.SVGProps<SVGSVGElement> {\n  name: string;\n  size?: number | string;\n}\n\n/**\n * Trainable Design System Harvested Vector Icon Primitive\n */\nexport const Icon: React.FC<IconProps> = ({ name, size = 24, className = \"\", style = {}, ...props }) => {\n  const iconNode = HARVESTED_ICONS[name];\n  if (!iconNode) {\n    return (\n      <svg\n        width={size}\n        height={size}\n        viewBox=\"0 0 24 24\"\n        fill=\"none\"\n        stroke=\"currentColor\"\n        strokeWidth={2}\n        className={`tds-icon tds-icon--missing ${className}`}\n        style={style}\n        {...props}\n      >\n        <circle cx=\"12\" cy=\"12\" r=\"10\" strokeDasharray=\"4 4\" />\n      </svg>\n    );\n  }\n\n  return (\n    <span\n      className={`tds-icon-wrapper tds-icon--${name} ${className}`}\n      style={{ display: \"inline-flex\", width: size, height: size, alignItems: \"center\", justifyContent: \"center\", ...style }}\n    >\n      {iconNode}\n    </span>\n  );\n};\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
+    },
+    "Tag": {
+      "name": "Tag",
+      "family": "communication",
+      "description": "Categorical badge or chip used for status, attributes, and categorical metadata.",
+      "anatomy": {
+        "container": {
+          "height": "22px (21.75px computed)",
+          "padding": "4px 12px",
+          "borderRadius": "var(--sys-shape-corner-full) /* 14.875px pill */",
+          "backdropFilter": "var(blur(16px)) /* blur(32px) */"
+        }
+      },
+      "variants": {
+        "primary": {
+          "background": "var(--sys-color-surface-container)",
+          "color": "var(--sys-color-primary)"
+        },
+        "compact": {
+          "padding": "2px 6px"
+        }
+      },
+      "observedAttributes": [
+        "variant",
+        "icon",
+        "icon-source",
+        "compact"
+      ],
+      "a11y": {},
+      "rules": [
+        "Keep labels brief and clear."
+      ],
+      "examples": [
+        "<Tag color=\"primary\">Active</Tag>",
+        "<Tag color=\"primary\" icon=\"check\">Verified</Tag>"
+      ],
+      "path": "./components/ui/Tag.tsx"
+    },
+    "TagDismissible": {
+      "name": "TagDismissible",
+      "family": "communication",
+      "description": "Interactive filter chip with dismiss action.",
+      "anatomy": {
+        "container": {
+          "minTouchTarget": "48px"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "label",
+        "aria",
+        "compact"
+      ],
+      "a11y": {
+        "touchTarget": ">= 48px dismiss tap target"
+      },
+      "rules": [
+        "Emit dismissal event on click."
+      ],
+      "examples": [
+        "<TagDismissible label=\"Role: Administrator\" />"
+      ],
+      "path": "./components/ui/TagDismissible.tsx"
+    },
+    "Modal": {
+      "name": "Modal",
+      "family": "containment",
+      "description": "Dialog overlay with frosted backdrop scrim and focus trapping.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "var(--sys-shape-corner-medium)",
+          "background": "var(--sys-color-surface)",
+          "padding": "var(24px)"
+        },
+        "backdrop": "var(--sys-color-scrim) with blur(32px)"
+      },
+      "variants": {
+        "default": {},
+        "fullscreen": {}
+      },
+      "observedAttributes": [
+        "open",
+        "dismiss-button",
+        "disable-backdrop-click",
+        "backdrop",
+        "background",
+        "fullscreen",
+        "aria"
+      ],
+      "a11y": {
+        "role": "dialog",
+        "ariaModal": "true",
+        "focusTrap": "true"
+      },
+      "rules": [
+        "Ensure escape key closes the modal."
+      ],
+      "examples": [
+        "<Modal open={true} heading=\"Privacy Settings\">\n  <Text>Manage your application preferences and permissions.</Text>\n</Modal>"
+      ],
+      "path": "./components/ui/Modal.tsx"
+    },
+    "Flyout": {
+      "name": "Flyout",
+      "family": "containment",
+      "description": "Slide-out panel drawer anchored to start, end, top, or bottom.",
+      "anatomy": {
+        "container": {
+          "background": "var(--sys-color-surface-container)",
+          "shadow": "var(var(--sys-elevation-level3))"
+        }
+      },
+      "variants": {
+        "start": {},
+        "end": {},
+        "top": {},
+        "bottom": {}
+      },
+      "observedAttributes": [
+        "open",
+        "position",
+        "disable-backdrop-click",
+        "background",
+        "backdrop",
+        "footer-behavior",
+        "fullscreen",
+        "aria"
+      ],
+      "a11y": {
+        "focusTrap": "true"
+      },
+      "rules": [
+        "Use for mobile navigation, filter panels, and configuration drawers."
+      ],
+      "examples": [
+        "<Flyout open={true} position=\"end\">\n  <Heading size=\"large\">Filter Results</Heading>\n</Flyout>"
+      ],
+      "path": "./components/ui/Flyout.tsx"
+    },
+    "Accordion": {
+      "name": "Accordion",
+      "family": "containment",
+      "description": "Collapsible disclosure section for FAQs and technical specifications.",
+      "anatomy": {
+        "detailsRadius": "var(--sys-shape-corner-large) /* 16px */",
+        "border": "1px solid var(--sys-color-outline-variant)"
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "open",
+        "align-marker",
+        "background",
+        "compact",
+        "indent",
+        "size",
+        "heading",
+        "heading-tag",
+        "sticky"
+      ],
+      "a11y": {
+        "ariaExpanded": "true/false",
+        "keyboardAccessible": "true"
+      },
+      "rules": [
+        "Always use semantic heading tags inside."
+      ],
+      "examples": [
+        "<Accordion heading=\"Technical Specifications\" headingTag=\"h3\">\n  <Text>Built with zero runtime dependencies and 100% WCAG AA compliance.</Text>\n</Accordion>"
+      ],
+      "path": "./components/ui/Accordion.tsx"
+    },
+    "Divider": {
+      "name": "Divider",
+      "family": "containment",
+      "description": "1px subtle boundary divider between layout blocks.",
+      "anatomy": {
+        "height": "1px",
+        "color": "var(--sys-color-outline-variant)"
+      },
+      "variants": {
+        "horizontal": {},
+        "vertical": {}
+      },
+      "observedAttributes": [
+        "color",
+        "direction"
+      ],
+      "a11y": {
+        "role": "separator"
+      },
+      "rules": [
+        "Do not use heavy contrasting borders where a divider suffices."
+      ],
+      "examples": [
+        "<Divider />"
+      ],
+      "path": "./components/ui/Divider.tsx"
+    },
+    "Table": {
+      "name": "Table",
+      "family": "containment",
+      "description": "Data table container with sticky header support and responsive scrolling.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "var(--sys-shape-corner-small)"
+        }
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "caption",
+        "compact",
+        "layout",
+        "sticky"
+      ],
+      "a11y": {
+        "caption": "Required caption or aria-label"
+      },
+      "rules": [
+        "Include descriptive caption."
+      ],
+      "examples": [
+        "<Table caption=\"System Token Compliance Matrix\" />"
+      ],
+      "path": "./components/ui/Table.tsx"
+    },
+    "InputSearch": {
+      "name": "InputSearch",
+      "family": "text-inputs",
+      "description": "Interactive search input with search glyph, clear button, and autocomplete support.",
+      "anatomy": {
+        "container": {
+          "minHeight": "48px",
+          "borderRadius": "var(--sys-shape-corner-small)",
+          "background": "var(--sys-color-surface)"
+        }
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "value",
+        "label",
+        "description",
+        "compact",
+        "name",
+        "auto-complete",
+        "clear",
+        "indicator",
+        "read-only",
+        "form",
+        "max-length",
+        "min-length",
+        "placeholder",
+        "disabled",
+        "required",
+        "loading",
+        "state",
+        "message",
+        "hide-label",
+        "aria"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px",
+        "labelConnected": "true"
+      },
+      "rules": [
+        "Always provide accessible label even if visually hidden."
+      ],
+      "examples": [
+        "<InputSearch label=\"Search documentation\" placeholder=\"Search tokens or components...\" clear={true} />"
+      ],
+      "path": "./components/ui/InputSearch.tsx"
+    },
+    "TextField": {
+      "name": "TextField",
+      "path": "./components/ui/TextField.tsx",
+      "family": "text-inputs",
+      "description": "Text input with 56px height, floating label, and active brand indicator.",
+      "anatomy": {
+        "container": {
+          "minHeight": 56,
+          "borderRadius": "8px"
+        }
+      },
+      "variants": {
+        "standard": {
+          "containerColor": "rgba(156, 156, 159, 0.2)"
+        }
+      },
+      "props": {
+        "label": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        },
+        "helperText": {
+          "type": "string"
+        }
+      },
+      "a11y": {
+        "minTouchTarget": "56px height",
+        "requiredAria": [
+          "aria-invalid"
+        ],
+        "focusIndicator": "Brand outline"
+      },
+      "rules": [
+        "TDS-TOUCH-TARGET-TOO-SMALL: Must be at least 56px in height."
+      ],
+      "examples": [
+        "<TextField label=\"Email address\" placeholder=\"alex@example.com\" />"
+      ],
+      "code": "import React from \"react\";\n\nexport interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  label?: string;\n  helperText?: string;\n  error?: string;\n  startIcon?: React.ReactNode;\n  endIcon?: React.ReactNode;\n}\n\n/**\n * Trainable Design System Certified TextField Component (Text Inputs Family)\n * - Minimum 56px height\n * - Active brand outline indicator\n */\nexport const TextField: React.FC<TextFieldProps> = ({\n  label,\n  helperText,\n  error,\n  startIcon,\n  endIcon,\n  className = \"\",\n  style = {},\n  disabled = false,\n  ...props\n}) => {\n  return (\n    <div\n      style={{\n        display: \"flex\",\n        flexDirection: \"column\",\n        gap: \"6px\",\n        fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n        width: \"100%\",\n        ...style,\n      }}\n      className={`tds-textfield-wrapper ${className}`}\n    >\n      {label && (\n        <label\n          style={{\n            fontSize: \"0.875rem\",\n            fontWeight: 500,\n            color: error ? \"var(--sys-color-error)\" : \"var(--sys-color-on-surface-variant)\",\n          }}\n        >\n          {label}\n        </label>\n      )}\n\n      <div\n        style={{\n          display: \"flex\",\n          alignItems: \"center\",\n          minHeight: \"56px\",\n          borderRadius: \"8px\",\n          background: \"var(--sys-color-surface-container)\",\n          border: error\n            ? \"1px solid var(--sys-color-error)\"\n            : \"1px solid var(--sys-color-outline)\",\n          paddingInline: \"16px\",\n          gap: \"10px\",\n          boxSizing: \"border-box\",\n          opacity: disabled ? 0.38 : 1,\n        }}\n      >\n        {startIcon && <span style={{ color: \"var(--sys-color-on-surface-variant)\" }}>{startIcon}</span>}\n        <input\n          style={{\n            flex: 1,\n            background: \"transparent\",\n            border: \"none\",\n            outline: \"none\",\n            color: \"var(--sys-color-on-surface)\",\n            fontSize: \"1rem\",\n            fontFamily: \"inherit\",\n          }}\n          disabled={disabled}\n          {...props}\n        />\n        {endIcon && <span style={{ color: \"var(--sys-color-on-surface-variant)\" }}>{endIcon}</span>}\n      </div>\n\n      {(error || helperText) && (\n        <span\n          style={{\n            fontSize: \"0.75rem\",\n            color: error ? \"var(--sys-color-error)\" : \"var(--sys-color-on-surface-variant)\",\n            paddingInlineStart: \"4px\",\n          }}\n        >\n          {error || helperText}\n        </span>\n      )}\n    </div>\n  );\n};\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
+    },
+    "Textarea": {
+      "name": "Textarea",
+      "family": "text-inputs",
+      "description": "Multi-line text input with character counter and auto-resizing.",
+      "anatomy": {
+        "borderRadius": "var(--sys-shape-corner-small)"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "value",
+        "label",
+        "description",
+        "compact",
+        "name",
+        "state",
+        "message",
+        "counter",
+        "rows",
+        "max-length"
+      ],
+      "a11y": {},
+      "rules": [
+        "Clearly state max character length."
+      ],
+      "examples": [
+        "<Textarea label=\"Feedback details\" counter={true} maxLength={500} />"
+      ],
+      "path": "./components/ui/Textarea.tsx"
+    },
+    "Select": {
+      "name": "Select",
+      "family": "text-inputs",
+      "description": "Dropdown selection control with custom chevron indicator.",
+      "anatomy": {
+        "minHeight": "48px",
+        "borderRadius": "var(--sys-shape-corner-small)"
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "value",
+        "isOpen",
+        "label",
+        "description",
+        "name",
+        "state",
+        "message",
+        "disabled",
+        "required"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px"
+      },
+      "rules": [
+        "Group complex choices using optgroup."
+      ],
+      "examples": [
+        "<Select label=\"Environment\">\n  <Option value=\"production\">Production</Option>\n  <Option value=\"staging\">Staging</Option>\n</Select>"
+      ],
+      "path": "./components/ui/Select.tsx"
+    },
+    "MultiSelect": {
+      "name": "MultiSelect",
+      "family": "text-inputs",
+      "description": "Multi-item selection control with checkbox dropdown.",
+      "anatomy": {
+        "minHeight": "48px"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "value",
+        "isOpen",
+        "label",
+        "description",
+        "name",
+        "state",
+        "message",
+        "disabled",
+        "required"
+      ],
+      "a11y": {},
+      "rules": [
+        "Displays selected count or pill summary."
+      ],
+      "examples": [
+        "<MultiSelect label=\"Select active permissions\" />"
+      ],
+      "path": "./components/ui/MultiSelect.tsx"
+    },
+    "PinCode": {
+      "name": "PinCode",
+      "family": "text-inputs",
+      "description": "Discrete digit input boxes for 2FA and verification codes.",
+      "anatomy": {
+        "minHeight": "48px"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "label",
+        "length",
+        "type",
+        "value",
+        "state",
+        "disabled"
+      ],
+      "a11y": {},
+      "rules": [
+        "Automatically focus next field upon input."
+      ],
+      "examples": [
+        "<PinCode length={6} label=\"Verification code\" />"
+      ],
+      "path": "./components/ui/PinCode.tsx"
+    },
+    "Checkbox": {
+      "name": "Checkbox",
+      "family": "selection",
+      "description": "Form checkbox with indeterminate state and touch target area.",
+      "anatomy": {
+        "touchTarget": "48x48px",
+        "box": "28x28px",
+        "borderRadius": "var(--sys-shape-corner-small) /* 8px */"
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "checked",
+        "indeterminate",
+        "disabled",
+        "required",
+        "name",
+        "value",
+        "label",
+        "state",
+        "message"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px"
+      },
+      "rules": [
+        "Always wrap within 48x48px hit area."
+      ],
+      "examples": [
+        "<Checkbox label=\"I accept the terms and conditions\" />"
+      ],
+      "path": "./components/ui/Checkbox.tsx"
+    },
+    "RadioButton": {
+      "name": "RadioButton",
+      "family": "selection",
+      "description": "Single-choice radio selection control with 48x48px touch target.",
+      "anatomy": {
+        "touchTarget": "48x48px",
+        "circle": "28x28px",
+        "borderRadius": "var(--sys-shape-corner-full) /* calc(infinity * 1px) */"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "checked",
+        "disabled",
+        "required",
+        "name",
+        "value",
+        "label"
+      ],
+      "a11y": {
+        "minTouchTarget": "48x48px"
+      },
+      "rules": [
+        "Group inside fieldset with common name."
+      ],
+      "examples": [
+        "<RadioButton name=\"plan\" value=\"pro\" label=\"Professional Plan\" />"
+      ],
+      "path": "./components/ui/RadioButton.tsx"
+    },
+    "Switch": {
+      "name": "Switch",
+      "family": "selection",
+      "description": "Toggle switch for binary settings and preferences.",
+      "anatomy": {
+        "touchTarget": "48x48px",
+        "track": "44x28px",
+        "borderRadius": "var(--sys-shape-corner-full) /* calc(infinity * 1px) */",
+        "backgroundColor": "var(--sys-color-surface-container-high)"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "checked",
+        "disabled",
+        "loading",
+        "align-label",
+        "stretch"
+      ],
+      "a11y": {
+        "role": "switch",
+        "ariaChecked": "true/false"
+      },
+      "rules": [
+        "Use for instant state changes without form submission."
+      ],
+      "examples": [
+        "<Switch label=\"Enable dark mode\" />"
+      ],
+      "path": "./components/ui/Switch.tsx"
+    },
+    "SegmentedControl": {
+      "name": "SegmentedControl",
+      "family": "selection",
+      "description": "Mutually exclusive pill selector for switching modes or views.",
+      "anatomy": {
+        "container": {
+          "height": "52px",
+          "background": "transparent"
+        },
+        "item": {
+          "height": "52px",
+          "padding": "8px 12px",
+          "borderRadius": "var(--sys-shape-corner-medium) /* 12px */",
+          "background": "rgba(175, 175, 182, 0.15) /* frosted item fill */"
+        }
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "value",
+        "label",
+        "description",
+        "name",
+        "compact",
+        "columns",
+        "disabled",
+        "no-wrap"
+      ],
+      "a11y": {
+        "role": "radiogroup"
+      },
+      "rules": [
+        "Keep segments to 2-5 options maximum."
+      ],
+      "examples": [
+        "<SegmentedControl value=\"grid\">\n  <SegmentedControlItem value=\"grid\">Grid</SegmentedControlItem>\n  <SegmentedControlItem value=\"list\">List</SegmentedControlItem>\n</SegmentedControl>"
+      ],
+      "path": "./components/ui/SegmentedControl.tsx"
+    },
+    "Tabs": {
+      "name": "Tabs",
+      "family": "navigation",
+      "description": "Tabbed content navigation switching between views.",
+      "anatomy": {
+        "indicator": "2px solid var(--sys-color-primary)",
+        "height": "48px"
+      },
+      "variants": {
+        "default": {},
+        "compact": {}
+      },
+      "observedAttributes": [
+        "activeTabIndex",
+        "active-tab-index",
+        "size",
+        "background",
+        "weight"
+      ],
+      "a11y": {
+        "role": "tablist",
+        "keyboardAccessible": "Arrow keys navigation"
+      },
+      "rules": [
+        "Include matching tab panels."
+      ],
+      "examples": [
+        "<Tabs activeTabIndex={0}>\n  <TabItem label=\"Overview\">Overview content</TabItem>\n  <TabItem label=\"Settings\">Settings content</TabItem>\n</Tabs>"
+      ],
+      "path": "./components/ui/Tabs.tsx"
+    },
+    "TabsBar": {
+      "name": "TabsBar",
+      "family": "navigation",
+      "description": "Header navigation tab bar without embedded content panels.",
+      "anatomy": {
+        "container": {
+          "scrollerRadius": "var(--sys-shape-corner-medium) /* 12px */",
+          "innerDivRadius": "var(--sys-shape-corner-small) /* 8px */",
+          "scrollerPadding": "4px",
+          "background": "var(--sys-color-surface-container) /* rgb(241, 241, 244) */"
+        },
+        "button": {
+          "touchTarget": "48px (enforced)",
+          "height": "24px",
+          "padding": "12px 24px"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "activeTabIndex",
+        "active-tab-index",
+        "size",
+        "weight"
+      ],
+      "a11y": {
+        "role": "tablist"
+      },
+      "rules": [
+        "Synchronize active index with route changes."
+      ],
+      "examples": [
+        "<TabsBar activeTabIndex={0}>\n  <button type=\"button\">General</button>\n  <button type=\"button\">Security</button>\n</TabsBar>"
+      ],
+      "path": "./components/ui/TabsBar.tsx"
+    },
+    "Pagination": {
+      "name": "Pagination",
+      "family": "navigation",
+      "description": "Multi-page navigation controls with previous, next, and numbered page jumps.",
+      "anatomy": {
+        "buttonTarget": "48x48px"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "total-items-count",
+        "items-per-page",
+        "active-page",
+        "show-last-page",
+        "intl"
+      ],
+      "a11y": {
+        "navLabel": "aria-label=\"Pagination\""
+      },
+      "rules": [
+        "Provide localized labels for accessibility."
+      ],
+      "examples": [
+        "<Pagination totalItemsCount={120} itemsPerPage={12} activePage={1} />"
+      ],
+      "path": "./components/ui/Pagination.tsx"
+    },
+    "Scroller": {
+      "name": "Scroller",
+      "family": "navigation",
+      "description": "Horizontal carousel / content scroller with scroll indicators and snap points.",
+      "anatomy": {
+        "scrollBar": "custom / hidden",
+        "indicators": "arrow buttons"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "scrollToPosition",
+        "scrollbar",
+        "compact",
+        "sticky",
+        "align-scroll-indicator"
+      ],
+      "a11y": {},
+      "rules": [
+        "Support keyboard horizontal scroll."
+      ],
+      "examples": [
+        "<Scroller>\n  <div className=\"item\">Card 1</div>\n  <div className=\"item\">Card 2</div>\n</Scroller>"
+      ],
+      "path": "./components/ui/Scroller.tsx"
+    },
+    "Banner": {
+      "name": "Banner",
+      "family": "communication",
+      "description": "Prominent top banner for site-wide announcements, recalls, or promotions.",
+      "anatomy": {
+        "background": "var(--sys-color-surface-container-highest)",
+        "padding": "var(16px)"
+      },
+      "variants": {
+        "info": {},
+        "warning": {},
+        "error": {}
+      },
+      "observedAttributes": [
+        "open",
+        "heading",
+        "heading-tag",
+        "description",
+        "position",
+        "state",
+        "dismiss-button"
+      ],
+      "a11y": {
+        "role": "status"
+      },
+      "rules": [
+        "Include dismiss button when dismissible."
+      ],
+      "examples": [
+        "<Banner state=\"info\" heading=\"New Feature Available\" description=\"Explore the multi-modal ingestion pipeline.\" />"
+      ],
+      "path": "./components/ui/Banner.tsx"
+    },
+    "InlineNotification": {
+      "name": "InlineNotification",
+      "family": "communication",
+      "description": "In-context message box indicating status, error, warning, or action required.",
+      "anatomy": {
+        "borderRadius": "var(--sys-shape-corner-small)",
+        "padding": "16px"
+      },
+      "variants": {
+        "info": {},
+        "success": {},
+        "warning": {},
+        "error": {}
+      },
+      "observedAttributes": [
+        "heading",
+        "heading-tag",
+        "description",
+        "state",
+        "dismiss-button",
+        "action-label",
+        "action-loading"
+      ],
+      "a11y": {
+        "role": "alert"
+      },
+      "rules": [
+        "Use appropriate state color icon."
+      ],
+      "examples": [
+        "<InlineNotification state=\"warning\" heading=\"Session Expiring\" description=\"Your session will expire in 5 minutes.\" />"
+      ],
+      "path": "./components/ui/InlineNotification.tsx"
+    },
+    "Spinner": {
+      "name": "Spinner",
+      "family": "communication",
+      "description": "Circular indeterminate loading spinner.",
+      "anatomy": {
+        "size": "24px / 48px"
+      },
+      "variants": {
+        "small": {
+          "size": "16px"
+        },
+        "medium": {
+          "size": "24px"
+        },
+        "large": {
+          "size": "48px"
+        }
+      },
+      "observedAttributes": [
+        "color",
+        "size",
+        "aria"
+      ],
+      "a11y": {
+        "role": "status",
+        "ariaLabel": "Loading"
+      },
+      "rules": [
+        "Always provide accessible description."
+      ],
+      "examples": [
+        "<Spinner size=\"medium\" ariaLabel=\"Loading application data\" />"
+      ],
+      "path": "./components/ui/Spinner.tsx"
+    },
+    "Toast": {
+      "name": "Toast",
+      "family": "communication",
+      "description": "Transient notification toast appearing in screen corner.",
+      "anatomy": {
+        "position": "fixed bottom-right",
+        "borderRadius": "var(--sys-shape-corner-small)"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [],
+      "a11y": {
+        "role": "status"
+      },
+      "rules": [
+        "Auto-dismiss within 4-6 seconds."
+      ],
+      "examples": [
+        "<Toast message=\"Tokens saved successfully.\" />"
+      ],
+      "path": "./components/ui/Toast.tsx"
+    },
+    "Popover": {
+      "name": "Popover",
+      "family": "communication",
+      "description": "Contextual floating tooltip / popover triggered on click or hover.",
+      "anatomy": {
+        "borderRadius": "var(--sys-shape-corner-small)",
+        "background": "var(--sys-color-surface)"
+      },
+      "variants": {
+        "top": {},
+        "bottom": {},
+        "left": {},
+        "right": {}
+      },
+      "observedAttributes": [
+        "open",
+        "direction",
+        "description",
+        "compact",
+        "aria"
+      ],
+      "a11y": {
+        "role": "tooltip"
+      },
+      "rules": [
+        "Dismiss on escape key or outside click."
+      ],
+      "examples": [
+        "<Popover description=\"Detailed explanation of token inheritance\">\n  <ButtonPure icon=\"information\">Info</ButtonPure>\n</Popover>"
+      ],
+      "path": "./components/ui/Popover.tsx"
+    },
+    "StepperHorizontal": {
+      "name": "StepperHorizontal",
+      "family": "navigation",
+      "description": "Step-by-step progress indicator for configuration flows and checkout.",
+      "anatomy": {
+        "line": "2px solid var(--sys-color-outline-variant)"
+      },
+      "variants": {
+        "small": {},
+        "medium": {}
+      },
+      "observedAttributes": [
+        "size"
+      ],
+      "a11y": {
+        "ariaCurrent": "step"
+      },
+      "rules": [
+        "Indicate completed, active, and upcoming steps."
+      ],
+      "examples": [
+        "<StepperHorizontal size=\"medium\">\n  <Step state=\"complete\">Account</Step>\n  <Step state=\"current\">Configuration</Step>\n</StepperHorizontal>"
+      ],
+      "path": "./components/ui/StepperHorizontal.tsx"
+    },
+    "Logo": {
+      "name": "Logo",
+      "family": "brand",
+      "description": "Authoritative brand logo emblem and vector symbol.",
+      "anatomy": {
+        "ratio": "1:1 / 16:9 standard logo box"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "href",
+        "target",
+        "aria"
+      ],
+      "a11y": {
+        "alt": "Brand Logo"
+      },
+      "rules": [
+        "Do not alter colors or aspect ratio."
+      ],
+      "examples": [
+        "<Logo href=\"/\" size=\"medium\" />"
+      ],
+      "path": "./components/ui/Logo.tsx"
+    },
+    "Wordmark": {
+      "name": "Wordmark",
+      "family": "brand",
+      "description": "Official typographic brand identity wordmark.",
+      "anatomy": {
+        "lettering": "Fluid geometric brand typography"
+      },
+      "variants": {
+        "small": {},
+        "medium": {},
+        "large": {}
+      },
+      "observedAttributes": [
+        "size",
+        "href",
+        "target",
+        "aria"
+      ],
+      "a11y": {
+        "alt": "Brand Wordmark"
+      },
+      "rules": [
+        "Never re-type brand name with standard fonts; always use Wordmark primitive."
+      ],
+      "examples": [
+        "<Wordmark size=\"medium\" href=\"/\" />"
+      ],
+      "path": "./components/ui/Wordmark.tsx"
+    },
+    "BrandSignature": {
+      "name": "BrandSignature",
+      "family": "brand",
+      "description": "Sub-brand or product line signature typographic element.",
+      "anatomy": {
+        "color": "var(--sys-color-primary)"
+      },
+      "variants": {
+        "core": {},
+        "studio": {},
+        "enterprise": {}
+      },
+      "observedAttributes": [
+        "product",
+        "safe-zone",
+        "size",
+        "color"
+      ],
+      "a11y": {
+        "alt": "Product line designation"
+      },
+      "rules": [
+        "Use brand-specific signature rather than regular text."
+      ],
+      "examples": [
+        "<BrandSignature product=\"core\" size=\"medium\" />"
+      ],
+      "path": "./components/ui/BrandSignature.tsx"
+    },
+    "Canvas": {
+      "name": "Canvas",
+      "family": "containment",
+      "description": "Root layout shell component providing sidebars, navigation slots, and safe zones.",
+      "anatomy": {
+        "safeZone": "var(--sys-grid-safe-zone)"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "sidebar-start-open",
+        "sidebar-end-open",
+        "background"
+      ],
+      "a11y": {
+        "role": "main"
+      },
+      "rules": [
+        "Enforces system safe-zone padding."
+      ],
+      "examples": [
+        "<Canvas background=\"surface\"><slot></slot></Canvas>"
+      ],
+      "path": "./components/ui/Canvas.tsx"
+    },
+    "Fieldset": {
+      "name": "Fieldset",
+      "family": "containment",
+      "description": "Accessible semantic container grouping related form inputs.",
+      "anatomy": {
+        "margin": "var(16px)"
+      },
+      "variants": {
+        "default": {}
+      },
+      "observedAttributes": [
+        "label",
+        "label-size",
+        "required",
+        "state",
+        "message",
+        "aria"
+      ],
+      "a11y": {
+        "role": "group"
+      },
+      "rules": [
+        "Provide descriptive legend/label."
+      ],
+      "examples": [
+        "<Fieldset label=\"Personal Information\"></Fieldset>"
+      ],
+      "path": "./components/ui/Fieldset.tsx"
+    },
+    "Card": {
+      "name": "Card",
+      "path": "./components/ui/Card.tsx",
+      "family": "containment",
+      "description": "Structural content container implementing tonal surface elevation.",
+      "anatomy": {
+        "container": {
+          "shape": "rounded-rect",
+          "borderRadius": "16px",
+          "padding": "24px"
+        }
+      },
+      "variants": {
+        "filled": {
+          "containerColor": "rgba(156, 156, 159, 0.2)"
+        },
+        "elevated": {
+          "containerColor": "rgba(156, 156, 159, 0.35)",
+          "elevation": 2
+        },
+        "outlined": {
+          "borderColor": "rgba(255, 255, 255, 0.2)"
+        }
+      },
+      "props": {
+        "variant": {
+          "type": "'filled' | 'elevated' | 'outlined'",
+          "default": "'filled'"
+        },
+        "header": {
+          "type": "React.ReactNode"
+        },
+        "footer": {
+          "type": "React.ReactNode"
+        }
+      },
+      "a11y": {
+        "minTouchTarget": "N/A",
+        "requiredAria": [],
+        "focusIndicator": "None"
+      },
+      "rules": [
+        "TDS-RAW-COLOR: Background must map to surface container tokens."
+      ],
+      "examples": [
+        "<Card variant=\"filled\">Card content</Card>"
+      ],
+      "code": "import React from \"react\";\n\nexport type CardVariant = \"filled\" | \"elevated\" | \"outlined\";\n\nexport interface CardProps extends React.HTMLAttributes<HTMLDivElement> {\n  variant?: CardVariant;\n  header?: React.ReactNode;\n  footer?: React.ReactNode;\n  children?: React.ReactNode;\n}\n\n/**\n * Trainable Design System Certified Card Component (Containment Family)\n * - Surface Container hierarchy\n */\nexport const Card: React.FC<CardProps> = ({\n  variant = \"filled\",\n  header,\n  footer,\n  children,\n  className = \"\",\n  style = {},\n  ...props\n}) => {\n  const baseStyle: React.CSSProperties = {\n    fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n    borderRadius: \"16px\",\n    padding: \"24px\",\n    display: \"flex\",\n    flexDirection: \"column\",\n    gap: \"16px\",\n    boxSizing: \"border-box\",\n    transition: \"transform 0.15s ease, box-shadow 0.15s ease\",\n    ...style,\n  };\n\n  let variantStyle: React.CSSProperties = {};\n  switch (variant) {\n    case \"filled\":\n      variantStyle = {\n        background: \"var(--sys-color-surface-container)\",\n        color: \"var(--sys-color-on-surface)\",\n        border: \"1px solid var(--sys-color-outline-variant)\",\n      };\n      break;\n    case \"elevated\":\n      variantStyle = {\n        background: \"var(--sys-color-surface-container-high)\",\n        color: \"var(--sys-color-on-surface)\",\n        boxShadow: \"0 8px 24px rgba(0, 0, 0, 0.35)\",\n        border: \"1px solid var(--sys-color-outline-variant)\",\n      };\n      break;\n    case \"outlined\":\n      variantStyle = {\n        background: \"transparent\",\n        color: \"var(--sys-color-on-surface)\",\n        border: \"1px solid var(--sys-color-outline)\",\n      };\n      break;\n  }\n\n  return (\n    <div\n      style={{ ...baseStyle, ...variantStyle }}\n      className={`tds-card tds-card--${variant} ${className}`}\n      {...props}\n    >\n      {header && <div className=\"tds-card-header\">{header}</div>}\n      <div className=\"tds-card-body\">{children}</div>\n      {footer && <div className=\"tds-card-footer\">{footer}</div>}\n    </div>\n  );\n};\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
+    },
+    "Badge": {
+      "name": "Badge",
+      "path": "./components/ui/Badge.tsx",
+      "family": "communication",
+      "description": "Compact status or tag badge.",
+      "anatomy": {
+        "container": {
+          "shape": "full-pill",
+          "borderRadius": "9999px"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
+      "props": {
+        "children": {
+          "type": "React.ReactNode"
+        }
+      },
+      "a11y": {
+        "minTouchTarget": "N/A",
+        "requiredAria": [],
+        "focusIndicator": "None"
+      },
+      "rules": [],
+      "examples": [
+        "<Badge>Verified</Badge>"
+      ],
+      "code": "import React from \"react\";\n\nexport interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {\n  children?: React.ReactNode;\n}\n\nexport const Badge: React.FC<BadgeProps> = ({ children, className = \"\", style = {}, ...props }) => (\n  <span\n    style={{\n      display: \"inline-flex\",\n      alignItems: \"center\",\n      padding: \"4px 10px\",\n      borderRadius: \"9999px\",\n      fontSize: \"0.75rem\",\n      fontWeight: 600,\n      background: \"var(--sys-color-surface-container-high)\",\n      color: \"var(--sys-color-on-surface)\",\n      border: \"1px solid var(--sys-color-outline-variant)\",\n      fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n      ...style,\n    }}\n    className={`tds-badge ${className}`}\n    {...props}\n  >\n    {children}\n  </span>\n);\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
+    },
+    "Chip": {
+      "name": "Chip",
+      "path": "./components/ui/Chip.tsx",
+      "family": "selection",
+      "description": "Filter and selection chip with interactive toggle state.",
+      "anatomy": {
+        "container": {
+          "minHeight": 36,
+          "borderRadius": "8px"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
+      "props": {
+        "selected": {
+          "type": "boolean"
+        },
+        "icon": {
+          "type": "React.ReactNode"
+        }
+      },
+      "a11y": {
+        "minTouchTarget": "36px height",
+        "requiredAria": [
+          "aria-pressed"
+        ],
+        "focusIndicator": "Outline"
+      },
+      "rules": [],
+      "examples": [
+        "<Chip selected={true}>Filter option</Chip>"
+      ],
+      "code": "import React from \"react\";\n\nexport interface ChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  selected?: boolean;\n  icon?: React.ReactNode;\n  children?: React.ReactNode;\n}\n\nexport const Chip: React.FC<ChipProps> = ({\n  selected = false,\n  icon,\n  children,\n  className = \"\",\n  style = {},\n  ...props\n}) => (\n  <button\n    type=\"button\"\n    style={{\n      minHeight: \"36px\",\n      display: \"inline-flex\",\n      alignItems: \"center\",\n      gap: \"8px\",\n      padding: \"6px 14px\",\n      borderRadius: \"8px\",\n      fontSize: \"0.875rem\",\n      fontWeight: 500,\n      cursor: \"pointer\",\n      border: selected\n        ? \"1px solid var(--sys-color-primary)\"\n        : \"1px solid var(--sys-color-outline)\",\n      background: selected\n        ? \"var(--sys-color-surface-container-high)\"\n        : \"transparent\",\n      color: \"var(--sys-color-on-surface)\",\n      fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n      transition: \"background 0.15s ease\",\n      ...style,\n    }}\n    className={`tds-chip ${selected ? \"selected\" : \"\"} ${className}`}\n    {...props}\n  >\n    {icon && <span>{icon}</span>}\n    <span>{children}</span>\n  </button>\n);\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
     }
   }
 }

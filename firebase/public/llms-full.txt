@@ -1,11 +1,11 @@
 # Trainable DS: Complete Machine Reference & Prompt Bundle (Version 1.7.0)
 
-> This document is the full, exhaustive reference for Trainable DS. You can inject this entire file into any AI agent system prompt to achieve 100% compliant Material Design 3 generation.
+> This document is the full, exhaustive reference for Trainable DS. You can inject this entire file into any AI agent system prompt to achieve 100% compliant, brand-consistent UI generation.
 
 ## 0. Autonomous Website Extraction Protocol (Zero Process Knowledge)
 
 When prompted by the user:
-> *"Use Trainable Design System to extract the design system from <website url>"*
+> *"Follow the autonomous training protocol at <url>/llms.txt to extract and build a complete design system from <website url>"* (or *"Use Trainable Design System to extract the design system from <website url>"*)
 
 The AI Agent autonomously executes the following procedure:
 
@@ -17,7 +17,7 @@ The AI Agent autonomously executes the following procedure:
 
 2. **Automated Pipeline Execution:**
    - **Archetype Sitemap Crawling:** Discovers internal links and classifies subpages into UX archetypes (`home`, `listing`, `detail`, `form`, `content`).
-   - **Deep Asset Harvesting:** Extracts `@font-face` CDN `.woff2` font declarations into `fonts.json` and pierces Web Component Shadow DOMs (e.g. `<p-icon>`, `<p-button>`) to extract raw SVG vectors into `icons.json`.
+   - **Deep Asset Harvesting:** Extracts `@font-face` CDN `.woff2` font declarations into `fonts.json` and pierces Web Component Shadow DOMs (e.g. `<ds-icon>`, `<ds-button>`) to extract raw SVG vectors into `icons.json`.
    - **Visual Drift & Convergence Loops:** Analyzes runtime computed styles (geometry, OKLab color ΔE, typography, materials) and runs refinement loops until cross-page compliance meets or exceeds 95%.
    - **Emits 6-Asset Bundle:** `tokens.json`, `components.json`, `fonts.json`, `icons.json`, `DESIGN.md`, and `overview.html`.
 
@@ -29,10 +29,10 @@ The AI Agent autonomously executes the following procedure:
 
 ---
 
-## 1. System Foundations (Material Design 3 Depth)
+## 1. System Foundations & 3-Tier Token Depth
 
-### 1.1 M3 Semantic Color Taxonomy (Dual Scheme)
-Material Design 3 defines 36+ semantic color roles. Colors are divided into Light and Dark schemes derived mathematically from HCT (Hue, Chroma, Tone) tonal palettes:
+### 1.1 Accessible Semantic Color Taxonomy (Dual Scheme)
+The system defines 36+ semantic color roles. Colors are divided into Light and Dark schemes derived mathematically from HCT (Hue, Chroma, Tone) tonal palettes:
 
 #### Primary Accent Family
 - `sys.color.primary`: Key brand color for high-emphasis elements (Filled buttons, active states). Light: Tone 40. Dark: Tone 80.
@@ -59,7 +59,7 @@ Material Design 3 defines 36+ semantic color roles. Colors are divided into Ligh
 - `sys.color.on-error-container`: Text on error container (#410002 in light, #ffdad6 in dark).
 
 #### Surface Container Hierarchy (5-Level Depth)
-Instead of shadows, M3 uses tonal surface elevation:
+Instead of arbitrary shadows, the system uses tonal surface elevation hierarchy:
 - `sys.color.surface`: Base canvas background.
 - `sys.color.on-surface`: Primary copy on surfaces.
 - `sys.color.surface-variant`: Secondary surfaces.
@@ -127,7 +127,7 @@ Font Family: `Inter, Roboto, sans-serif`
 
 ---
 
-## 2. Component Contracts Across 6 M3 Families
+## 2. Component Contracts Across 6 Functional Families
 
 ### 1. Actions (`Button`, `IconButton`, `FAB`, `SegmentedButton`)
 - **Minimum Touch Target:** $\ge 48\times 48\text{px}$ (e.g. `min-h-[48px] min-w-[48px]` or `h-12`).
@@ -171,6 +171,8 @@ Font Family: `Inter, Roboto, sans-serif`
 | `TDS-TOUCH-TARGET-TOO-SMALL`| HIGH | Interactive elements must be $\ge 48\times 48\text{px}$ (`min-h-[48px]`, `w-12 h-12`). |
 | `TDS-RTL-NON-LOGICAL` | MEDIUM | Use logical CSS classes (`ps-*`, `pe-*`, `ms-*`, `me-*`) instead of `pl`, `pr`, `ml`, `mr`. |
 | `TDS-CAPITALIZATION-NOT-SENTENCE-CASE` | MEDIUM | All labels, titles, and buttons must use sentence case (`Save changes`, not `Save Changes`). |
+| `TDS-SPEC-FIDELITY` | CRITICAL | Strictly adhere to user specifications, sketches, and commands. Zero feature hallucination (do not invent unrequested action buttons, widgets, or toggles). |
+| `TDS-WHITESPACE-PRESERVATION` | HIGH | When space is marked as whitespace or left unoccupied in a sketch, either ask the user first or render an explicit placeholder container. Never fill with speculative features. |
 
 ---
 
@@ -187,6 +189,6 @@ Response:
   "certified": true,
   "score": 100,
   "diagnostics": [],
-  "summary": "CERTIFIED COMPLIANT: Code meets all Material Design 3 and Trainable DS constraints."
+  "summary": "CERTIFIED COMPLIANT: Code meets all design system token and component constraints."
 }
 ```

@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import * as fs from "node:fs";
+import * as path from "node:path";
 import { McpServer } from "./server.js";
 
 describe("McpServer", () => {
@@ -50,6 +52,7 @@ describe("McpServer", () => {
     expect(toolNames).toContain("validate_code_snippet");
     expect(toolNames).toContain("suggest_remediation");
     expect(toolNames).toContain("get_design_guidelines");
+    expect(toolNames).toContain("get_component_code");
   });
 
   it("executes get_design_tokens tool", async () => {
@@ -66,6 +69,26 @@ describe("McpServer", () => {
     expect(res?.result).toHaveProperty("content");
     const content = (res?.result as { content: Array<{ text: string }> }).content;
     expect(content[0].text).toContain("primary");
+  });
+
+  it("executes get_component_code tool", async () => {
+    const res = await server.handleMessage({
+      jsonrpc: "2.0",
+      id: 44,
+      method: "tools/call",
+      params: {
+        name: "get_component_code",
+        arguments: { component_name: "Button" },
+      },
+    });
+
+    expect(res?.result).toHaveProperty("content");
+    const content = (res?.result as { content: Array<{ text: string }> }).content;
+    const comp = JSON.parse(content[0].text);
+    expect(comp.name).toBe("Button");
+    expect(comp.family).toBe("actions");
+    expect(comp.code).toBeDefined();
+    expect(comp.code).toContain("export const Button");
   });
 
   it("executes list_components tool", async () => {
@@ -155,5 +178,63 @@ describe("McpServer", () => {
       method: "prompts/list",
     });
     expect(promptRes?.result).toHaveProperty("prompts");
+  });
+
+  it("handles ingest_design_source, refine_design_system, and manage_ds_branches tools", async () => {
+    // 1. manage_ds_branches list
+    const branchListRes = await server.handleMessage({
+      jsonrpc: "2.0",
+      id: 10,
+      method: "tools/call",
+      params: {
+        name: "manage_ds_branches",
+        arguments: { action: "list" },
+      },
+    });
+    const listContent = (branchListRes?.result as { content: Array<{ text: string }> }).content;
+    const branchInfo = JSON.parse(listContent[0].text);
+    expect(branchInfo).toHaveProperty("currentBranch");
+
+    // 2. ingest_design_source
+    const ingestRes = await server.handleMessage({
+      jsonrpc: "2.0",
+      id: 11,
+      method: "tools/call",
+      params: {
+        name: "ingest_design_source",
+        arguments: {
+          content: "token,value\nsys.color.accent,#e11d48",
+          type: "table",
+          file_name: "test-tokens.csv",
+        },
+      },
+    });
+    const ingestContent = (ingestRes?.result as { content: Array<{ text: string }> }).content;
+    const ingestData = JSON.parse(ingestContent[0].text);
+    expect(ingestData.success).toBe(true);
+    expect(ingestData.appliedTokens).toBe(1);
+
+    // 3. refine_design_system
+    const refineRes = await server.handleMessage({
+      jsonrpc: "2.0",
+      id: 12,
+      method: "tools/call",
+      params: {
+        name: "refine_design_system",
+        arguments: {
+          prompt: "Change primary color to #0044cc",
+        },
+      },
+    });
+    const refineContent = (refineRes?.result as { content: Array<{ text: string }> }).content;
+    const refineData = JSON.parse(refineContent[0].text);
+    expect(refineData.success).toBe(true);
+    expect(refineData.patches.tokens.some((t: any) => t.path === "sys.color.primary" && t.value === "#0044cc")).toBe(true);
+
+    try {
+      fs.rmSync(path.join(process.cwd(), ".tds"), { recursive: true, force: true });
+    } catch {
+      // Ignore
+    }
   });
 });

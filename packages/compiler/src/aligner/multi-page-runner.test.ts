@@ -13,13 +13,13 @@ describe("multi-page-runner", () => {
 
   it("crawls multiple pages, merges assets, and generates overview.html", async () => {
     const page1Snapshot: HarvestedSystemSnapshot = {
-      url: "https://porsche.com/germany/",
+      url: "https://brand.example.com/",
       timestamp: Date.now(),
-      title: "Porsche Home",
+      title: "Brand Home",
       elements: [
         {
-          selector: "p-button.primary",
-          tagName: "p-button",
+          selector: "ds-button.primary",
+          tagName: "ds-button",
           isShadowRoot: true,
           family: "actions",
           role: "button.primary",
@@ -39,17 +39,17 @@ describe("multi-page-runner", () => {
         }
       ],
       brandColors: {},
-      detectedWebComponents: ["p-button"]
+      detectedWebComponents: ["ds-button"]
     };
 
     const page2Snapshot: HarvestedSystemSnapshot = {
-      url: "https://porsche.com/germany/models/911/",
+      url: "https://brand.example.com/products/item/",
       timestamp: Date.now(),
-      title: "Porsche 911",
+      title: "Brand Product",
       elements: [
         {
-          selector: "p-button.primary",
-          tagName: "p-button",
+          selector: "ds-button.primary",
+          tagName: "ds-button",
           isShadowRoot: true,
           family: "actions",
           role: "button.primary",
@@ -69,13 +69,13 @@ describe("multi-page-runner", () => {
         }
       ],
       brandColors: {},
-      detectedWebComponents: ["p-button"]
+      detectedWebComponents: ["ds-button"]
     };
 
     const result = await runMultiPageAlignment({
-      rootUrl: "https://porsche.com/germany/",
-      pages: ["https://porsche.com/germany/", "https://porsche.com/germany/models/911/"],
-      brandName: "Porsche Design System",
+      rootUrl: "https://brand.example.com/",
+      pages: ["https://brand.example.com/", "https://brand.example.com/products/item/"],
+      brandName: "Enterprise Design System",
       dsDirectory: tempDir,
       maxLoops: 2,
       threshold: 95,
@@ -85,12 +85,12 @@ describe("multi-page-runner", () => {
           {
             fonts: {
               families: {
-                "Porsche Next": {
-                  name: "Porsche Next",
+                "Brand Sans": {
+                  name: "Brand Sans",
                   weights: ["400"],
                   styles: ["normal"],
                   faces: [],
-                  cssBlock: "@font-face { font-family: 'Porsche Next'; }"
+                  cssBlock: "@font-face { font-family: 'Brand Sans'; }"
                 }
               }
             },
@@ -101,12 +101,12 @@ describe("multi-page-runner", () => {
           {
             fonts: {
               families: {
-                "Porsche Next": {
-                  name: "Porsche Next",
+                "Brand Sans": {
+                  name: "Brand Sans",
                   weights: ["700"],
                   styles: ["normal"],
                   faces: [],
-                  cssBlock: "@font-face { font-family: 'Porsche Next'; font-weight: 700; }"
+                  cssBlock: "@font-face { font-family: 'Brand Sans'; font-weight: 700; }"
                 }
               }
             },
@@ -119,10 +119,12 @@ describe("multi-page-runner", () => {
     });
 
     expect(result.crawledPages.length).toBe(2);
-    expect(result.fonts.families["Porsche Next"]).toBeDefined();
-    expect(result.fonts.families["Porsche Next"].weights).toContain("400");
-    expect(result.fonts.families["Porsche Next"].weights).toContain("700");
+    expect(result.fonts.families["Brand Sans"]).toBeDefined();
+    expect(result.fonts.families["Brand Sans"].weights).toContain("400");
+    expect(result.fonts.families["Brand Sans"].weights).toContain("700");
     expect(result.icons.length).toBe(2);
     expect(result.overviewHtmlPath).toContain("overview.html");
+    expect(result.componentLibraryPath).toContain("components/ui");
+    expect(fs.existsSync(path.join(result.componentLibraryPath, "Button.tsx"))).toBe(true);
   });
 });

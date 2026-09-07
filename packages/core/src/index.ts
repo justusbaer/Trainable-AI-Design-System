@@ -8,3 +8,5 @@ export * from "./tokens/m3-motion.js";
 export * from "./components/schema.js";
 export * from "./hct/palette.js";
 export * from "./rules/schema.js";
+export * from "./ingest/types.js";
+export * from "./vcs/types.js";

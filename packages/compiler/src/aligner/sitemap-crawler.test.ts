@@ -3,29 +3,29 @@ import { classifyPageArchetype, parseDiscoveredLinks, selectRepresentativePages 
 
 describe("sitemap-crawler", () => {
   it("correctly classifies URLs into page archetypes", () => {
-    expect(classifyPageArchetype("https://porsche.com/germany/")).toBe("home");
-    expect(classifyPageArchetype("https://porsche.com/germany/models/")).toBe("listing");
-    expect(classifyPageArchetype("https://porsche.com/germany/models/911/")).toBe("detail");
-    expect(classifyPageArchetype("https://porsche.com/germany/finder/")).toBe("form");
-    expect(classifyPageArchetype("https://porsche.com/germany/experience/")).toBe("content");
+    expect(classifyPageArchetype("https://brand.example.com/")).toBe("home");
+    expect(classifyPageArchetype("https://brand.example.com/models/")).toBe("listing");
+    expect(classifyPageArchetype("https://brand.example.com/models/product-detail/")).toBe("detail");
+    expect(classifyPageArchetype("https://brand.example.com/finder/")).toBe("form");
+    expect(classifyPageArchetype("https://brand.example.com/experience/")).toBe("content");
   });
 
   it("parses discovered links and ranks priorities", () => {
     const rawData = {
-      title: "Porsche Deutschland",
+      title: "Enterprise Portal",
       discoveredLinks: [
-        { url: "https://porsche.com/germany/models/", label: "Modelle", inNav: true },
-        { url: "https://porsche.com/germany/models/911/", label: "911", inNav: true },
-        { url: "https://porsche.com/germany/finder/", label: "Fahrzeugsuche", inNav: true },
-        { url: "https://porsche.com/germany/privacy/", label: "Datenschutz", inNav: false }
+        { url: "https://brand.example.com/models/", label: "Products", inNav: true },
+        { url: "https://brand.example.com/models/product-detail/", label: "Detail", inNav: true },
+        { url: "https://brand.example.com/finder/", label: "Search", inNav: true },
+        { url: "https://brand.example.com/privacy/", label: "Privacy", inNav: false }
       ]
     };
 
-    const pages = parseDiscoveredLinks(rawData, "https://porsche.com/germany/");
+    const pages = parseDiscoveredLinks(rawData, "https://brand.example.com/");
     expect(pages.length).toBe(5); // Root + 4 links
     expect(pages[0].archetype).toBe("home");
 
-    const detailPage = pages.find(p => p.url.includes("911"));
+    const detailPage = pages.find(p => p.url.includes("product-detail"));
     expect(detailPage).toBeDefined();
     expect(detailPage?.archetype).toBe("detail");
     expect(detailPage?.priorityScore).toBeGreaterThan(50);
@@ -33,17 +33,17 @@ describe("sitemap-crawler", () => {
 
   it("selects representative balanced set of diverse archetypes", () => {
     const rawData = {
-      title: "Porsche Deutschland",
+      title: "Enterprise Portal",
       discoveredLinks: [
-        { url: "https://porsche.com/germany/models/", label: "Modelle", inNav: true },
-        { url: "https://porsche.com/germany/models/taycan/", label: "Taycan", inNav: true },
-        { url: "https://porsche.com/germany/models/911/", label: "911", inNav: true },
-        { url: "https://porsche.com/germany/finder/", label: "Finder", inNav: true },
-        { url: "https://porsche.com/germany/experience/", label: "Experience", inNav: true }
+        { url: "https://brand.example.com/models/", label: "Products", inNav: true },
+        { url: "https://brand.example.com/models/product-item/", label: "Item", inNav: true },
+        { url: "https://brand.example.com/models/product-detail/", label: "Detail", inNav: true },
+        { url: "https://brand.example.com/finder/", label: "Finder", inNav: true },
+        { url: "https://brand.example.com/experience/", label: "Experience", inNav: true }
       ]
     };
 
-    const allPages = parseDiscoveredLinks(rawData, "https://porsche.com/germany/");
+    const allPages = parseDiscoveredLinks(rawData, "https://brand.example.com/");
     const selected = selectRepresentativePages(allPages, 4);
 
     expect(selected.length).toBe(4);

@@ -11,13 +11,13 @@ describe("visual-loop-runner", () => {
     fs.rmSync(tempDir, { recursive: true, force: true });
   });
   const mockSourceSnapshot: HarvestedSystemSnapshot = {
-    url: "https://porsche.com",
+    url: "https://example.com",
     timestamp: Date.now(),
     title: "Source of Truth",
     elements: [
       {
-        selector: "p-button.primary",
-        tagName: "p-button",
+        selector: "ds-button.primary",
+        tagName: "ds-button",
         isShadowRoot: true,
         family: "actions",
         role: "button.primary",
@@ -37,7 +37,7 @@ describe("visual-loop-runner", () => {
       }
     ],
     brandColors: {},
-    detectedWebComponents: ["p-button"]
+    detectedWebComponents: ["ds-button"]
   };
 
   it("runs multi-loop convergence with progress callbacks", async () => {
@@ -74,7 +74,7 @@ describe("visual-loop-runner", () => {
     const progressLogs: { loop: number; score: number }[] = [];
 
     const result = await runVisualAlignmentLoop({
-      sourceUrl: "https://porsche.com",
+      sourceUrl: "https://example.com",
       mockSourceSnapshot,
       mockExtractedSnapshot,
       dsDirectory: tempDir,

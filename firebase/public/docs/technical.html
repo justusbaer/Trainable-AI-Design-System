@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trainable DS — Technical Architecture & Replication Manual</title>
+  <meta name="description" content="Authoritative technical specification and engineering replication manual for the Trainable DS platform. Complete documentation of dual-surface architecture, HCT color science, web extraction, Git-native VCS, and the 4-tier evaluator.">
+
+  <!-- Machine-Readable Agent Discovery -->
+  <link rel="llms-txt" type="text/markdown" href="/llms.txt">
+  <link rel="llms-full-txt" type="text/markdown" href="/llms-full.txt">
+  <link rel="design-system-facade" type="text/markdown" href="/DESIGN.md">
+  <link rel="design-tokens" type="application/json" href="/tokens.json">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../portal.css">
+
+  <style>
+    /* Docs Sub-Site Custom Layout & Styles */
+    .docs-wrapper {
+      display: flex;
+      max-width: 1440px;
+      margin: 0 auto;
+      width: 100%;
+      padding-inline: 1.5rem;
+      gap: 2.5rem;
+      position: relative;
+    }
+
+    /* Sticky Sidebar Navigation */
+    .docs-sidebar {
+      width: 290px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 5rem;
+      height: calc(100vh - 6rem);
+      overflow-y: auto;
+      padding-block: 1rem 2.5rem;
+      padding-inline-end: 1rem;
+      border-inline-end: 1px solid var(--md-sys-color-outline-variant);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .docs-sidebar::-webkit-scrollbar {
+      width: 4px;
+    }
+    .docs-sidebar::-webkit-scrollbar-thumb {
+      background: var(--md-sys-color-outline-variant);
+      border-radius: 4px;
+    }
+
+    .sidebar-search {
+      width: 100%;
+      background: var(--md-sys-color-surface-container-lowest);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-md);
+      padding: 0.6rem 0.85rem;
+      font-size: 0.85rem;
+      color: var(--md-sys-color-on-surface);
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .sidebar-search:focus {
+      border-color: var(--md-sys-color-primary);
+    }
+
+    .sidebar-nav-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .sidebar-group-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--md-sys-color-on-surface-variant);
+      margin-block: 0.75rem 0.35rem;
+      padding-inline: 0.5rem;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.45rem 0.65rem;
+      border-radius: var(--md-sys-shape-corner-sm);
+      color: var(--md-sys-color-on-surface-variant);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      line-height: 1.35;
+    }
+
+    .sidebar-link:hover {
+      background: var(--md-sys-color-surface-container-high);
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .sidebar-link.active {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      font-weight: 600;
+    }
+
+    .sidebar-badge {
+      font-size: 0.7rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 9999px;
+      background: var(--md-sys-color-surface-container-highest);
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    /* Main Docs Content Area */
+    .docs-content {
+      flex: 1;
+      min-width: 0;
+      padding-block: 1rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5rem;
+    }
+
+    .docs-header {
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      padding-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .docs-title {
+      font-size: clamp(2.2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .docs-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      font-size: 0.85rem;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .meta-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--md-sys-color-surface-container);
+      padding: 0.25rem 0.7rem;
+      border-radius: var(--md-sys-shape-corner-full);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    /* Section Cards & Callouts */
+    .doc-section {
+      scroll-margin-top: 6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .section-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 2px solid var(--md-sys-color-surface-container-high);
+      padding-bottom: 0.75rem;
+    }
+
+    .section-heading {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .subsection-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .doc-callout {
+      background: var(--md-sys-color-surface-container-low);
+      border-left: 4px solid var(--md-sys-color-primary);
+      border-radius: var(--md-sys-shape-corner-md);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .doc-callout.tip {
+      border-left-color: #10b981;
+      background: color-mix(in srgb, #10b981 8%, var(--md-sys-color-surface-container-low));
+    }
+
+    .doc-callout.warning {
+      border-left-color: #f59e0b;
+      background: color-mix(in srgb, #f59e0b 8%, var(--md-sys-color-surface-container-low));
+    }
+
+    .callout-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Diagrams & Visual Architecture */
+    .diagram-container {
+      background: var(--md-sys-color-surface-container-lowest);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-lg);
+      padding: 1.75rem;
+      overflow-x: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .diagram-caption {
+      font-size: 0.8rem;
+      color: var(--md-sys-color-on-surface-variant);
+      text-align: center;
+      font-style: italic;
+    }
+
+    .arch-flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .arch-box {
+      background: var(--md-sys-color-surface-container);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-md);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .arch-box-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--md-sys-color-primary);
+    }
+
+    .arch-box-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    /* Code Blocks with Copy Button */
+    .code-block-wrapper {
+      position: relative;
+      background: var(--md-sys-color-surface-container-lowest);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-md);
+      overflow: hidden;
+    }
+
+    .code-block-header {
+      background: var(--md-sys-color-surface-container);
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .btn-copy-snippet {
+      background: transparent;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      color: var(--md-sys-color-on-surface);
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--md-sys-shape-corner-sm);
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-copy-snippet:hover {
+      background: var(--md-sys-color-surface-container-highest);
+      color: var(--md-sys-color-primary);
+    }
+
+    pre.code-content {
+      padding: 1.25rem;
+      margin: 0;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      line-height: 1.6;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    /* Data Tables */
+    .spec-table-wrapper {
+      overflow-x: auto;
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-lg);
+    }
+
+    .spec-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .spec-table th {
+      background: var(--md-sys-color-surface-container);
+      padding: 0.85rem 1rem;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface);
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      white-space: nowrap;
+    }
+
+    .spec-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      color: var(--md-sys-color-on-surface);
+      vertical-align: middle;
+    }
+
+    .spec-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .spec-table code {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      background: var(--md-sys-color-surface-container);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    /* Math Formula Block */
+    .math-block {
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px dashed var(--md-sys-color-primary);
+      border-radius: var(--md-sys-shape-corner-md);
+      padding: 1.25rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--md-sys-color-primary);
+      overflow-x: auto;
+    }
+
+    /* Reading Progress Bar */
+    #reading-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--md-sys-color-primary);
+      width: 0%;
+      z-index: 1001;
+      transition: width 0.1s ease;
+    }
+
+    /* Interactive Demo Card */
+    .interactive-demo-card {
+      background: var(--md-sys-color-surface-container);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .interactive-demo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .demo-tone-slider-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .tone-range-input {
+      flex: 1;
+      accent-color: var(--md-sys-color-primary);
+    }
+
+    .live-swatch-box {
+      width: 80px;
+      height: 48px;
+      border-radius: var(--md-sys-shape-corner-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      border: 1px solid rgba(255,255,255,0.15);
+      transition: background-color 0.1s ease;
+    }
+
+    @media (max-width: 960px) {
+      .docs-wrapper {
+        flex-direction: column;
+        padding-inline: 1rem;
+      }
+      .docs-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        top: 0;
+        border-inline-end: none;
+        border-bottom: 1px solid var(--md-sys-color-outline-variant);
+        max-height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="reading-progress"></div>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo">T</div>
+        <span class="brand-title">Trainable DS</span>
+        <span class="badge" style="background:#6366f1; color:#ffffff;">v1.7.0 Docs</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link">← Portal Home</a></li>
+          <li><a href="/overview.html" class="nav-link" target="_blank" style="color:#2563eb; font-weight:600;">Review Studio ↗</a></li>
+          <li><a href="/docs/product.html" class="nav-link" style="color:#d97706; font-weight:600;">Product PRD ↗</a></li>
+          <li><a href="/DESIGN.md" class="nav-link" target="_blank" style="font-family:var(--font-mono); font-size:0.82rem;">DESIGN.md ↗</a></li>
+          <li><a href="/llms.txt" class="nav-link" target="_blank" style="font-family:var(--font-mono); font-size:0.82rem;">llms.txt ↗</a></li>
+          <li>
+            <button type="button" id="theme-toggle" class="btn-icon" aria-label="Toggle theme">
+              🌙
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Docs Master Layout -->
+  <div class="docs-wrapper">
+
+    <!-- Sticky Table of Contents Sidebar -->
+    <aside class="docs-sidebar">
+      <input type="text" id="doc-filter" class="sidebar-search" placeholder="Search architecture specs...">
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">1. System Overview</div>
+        <a href="#section-topology" class="sidebar-link active">
+          <span>System Topology</span>
+          <span class="sidebar-badge">Arch</span>
+        </a>
+        <a href="#section-dualsurface" class="sidebar-link">
+          <span>Dual-Surface Architecture</span>
+          <span class="sidebar-badge">Core</span>
+        </a>
+        <a href="#section-contracts" class="sidebar-link">
+          <span>Machine-First Contracts</span>
+          <span class="sidebar-badge">Spec</span>
+        </a>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">2. Color & Design Tokens</div>
+        <a href="#section-tokens" class="sidebar-link">
+          <span>W3C DTCG 3-Tier Hierarchy</span>
+          <span class="sidebar-badge">DTCG</span>
+        </a>
+        <a href="#section-hct" class="sidebar-link">
+          <span>HCT & OKLab Color Math</span>
+          <span class="sidebar-badge">Math</span>
+        </a>
+        <a href="#section-semantic-roles" class="sidebar-link">
+          <span>47 Semantic Color Roles</span>
+          <span class="sidebar-badge">47 Roles</span>
+        </a>
+        <a href="#section-typescale" class="sidebar-link">
+          <span>15-Tier Typescale & Spatial</span>
+          <span class="sidebar-badge">Layout</span>
+        </a>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">3. Web Extractor & Aligner</div>
+        <a href="#section-extractor" class="sidebar-link">
+          <span>Sitemap & Shadow DOM Crawler</span>
+          <span class="sidebar-badge">CDP</span>
+        </a>
+        <a href="#section-visual-loop" class="sidebar-link">
+          <span>Visual Alignment Loop</span>
+          <span class="sidebar-badge">95%</span>
+        </a>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">4. Ingestion & VCS</div>
+        <a href="#section-ingest" class="sidebar-link">
+          <span>Multi-Modal Ingestion & Fusion</span>
+          <span class="sidebar-badge">Fusion</span>
+        </a>
+        <a href="#section-vcs" class="sidebar-link">
+          <span>Git-Native DS-VCS & Merger</span>
+          <span class="sidebar-badge">VCS</span>
+        </a>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">5. Components & Evaluator</div>
+        <a href="#section-components" class="sidebar-link">
+          <span>Prototype Components & JIT</span>
+          <span class="sidebar-badge">TSX</span>
+        </a>
+        <a href="#section-evaluator" class="sidebar-link">
+          <span>4-Tier Evaluator Engine</span>
+          <span class="sidebar-badge">Audit</span>
+        </a>
+      </div>
+
+      <div class="sidebar-nav-group">
+        <div class="sidebar-group-title">6. Replication Manual</div>
+        <a href="#section-replication" class="sidebar-link" style="color:var(--md-sys-color-primary); font-weight:700;">
+          <span>7-Step Engineering Guide</span>
+          <span class="sidebar-badge" style="background:#6366f1; color:#fff;">Build</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Documentation Body -->
+    <main class="docs-content">
+
+      <!-- Docs Header -->
+      <section class="docs-header">
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span class="badge" style="background:#dbeafe; color:#1e40af;">Enterprise Technical Specification</span>
+          <span class="badge" style="background:#dcfce7; color:#166534;">Verified v1.7.0</span>
+        </div>
+        <h1 class="docs-title">Trainable DS Platform Architecture & Replication Manual</h1>
+        <p style="font-size:1.15rem; color:var(--md-sys-color-on-surface-variant); line-height:1.6;">
+          Comprehensive engineering specification detailing the mathematical foundations, dual-surface contracts, deep web extractor, Git-native version control system, and 4-tier closed-loop compliance engine of the Trainable DS platform.
+        </p>
+        <div class="docs-meta">
+          <div class="meta-tag"><span>Author:</span> Lead System Architect & Technical Writer</div>
+          <div class="meta-tag"><span>Target Engine:</span> Antigravity / Cursor / Claude Code</div>
+          <div class="meta-tag"><span>Standards:</span> W3C DTCG • Material Design 3 • MCP • WCAG 2.1 AA</div>
+        </div>
+      </section>
+
+      <!-- Section 1: Topology -->
+      <section id="section-topology" class="doc-section">
+        <div class="section-title-row">
+          <h2 class="section-heading">1. System Topology & Dual-Surface Philosophy</h2>
+          <span class="badge">Architecture</span>
+        </div>
+
+        <p>
+          Modern AI coding tools suffer from a fundamental tension between <strong>cognitive overload</strong> and <strong>style hallucination</strong>. Providing full Storybooks to an LLM exhausts its context window, while providing unstructured text guidelines leads to models inventing raw hex values (<code>#2563eb</code>) and breaking spacing scales.
+        </p>
+
+        <p>
+          <strong>Trainable DS</strong> resolves this with an <strong>Agent-Native, Dual-Surface Architecture</strong>:
+        </p>
+
+        <div class="diagram-container">
+          <div class="arch-flow-grid">
+            <div class="arch-box">
+              <div class="arch-box-title">🌐 1. Extraction & Ingest</div>
+              <ul class="arch-box-list">
+                <li>• Headless Chrome CDP (Port 9222)</li>
+                <li>• Shadow DOM SVG piercer</li>
+                <li>• @font-face WOFF2 harvester</li>
+                <li>• Multi-Modal Ingestion Adapters</li>
+              </ul>
+            </div>
+            <div class="arch-box">
+              <div class="arch-box-title">⚙️ 2. Core & Compiler</div>
+              <ul class="arch-box-list">
+                <li>• CAM16 / OKLab Color Math</li>
+                <li>• 14-Tone M3 Palette Generator</li>
+                <li>• Discrepancy Analyzer (Convergence)</li>
+                <li>• FusionEngine Precedence (50→10)</li>
+              </ul>
+            </div>
+            <div class="arch-box">
+              <div class="arch-box-title">🌿 3. Version Control</div>
+              <ul class="arch-box-list">
+                <li>• Git-Native Store in .tds/vcs/</li>
+                <li>• SHA-256 Commit & Snapshot Hash</li>
+                <li>• AST-Aware 3-Way Semantic Merger</li>
+                <li>• MergeGatekeeper (WCAG & Touch)</li>
+              </ul>
+            </div>
+            <div class="arch-box">
+              <div class="arch-box-title">🤖 4. Dual-Surfaces</div>
+              <ul class="arch-box-list">
+                <li>• Machine: llms.txt & DESIGN.md</li>
+                <li>• Machine: tokens.json & MCP Server</li>
+                <li>• Human: overview.html Review Studio</li>
+                <li>• Lock protection: tds:locked = true</li>
+              </ul>
+            </div>
+          </div>
+          <div class="diagram-caption">Figure 1.1: High-Level End-to-End Topology of the Trainable DS Platform</div>
+        </div>
+
+        <div class="doc-callout tip">
+          <div class="callout-title">💡 Core Architecture Philosophy</div>
+          <div>
+            <strong>Machine-First, Human-Governed:</strong> AI agents consume terse, high-density machine artifacts (<code>DESIGN.md</code>, <code>tokens.json</code>, and JIT MCP tools). Humans review and override decisions through visual sliders in <code>overview.html</code>. Any human override is permanently stamped with <code>"tds:locked": true</code>, rendering it immune to crawler overwrite.
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Dual-Surface & Contracts -->
+      <section id="section-dualsurface" class="doc-section">
+        <div class="section-title-row">
+          <h2 class="section-heading">2. Dual-Surface Architecture & Machine-First Contracts</h2>
+          <span class="badge">Contracts</span>
+        </div>
+
+        <h3 class="subsection-heading">2.1 The 6 Machine-First Contract Artifacts</h3>
+        <p>Every extraction or ingestion run produces a canonical 6-asset bundle in the project root or Firebase Hosting CDN:</p>
+
+        <div class="spec-table-wrapper">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Artifact File</th>
+                <th>Target Audience</th>
+                <th>Format & Standard</th>
+                <th>Primary Role in System</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>/llms.txt</code></td>
+                <td>Autonomous AI Agents</td>
+                <td>Markdown Protocol (Astryx Parity)</td>
+                <td>Zero-process prompt onboarding & MCP discovery</td>
+              </tr>
+              <tr>
+                <td><code>/DESIGN.md</code></td>
+                <td>AI Models & Developers</td>
+                <td>YAML Frontmatter + Rationale Prose</td>
+                <td>Compact Stitch facade: tokens, "The Why", DOs & DONTs</td>
+              </tr>
+              <tr>
+                <td><code>/tokens.json</code></td>
+                <td>Design Tools & Compilers</td>
+                <td>W3C DTCG 3-Tier JSON</td>
+                <td>Authoritative Reference, System & Component tokens</td>
+              </tr>
+              <tr>
+                <td><code>/components.json</code></td>
+                <td>LLM Generators & CLI</td>
+                <td>M3 Functional Manifest</td>
+                <td>Component anatomy, props, variants, A11y rules & code</td>
+              </tr>
+              <tr>
+                <td><code>/fonts.json</code></td>
+                <td>CSS Bundlers & Portal</td>
+                <td>JSON Font Manifest</td>
+                <td>@font-face CSS blocks, weights, and CDN WOFF2 URLs</td>
+              </tr>
+              <tr>
+                <td><code>/icons.json</code></td>
+                <td>Component Generators</td>
+                <td>SVG Vector Catalog</td>
+                <td>Pierced shadow-root SVGs with viewBox & geometry</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="subsection-heading">2.2 Human-in-the-Loop Review Studio (`overview.html`)</h3>
+        <p>
+          The Review Studio provides real-time in-browser inspection and editorial control. When an engineer tweaks a color or adjusts the button border-radius from a 9999px pill to an 8px rounded rectangle, the client-side script executes an in-memory AST diff:
+        </p>
+
+        <div class="code-block-wrapper">
+          <div class="code-block-header">
+            <span>Client-Side Lock & Override Stamping (overview.html)</span>
+            <button type="button" class="btn-copy-snippet" onclick="copySnippet(this)">📋 Copy</button>
+          </div>
+          <pre class="code-content"><code>function recordOverride(key, value) {
+  OVERRIDES[key] = {
+    value: value,
+    locked: true,
+    timestamp: new Date().toISOString()
+  };
+  // Live CSS Custom Property preview update
+  document.documentElement.style.setProperty(`--${key.replace(/\./g, '-')}`, value);
+  renderDiffTable();
+}</code></pre>
+        </div>
+      </section>
+
+      <!-- Section 3: Core Token Hierarchy & HCT Math -->
+      <section id="section-tokens" class="doc-section">
+        <div class="section-title-row">
+          <h2 class="section-heading">3. Core Token Hierarchy & Perceptual Color Science</h2>
+          <span class="badge">@trainable-ds/core</span>
+        </div>
+
+        <h3 class="subsection-heading">3.1 W3C DTCG 3-Tier Structure</h3>
+        <p>Tokens are organized strictly into three tiers to decouple raw color physics from application-level components:</p>
+
+        <div class="diagram-container">
+          <div style="font-family:var(--font-mono); font-size:0.85rem; line-height:1.8;">
+            <div style="color:#60a5fa;">ref.palette.primary.40 = "#3c485c" <span style="color:var(--md-sys-color-on-surface-variant);">(Tier 1: Reference primitive from HCT math)</span></div>
+            <div style="padding-inline-start:1.5rem; color:#a78bfa;">↳ sys.color.primary = "{ref.palette.primary.40}" <span style="color:var(--md-sys-color-on-surface-variant);">(Tier 2: Semantic role assigned in Light mode)</span></div>
+            <div style="padding-inline-start:3rem; color:#34d399;">↳ comp.button.container.color = "{sys.color.primary}" <span style="color:var(--md-sys-color-on-surface-variant);">(Tier 3: Component-scoped token)</span></div>
+          </div>
+        </div>
+
+        <h3 id="section-hct" class="subsection-heading">3.2 HCT & OKLab Color Transformation Mathematics</h3>
+        <p>
+          Standard RGB calculations fail human perceptual uniformity. Trainable DS implements an analytical bridge between sRGB, Linear sRGB, and OKLab / CAM16 in <code>@trainable-ds/core/src/hct/palette.ts</code>:
+        </p>
+
+        <div class="math-block">
+          <strong>1. sRGB to Linear sRGB:</strong><br>
+          C_linear = (C / 255 &le; 0.04045) ? (C / 255) / 12.92 : ((C / 255 + 0.055) / 1.055)^2.4<br><br>
+          <strong>2. Linear sRGB to Cone Responses (L, M, S):</strong><br>
+          L = 0.4122214708*R + 0.5363325363*G + 0.0514459929*B<br>
+          M = 0.2119034982*R + 0.6806995451*G + 0.1073969566*B<br>
+          S = 0.0883024619*R + 0.2817188376*G + 0.6299787005*B<br><br>
+          <strong>3. Non-Linear Cube Root Compression:</strong><br>
+          L' = cbrt(L),  M' = cbrt(M),  S' = cbrt(S)<br><br>
+          <strong>4. OKLab Coordinates (L_ok, a_ok, b_ok):</strong><br>
+          L_ok = 0.2104542553*L' + 0.7936177850*M' - 0.0040720468*S'<br>
+          a_ok = 1.9779984951*L' - 2.4285922050*M' + 0.4505937099*S'<br>
+          b_ok = 0.0259040371*L' + 0.7827717662*M' - 0.8086757660*S'
+        </div>
+
+        <!-- Interactive Tone Visualizer Demo -->
+        <div class="interactive-demo-card">
+          <div class="interactive-demo-header">
+            <div style="display:flex; flex-direction:column; gap:0.25rem;">
+              <span style="font-weight:700; font-size:1rem;">Interactive HCT/OKLab Tonal Generator</span>
+              <span style="font-size:0.8rem; color:var(--md-sys-color-on-surface-variant);">Adjust tone to see CAM16 perceptual lightness & chroma dampening</span>
+            </div>
+            <div class="demo-tone-slider-container">
+              <span style="font-size:0.85rem; font-family:var(--font-mono);">Tone: <strong id="tone-val-label">40</strong></span>
+              <input type="range" id="tone-slider" class="tone-range-input" min="0" max="100" value="40">
+              <div id="live-swatch" class="live-swatch-box" style="background:#3c485c; color:#fff;">#3c485c</div>
+            </div>
+          </div>
+        </div>
+
+        <h3 id="section-semantic-roles" class="subsection-heading">3.3 The 47 Semantic Color Roles</h3>
+        <p>In accordance with the complete Material Design 3 specification, Trainable DS captures 47 semantic roles per scheme:</p>
+
+        <div class="spec-table-wrapper">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Semantic Group</th>
+                <th>Count</th>
+                <th>Exact DTCG Role Names</th>
+                <th>Role Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Primary Group</strong></td>
+                <td>4</td>
+                <td><code>primary</code>, <code>onPrimary</code>, <code>primaryContainer</code>, <code>onPrimaryContainer</code></td>
+                <td>Key brand actions, prominent buttons, active tabs</td>
+              </tr>
+              <tr>
+                <td><strong>Secondary Group</strong></td>
+                <td>4</td>
+                <td><code>secondary</code>, <code>onSecondary</code>, <code>secondaryContainer</code>, <code>onSecondaryContainer</code></td>
+                <td>Less prominent UI components, filters, badges</td>
+              </tr>
+              <tr>
+                <td><strong>Tertiary Group</strong></td>
+                <td>4</td>
+                <td><code>tertiary</code>, <code>onTertiary</code>, <code>tertiaryContainer</code>, <code>onTertiaryContainer</code></td>
+                <td>Contrasting accents, creative callouts, input focus</td>
+              </tr>
+              <tr>
+                <td><strong>Error Group</strong></td>
+                <td>4</td>
+                <td><code>error</code>, <code>onError</code>, <code>errorContainer</code>, <code>onErrorContainer</code></td>
+                <td>Critical validation alerts, deletion actions</td>
+              </tr>
+              <tr>
+                <td><strong>Surface Hierarchy</strong></td>
+                <td>11</td>
+                <td><code>surface</code>, <code>onSurface</code>, <code>surfaceVariant</code>, <code>onSurfaceVariant</code>, <code>surfaceDim</code>, <code>surfaceBright</code>, <code>surfaceContainerLowest</code>, <code>surfaceContainerLow</code>, <code>surfaceContainer</code>, <code>surfaceContainerHigh</code>, <code>surfaceContainerHighest</code></td>
+                <td>5-tier container depth without heavy drop shadows</td>
+              </tr>
+              <tr>
+                <td><strong>Fixed Accent Roles</strong></td>
+                <td>12</td>
+                <td><code>primaryFixed</code>, <code>primaryFixedDim</code>, <code>onPrimaryFixed</code>, <code>onPrimaryFixedVariant</code>, <code>secondaryFixed</code>, <code>secondaryFixedDim</code>, <code>onSecondaryFixed</code>, <code>onSecondaryFixedVariant</code>, <code>tertiaryFixed</code>, <code>tertiaryFixedDim</code>, <code>onTertiaryFixed</code>, <code>onTertiaryFixedVariant</code></td>
+                <td>Theme-invariant accent tones (identical in light and dark)</td>
+              </tr>
+              <tr>
+                <td><strong>Utilities & Inverses</strong></td>
+                <td>8</td>
+                <td><code>outline</code>, <code>outlineVariant</code>, <code>inverseSurface</code>, <code>inverseOnSurface</code>, <code>inversePrimary</code>, <code>shadow</code>, <code>scrim</code>, <code>surfaceTint</code></td>
+                <td>Borders, modal scrims, and inverted snackbars</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="section-typescale" class="subsection-heading">3.4 15-Tier Typescale & Spatial Quantum</h3>
+        <p>
+          Typography is governed by 5 categories (Display, Headline, Title, Body, Label) across 3 scales (Large, Medium, Small). All layout paddings and heights strictly observe the 8dp spatial quantum grid with a 4dp half-step.
+        </p>
+      </section>
+
+      <!-- Section 4: Web Extractor & Visual Aligner -->
+      <section id="section-extractor" class="doc-section">
+        <div class="section-title-row">
+          <h2 class="section-heading">4. Web Extractor & Deep Visual Alignment</h2>
+          <span class="badge">@trainable-ds/compiler/aligner</span>
+        </div>
+
+        <h3 class="subsection-heading">4.1 Headless Chrome CDP & Shadow DOM Harvester</h3>
+        <p>
+          The extractor launches a headless Chrome instance (<code>CdpRunner</code>) on remote debugging port 9222. To harvest modern enterprise web applications built with Web Components, it recursively pierces shadow roots:
+        </p>
+
+        <div class="code-block-wrapper">
+          <div class="code-block-header">
+            <span>Recursive Shadow DOM Harvester (assets-harvester.ts)</span>
+            <button type="button" class="btn-copy-snippet" onclick="copySnippet(this)">📋 Copy</button>
+          </div>
+          <pre class="code-content"><code>function harvestIconsFromRoot(root) {
+  const candidates = root.querySelectorAll('svg, ds-icon, [class*="icon"], [data-icon]');
+  candidates.forEach(el => {
+    let svgEl = el.tagName.toLowerCase() === 'svg' ? el : null;
+    if (!svgEl && el.shadowRoot) {
+      svgEl = el.shadowRoot.querySelector('svg'); // Pierces Shadow Root
+    }
+    if (svgEl) {
+      const viewBox = svgEl.getAttribute('viewBox') || '0 0 24 24';
+      const hash = viewBox + '_' + svgEl.innerHTML.slice(0, 80);
+      rawIcons.push({ name: el.getAttribute('name') || 'icon', viewBox, svg: svgEl.outerHTML });
+    }
+  });
+  // Recurse into all nested child shadow roots
+  root.querySelectorAll('*').forEach(child => {
+    if (child.shadowRoot) harvestIconsFromRoot(child.shadowRoot);
+  });
+}</code></pre>
+        </div>
+
+        <h3 id="section-visual-loop" class="subsection-heading">4.2 Discrepancy Analyzer & Convergence Formula</h3>
+        <p>
+          The discrepancy analyzer audits the extracted tokens against computed styles sampled from live elements. The composite convergence score is calculated using the weighted formula:
+        </p>
+
+        <div class="math-block">
+          <strong>Composite Convergence Score:</strong><br>
+          CompositeScore = clamp(Geometry * 0.35 + Color * 0.30 + Typography * 0.20 + Material * 0.15)<br><br>
+          <strong>Deduction Rules:</strong><br>
+          • Geometry: Shape mismatch (Pill 9999px vs Rounded Rect) = -35; Corner radius drift > 4px = -15<br>
+          • Color: Euclidean RGB distance > 15 = -25<br>
+          • Material: Opacity / Alpha drift > 0.20 = -25<br>
+          • Typography: Font family mismatch = -25; Font weight drift > 150 = -15
+        </div>
+      </section>
+
+      <!-- Section 5: Ingestion & VCS -->
+      <section id="section-ingest" class="doc-section">
+        <div class="section-title-row">
+          <h2 class="section-heading">5. Universal Ingestion & Git-Native VCS (DS-VCS)</h2>
+          <span class="badge">@trainable-ds/compiler/vcs</span>
+        </div>
+
+        <h3 class="subsection-heading">5.1 FusionEngine Precedence Order</h3>
+        <p>
+          When ingesting design system data from multiple sources (CSV tables, markdown brand guidelines, screenshots, and conversational refinements), the <code>FusionEngine</code> applies strict source priority:
+        </p>
+
+        <div class="diagram-container">
+          <div style="font-family:var(--font-mono); font-size:0.88rem; line-height:2;">
+            <span style="color:#ef4444; font-weight:700;">1. Conversation (Priority 50)</span> — Explicit engineer directives (highest priority)<br>
+            <span style="color:#f59e0b; font-weight:700;">2. Table (Priority 40)</span> — CSV / TSV / Figma Tokens Studio JSON<br>
+            <span style="color:#3b82f6; font-weight:700;">3. Web (Priority 30)</span> — Computed styles sampled via Chrome CDP<br>
+            <span style="color:#10b981; font-weight:700;">4. Document (Priority 20)</span> — Markdown brand guides & DOs/DONTs<br>
+            <span style="color:#8b5cf6; font-weight:700;">5. Vision (Priority 10)</span> — Screenshots & OKLab color clustering
+          </div>
+        </div>
+
+        <h3 id="section-vcs" class="subsection-heading">5.2 Git-Native Design System Version Control</h3>
+        <p>
+          The system maintains an immutable, content-addressed version control store in <code>.tds/vcs/</code>:
+        </p>
+        <ul style="padding-left:1.5rem; line-height:1.8; color:var(--md-sys-color-on-surface-variant);">
+          <li><strong>SHA-256 Snapshots:</strong> Snapshots are serialized and hashed to 16 hex characters in <code>.tds/vcs/snapshots/{hash}.json</code>.</li>
+          <li><strong>Cryptographic Commits:</strong> Commit objects contain <code>id</code> (12 hex chars), <code>parentId</code>, <code>branch</code>, <code>timestamp</code>, and <code>snapshotHash</code>.</li>
+          <li><strong>AST 3-Way Semantic Merger:</strong> Reconciles branch changes at the token and component AST level, isolating conflicts without JSON corruption.</li>
+          <li><strong>MergeGatekeeper CI Gate:</strong> Automatically blocks merges if color contrast &lt; 4.5:1 (WCAG AA) or touch targets &lt; 48px.</li>
+        </ul>
+      </section>
+
+      <!-- Section 6: Prototype Components & Evaluator -->
+      <section id="section-components" class="doc-section">
+        <div class="section-title-row">
+          <h2 class="section-heading">6. Prototype Component Library & 4-Tier Evaluator</h2>
+          <span class="badge">@trainable-ds/evaluator</span>
+        </div>
+
+        <h3 class="subsection-heading">6.1 Astryx JIT Component Retrieval</h3>
+        <p>
+          Rather than loading all components into model memory, agents query components Just-In-Time via CLI (<code>tds doc &lt;Component&gt;</code>) or MCP tool (<code>get_component_code</code>).
+        </p>
+
+        <h3 id="section-evaluator" class="subsection-heading">6.2 The 4-Tier Compliance Evaluator</h3>
+        <p>The evaluator runs four deterministic audit tiers with automated point deductions:</p>
+
+        <div class="spec-table-wrapper">
+          <table class="spec-table">
+            <thead>
+              <tr>
+                <th>Tier</th>
+                <th>Diagnostic Code</th>
+                <th>Severity</th>
+                <th>Penalty</th>
+                <th>Remediation Rule</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Tier 1: Static Token</strong></td>
+                <td><code>TDS-RAW-COLOR</code></td>
+                <td><span class="badge" style="background:#fee2e2; color:#991b1b;">CRITICAL</span></td>
+                <td>-25 pts</td>
+                <td>Replace raw hex (#2563eb) with semantic token class</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 1: Static Token</strong></td>
+                <td><code>TDS-NON-QUANTUM-SPACING</code></td>
+                <td><span class="badge" style="background:#fef3c7; color:#92400e;">HIGH</span></td>
+                <td>-15 pts</td>
+                <td>Replace arbitrary padding (p-[13px]) with 4px/8px quantum</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 2: Component Reuse</strong></td>
+                <td><code>TDS-REINVENTED-COMPONENT</code></td>
+                <td><span class="badge" style="background:#fef3c7; color:#92400e;">HIGH</span></td>
+                <td>-15 pts</td>
+                <td>Import certified component (e.g. &lt;Button&gt;) instead of raw &lt;button&gt;</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 2: On-Color Pairing</strong></td>
+                <td><code>TDS-M3-ON-COLOR-MISMATCH</code></td>
+                <td><span class="badge" style="background:#fee2e2; color:#991b1b;">CRITICAL</span></td>
+                <td>-25 pts</td>
+                <td>Pair bg-primary with text-on-primary to guarantee 4.5:1 contrast</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 3: Touch Targets</strong></td>
+                <td><code>TDS-TOUCH-TARGET-TOO-SMALL</code></td>
+                <td><span class="badge" style="background:#fef3c7; color:#92400e;">HIGH</span></td>
+                <td>-15 pts</td>
+                <td>Ensure interactive element dimensions are &ge; 48x48px</td>
+              </tr>
+              <tr>
+                <td><strong>Tier 4: Content & Case</strong></td>
+                <td><code>TDS-CAPITALIZATION-NOT-SENTENCE-CASE</code></td>
+                <td><span class="badge" style="background:#e0e7ff; color:#3730a3;">MEDIUM</span></td>
+                <td>-8 pts</td>
+                <td>Change Title Case ("Save Changes") to sentence case ("Save changes")</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Section 7: Replication Manual -->
+      <section id="section-replication" class="doc-section">
+        <div class="section-title-row">
+          <h2 class="section-heading">7. Step-by-Step Engineering Replication Guide</h2>
+          <span class="badge" style="background:#6366f1; color:#fff;">7 Steps</span>
+        </div>
+
+        <p>To replicate the entire Trainable DS platform from scratch, execute the following 7 steps:</p>
+
+        <div class="workflow-steps-grid">
+          <div class="workflow-step-card">
+            <div class="step-num-badge">1</div>
+            <div class="step-title">Monorepo & Type Schemas</div>
+            <div class="step-desc">Initialize monorepo with core Zod schemas for DTCG tokens, M3 47 roles, and component manifests.</div>
+          </div>
+          <div class="workflow-step-card">
+            <div class="step-num-badge">2</div>
+            <div class="step-title">OKLab & HCT Math</div>
+            <div class="step-desc">Implement analytical sRGB &harr; Linear &harr; OKLab conversions and 14-tone tonal palette generator.</div>
+          </div>
+          <div class="workflow-step-card">
+            <div class="step-num-badge">3</div>
+            <div class="step-title">CDP Extractor & Harvester</div>
+            <div class="step-desc">Build Chrome DevTools Protocol runner piercing shadow roots for SVGs and crawling @font-face rules.</div>
+          </div>
+          <div class="workflow-step-card">
+            <div class="step-num-badge">4</div>
+            <div class="step-title">Ingestion & Fusion Engine</div>
+            <div class="step-desc">Create Table, Document, Vision, and Conversation adapters with source precedence (50 to 10).</div>
+          </div>
+          <div class="workflow-step-card">
+            <div class="step-num-badge">5</div>
+            <div class="step-title">Git-Native DS-VCS</div>
+            <div class="step-desc">Implement SHA-256 snapshot store, AST-aware 3-way semantic merger, and WCAG AA gatekeeper.</div>
+          </div>
+          <div class="workflow-step-card">
+            <div class="step-num-badge">6</div>
+            <div class="step-title">Component Generator & JIT</div>
+            <div class="step-desc">Emit production TSX primitives and wire CLI `tds doc` and MCP `get_component_code` tools.</div>
+          </div>
+          <div class="workflow-step-card">
+            <div class="step-num-badge">7</div>
+            <div class="step-title">4-Tier Evaluator & Review Studio</div>
+            <div class="step-desc">Deploy AST linting engine, 13 MCP server tools, and the interactive overview.html Review Studio.</div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="footer-container">
+      <div>
+        <strong>Trainable DS Technical Manual</strong> — Certified Enterprise Specification v1.7.0
+      </div>
+      <ul class="footer-links">
+        <li><a href="/" class="footer-link">Portal Home</a></li>
+        <li><a href="/overview.html" class="footer-link">Review Studio</a></li>
+        <li><a href="/docs/product.html" class="footer-link">Product PRD</a></li>
+        <li><a href="/DESIGN.md" class="footer-link">DESIGN.md</a></li>
+        <li><a href="/llms.txt" class="footer-link">llms.txt</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    // Theme Switcher & Persistence
+    function initDocsTheme() {
+      const themeToggle = document.getElementById("theme-toggle");
+      const savedTheme = localStorage.getItem("tds-theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+
+      document.documentElement.setAttribute("data-theme", savedTheme);
+      updateThemeIcon(savedTheme);
+
+      if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+          const current = document.documentElement.getAttribute("data-theme") || "light";
+          const next = current === "dark" ? "light" : "dark";
+          document.documentElement.setAttribute("data-theme", next);
+          localStorage.setItem("tds-theme", next);
+          updateThemeIcon(next);
+        });
+      }
+    }
+
+    function updateThemeIcon(theme) {
+      const btn = document.getElementById("theme-toggle");
+      if (btn) btn.textContent = theme === "dark" ? "☀️" : "🌙";
+    }
+
+    // Reading Progress & Active Sidebar Tracking
+    window.addEventListener("scroll", () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      const bar = document.getElementById("reading-progress");
+      if (bar) bar.style.width = scrolled + "%";
+
+      // Active Section Tracking
+      const sections = document.querySelectorAll(".doc-section");
+      let currentSection = "";
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 120;
+        if (winScroll >= top) {
+          currentSection = sec.getAttribute("id");
+        }
+      });
+
+      if (currentSection) {
+        document.querySelectorAll(".sidebar-link").forEach(link => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === "#" + currentSection) {
+            link.classList.add("active");
+          }
+        });
+      }
+    });
+
+    // Copy Code Snippet
+    function copySnippet(btn) {
+      const wrapper = btn.closest(".code-block-wrapper");
+      const code = wrapper.querySelector("code").innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        const orig = btn.innerHTML;
+        btn.innerHTML = "✔ Copied!";
+        setTimeout(() => { btn.innerHTML = orig; }, 2000);
+      });
+    }
+
+    // Interactive Tonal Generator Demo
+    document.addEventListener("DOMContentLoaded", () => {
+      initDocsTheme();
+
+      const slider = document.getElementById("tone-slider");
+      const label = document.getElementById("tone-val-label");
+      const swatch = document.getElementById("live-swatch");
+
+      if (slider && swatch) {
+        slider.addEventListener("input", (e) => {
+          const tone = parseInt(e.target.value, 10);
+          if (label) label.textContent = tone;
+
+          // Simple tone lightness approximation for demo
+          const lightness = tone;
+          const hexR = Math.round(60 * (tone / 50));
+          const hexG = Math.round(72 * (tone / 50));
+          const hexB = Math.round(92 * (tone / 50));
+          const clamp = (v) => Math.max(0, Math.min(255, v));
+          const hex = "#" + [clamp(hexR), clamp(hexG), clamp(hexB)].map(x => x.toString(16).padStart(2, "0")).join("");
+
+          swatch.style.backgroundColor = hex;
+          swatch.style.color = tone > 50 ? "#000000" : "#ffffff";
+          swatch.textContent = hex;
+        });
+      }
+
+      // Sidebar Filter
+      const search = document.getElementById("doc-filter");
+      if (search) {
+        search.addEventListener("input", (e) => {
+          const q = e.target.value.toLowerCase();
+          document.querySelectorAll(".sidebar-link").forEach(link => {
+            const text = link.textContent.toLowerCase();
+            link.style.display = text.includes(q) ? "flex" : "none";
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

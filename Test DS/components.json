@@ -1,91 +1,73 @@
 {
   "version": "1.7.0",
-  "system": "Porsche Design System",
+  "system": "Trainable Design System",
   "pdsVersion": "4.5.0",
   "lastUpdated": "2026-09-05T14:05:00.000Z",
   "components": {
     "Button": {
       "name": "Button",
-      "tag": "p-button",
+      "path": "./components/ui/Button.tsx",
       "family": "actions",
-      "description": "Standard interactive primary or secondary action button with high-contrast pill styling, optional icon, and loading state.",
+      "description": "Certified interactive action element with 48px touch target and brand corner radius.",
       "anatomy": {
         "container": {
-          "standard": {
-            "minTouchTarget": "48px (enforced)",
-            "height": "56px",
-            "padding": "16px 28px",
-            "borderRadius": "var(--p-radius-xl) /* 12px */"
-          },
-          "compact": {
-            "minTouchTarget": "48px (enforced via hit-box)",
-            "height": "36px",
-            "padding": "6px 16px",
-            "borderRadius": "var(--p-radius-lg) /* 8px */"
-          },
-          "iconOnly": {
-            "width": "56px",
-            "height": "56px",
-            "padding": "16px",
-            "borderRadius": "var(--p-radius-full) /* calc(infinity * 1px) / 1.67772e+07px */"
-          }
-        },
-        "content": {
-          "label": "var(--p-typescale-sm) var(--p-font-porsche-next)",
-          "iconSlot": "p-icon",
-          "loadingSlot": "spinner / status"
+          "shape": "full-pill",
+          "borderRadius": "9999px",
+          "height": 48,
+          "padding": "16px 28px"
         }
       },
       "variants": {
         "primary": {
-          "background": "var(--p-color-primary)",
-          "color": "var(--p-color-canvas) / #ffffff",
-          "hover": "var(--p-color-contrast-high)",
-          "backdropFilter": "var(--p-blur-frosted) /* blur(32px) */"
+          "containerColor": "#010205",
+          "labelColor": "#ffffff"
         },
         "secondary": {
-          "background": "var(--p-color-frosted-strong)",
-          "color": "var(--p-color-primary)",
-          "hover": "var(--p-color-frosted)",
-          "backdropFilter": "var(--p-blur-frosted) /* blur(32px) */"
+          "containerColor": "rgba(156, 156, 159, 0.35)",
+          "labelColor": "#ffffff"
+        },
+        "outlined": {
+          "borderColor": "rgba(255, 255, 255, 0.2)",
+          "labelColor": "#ffffff"
+        },
+        "text": {
+          "containerColor": "transparent",
+          "labelColor": "#010205"
         }
       },
-      "observedAttributes": [
-        "variant",
-        "type",
-        "name",
-        "value",
-        "disabled",
-        "loading",
-        "icon",
-        "icon-source",
-        "hide-label",
-        "compact",
-        "aria",
-        "form"
-      ],
+      "props": {
+        "variant": {
+          "type": "'primary' | 'secondary' | 'outlined' | 'text'",
+          "default": "'primary'"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": "false"
+        },
+        "icon": {
+          "type": "React.ReactNode"
+        }
+      },
       "a11y": {
         "minTouchTarget": "48x48px",
-        "focusIndicator": "2px outline var(--p-color-focus) with 2px offset",
-        "requiredAria": [
-          "aria-label (when hide-label=true)"
-        ]
+        "requiredAria": [],
+        "focusIndicator": "3px outline with 2px offset"
       },
       "rules": [
-        "Always use <p-button> instead of raw HTML <button>.",
-        "Maintain touch targets >= 48x48px for all touch surfaces.",
-        "Labels MUST use sentence case (e.g., 'Discover models', 'Save configuration').",
-        "When hide-label=true, provide an explicit aria attribute."
+        "TDS-TOUCH-TARGET-TOO-SMALL: Must satisfy min 48x48px touch target."
       ],
       "examples": [
-        "<p-button variant=\"primary\">Discover models</p-button>",
-        "<p-button variant=\"secondary\" icon=\"arrow-right\">Configure now</p-button>",
-        "<p-button variant=\"secondary\" hide-label=\"true\" icon=\"play\" aria='{\"aria-label\": \"Play video\"}'></p-button>"
-      ]
+        "<Button variant=\"primary\">Save changes</Button>"
+      ],
+      "code": "import React from \"react\";\n\nexport type ButtonVariant = \"primary\" | \"secondary\" | \"outlined\" | \"text\";\n\nexport interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  variant?: ButtonVariant;\n  icon?: React.ReactNode;\n  iconPosition?: \"start\" | \"end\";\n  children?: React.ReactNode;\n}\n\n/**\n * Trainable Design System Certified Button Component\n * - 8dp spatial quantum adherence\n * - Minimum 48x48px touch target\n * - Extracted corner radius: 9999px\n */\nexport const Button: React.FC<ButtonProps> = ({\n  variant = \"primary\",\n  icon,\n  iconPosition = \"start\",\n  children,\n  className = \"\",\n  style = {},\n  disabled = false,\n  ...props\n}) => {\n  const baseStyle: React.CSSProperties = {\n    fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n    display: \"inline-flex\",\n    alignItems: \"center\",\n    justifyContent: \"center\",\n    gap: \"8px\",\n    minHeight: \"48px\",\n    padding: \"16px 28px\",\n    borderRadius: \"9999px\",\n    fontSize: \"1rem\",\n    fontWeight: 600,\n    lineHeight: 1.5,\n    cursor: disabled ? \"not-allowed\" : \"pointer\",\n    transition: \"all 0.15s cubic-bezier(0.2, 0, 0, 1)\",\n    border: \"1px solid transparent\",\n    opacity: disabled ? 0.38 : 1,\n    outline: \"none\",\n    boxSizing: \"border-box\",\n    ...style,\n  };\n\n  let variantStyle: React.CSSProperties = {};\n  switch (variant) {\n    case \"primary\":\n      variantStyle = {\n        background: \"var(--sys-color-primary)\",\n        color: \"var(--sys-color-on-primary)\",\n        borderColor: \"transparent\",\n      };\n      break;\n    case \"secondary\":\n      variantStyle = {\n        background: \"var(--sys-color-surface-container-high)\",\n        color: \"var(--sys-color-on-surface)\",\n        backdropFilter: \"blur(16px)\",\n        WebkitBackdropFilter: \"blur(16px)\",\n        borderColor: \"var(--sys-color-outline-variant)\",\n      };\n      break;\n    case \"outlined\":\n      variantStyle = {\n        background: \"transparent\",\n        color: \"var(--sys-color-on-surface)\",\n        borderColor: \"var(--sys-color-outline)\",\n      };\n      break;\n    case \"text\":\n      variantStyle = {\n        background: \"transparent\",\n        color: \"var(--sys-color-primary)\",\n        borderColor: \"transparent\",\n        padding: \"8px 16px\",\n      };\n      break;\n  }\n\n  return (\n    <button\n      style={{ ...baseStyle, ...variantStyle }}\n      className={`tds-button tds-button--${variant} ${className}`}\n      disabled={disabled}\n      {...props}\n    >\n      {icon && iconPosition === \"start\" && <span className=\"tds-btn-icon\">{icon}</span>}\n      {children && <span className=\"tds-btn-label\">{children}</span>}\n      {icon && iconPosition === \"end\" && <span className=\"tds-btn-icon\">{icon}</span>}\n    </button>\n  );\n};\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false,
+      "humanNotes": "Use variant='primary' for the single primary call to action per view."
     },
     "ButtonPure": {
       "name": "ButtonPure",
-      "tag": "p-button-pure",
       "family": "actions",
       "description": "Minimal text-only or icon button without container background, with optional underline and active highlight.",
       "anatomy": {
@@ -95,7 +77,7 @@
       },
       "variants": {
         "default": {
-          "color": "var(--p-color-primary)"
+          "color": "var(--sys-color-primary)"
         }
       },
       "observedAttributes": [
@@ -118,19 +100,19 @@
       ],
       "a11y": {
         "minTouchTarget": "48x48px",
-        "focusIndicator": "2px outline var(--p-color-focus)"
+        "focusIndicator": "2px outline var(--sys-color-primary)"
       },
       "rules": [
         "Use for understated actions, inline triggers, or dialog dismissals."
       ],
       "examples": [
-        "<p-button-pure icon=\"arrow-right\">Learn more</p-button-pure>",
-        "<p-button-pure underline=\"true\">View details</p-button-pure>"
-      ]
+        "<ButtonPure icon=\"arrow-right\">Learn more</ButtonPure>",
+        "<ButtonPure underline={true}>View details</ButtonPure>"
+      ],
+      "path": "./components/ui/ButtonPure.tsx"
     },
     "Link": {
       "name": "Link",
-      "tag": "p-link",
       "family": "navigation",
       "description": "Primary or secondary navigational link styled with button-like appearance or link pill.",
       "anatomy": {
@@ -141,12 +123,12 @@
       },
       "variants": {
         "primary": {
-          "background": "var(--p-color-primary)",
-          "color": "var(--p-color-canvas)"
+          "background": "var(--sys-color-primary)",
+          "color": "var(--sys-color-surface)"
         },
         "secondary": {
-          "background": "var(--p-color-frosted-strong)",
-          "color": "var(--p-color-primary)"
+          "background": "var(--sys-color-surface-container-highest)",
+          "color": "var(--sys-color-primary)"
         }
       },
       "observedAttributes": [
@@ -163,19 +145,19 @@
       ],
       "a11y": {
         "minTouchTarget": "48x48px",
-        "focusIndicator": "2px outline var(--p-color-focus)"
+        "focusIndicator": "2px outline var(--sys-color-primary)"
       },
       "rules": [
-        "Use <p-link> for navigation between URLs; use <p-button> for in-page actions."
+        "Use Link for navigation between URLs; use Button for in-page actions."
       ],
       "examples": [
-        "<p-link href=\"/models\" variant=\"primary\">Explore all models</p-link>",
-        "<p-link href=\"/dealer\" variant=\"secondary\" icon=\"locate\">Find a dealer</p-link>"
-      ]
+        "<Link href=\"/dashboard\" variant=\"primary\">Explore dashboard</Link>",
+        "<Link href=\"/support\" variant=\"secondary\" icon=\"help-circle\">Support center</Link>"
+      ],
+      "path": "./components/ui/Link.tsx"
     },
     "LinkPure": {
       "name": "LinkPure",
-      "tag": "p-link-pure",
       "family": "navigation",
       "description": "Pure text link with optional icon and animated hover underline.",
       "anatomy": {
@@ -185,7 +167,7 @@
       },
       "variants": {
         "default": {
-          "color": "var(--p-color-primary)"
+          "color": "var(--sys-color-primary)"
         }
       },
       "observedAttributes": [
@@ -208,20 +190,20 @@
         "minTouchTarget": "48x48px"
       },
       "rules": [
-        "Ideal for card actions, inline references, and model links."
+        "Ideal for card actions, inline references, and resource links."
       ],
       "examples": [
-        "<p-link-pure href=\"/911\" icon=\"arrow-right\">Discover the 911</p-link-pure>"
-      ]
+        "<LinkPure href=\"/docs\" icon=\"arrow-right\">Read the documentation</LinkPure>"
+      ],
+      "path": "./components/ui/LinkPure.tsx"
     },
     "LinkTile": {
       "name": "LinkTile",
-      "tag": "p-link-tile",
       "family": "navigation",
       "description": "High-impact visual card tile combining media, gradient overlay, title, and link navigation.",
       "anatomy": {
         "container": {
-          "borderRadius": "var(--p-radius-3xl) /* 24px */",
+          "borderRadius": "var(--sys-shape-corner-extra-large) /* 24px */",
           "overflow": "hidden"
         },
         "media": "img, video, or picture slot",
@@ -253,20 +235,20 @@
         ]
       },
       "rules": [
-        "Enclose media inside <p-link-tile> and pass label as descriptive text."
+        "Enclose media inside LinkTile and pass label as descriptive text."
       ],
       "examples": [
-        "<p-link-tile href=\"/eyewear\" label=\"Discover eyewear\" description=\"Porsche Design Collection\">\n  <img src=\"/images/eyewear.jpg\" alt=\"Porsche Eyewear\" />\n</p-link-tile>"
-      ]
+        "<LinkTile href=\"/showcase\" label=\"Component Library\" description=\"Production Design System\">\n  <img src=\"/images/showcase.jpg\" alt=\"Component Library Showcase\" />\n</LinkTile>"
+      ],
+      "path": "./components/ui/LinkTile.tsx"
     },
     "LinkTileProduct": {
       "name": "LinkTileProduct",
-      "tag": "p-link-tile-product",
       "family": "navigation",
-      "description": "E-commerce product card tile displaying price, original price, description, and wishlist like-button.",
+      "description": "E-commerce product card tile displaying price, original price, description, and wishlist action.",
       "anatomy": {
         "container": {
-          "borderRadius": "var(--p-radius-xl)"
+          "borderRadius": "var(--sys-shape-corner-medium)"
         }
       },
       "variants": {
@@ -291,26 +273,26 @@
         "Must format price according to locale."
       ],
       "examples": [
-        "<p-link-tile-product heading=\"Chronograph 1\" price=\"€9,950\" href=\"/shop/chronograph\">\n  <img src=\"/watch.jpg\" alt=\"Chronograph 1\" />\n</p-link-tile-product>"
-      ]
+        "<LinkTileProduct heading=\"Enterprise Suite\" price=\"$299/mo\" href=\"/pricing\">\n  <img src=\"/images/product.jpg\" alt=\"Enterprise Suite\" />\n</LinkTileProduct>"
+      ],
+      "path": "./components/ui/LinkTileProduct.tsx"
     },
     "Display": {
       "name": "Display",
-      "tag": "p-display",
       "family": "typography",
       "description": "Massive stage display typography for hero headers and splash showcases.",
       "anatomy": {
-        "typography": "Porsche Next, 3xl - 5xl fluid scale"
+        "typography": "Display fluid scale (3xl - 5xl)"
       },
       "variants": {
         "small": {
-          "size": "var(--p-typescale-3xl)"
+          "size": "var(2.5rem)"
         },
         "medium": {
-          "size": "var(--p-typescale-4xl)"
+          "size": "var(3rem)"
         },
         "large": {
-          "size": "var(--p-typescale-5xl)"
+          "size": "var(3.5rem)"
         }
       },
       "observedAttributes": [
@@ -327,32 +309,32 @@
         "Never use display typography for body text."
       ],
       "examples": [
-        "<p-display tag=\"h1\" size=\"medium\">Cayenne Turbo Coupé Electric.</p-display>"
-      ]
+        "<Display tag=\"h1\" size=\"medium\">Autonomous Design Systems for AI Agents.</Display>"
+      ],
+      "path": "./components/ui/Display.tsx"
     },
     "Heading": {
       "name": "Heading",
-      "tag": "p-heading",
       "family": "typography",
       "description": "Standard section and screen heading component.",
       "anatomy": {
-        "typography": "Porsche Next, xs - 2xl fluid scale"
+        "typography": "Heading fluid scale (xs - 2xl)"
       },
       "variants": {
         "small": {
-          "size": "var(--p-typescale-sm)"
+          "size": "var(1rem)"
         },
         "medium": {
-          "size": "var(--p-typescale-md)"
+          "size": "var(1.25rem)"
         },
         "large": {
-          "size": "var(--p-typescale-lg)"
+          "size": "var(1.5rem)"
         },
         "xl": {
-          "size": "var(--p-typescale-xl)"
+          "size": "var(1.75rem)"
         },
         "2xl": {
-          "size": "var(--p-typescale-2xl)"
+          "size": "var(2rem)"
         }
       },
       "observedAttributes": [
@@ -371,29 +353,29 @@
         "Headings must use sentence case."
       ],
       "examples": [
-        "<p-heading tag=\"h2\" size=\"xl\" weight=\"semibold\">Find your new or pre-owned Porsche.</p-heading>"
-      ]
+        "<Heading tag=\"h2\" size=\"xl\" weight=\"semibold\">Component Library & Token Architecture</Heading>"
+      ],
+      "path": "./components/ui/Heading.tsx"
     },
     "Text": {
       "name": "Text",
-      "tag": "p-text",
       "family": "typography",
       "description": "General interface body text, captions, and disclaimers.",
       "anatomy": {
-        "typography": "Porsche Next, 2xs - sm"
+        "typography": "Body fluid scale (2xs - md)"
       },
       "variants": {
         "xx-small": {
-          "size": "var(--p-typescale-2xs)"
+          "size": "var(0.75rem)"
         },
         "x-small": {
-          "size": "var(--p-typescale-xs)"
+          "size": "var(0.875rem)"
         },
         "small": {
-          "size": "var(--p-typescale-sm)"
+          "size": "var(1rem)"
         },
         "medium": {
-          "size": "var(--p-typescale-md)"
+          "size": "var(1.25rem)"
         }
       },
       "observedAttributes": [
@@ -410,64 +392,58 @@
         "Use contrast-high for readability on light or dark surfaces."
       ],
       "examples": [
-        "<p-text size=\"small\" color=\"contrast-high\">Experience pure driving dynamics.</p-text>",
-        "<p-text size=\"xx-small\" color=\"contrast-low\">Combined power consumption: 22.0 – 20.0 kWh/100 km.</p-text>"
-      ]
+        "<Text size=\"small\" color=\"contrast-high\">Streamline design tokens and component extraction directly from code.</Text>",
+        "<Text size=\"xx-small\" color=\"contrast-low\">Certified against WCAG 2.1 AA accessibility standards.</Text>"
+      ],
+      "path": "./components/ui/Text.tsx"
     },
     "Icon": {
       "name": "Icon",
-      "tag": "p-icon",
+      "path": "./components/ui/Icon.tsx",
       "family": "communication",
-      "description": "Official Porsche icon glyph rendering standard navigational and vehicle icons.",
-      "anatomy": {
-        "box": "24x24px"
-      },
-      "variants": {
-        "small": {
-          "size": "16px"
+      "description": "Harvested vector icon catalog wrapper.",
+      "anatomy": {},
+      "variants": {},
+      "props": {
+        "name": {
+          "type": "string"
         },
-        "medium": {
-          "size": "24px"
-        },
-        "large": {
-          "size": "32px"
+        "size": {
+          "type": "number | string",
+          "default": "24"
         }
       },
-      "observedAttributes": [
-        "name",
-        "source",
-        "color",
-        "size",
-        "aria"
-      ],
       "a11y": {
-        "decorative": "aria-hidden=\"true\" when paired with text label"
+        "minTouchTarget": "N/A",
+        "requiredAria": [],
+        "focusIndicator": "None"
       },
-      "rules": [
-        "Always accompany icon-only buttons with an aria-label."
-      ],
+      "rules": [],
       "examples": [
-        "<p-icon name=\"arrow-right\" size=\"medium\"></p-icon>",
-        "<p-icon name=\"locate\" size=\"small\"></p-icon>"
-      ]
+        "<Icon name=\"arrow-right\" size={24} />"
+      ],
+      "code": "import React from \"react\";\n\nexport const HARVESTED_ICONS: Record<string, React.ReactNode> = {\n  \"arrow-right\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg>),\n  \"chevron-down\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M6 9l6 6 6-6\"/></svg>),\n  \"filter\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M3 4h18v2l-7 8v6l-4 2v-8L3 6V4z\"/></svg>),\n  \"heart\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg>),\n  \"user\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"12\" cy=\"7\" r=\"4\"/><path d=\"M6 21v-2a6 6 0 0 1 12 0v2\"/></svg>),\n  \"search\": (<svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"M21 21l-4.35-4.35\"/></svg>)\n};\n\nexport interface IconProps extends React.SVGProps<SVGSVGElement> {\n  name: string;\n  size?: number | string;\n}\n\n/**\n * Trainable Design System Harvested Vector Icon Primitive\n */\nexport const Icon: React.FC<IconProps> = ({ name, size = 24, className = \"\", style = {}, ...props }) => {\n  const iconNode = HARVESTED_ICONS[name];\n  if (!iconNode) {\n    return (\n      <svg\n        width={size}\n        height={size}\n        viewBox=\"0 0 24 24\"\n        fill=\"none\"\n        stroke=\"currentColor\"\n        strokeWidth={2}\n        className={`tds-icon tds-icon--missing ${className}`}\n        style={style}\n        {...props}\n      >\n        <circle cx=\"12\" cy=\"12\" r=\"10\" strokeDasharray=\"4 4\" />\n      </svg>\n    );\n  }\n\n  return (\n    <span\n      className={`tds-icon-wrapper tds-icon--${name} ${className}`}\n      style={{ display: \"inline-flex\", width: size, height: size, alignItems: \"center\", justifyContent: \"center\", ...style }}\n    >\n      {iconNode}\n    </span>\n  );\n};\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
     },
     "Tag": {
       "name": "Tag",
-      "tag": "p-tag",
       "family": "communication",
-      "description": "Categorical badge or chip used for vehicle fuel types, features, and model tags.",
+      "description": "Categorical badge or chip used for status, attributes, and categorical metadata.",
       "anatomy": {
         "container": {
           "height": "22px (21.75px computed)",
           "padding": "4px 12px",
-          "borderRadius": "var(--p-radius-full) /* 14.875px pill */",
-          "backdropFilter": "var(--p-blur-frosted) /* blur(32px) */"
+          "borderRadius": "var(--sys-shape-corner-full) /* 14.875px pill */",
+          "backdropFilter": "var(blur(16px)) /* blur(32px) */"
         }
       },
       "variants": {
         "primary": {
-          "background": "var(--p-color-surface)",
-          "color": "var(--p-color-primary)"
+          "background": "var(--sys-color-surface-container)",
+          "color": "var(--sys-color-primary)"
         },
         "compact": {
           "padding": "2px 6px"
@@ -484,13 +460,13 @@
         "Keep labels brief and clear."
       ],
       "examples": [
-        "<p-tag color=\"primary\">Petrol</p-tag>",
-        "<p-tag color=\"primary\" icon=\"lightning\">Electric</p-tag>"
-      ]
+        "<Tag color=\"primary\">Active</Tag>",
+        "<Tag color=\"primary\" icon=\"check\">Verified</Tag>"
+      ],
+      "path": "./components/ui/Tag.tsx"
     },
     "TagDismissible": {
       "name": "TagDismissible",
-      "tag": "p-tag-dismissible",
       "family": "communication",
       "description": "Interactive filter chip with dismiss action.",
       "anatomy": {
@@ -513,21 +489,21 @@
         "Emit dismissal event on click."
       ],
       "examples": [
-        "<p-tag-dismissible label=\"Transmission: Automatic\"></p-tag-dismissible>"
-      ]
+        "<TagDismissible label=\"Role: Administrator\" />"
+      ],
+      "path": "./components/ui/TagDismissible.tsx"
     },
     "Modal": {
       "name": "Modal",
-      "tag": "p-modal",
       "family": "containment",
       "description": "Dialog overlay with frosted backdrop scrim and focus trapping.",
       "anatomy": {
         "container": {
-          "borderRadius": "var(--p-radius-xl)",
-          "background": "var(--p-color-canvas)",
-          "padding": "var(--p-spacing-static-lg)"
+          "borderRadius": "var(--sys-shape-corner-medium)",
+          "background": "var(--sys-color-surface)",
+          "padding": "var(24px)"
         },
-        "backdrop": "var(--p-color-backdrop) with blur(32px)"
+        "backdrop": "var(--sys-color-scrim) with blur(32px)"
       },
       "variants": {
         "default": {},
@@ -551,18 +527,18 @@
         "Ensure escape key closes the modal."
       ],
       "examples": [
-        "<p-modal open=\"true\" heading=\"Cookie Preferences\">\n  <p-text>Manage your privacy settings.</p-text>\n</p-modal>"
-      ]
+        "<Modal open={true} heading=\"Privacy Settings\">\n  <Text>Manage your application preferences and permissions.</Text>\n</Modal>"
+      ],
+      "path": "./components/ui/Modal.tsx"
     },
     "Flyout": {
       "name": "Flyout",
-      "tag": "p-flyout",
       "family": "containment",
       "description": "Slide-out panel drawer anchored to start, end, top, or bottom.",
       "anatomy": {
         "container": {
-          "background": "var(--p-color-surface)",
-          "shadow": "var(--p-shadow-lg)"
+          "background": "var(--sys-color-surface-container)",
+          "shadow": "var(var(--sys-elevation-level3))"
         }
       },
       "variants": {
@@ -588,17 +564,17 @@
         "Use for mobile navigation, filter panels, and configuration drawers."
       ],
       "examples": [
-        "<p-flyout open=\"true\" position=\"end\">\n  <p-heading size=\"large\">Filter results</p-heading>\n</p-flyout>"
-      ]
+        "<Flyout open={true} position=\"end\">\n  <Heading size=\"large\">Filter Results</Heading>\n</Flyout>"
+      ],
+      "path": "./components/ui/Flyout.tsx"
     },
     "Accordion": {
       "name": "Accordion",
-      "tag": "p-accordion",
       "family": "containment",
       "description": "Collapsible disclosure section for FAQs and technical specifications.",
       "anatomy": {
-        "detailsRadius": "var(--p-radius-2xl) /* 16px */",
-        "border": "1px solid var(--p-color-contrast-lower)"
+        "detailsRadius": "var(--sys-shape-corner-large) /* 16px */",
+        "border": "1px solid var(--sys-color-outline-variant)"
       },
       "variants": {
         "default": {},
@@ -623,17 +599,17 @@
         "Always use semantic heading tags inside."
       ],
       "examples": [
-        "<p-accordion heading=\"Technical Specs\" heading-tag=\"h3\">\n  <p-text>Top speed: 305 km/h</p-text>\n</p-accordion>"
-      ]
+        "<Accordion heading=\"Technical Specifications\" headingTag=\"h3\">\n  <Text>Built with zero runtime dependencies and 100% WCAG AA compliance.</Text>\n</Accordion>"
+      ],
+      "path": "./components/ui/Accordion.tsx"
     },
     "Divider": {
       "name": "Divider",
-      "tag": "p-divider",
       "family": "containment",
       "description": "1px subtle boundary divider between layout blocks.",
       "anatomy": {
         "height": "1px",
-        "color": "var(--p-color-contrast-lower)"
+        "color": "var(--sys-color-outline-variant)"
       },
       "variants": {
         "horizontal": {},
@@ -650,17 +626,17 @@
         "Do not use heavy contrasting borders where a divider suffices."
       ],
       "examples": [
-        "<p-divider></p-divider>"
-      ]
+        "<Divider />"
+      ],
+      "path": "./components/ui/Divider.tsx"
     },
     "Table": {
       "name": "Table",
-      "tag": "p-table",
       "family": "containment",
       "description": "Data table container with sticky header support and responsive scrolling.",
       "anatomy": {
         "container": {
-          "borderRadius": "var(--p-radius-md)"
+          "borderRadius": "var(--sys-shape-corner-small)"
         }
       },
       "variants": {
@@ -680,19 +656,19 @@
         "Include descriptive caption."
       ],
       "examples": [
-        "<p-table caption=\"Fuel consumption data\"></p-table>"
-      ]
+        "<Table caption=\"System Token Compliance Matrix\" />"
+      ],
+      "path": "./components/ui/Table.tsx"
     },
     "InputSearch": {
       "name": "InputSearch",
-      "tag": "p-input-search",
       "family": "text-inputs",
       "description": "Interactive search input with search glyph, clear button, and autocomplete support.",
       "anatomy": {
         "container": {
           "minHeight": "48px",
-          "borderRadius": "var(--p-radius-md)",
-          "background": "var(--p-color-canvas)"
+          "borderRadius": "var(--sys-shape-corner-small)",
+          "background": "var(--sys-color-surface)"
         }
       },
       "variants": {
@@ -729,50 +705,62 @@
         "Always provide accessible label even if visually hidden."
       ],
       "examples": [
-        "<p-input-search label=\"Search dealer location\" placeholder=\"Postal code or city\" clear=\"true\"></p-input-search>"
-      ]
+        "<InputSearch label=\"Search documentation\" placeholder=\"Search tokens or components...\" clear={true} />"
+      ],
+      "path": "./components/ui/InputSearch.tsx"
     },
     "TextField": {
       "name": "TextField",
-      "tag": "p-text-field",
+      "path": "./components/ui/TextField.tsx",
       "family": "text-inputs",
-      "description": "Single-line form input with floating label, validation states, and message slots.",
+      "description": "Text input with 56px height, floating label, and active brand indicator.",
       "anatomy": {
-        "minHeight": "48px",
-        "borderRadius": "var(--p-radius-md)"
+        "container": {
+          "minHeight": 56,
+          "borderRadius": "8px"
+        }
       },
       "variants": {
-        "default": {},
-        "compact": {}
+        "standard": {
+          "containerColor": "rgba(156, 156, 159, 0.2)"
+        }
       },
-      "observedAttributes": [
-        "value",
-        "label",
-        "description",
-        "placeholder",
-        "name",
-        "disabled",
-        "required",
-        "state",
-        "message"
-      ],
+      "props": {
+        "label": {
+          "type": "string"
+        },
+        "error": {
+          "type": "string"
+        },
+        "helperText": {
+          "type": "string"
+        }
+      },
       "a11y": {
-        "focusIndicator": "2px outline var(--p-color-focus)"
+        "minTouchTarget": "56px height",
+        "requiredAria": [
+          "aria-invalid"
+        ],
+        "focusIndicator": "Brand outline"
       },
       "rules": [
-        "Show validation message when state is error."
+        "TDS-TOUCH-TARGET-TOO-SMALL: Must be at least 56px in height."
       ],
       "examples": [
-        "<p-text-field label=\"Full name\" placeholder=\"Enter your name\"></p-text-field>"
-      ]
+        "<TextField label=\"Email address\" placeholder=\"alex@example.com\" />"
+      ],
+      "code": "import React from \"react\";\n\nexport interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {\n  label?: string;\n  helperText?: string;\n  error?: string;\n  startIcon?: React.ReactNode;\n  endIcon?: React.ReactNode;\n}\n\n/**\n * Trainable Design System Certified TextField Component (Text Inputs Family)\n * - Minimum 56px height\n * - Active brand outline indicator\n */\nexport const TextField: React.FC<TextFieldProps> = ({\n  label,\n  helperText,\n  error,\n  startIcon,\n  endIcon,\n  className = \"\",\n  style = {},\n  disabled = false,\n  ...props\n}) => {\n  return (\n    <div\n      style={{\n        display: \"flex\",\n        flexDirection: \"column\",\n        gap: \"6px\",\n        fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n        width: \"100%\",\n        ...style,\n      }}\n      className={`tds-textfield-wrapper ${className}`}\n    >\n      {label && (\n        <label\n          style={{\n            fontSize: \"0.875rem\",\n            fontWeight: 500,\n            color: error ? \"var(--sys-color-error)\" : \"var(--sys-color-on-surface-variant)\",\n          }}\n        >\n          {label}\n        </label>\n      )}\n\n      <div\n        style={{\n          display: \"flex\",\n          alignItems: \"center\",\n          minHeight: \"56px\",\n          borderRadius: \"8px\",\n          background: \"var(--sys-color-surface-container)\",\n          border: error\n            ? \"1px solid var(--sys-color-error)\"\n            : \"1px solid var(--sys-color-outline)\",\n          paddingInline: \"16px\",\n          gap: \"10px\",\n          boxSizing: \"border-box\",\n          opacity: disabled ? 0.38 : 1,\n        }}\n      >\n        {startIcon && <span style={{ color: \"var(--sys-color-on-surface-variant)\" }}>{startIcon}</span>}\n        <input\n          style={{\n            flex: 1,\n            background: \"transparent\",\n            border: \"none\",\n            outline: \"none\",\n            color: \"var(--sys-color-on-surface)\",\n            fontSize: \"1rem\",\n            fontFamily: \"inherit\",\n          }}\n          disabled={disabled}\n          {...props}\n        />\n        {endIcon && <span style={{ color: \"var(--sys-color-on-surface-variant)\" }}>{endIcon}</span>}\n      </div>\n\n      {(error || helperText) && (\n        <span\n          style={{\n            fontSize: \"0.75rem\",\n            color: error ? \"var(--sys-color-error)\" : \"var(--sys-color-on-surface-variant)\",\n            paddingInlineStart: \"4px\",\n          }}\n        >\n          {error || helperText}\n        </span>\n      )}\n    </div>\n  );\n};\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
     },
     "Textarea": {
       "name": "Textarea",
-      "tag": "p-textarea",
       "family": "text-inputs",
       "description": "Multi-line text input with character counter and auto-resizing.",
       "anatomy": {
-        "borderRadius": "var(--p-radius-md)"
+        "borderRadius": "var(--sys-shape-corner-small)"
       },
       "variants": {
         "default": {}
@@ -794,17 +782,17 @@
         "Clearly state max character length."
       ],
       "examples": [
-        "<p-textarea label=\"Inquiry details\" counter=\"true\" max-length=\"500\"></p-textarea>"
-      ]
+        "<Textarea label=\"Feedback details\" counter={true} maxLength={500} />"
+      ],
+      "path": "./components/ui/Textarea.tsx"
     },
     "Select": {
       "name": "Select",
-      "tag": "p-select",
       "family": "text-inputs",
       "description": "Dropdown selection control with custom chevron indicator.",
       "anatomy": {
         "minHeight": "48px",
-        "borderRadius": "var(--p-radius-md)"
+        "borderRadius": "var(--sys-shape-corner-small)"
       },
       "variants": {
         "default": {},
@@ -825,15 +813,15 @@
         "minTouchTarget": "48x48px"
       },
       "rules": [
-        "Group complex choices using <p-optgroup>."
+        "Group complex choices using optgroup."
       ],
       "examples": [
-        "<p-select label=\"Select vehicle model\"><p-option value=\"911\">911</p-option></p-select>"
-      ]
+        "<Select label=\"Environment\">\n  <Option value=\"production\">Production</Option>\n  <Option value=\"staging\">Staging</Option>\n</Select>"
+      ],
+      "path": "./components/ui/Select.tsx"
     },
     "MultiSelect": {
       "name": "MultiSelect",
-      "tag": "p-multi-select",
       "family": "text-inputs",
       "description": "Multi-item selection control with checkbox dropdown.",
       "anatomy": {
@@ -858,12 +846,12 @@
         "Displays selected count or pill summary."
       ],
       "examples": [
-        "<p-multi-select label=\"Select exterior packages\"></p-multi-select>"
-      ]
+        "<MultiSelect label=\"Select active permissions\" />"
+      ],
+      "path": "./components/ui/MultiSelect.tsx"
     },
     "PinCode": {
       "name": "PinCode",
-      "tag": "p-pin-code",
       "family": "text-inputs",
       "description": "Discrete digit input boxes for 2FA and verification codes.",
       "anatomy": {
@@ -885,18 +873,18 @@
         "Automatically focus next field upon input."
       ],
       "examples": [
-        "<p-pin-code length=\"6\" label=\"Verification code\"></p-pin-code>"
-      ]
+        "<PinCode length={6} label=\"Verification code\" />"
+      ],
+      "path": "./components/ui/PinCode.tsx"
     },
     "Checkbox": {
       "name": "Checkbox",
-      "tag": "p-checkbox",
       "family": "selection",
       "description": "Form checkbox with indeterminate state and touch target area.",
       "anatomy": {
         "touchTarget": "48x48px",
         "box": "28x28px",
-        "borderRadius": "var(--p-radius-lg) /* 8px */"
+        "borderRadius": "var(--sys-shape-corner-small) /* 8px */"
       },
       "variants": {
         "default": {},
@@ -920,18 +908,18 @@
         "Always wrap within 48x48px hit area."
       ],
       "examples": [
-        "<p-checkbox label=\"I accept the terms and conditions\"></p-checkbox>"
-      ]
+        "<Checkbox label=\"I accept the terms and conditions\" />"
+      ],
+      "path": "./components/ui/Checkbox.tsx"
     },
     "RadioButton": {
       "name": "RadioButton",
-      "tag": "p-radio-button",
       "family": "selection",
-      "description": "Single-choice radio selection control.",
+      "description": "Single-choice radio selection control with 48x48px touch target.",
       "anatomy": {
         "touchTarget": "48x48px",
         "circle": "28x28px",
-        "borderRadius": "var(--p-radius-full) /* calc(infinity * 1px) */"
+        "borderRadius": "var(--sys-shape-corner-full) /* calc(infinity * 1px) */"
       },
       "variants": {
         "default": {}
@@ -951,19 +939,19 @@
         "Group inside fieldset with common name."
       ],
       "examples": [
-        "<p-radio-button name=\"transmission\" value=\"pdk\" label=\"Porsche Doppelkupplung (PDK)\"></p-radio-button>"
-      ]
+        "<RadioButton name=\"plan\" value=\"pro\" label=\"Professional Plan\" />"
+      ],
+      "path": "./components/ui/RadioButton.tsx"
     },
     "Switch": {
       "name": "Switch",
-      "tag": "p-switch",
       "family": "selection",
       "description": "Toggle switch for binary settings and preferences.",
       "anatomy": {
         "touchTarget": "48x48px",
         "track": "44x28px",
-        "borderRadius": "var(--p-radius-full) /* calc(infinity * 1px) */",
-        "backgroundColor": "var(--p-color-frosted-soft)"
+        "borderRadius": "var(--sys-shape-corner-full) /* calc(infinity * 1px) */",
+        "backgroundColor": "var(--sys-color-surface-container-high)"
       },
       "variants": {
         "default": {}
@@ -983,12 +971,12 @@
         "Use for instant state changes without form submission."
       ],
       "examples": [
-        "<p-switch label=\"Sport exhaust system\"></p-switch>"
-      ]
+        "<Switch label=\"Enable dark mode\" />"
+      ],
+      "path": "./components/ui/Switch.tsx"
     },
     "SegmentedControl": {
       "name": "SegmentedControl",
-      "tag": "p-segmented-control",
       "family": "selection",
       "description": "Mutually exclusive pill selector for switching modes or views.",
       "anatomy": {
@@ -999,7 +987,7 @@
         "item": {
           "height": "52px",
           "padding": "8px 12px",
-          "borderRadius": "var(--p-radius-xl) /* 12px */",
+          "borderRadius": "var(--sys-shape-corner-medium) /* 12px */",
           "background": "rgba(175, 175, 182, 0.15) /* frosted item fill */"
         }
       },
@@ -1024,16 +1012,16 @@
         "Keep segments to 2-5 options maximum."
       ],
       "examples": [
-        "<p-segmented-control value=\"grid\"><p-segmented-control-item value=\"grid\">Grid</p-segmented-control-item><p-segmented-control-item value=\"list\">List</p-segmented-control-item></p-segmented-control>"
-      ]
+        "<SegmentedControl value=\"grid\">\n  <SegmentedControlItem value=\"grid\">Grid</SegmentedControlItem>\n  <SegmentedControlItem value=\"list\">List</SegmentedControlItem>\n</SegmentedControl>"
+      ],
+      "path": "./components/ui/SegmentedControl.tsx"
     },
     "Tabs": {
       "name": "Tabs",
-      "tag": "p-tabs",
       "family": "navigation",
       "description": "Tabbed content navigation switching between views.",
       "anatomy": {
-        "indicator": "2px solid var(--p-color-primary)",
+        "indicator": "2px solid var(--sys-color-primary)",
         "height": "48px"
       },
       "variants": {
@@ -1055,20 +1043,20 @@
         "Include matching tab panels."
       ],
       "examples": [
-        "<p-tabs active-tab-index=\"0\"><p-tabs-item label=\"Overview\">Content</p-tabs-item></p-tabs>"
-      ]
+        "<Tabs activeTabIndex={0}>\n  <TabItem label=\"Overview\">Overview content</TabItem>\n  <TabItem label=\"Settings\">Settings content</TabItem>\n</Tabs>"
+      ],
+      "path": "./components/ui/Tabs.tsx"
     },
     "TabsBar": {
       "name": "TabsBar",
-      "tag": "p-tabs-bar",
       "family": "navigation",
       "description": "Header navigation tab bar without embedded content panels.",
       "anatomy": {
         "container": {
-          "scrollerRadius": "var(--p-radius-xl) /* 12px */",
-          "innerDivRadius": "var(--p-radius-lg) /* 8px */",
+          "scrollerRadius": "var(--sys-shape-corner-medium) /* 12px */",
+          "innerDivRadius": "var(--sys-shape-corner-small) /* 8px */",
           "scrollerPadding": "4px",
-          "background": "var(--p-color-surface) /* rgb(241, 241, 244) */"
+          "background": "var(--sys-color-surface-container) /* rgb(241, 241, 244) */"
         },
         "button": {
           "touchTarget": "48px (enforced)",
@@ -1092,12 +1080,12 @@
         "Synchronize active index with route changes."
       ],
       "examples": [
-        "<p-tabs-bar active-tab-index=\"0\"><button type=\"button\">Exterior</button><button type=\"button\">Interior</button></p-tabs-bar>"
-      ]
+        "<TabsBar activeTabIndex={0}>\n  <button type=\"button\">General</button>\n  <button type=\"button\">Security</button>\n</TabsBar>"
+      ],
+      "path": "./components/ui/TabsBar.tsx"
     },
     "Pagination": {
       "name": "Pagination",
-      "tag": "p-pagination",
       "family": "navigation",
       "description": "Multi-page navigation controls with previous, next, and numbered page jumps.",
       "anatomy": {
@@ -1120,12 +1108,12 @@
         "Provide localized labels for accessibility."
       ],
       "examples": [
-        "<p-pagination total-items-count=\"120\" items-per-page=\"12\" active-page=\"1\"></p-pagination>"
-      ]
+        "<Pagination totalItemsCount={120} itemsPerPage={12} activePage={1} />"
+      ],
+      "path": "./components/ui/Pagination.tsx"
     },
     "Scroller": {
       "name": "Scroller",
-      "tag": "p-scroller",
       "family": "navigation",
       "description": "Horizontal carousel / content scroller with scroll indicators and snap points.",
       "anatomy": {
@@ -1147,17 +1135,17 @@
         "Support keyboard horizontal scroll."
       ],
       "examples": [
-        "<p-scroller><div class=\"item\">1</div><div class=\"item\">2</div></p-scroller>"
-      ]
+        "<Scroller>\n  <div className=\"item\">Card 1</div>\n  <div className=\"item\">Card 2</div>\n</Scroller>"
+      ],
+      "path": "./components/ui/Scroller.tsx"
     },
     "Banner": {
       "name": "Banner",
-      "tag": "p-banner",
       "family": "communication",
       "description": "Prominent top banner for site-wide announcements, recalls, or promotions.",
       "anatomy": {
-        "background": "var(--p-color-frosted-strong)",
-        "padding": "var(--p-spacing-static-md)"
+        "background": "var(--sys-color-surface-container-highest)",
+        "padding": "var(16px)"
       },
       "variants": {
         "info": {},
@@ -1180,16 +1168,16 @@
         "Include dismiss button when dismissible."
       ],
       "examples": [
-        "<p-banner state=\"info\" heading=\"World Premiere\" description=\"Watch live now.\"></p-banner>"
-      ]
+        "<Banner state=\"info\" heading=\"New Feature Available\" description=\"Explore the multi-modal ingestion pipeline.\" />"
+      ],
+      "path": "./components/ui/Banner.tsx"
     },
     "InlineNotification": {
       "name": "InlineNotification",
-      "tag": "p-inline-notification",
       "family": "communication",
       "description": "In-context message box indicating status, error, warning, or action required.",
       "anatomy": {
-        "borderRadius": "var(--p-radius-lg)",
+        "borderRadius": "var(--sys-shape-corner-small)",
         "padding": "16px"
       },
       "variants": {
@@ -1214,12 +1202,12 @@
         "Use appropriate state color icon."
       ],
       "examples": [
-        "<p-inline-notification state=\"warning\" heading=\"Delivery delayed\" description=\"Estimated delivery in 4 weeks.\"></p-inline-notification>"
-      ]
+        "<InlineNotification state=\"warning\" heading=\"Session Expiring\" description=\"Your session will expire in 5 minutes.\" />"
+      ],
+      "path": "./components/ui/InlineNotification.tsx"
     },
     "Spinner": {
       "name": "Spinner",
-      "tag": "p-spinner",
       "family": "communication",
       "description": "Circular indeterminate loading spinner.",
       "anatomy": {
@@ -1249,17 +1237,17 @@
         "Always provide accessible description."
       ],
       "examples": [
-        "<p-spinner size=\"medium\" aria='{\"aria-label\": \"Loading model data\"}'></p-spinner>"
-      ]
+        "<Spinner size=\"medium\" ariaLabel=\"Loading application data\" />"
+      ],
+      "path": "./components/ui/Spinner.tsx"
     },
     "Toast": {
       "name": "Toast",
-      "tag": "p-toast",
       "family": "communication",
       "description": "Transient notification toast appearing in screen corner.",
       "anatomy": {
         "position": "fixed bottom-right",
-        "borderRadius": "var(--p-radius-lg)"
+        "borderRadius": "var(--sys-shape-corner-small)"
       },
       "variants": {
         "default": {}
@@ -1272,17 +1260,17 @@
         "Auto-dismiss within 4-6 seconds."
       ],
       "examples": [
-        "<p-toast></p-toast>"
-      ]
+        "<Toast message=\"Tokens saved successfully.\" />"
+      ],
+      "path": "./components/ui/Toast.tsx"
     },
     "Popover": {
       "name": "Popover",
-      "tag": "p-popover",
       "family": "communication",
       "description": "Contextual floating tooltip / popover triggered on click or hover.",
       "anatomy": {
-        "borderRadius": "var(--p-radius-md)",
-        "background": "var(--p-color-canvas)"
+        "borderRadius": "var(--sys-shape-corner-small)",
+        "background": "var(--sys-color-surface)"
       },
       "variants": {
         "top": {},
@@ -1304,16 +1292,16 @@
         "Dismiss on escape key or outside click."
       ],
       "examples": [
-        "<p-popover description=\"Detailed aerodynamic package explanation\"><p-button-pure icon=\"information\">Info</p-button-pure></p-popover>"
-      ]
+        "<Popover description=\"Detailed explanation of token inheritance\">\n  <ButtonPure icon=\"information\">Info</ButtonPure>\n</Popover>"
+      ],
+      "path": "./components/ui/Popover.tsx"
     },
     "StepperHorizontal": {
       "name": "StepperHorizontal",
-      "tag": "p-stepper-horizontal",
       "family": "navigation",
       "description": "Step-by-step progress indicator for configuration flows and checkout.",
       "anatomy": {
-        "line": "2px solid var(--p-color-contrast-lower)"
+        "line": "2px solid var(--sys-color-outline-variant)"
       },
       "variants": {
         "small": {},
@@ -1329,16 +1317,16 @@
         "Indicate completed, active, and upcoming steps."
       ],
       "examples": [
-        "<p-stepper-horizontal size=\"medium\"><p-stepper-horizontal-item state=\"complete\">Model</p-stepper-horizontal-item><p-stepper-horizontal-item state=\"current\">Exterior</p-stepper-horizontal-item></p-stepper-horizontal>"
-      ]
+        "<StepperHorizontal size=\"medium\">\n  <Step state=\"complete\">Account</Step>\n  <Step state=\"current\">Configuration</Step>\n</StepperHorizontal>"
+      ],
+      "path": "./components/ui/StepperHorizontal.tsx"
     },
-    "Crest": {
-      "name": "Crest",
-      "tag": "p-crest",
+    "Logo": {
+      "name": "Logo",
       "family": "brand",
-      "description": "Official Porsche coat of arms crest emblem.",
+      "description": "Authoritative brand logo emblem and vector symbol.",
       "anatomy": {
-        "ratio": "traditional crest shield"
+        "ratio": "1:1 / 16:9 standard logo box"
       },
       "variants": {
         "default": {}
@@ -1349,22 +1337,22 @@
         "aria"
       ],
       "a11y": {
-        "alt": "Porsche Crest"
+        "alt": "Brand Logo"
       },
       "rules": [
         "Do not alter colors or aspect ratio."
       ],
       "examples": [
-        "<p-crest href=\"https://www.porsche.de\"></p-crest>"
-      ]
+        "<Logo href=\"/\" size=\"medium\" />"
+      ],
+      "path": "./components/ui/Logo.tsx"
     },
     "Wordmark": {
       "name": "Wordmark",
-      "tag": "p-wordmark",
       "family": "brand",
-      "description": "Official PORSCHE typographic brand wordmark.",
+      "description": "Official typographic brand identity wordmark.",
       "anatomy": {
-        "lettering": "Monospaced luxury brand lettering"
+        "lettering": "Fluid geometric brand typography"
       },
       "variants": {
         "small": {},
@@ -1378,56 +1366,51 @@
         "aria"
       ],
       "a11y": {
-        "alt": "Porsche"
+        "alt": "Brand Wordmark"
       },
       "rules": [
-        "Never re-type 'PORSCHE' using standard fonts; always use <p-wordmark>."
+        "Never re-type brand name with standard fonts; always use Wordmark primitive."
       ],
       "examples": [
-        "<p-wordmark size=\"medium\" href=\"/\"></p-wordmark>"
-      ]
+        "<Wordmark size=\"medium\" href=\"/\" />"
+      ],
+      "path": "./components/ui/Wordmark.tsx"
     },
-    "ModelSignature": {
-      "name": "ModelSignature",
-      "tag": "p-model-signature",
+    "BrandSignature": {
+      "name": "BrandSignature",
       "family": "brand",
-      "description": "Official vector lettering script for Porsche model designations (911, Cayenne, Taycan, Panamera, Macan, 718).",
+      "description": "Sub-brand or product line signature typographic element.",
       "anatomy": {
-        "color": "var(--p-model-signature-color)"
+        "color": "var(--sys-color-primary)"
       },
       "variants": {
-        "718": {},
-        "911": {},
-        "taycan": {},
-        "cayenne": {},
-        "panamera": {},
-        "macan": {}
+        "core": {},
+        "studio": {},
+        "enterprise": {}
       },
       "observedAttributes": [
-        "model",
+        "product",
         "safe-zone",
-        "fetch-priority",
-        "lazy",
         "size",
         "color"
       ],
       "a11y": {
-        "alt": "Model designation"
+        "alt": "Product line designation"
       },
       "rules": [
-        "Use model-specific signature rather than regular text."
+        "Use brand-specific signature rather than regular text."
       ],
       "examples": [
-        "<p-model-signature model=\"911\" size=\"medium\"></p-model-signature>"
-      ]
+        "<BrandSignature product=\"core\" size=\"medium\" />"
+      ],
+      "path": "./components/ui/BrandSignature.tsx"
     },
     "Canvas": {
       "name": "Canvas",
-      "tag": "p-canvas",
       "family": "containment",
       "description": "Root layout shell component providing sidebars, navigation slots, and safe zones.",
       "anatomy": {
-        "safeZone": "var(--pds-internal-grid-safe-zone)"
+        "safeZone": "var(--sys-grid-safe-zone)"
       },
       "variants": {
         "default": {}
@@ -1441,19 +1424,19 @@
         "role": "main"
       },
       "rules": [
-        "Enforces Porsche safe-zone padding."
+        "Enforces system safe-zone padding."
       ],
       "examples": [
-        "<p-canvas background=\"surface\"><slot></slot></p-canvas>"
-      ]
+        "<Canvas background=\"surface\"><slot></slot></Canvas>"
+      ],
+      "path": "./components/ui/Canvas.tsx"
     },
     "Fieldset": {
       "name": "Fieldset",
-      "tag": "p-fieldset",
       "family": "containment",
       "description": "Accessible semantic container grouping related form inputs.",
       "anatomy": {
-        "margin": "var(--p-spacing-static-md)"
+        "margin": "var(16px)"
       },
       "variants": {
         "default": {}
@@ -1473,8 +1456,135 @@
         "Provide descriptive legend/label."
       ],
       "examples": [
-        "<p-fieldset label=\"Personal Information\"></p-fieldset>"
-      ]
+        "<Fieldset label=\"Personal Information\"></Fieldset>"
+      ],
+      "path": "./components/ui/Fieldset.tsx"
+    },
+    "Card": {
+      "name": "Card",
+      "path": "./components/ui/Card.tsx",
+      "family": "containment",
+      "description": "Structural content container implementing tonal surface elevation.",
+      "anatomy": {
+        "container": {
+          "shape": "rounded-rect",
+          "borderRadius": "16px",
+          "padding": "24px"
+        }
+      },
+      "variants": {
+        "filled": {
+          "containerColor": "rgba(156, 156, 159, 0.2)"
+        },
+        "elevated": {
+          "containerColor": "rgba(156, 156, 159, 0.35)",
+          "elevation": 2
+        },
+        "outlined": {
+          "borderColor": "rgba(255, 255, 255, 0.2)"
+        }
+      },
+      "props": {
+        "variant": {
+          "type": "'filled' | 'elevated' | 'outlined'",
+          "default": "'filled'"
+        },
+        "header": {
+          "type": "React.ReactNode"
+        },
+        "footer": {
+          "type": "React.ReactNode"
+        }
+      },
+      "a11y": {
+        "minTouchTarget": "N/A",
+        "requiredAria": [],
+        "focusIndicator": "None"
+      },
+      "rules": [
+        "TDS-RAW-COLOR: Background must map to surface container tokens."
+      ],
+      "examples": [
+        "<Card variant=\"filled\">Card content</Card>"
+      ],
+      "code": "import React from \"react\";\n\nexport type CardVariant = \"filled\" | \"elevated\" | \"outlined\";\n\nexport interface CardProps extends React.HTMLAttributes<HTMLDivElement> {\n  variant?: CardVariant;\n  header?: React.ReactNode;\n  footer?: React.ReactNode;\n  children?: React.ReactNode;\n}\n\n/**\n * Trainable Design System Certified Card Component (Containment Family)\n * - Surface Container hierarchy\n */\nexport const Card: React.FC<CardProps> = ({\n  variant = \"filled\",\n  header,\n  footer,\n  children,\n  className = \"\",\n  style = {},\n  ...props\n}) => {\n  const baseStyle: React.CSSProperties = {\n    fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n    borderRadius: \"16px\",\n    padding: \"24px\",\n    display: \"flex\",\n    flexDirection: \"column\",\n    gap: \"16px\",\n    boxSizing: \"border-box\",\n    transition: \"transform 0.15s ease, box-shadow 0.15s ease\",\n    ...style,\n  };\n\n  let variantStyle: React.CSSProperties = {};\n  switch (variant) {\n    case \"filled\":\n      variantStyle = {\n        background: \"var(--sys-color-surface-container)\",\n        color: \"var(--sys-color-on-surface)\",\n        border: \"1px solid var(--sys-color-outline-variant)\",\n      };\n      break;\n    case \"elevated\":\n      variantStyle = {\n        background: \"var(--sys-color-surface-container-high)\",\n        color: \"var(--sys-color-on-surface)\",\n        boxShadow: \"0 8px 24px rgba(0, 0, 0, 0.35)\",\n        border: \"1px solid var(--sys-color-outline-variant)\",\n      };\n      break;\n    case \"outlined\":\n      variantStyle = {\n        background: \"transparent\",\n        color: \"var(--sys-color-on-surface)\",\n        border: \"1px solid var(--sys-color-outline)\",\n      };\n      break;\n  }\n\n  return (\n    <div\n      style={{ ...baseStyle, ...variantStyle }}\n      className={`tds-card tds-card--${variant} ${className}`}\n      {...props}\n    >\n      {header && <div className=\"tds-card-header\">{header}</div>}\n      <div className=\"tds-card-body\">{children}</div>\n      {footer && <div className=\"tds-card-footer\">{footer}</div>}\n    </div>\n  );\n};\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
+    },
+    "Badge": {
+      "name": "Badge",
+      "path": "./components/ui/Badge.tsx",
+      "family": "communication",
+      "description": "Compact status or tag badge.",
+      "anatomy": {
+        "container": {
+          "shape": "full-pill",
+          "borderRadius": "9999px"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
+      "props": {
+        "children": {
+          "type": "React.ReactNode"
+        }
+      },
+      "a11y": {
+        "minTouchTarget": "N/A",
+        "requiredAria": [],
+        "focusIndicator": "None"
+      },
+      "rules": [],
+      "examples": [
+        "<Badge>Verified</Badge>"
+      ],
+      "code": "import React from \"react\";\n\nexport interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {\n  children?: React.ReactNode;\n}\n\nexport const Badge: React.FC<BadgeProps> = ({ children, className = \"\", style = {}, ...props }) => (\n  <span\n    style={{\n      display: \"inline-flex\",\n      alignItems: \"center\",\n      padding: \"4px 10px\",\n      borderRadius: \"9999px\",\n      fontSize: \"0.75rem\",\n      fontWeight: 600,\n      background: \"var(--sys-color-surface-container-high)\",\n      color: \"var(--sys-color-on-surface)\",\n      border: \"1px solid var(--sys-color-outline-variant)\",\n      fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n      ...style,\n    }}\n    className={`tds-badge ${className}`}\n    {...props}\n  >\n    {children}\n  </span>\n);\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
+    },
+    "Chip": {
+      "name": "Chip",
+      "path": "./components/ui/Chip.tsx",
+      "family": "selection",
+      "description": "Filter and selection chip with interactive toggle state.",
+      "anatomy": {
+        "container": {
+          "minHeight": 36,
+          "borderRadius": "8px"
+        }
+      },
+      "variants": {
+        "default": {}
+      },
+      "props": {
+        "selected": {
+          "type": "boolean"
+        },
+        "icon": {
+          "type": "React.ReactNode"
+        }
+      },
+      "a11y": {
+        "minTouchTarget": "36px height",
+        "requiredAria": [
+          "aria-pressed"
+        ],
+        "focusIndicator": "Outline"
+      },
+      "rules": [],
+      "examples": [
+        "<Chip selected={true}>Filter option</Chip>"
+      ],
+      "code": "import React from \"react\";\n\nexport interface ChipProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {\n  selected?: boolean;\n  icon?: React.ReactNode;\n  children?: React.ReactNode;\n}\n\nexport const Chip: React.FC<ChipProps> = ({\n  selected = false,\n  icon,\n  children,\n  className = \"\",\n  style = {},\n  ...props\n}) => (\n  <button\n    type=\"button\"\n    style={{\n      minHeight: \"36px\",\n      display: \"inline-flex\",\n      alignItems: \"center\",\n      gap: \"8px\",\n      padding: \"6px 14px\",\n      borderRadius: \"8px\",\n      fontSize: \"0.875rem\",\n      fontWeight: 500,\n      cursor: \"pointer\",\n      border: selected\n        ? \"1px solid var(--sys-color-primary)\"\n        : \"1px solid var(--sys-color-outline)\",\n      background: selected\n        ? \"var(--sys-color-surface-container-high)\"\n        : \"transparent\",\n      color: \"var(--sys-color-on-surface)\",\n      fontFamily: \"var(--font-brand, 'Inter', system-ui, sans-serif)\",\n      transition: \"background 0.15s ease\",\n      ...style,\n    }}\n    className={`tds-chip ${selected ? \"selected\" : \"\"} ${className}`}\n    {...props}\n  >\n    {icon && <span>{icon}</span>}\n    <span>{children}</span>\n  </button>\n);\n",
+      "authoritativeSource": {
+        "type": "generated"
+      },
+      "locked": false
     }
   }
 }

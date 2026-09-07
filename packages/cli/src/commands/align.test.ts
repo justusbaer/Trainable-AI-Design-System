@@ -43,7 +43,7 @@ describe("cli runAlign", () => {
     const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
 
     const result = await runAlign({
-      url: "https://porsche.com",
+      url: "https://example.com",
       maxLoops: 3,
       threshold: 95
     });

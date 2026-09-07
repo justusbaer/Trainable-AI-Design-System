@@ -1,6 +1,6 @@
 /**
- * Trainable DS Visual Aligner (PDS Reconciliation Engine) - Phase 2 Loop
- * Source of Truth: https://www.porsche.com/germany/ & https://www.porsche.com/germany/models/911/
+ * Trainable DS Visual Aligner (Reconciliation Engine) - Phase 2 Loop
+ * Source of Truth: https://example.com/ & https://example.com/products/
  */
 
 const fs = require("fs");
@@ -9,14 +9,14 @@ const path = require("path");
 async function runVisualAlignment() {
   console.log("================================================================================");
   console.log("⚡ Trainable DS Visual Aligner v1.7.0 — Secondary Alignment Loop");
-  console.log("   Target URLs: https://www.porsche.com/germany/");
-  console.log("                https://www.porsche.com/germany/models/911/");
+  console.log("   Target URLs: https://example.com/");
+  console.log("                https://example.com/products/");
   console.log("   Convergence Threshold: 95% | Max Loops: 3");
   console.log("================================================================================\n");
 
   const tokens = JSON.parse(fs.readFileSync("tokens.json", "utf8"));
   const components = JSON.parse(fs.readFileSync("components.json", "utf8"));
-  let porscheCss = fs.readFileSync("porsche-tokens.css", "utf8");
+  let brandCss = fs.existsSync("tokens.css") ? fs.readFileSync("tokens.css", "utf8") : "";
 
   console.log("🔍 [Loop 1/3] Checking baseline convergence from Phase 1...");
   console.log("   Phase 1 Baseline Score: 98.5%");
@@ -161,7 +161,7 @@ async function runVisualAlignment() {
   // Update portal.js embedded dataset safely using line indexing
   const portalContent = fs.readFileSync("portal.js", "utf8");
   const portalLines = portalContent.split("\n");
-  const codeIdx = portalLines.findIndex(l => l.startsWith("/**") || l.includes("Porsche Design System Verification"));
+  const codeIdx = portalLines.findIndex(l => l.startsWith("/**") || l.includes("Design System Verification"));
   const restOfPortal = portalLines.slice(codeIdx).join("\n");
   const updatedPortal = `const EMBEDDED_TOKENS = ${JSON.stringify(tokens)};\nconst EMBEDDED_COMPONENTS = ${JSON.stringify(components.components)};\n\n${restOfPortal}`;
   fs.writeFileSync("portal.js", updatedPortal, "utf8");

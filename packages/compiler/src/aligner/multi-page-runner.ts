@@ -17,6 +17,7 @@ import { analyzeDrift, DriftReport } from "./discrepancy-analyzer.js";
 import { reconcileTokensAndComponents } from "./token-reconciler.js";
 import { compileDesignMd } from "../design-md/compiler.js";
 import { generateOverviewHtml } from "../overview/generator.js";
+import { generatePrototypeComponentLibrary } from "../extractor/component-library-generator.js";
 import { 
   M3_TYPESCALE_DEFAULTS, 
   M3_STATE_DEFAULTS, 
@@ -51,6 +52,7 @@ export interface MultiPageRunnerResult {
   fonts: HarvestedAssets["fonts"];
   icons: HarvestedSvgIcon[];
   overviewHtmlPath: string;
+  componentLibraryPath: string;
   totalPatchesApplied: string[];
 }
 
@@ -171,6 +173,45 @@ export async function runMultiPageAlignment(options: MultiPageRunnerOptions): Pr
   }
 
   // 3. GENERATE COMPLETE ARTIFACT BUNDLE
+  // Synthesize prototype component library
+  const protoLib = generatePrototypeComponentLibrary({
+    brandName,
+    tokens,
+    components,
+    fonts: mergedFonts,
+    icons: aggregatedIcons
+  });
+
+  // Preserve locked components or existing human customizations
+  if (!components.components) components.components = {};
+  for (const [compName, protoDef] of Object.entries(protoLib.manifest)) {
+    if (!components.components[compName]) {
+      components.components[compName] = protoDef;
+    } else {
+      // If not locked, update code and anatomy from latest tokens
+      if (!components.components[compName].locked) {
+        components.components[compName].code = protoDef.code;
+        components.components[compName].anatomy = protoDef.anatomy;
+        components.components[compName].variants = protoDef.variants;
+      }
+    }
+  }
+
+  // Write component library files to <dsDir>/components/ui/
+  const uiDir = path.join(dsDir, "components", "ui");
+  try {
+    fs.mkdirSync(uiDir, { recursive: true });
+    for (const [fname, content] of Object.entries(protoLib.files)) {
+      const compName = fname.replace(/\.tsx?$/, "");
+      if (components.components[compName]?.locked && fs.existsSync(path.join(uiDir, fname))) {
+        continue;
+      }
+      fs.writeFileSync(path.join(uiDir, fname), content, "utf-8");
+    }
+  } catch {
+    // Non-fatal if filesystem is restricted
+  }
+
   const overviewHtmlContent = generateOverviewHtml({
     brandName,
     version: "1.7.0",
@@ -224,6 +265,7 @@ export async function runMultiPageAlignment(options: MultiPageRunnerOptions): Pr
     fonts: mergedFonts,
     icons: aggregatedIcons,
     overviewHtmlPath: overviewPath,
+    componentLibraryPath: uiDir,
     totalPatchesApplied
   };
 }

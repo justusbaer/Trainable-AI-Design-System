@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trainable DS — Product Requirements Document (PRD) & JTBD Strategy</title>
+  <meta name="description" content="Executive-ready Product Requirements Document and Jobs to be Done (JTBD) strategic overview for Trainable DS — Agent-Native Design System Engine.">
+
+  <!-- Discoverability Links -->
+  <link rel="llms-txt" type="text/markdown" href="/llms.txt">
+  <link rel="design-system-facade" type="text/markdown" href="/DESIGN.md">
+  <link rel="design-tokens" type="application/json" href="/tokens.json">
+
+  <!-- Fonts & Styles -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../portal.css">
+
+  <style>
+    /* Custom Styling Extensions for PRD & JTBD Interactive Portal */
+    :root {
+      --brand-gradient: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+      --card-bg-elevated: var(--md-sys-color-surface-container);
+      --card-border: var(--md-sys-color-outline-variant);
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+    }
+
+    .prd-hero {
+      position: relative;
+      padding-block: 2.5rem 1.5rem;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    .hero-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+
+    .badge-primary {
+      background: color-mix(in srgb, var(--md-sys-color-primary) 15%, transparent);
+      color: var(--md-sys-color-primary);
+      border: 1px solid color-mix(in srgb, var(--md-sys-color-primary) 30%, transparent);
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--md-sys-shape-corner-full);
+      font-size: 0.8rem;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-emerald {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--md-sys-shape-corner-full);
+      font-size: 0.8rem;
+    }
+
+    .badge-amber {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      font-weight: 700;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--md-sys-shape-corner-full);
+      font-size: 0.8rem;
+    }
+
+    .hero-headline {
+      font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+      font-weight: 900;
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+      margin-bottom: 1.25rem;
+      background: linear-gradient(135deg, var(--md-sys-color-on-surface) 40%, var(--md-sys-color-on-surface-variant) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+      color: var(--md-sys-color-on-surface-variant);
+      line-height: 1.6;
+      max-width: 960px;
+      margin-bottom: 2rem;
+    }
+
+    /* Sub-nav Jump Bar */
+    .quick-jump-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      overflow-x: auto;
+      padding-bottom: 0.75rem;
+      margin-bottom: 2rem;
+      scrollbar-width: none;
+    }
+    .quick-jump-bar::-webkit-scrollbar { display: none; }
+
+    .jump-link {
+      white-space: nowrap;
+      padding: 0.5rem 1.1rem;
+      border-radius: var(--md-sys-shape-corner-full);
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      color: var(--md-sys-color-on-surface);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+
+    .jump-link:hover {
+      background: var(--md-sys-color-primary-container);
+      color: var(--md-sys-color-on-primary-container);
+      border-color: var(--md-sys-color-primary);
+      transform: translateY(-1px);
+    }
+
+    /* Executive Highlights Grid */
+    .exec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      margin-block: 1.5rem 2.5rem;
+    }
+
+    .exec-card {
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-lg);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .exec-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--md-elevation-2);
+      border-color: color-mix(in srgb, var(--md-sys-color-primary) 60%, transparent);
+    }
+
+    .exec-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--brand-gradient);
+      opacity: 0.8;
+    }
+
+    .exec-icon {
+      font-size: 1.75rem;
+      line-height: 1;
+    }
+
+    .exec-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--md-sys-color-on-surface);
+      letter-spacing: -0.015em;
+    }
+
+    .exec-desc {
+      font-size: 0.9rem;
+      color: var(--md-sys-color-on-surface-variant);
+      line-height: 1.55;
+    }
+
+    /* JTBD Interactive Persona Workbench */
+    .jtbd-workbench {
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-xl);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      box-shadow: var(--md-elevation-1);
+    }
+
+    .persona-tab-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    .persona-btn {
+      background: var(--md-sys-color-surface-container-lowest);
+      border: 2px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-lg);
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .persona-btn:hover {
+      border-color: var(--md-sys-color-primary);
+      transform: translateY(-2px);
+    }
+
+    .persona-btn.active {
+      border-color: var(--md-sys-color-primary);
+      background: color-mix(in srgb, var(--md-sys-color-primary-container) 40%, var(--md-sys-color-surface-container-lowest));
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-sys-color-primary) 20%, transparent);
+    }
+
+    .persona-role-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--md-sys-color-primary);
+    }
+
+    .persona-btn-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+
+    .persona-btn-tagline {
+      font-size: 0.85rem;
+      color: var(--md-sys-color-on-surface-variant);
+      line-height: 1.4;
+    }
+
+    /* Persona Detail Panel */
+    .persona-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      background: var(--md-sys-color-surface-container-lowest);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-lg);
+      padding: 1.75rem;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .job-quote-box {
+      background: linear-gradient(145deg, var(--md-sys-color-surface-container), var(--md-sys-color-surface-container-high));
+      border-left: 5px solid var(--md-sys-color-primary);
+      border-radius: 0 var(--md-sys-shape-corner-md) var(--md-sys-shape-corner-md) 0;
+      padding: 1.25rem 1.5rem;
+    }
+
+    .job-quote-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--md-sys-color-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .job-quote-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      line-height: 1.5;
+      color: var(--md-sys-color-on-surface);
+      font-style: italic;
+    }
+
+    /* 4 Forces of Progress Visualizer */
+    .forces-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .force-card {
+      padding: 1.25rem;
+      border-radius: var(--md-sys-shape-corner-md);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .force-push {
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      color: var(--md-sys-color-on-surface);
+    }
+    .force-push .force-header { color: #f43f5e; }
+
+    .force-pull {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--md-sys-color-on-surface);
+    }
+    .force-pull .force-header { color: #10b981; }
+
+    .force-anxiety {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      color: var(--md-sys-color-on-surface);
+    }
+    .force-anxiety .force-header { color: #f59e0b; }
+
+    .force-habit {
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      color: var(--md-sys-color-on-surface);
+    }
+    .force-habit .force-header { color: #6366f1; }
+
+    .force-header {
+      font-weight: 800;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Solution Outcomes Table */
+    .outcomes-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .outcomes-table th, .outcomes-table td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    .outcomes-table th {
+      background: var(--md-sys-color-surface-container);
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Interactive Workflow Stepper */
+    .stepper-nav {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .step-btn {
+      padding: 0.6rem 1.25rem;
+      border-radius: var(--md-sys-shape-corner-full);
+      border: 1px solid transparent;
+      background: var(--md-sys-color-surface-container-low);
+      color: var(--md-sys-color-on-surface-variant);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .step-btn.active {
+      background: var(--md-sys-color-primary);
+      color: var(--md-sys-color-on-primary);
+      border-color: var(--md-sys-color-primary);
+      box-shadow: var(--md-elevation-1);
+    }
+
+    .step-content-card {
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-xl);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .step-header-group {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .step-title-text {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .step-flow-diagram {
+      background: var(--md-sys-color-surface-container-lowest);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-lg);
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--md-sys-color-on-surface);
+      line-height: 1.7;
+      overflow-x: auto;
+    }
+
+    /* Comparison Matrix Table */
+    .comparison-wrapper {
+      overflow-x: auto;
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-xl);
+      box-shadow: var(--md-elevation-1);
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 820px;
+    }
+
+    .comparison-table th, .comparison-table td {
+      padding: 1.1rem 1.25rem;
+      text-align: left;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    .comparison-table th {
+      background: var(--md-sys-color-surface-container);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .comparison-table tr:hover td {
+      background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 50%, transparent);
+    }
+
+    .pill-fail {
+      background: rgba(244, 63, 94, 0.12);
+      color: #f43f5e;
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      border-radius: var(--md-sys-shape-corner-full);
+      padding: 0.2rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .pill-win {
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: var(--md-sys-shape-corner-full);
+      padding: 0.2rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* ROI Calculator Card */
+    .calculator-container {
+      background: linear-gradient(145deg, var(--md-sys-color-surface-container-low), var(--md-sys-color-surface-container));
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-xl);
+      padding: 2.25rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.5rem;
+      box-shadow: var(--md-elevation-2);
+    }
+
+    @media (max-width: 900px) {
+      .calculator-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .slider-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .styled-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--md-sys-color-outline-variant);
+      outline: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+    }
+    .styled-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--md-sys-color-primary);
+      box-shadow: var(--md-elevation-2);
+      cursor: pointer;
+      border: 2px solid #fff;
+    }
+
+    .calc-results-box {
+      background: var(--md-sys-color-surface-container-lowest);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-lg);
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 1.25rem;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px dashed var(--md-sys-color-outline-variant);
+      padding-bottom: 0.75rem;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--md-sys-color-primary);
+      font-family: var(--font-mono);
+    }
+
+    /* Roadmap Timeline */
+    .roadmap-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .roadmap-item {
+      background: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-lg);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      transition: border-color 0.2s ease;
+    }
+
+    .roadmap-item.current {
+      border-color: var(--md-sys-color-primary);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--md-sys-color-primary) 20%, transparent);
+    }
+
+    .phase-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .phase-badge.done { background: #10b981; color: #fff; }
+    .phase-badge.active { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+    .phase-badge.planned { background: var(--md-sys-color-surface-container-high); color: var(--md-sys-color-on-surface-variant); }
+
+    .phase-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    .phase-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .phase-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    .phase-bullets {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--md-sys-color-on-surface-variant);
+      list-style-position: inside;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="top-nav">
+    <div class="nav-container">
+      <a href="/" class="brand-group">
+        <div class="brand-logo">T</div>
+        <span class="brand-title">Trainable DS</span>
+        <span class="badge">v2.0.0 PRD</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="/" class="nav-link">Main Portal ↗</a></li>
+          <li><a href="/docs/technical.html" class="nav-link" style="color:#6366f1; font-weight:600;">Technical Docs ↗</a></li>
+          <li><a href="/overview.html" class="nav-link" style="color:#2563eb; font-weight:600;" target="_blank">Review Studio ↗</a></li>
+          <li><a href="#market-problem" class="nav-link">Problem</a></li>
+          <li><a href="#jtbd-personas" class="nav-link" style="color:#10b981; font-weight:700;">JTBD Personas</a></li>
+          <li><a href="#workflows" class="nav-link">Workflows</a></li>
+          <li><a href="#comparison" class="nav-link">Comparison</a></li>
+          <li><a href="#features" class="nav-link">Features</a></li>
+          <li><a href="#roi" class="nav-link" style="color:#f59e0b; font-weight:700;">ROI &amp; KPIs</a></li>
+          <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
+          <li>
+            <button type="button" id="theme-toggle" class="btn-icon" aria-label="Toggle theme">
+              🌙
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- PRD Hero Section -->
+    <section class="prd-hero" id="overview">
+      <div class="hero-badge-row">
+        <span class="badge-primary">Executive Product Requirements Document (PRD)</span>
+        <span class="badge-emerald">Status: Approved Specification</span>
+        <span class="badge-amber">Jobs to be Done (JTBD) Strategy</span>
+      </div>
+      <h1 class="hero-headline">The Agent-Native Design System Engine &amp; Version Control Platform</h1>
+      <p class="hero-lead">
+        Bridging the $100B AI UI generation shift with mathematically rigorous 3-tier tokens, autonomous multi-modal ingestion, Git-native DS-VCS branching, and closed-loop pre-merge compliance gates.
+      </p>
+
+      <!-- Jump Bar -->
+      <div class="quick-jump-bar">
+        <a href="#market-problem" class="jump-link">1. Market Problem</a>
+        <a href="#jtbd-personas" class="jump-link">2. JTBD Persona Workbench</a>
+        <a href="#workflows" class="jump-link">3. End-to-End Workflows</a>
+        <a href="#comparison" class="jump-link">4. Traditional vs Trainable DS</a>
+        <a href="#features" class="jump-link">5. Feature Requirements</a>
+        <a href="#roi" class="jump-link">6. Executive KPIs &amp; ROI</a>
+        <a href="#roadmap" class="jump-link">7. Cloud Roadmap</a>
+      </div>
+
+      <!-- Executive Overview Grid -->
+      <div class="exec-grid">
+        <div class="exec-card">
+          <div class="exec-icon">⚡</div>
+          <h3 class="exec-title">The Design-Code Drift</h3>
+          <p class="exec-desc">
+            As Claude, Cursor, and Copilot accelerate generation by 10x, models default to arbitrary hexes (<code>#2563eb</code>) and reinventions, generating thousands of lines of untamable CSS debt.
+          </p>
+        </div>
+        <div class="exec-card">
+          <div class="exec-icon">📦</div>
+          <h3 class="exec-title">Context Window Bloat</h3>
+          <p class="exec-desc">
+            50,000-line Storybook MDX packages truncate LLM context windows. Trainable DS provides Astryx JIT querying (<code>tds doc</code>) consuming &lt;600 tokens per component query.
+          </p>
+        </div>
+        <div class="exec-card">
+          <div class="exec-icon">🌿</div>
+          <h3 class="exec-title">Git-Native DS-VCS</h3>
+          <p class="exec-desc">
+            Full version control parity in <code>.tds/vcs/</code>: isolated branch creation, token locking (<code>tds:locked</code>), and 3-way AST semantic merging guarded by WCAG AA 4.5:1 gates.
+          </p>
+        </div>
+        <div class="exec-card">
+          <div class="exec-icon">🛡️</div>
+          <h3 class="exec-title">Closed-Loop Compliance</h3>
+          <p class="exec-desc">
+            4-tier evaluation engine audits static AST tokens, component reuse, DOM accessibility (axe-core), and 48px touch targets before code can be merged into production.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: Market Problem & Why Traditional DS Fails -->
+    <section id="market-problem" style="scroll-margin-top: 5rem;">
+      <div class="section-header">
+        <span class="badge" style="width: fit-content;">Strategic Diagnosis</span>
+        <h2 class="section-title">The Market Crisis: Why Traditional Design Systems Fail AI</h2>
+        <p class="section-desc">
+          Enterprise frontend generation is rapidly transitioning to autonomous AI coding pairs, but traditional design systems are built exclusively for human cognitive speeds.
+        </p>
+      </div>
+
+      <div class="exec-grid" style="margin-top: 1rem;">
+        <div class="exec-card" style="border-left: 4px solid var(--accent-rose);">
+          <h4 style="font-weight: 800; font-size: 1rem; color: var(--accent-rose); margin-bottom: 0.25rem;">1. Storybook &amp; Context Exhaustion</h4>
+          <p class="exec-desc">
+            Traditional design system documentation relies on heavy documentation sites or 80,000-line MDX packages. Feeding this into an AI prompt triggers context window limits, slows inference by 300%, and forces the LLM to hallucinate missing props.
+          </p>
+        </div>
+        <div class="exec-card" style="border-left: 4px solid var(--accent-rose);">
+          <h4 style="font-weight: 800; font-size: 1rem; color: var(--accent-rose); margin-bottom: 0.25rem;">2. The "Raw Hex Disease"</h4>
+          <p class="exec-desc">
+            Unconstrained agents default to statistical guessing: arbitrary Tailwind classes (<code>p-[13px]</code>, <code>bg-[#2563eb]</code>), completely bypassing the brand's semantic token hierarchy (<code>sys.color.primary</code>).
+          </p>
+        </div>
+        <div class="exec-card" style="border-left: 4px solid var(--accent-rose);">
+          <h4 style="font-weight: 800; font-size: 1rem; color: var(--accent-rose); margin-bottom: 0.25rem;">3. Missing Interaction States</h4>
+          <p class="exec-desc">
+            Models regularly output non-interactive flat elements omitting hover, pressed, focused (3px ring), and disabled opacities (38% text, 12% container), violating enterprise UX guidelines.
+          </p>
+        </div>
+        <div class="exec-card" style="border-left: 4px solid var(--accent-rose);">
+          <h4 style="font-weight: 800; font-size: 1rem; color: var(--accent-rose); margin-bottom: 0.25rem;">4. Zero Version Control (DS-VCS)</h4>
+          <p class="exec-desc">
+            Figma variables and code repositories live in disconnected silos. When design changes a primary brand token, there is no branch-isolated sandbox, no AST merge engine, and no automated a11y contrast safety gate.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Jobs to be Done (JTBD) Interactive Persona Workbench -->
+    <section id="jtbd-personas" style="scroll-margin-top: 5rem;">
+      <div class="section-header">
+        <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981; width: fit-content;">JTBD Strategy</span>
+        <h2 class="section-title">Jobs to be Done (JTBD) Interactive Persona Workbench</h2>
+        <p class="section-desc">
+          Explore how Trainable DS solves the core functional, emotional, and social jobs across the three key enterprise stakeholders. Click a persona to inspect their situational forces and outcomes.
+        </p>
+      </div>
+
+      <div class="jtbd-workbench">
+        <!-- Persona Tab Selector -->
+        <div class="persona-tab-row">
+          <button type="button" class="persona-btn active" id="btn-persona-a" onclick="switchPersona('a')">
+            <span class="persona-role-badge">Persona A • Governance</span>
+            <span class="persona-btn-name">Design System Lead</span>
+            <span class="persona-btn-tagline">"The Token Sovereign" — Protecting brand integrity across 10+ repos</span>
+          </button>
+
+          <button type="button" class="persona-btn" id="btn-persona-b" onclick="switchPersona('b')">
+            <span class="persona-role-badge">Persona B • Execution</span>
+            <span class="persona-btn-name">Full-Stack Engineer</span>
+            <span class="persona-btn-tagline">"The Velocity Builder" — Shipping compliant UI with Cursor &amp; Claude Code</span>
+          </button>
+
+          <button type="button" class="persona-btn" id="btn-persona-c" onclick="switchPersona('c')">
+            <span class="persona-role-badge">Persona C • Leadership</span>
+            <span class="persona-btn-name">Head of Product / VP Eng</span>
+            <span class="persona-btn-tagline">"The Governance Arbiter" — Enforcing automated CI gates &amp; zero a11y failure</span>
+          </button>
+        </div>
+
+        <!-- Dynamic Persona Display Panel -->
+        <div id="persona-display-panel" class="persona-panel">
+          <!-- Content dynamically rendered via JavaScript below -->
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: End-to-End Product Workflows & User Journeys -->
+    <section id="workflows" style="scroll-margin-top: 5rem;">
+      <div class="section-header">
+        <span class="badge" style="width: fit-content;">Architectural Workflows</span>
+        <h2 class="section-title">End-to-End Product Workflows &amp; User Journeys</h2>
+        <p class="section-desc">
+          Experience the 4 primary operational workflows that power Trainable DS from autonomous web extraction to closed-loop agent pairing.
+        </p>
+      </div>
+
+      <div class="stepper-nav">
+        <button type="button" class="step-btn active" onclick="switchWorkflow(1)">
+          🌐 Workflow 1: 1-Prompt Website Extraction
+        </button>
+        <button type="button" class="step-btn" onclick="switchWorkflow(2)">
+          🌿 Workflow 2: Multi-Modal Ingestion &amp; Branching
+        </button>
+        <button type="button" class="step-btn" onclick="switchWorkflow(3)">
+          🛡️ Workflow 3: Review Studio &amp; Semantic Merge
+        </button>
+        <button type="button" class="step-btn" onclick="switchWorkflow(4)">
+          🤖 Workflow 4: Agent UI Generation (Astryx JIT)
+        </button>
+      </div>
+
+      <!-- Dynamic Step Content Card -->
+      <div id="workflow-card" class="step-content-card">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+    </section>
+
+    <!-- SECTION 4: Head-to-Head Comparison Matrix -->
+    <section id="comparison" style="scroll-margin-top: 5rem;">
+      <div class="section-header">
+        <span class="badge" style="width: fit-content;">Market Differentiation</span>
+        <h2 class="section-title">Comparison Matrix: Traditional Design System vs. Trainable DS</h2>
+        <p class="section-desc">
+          Why traditional human-centric toolchains (Storybook, Zeroheight, Tokens Studio) fail the generative AI era.
+        </p>
+      </div>
+
+      <div class="comparison-wrapper">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th style="width: 18%;">Dimension</th>
+              <th style="width: 41%;">Traditional Design System (Storybook / Zeroheight)</th>
+              <th style="width: 41%; color: var(--md-sys-color-primary);">Trainable DS (Agent-Native Engine)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Primary Target</strong></td>
+              <td><span class="pill-fail">Humans Only</span> Browsing web documentation</td>
+              <td><span class="pill-win">Agent-Native</span> AI Pair Programmers (Cursor, Claude, Antigravity) &amp; DesignOps</td>
+            </tr>
+            <tr>
+              <td><strong>Token Ingestion</strong></td>
+              <td><span class="pill-fail">Manual</span> Exporting Figma plugins, writing JSON by hand</td>
+              <td><span class="pill-win">Autonomous</span> 1-prompt website crawler, CSV tables, PDFs, SVGs, prompts</td>
+            </tr>
+            <tr>
+              <td><strong>Token Hierarchy</strong></td>
+              <td><span class="pill-fail">Flat / 2-Tier</span> Raw hexes, ad-hoc CSS variables</td>
+              <td><span class="pill-win">W3C DTCG 3-Tier</span> Reference &rarr; System &rarr; Component with HCT color science</td>
+            </tr>
+            <tr>
+              <td><strong>Context Window Footprint</strong></td>
+              <td><span class="pill-fail">Context Bloat</span> 50,000&ndash;120,000 lines dumped into prompt</td>
+              <td><span class="pill-win">&lt;600 Tokens</span> Astryx JIT querying on demand via <code>tds doc &lt;Comp&gt;</code></td>
+            </tr>
+            <tr>
+              <td><strong>Agent Discoverability</strong></td>
+              <td><span class="pill-fail">Manual Setup</span> Writing complex <code>.cursorrules</code> or configs</td>
+              <td><span class="pill-win">Zero-Touch</span> Edge-hosted <code>/llms.txt</code> with auto-configured MCP</td>
+            </tr>
+            <tr>
+              <td><strong>Version Control</strong></td>
+              <td><span class="pill-fail">None</span> Figma variables unversioned; code drifts</td>
+              <td><span class="pill-win">Git-Native DS-VCS</span> <code>.tds/vcs/</code> branches, commits, diffs, and AST merge</td>
+            </tr>
+            <tr>
+              <td><strong>Merge Safety &amp; A11y</strong></td>
+              <td><span class="pill-fail">Honor System</span> Regressions caught in production audits</td>
+              <td><span class="pill-win">Automated Gates</span> Pre-merge blocker enforcing WCAG AA 4.5:1 &amp; 48px touch targets</td>
+            </tr>
+            <tr>
+              <td><strong>Token Immutability</strong></td>
+              <td><span class="pill-fail">None</span> Any developer or AI can override CSS rules</td>
+              <td><span class="pill-win">Cryptographic Lock</span> <code>tds:locked</code> protects core brand tokens from rogue changes</td>
+            </tr>
+            <tr>
+              <td><strong>Compliance Verification</strong></td>
+              <td><span class="pill-fail">Slow Human QA</span> 4.2-day PR review cycle</td>
+              <td><span class="pill-win">Closed-Loop</span> 4-tier evaluator (Static AST, a11y, LLM rubric) in &lt;5 seconds</td>
+            </tr>
+            <tr>
+              <td><strong>Visual Studio</strong></td>
+              <td><span class="pill-fail">Heavy Dev Server</span> Requires local build, slow load times</td>
+              <td><span class="pill-win">Standalone Review Studio</span> <code>overview.html</code> with live branch &amp; token overrides</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Product Feature Requirements Matrix -->
+    <section id="features" style="scroll-margin-top: 5rem;">
+      <div class="section-header">
+        <span class="badge" style="width: fit-content;">Engineering Scope</span>
+        <h2 class="section-title">Product Feature Requirements Matrix (MoSCoW)</h2>
+        <p class="section-desc">
+          Core platform capabilities, acceptance criteria, and CLI/API integration hooks across P0, P1, and P2 tiers.
+        </p>
+      </div>
+
+      <!-- Feature Tier Filter -->
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1.25rem;">
+        <button type="button" class="filter-chip active" id="chip-all" onclick="filterFeatures('all')">All Features (18)</button>
+        <button type="button" class="filter-chip" id="chip-p0" onclick="filterFeatures('p0')">P0: Must Have (MVP)</button>
+        <button type="button" class="filter-chip" id="chip-p1" onclick="filterFeatures('p1')">P1: Should Have (Cloud)</button>
+        <button type="button" class="filter-chip" id="chip-p2" onclick="filterFeatures('p2')">P2: Nice to Have</button>
+      </div>
+
+      <div class="comparison-wrapper">
+        <table class="comparison-table" id="features-table">
+          <thead>
+            <tr>
+              <th style="width: 10%;">ID &amp; Priority</th>
+              <th style="width: 25%;">Feature Name</th>
+              <th style="width: 45%;">Functional Specification &amp; Acceptance Criteria</th>
+              <th style="width: 20%;">CLI / API Hook</th>
+            </tr>
+          </thead>
+          <tbody id="features-tbody">
+            <!-- Rendered via JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Key Performance Indicators & ROI Calculator -->
+    <section id="roi" style="scroll-margin-top: 5rem;">
+      <div class="section-header">
+        <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; width: fit-content;">Executive ROI</span>
+        <h2 class="section-title">Key Performance Indicators &amp; Enterprise ROI Calculator</h2>
+        <p class="section-desc">
+          Quantifying the engineering velocity acceleration, compliance risk reduction, and token cost savings for leadership.
+        </p>
+      </div>
+
+      <!-- Metrics Grid -->
+      <div class="metrics-grid" style="margin-bottom: 2rem;">
+        <div class="metric-card">
+          <div class="metric-value">&lt; 90s</div>
+          <div class="metric-label">Time to First Compliant Screen</div>
+          <span style="font-size:0.75rem; color:#10b981; font-weight:700;">&darr; 95% from 4 hours</span>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">&lt; 15 min</div>
+          <div class="metric-label">Design Review Cycle Time</div>
+          <span style="font-size:0.75rem; color:#10b981; font-weight:700;">&darr; from 4.2 days</span>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">0%</div>
+          <div class="metric-label">Token Hallucination Rate</div>
+          <span style="font-size:0.75rem; color:#10b981; font-weight:700;">Eliminates raw hex styling</span>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">100%</div>
+          <div class="metric-label">WCAG 2.1 AA Compliance</div>
+          <span style="font-size:0.75rem; color:#10b981; font-weight:700;">Automated 4.5:1 merge gate</span>
+        </div>
+      </div>
+
+      <!-- Interactive Calculator Card -->
+      <div class="calculator-container">
+        <div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem;">Calculate Your Squad's ROI</h3>
+          <p style="font-size: 0.9rem; color: var(--md-sys-color-on-surface-variant); margin-bottom: 1.75rem;">
+            Adjust your organization's parameters to see real-time developer hours saved, PR cycle acceleration, and annual cost savings.
+          </p>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span>Frontend / Full-Stack Engineers</span>
+              <span id="label-engineers" style="color: var(--md-sys-color-primary); font-weight: 800;">20 Engineers</span>
+            </div>
+            <input type="range" min="2" max="100" value="20" class="styled-slider" id="slider-engineers" oninput="calculateROI()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span>AI UI Prompts / Screens Built Per Week Per Dev</span>
+              <span id="label-screens" style="color: var(--md-sys-color-primary); font-weight: 800;">6 Screens</span>
+            </div>
+            <input type="range" min="1" max="25" value="6" class="styled-slider" id="slider-screens" oninput="calculateROI()">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-label-row">
+              <span>Blended Hourly Engineering Cost ($)</span>
+              <span id="label-rate" style="color: var(--md-sys-color-primary); font-weight: 800;">$95 / hour</span>
+            </div>
+            <input type="range" min="50" max="200" step="5" value="95" class="styled-slider" id="slider-rate" oninput="calculateROI()">
+          </div>
+        </div>
+
+        <div class="calc-results-box">
+          <div>
+            <span class="badge-emerald" style="display:inline-block; margin-bottom:1rem;">Projected Business Impact</span>
+            
+            <div class="stat-row">
+              <span class="stat-label">Hours Saved / Week</span>
+              <span class="stat-number" id="stat-hours-week">240 hrs</span>
+            </div>
+            <div class="stat-row" style="margin-top:0.75rem;">
+              <span class="stat-label">PR Design Rework Saved</span>
+              <span class="stat-number" id="stat-rework-saved">85%</span>
+            </div>
+            <div class="stat-row" style="margin-top:0.75rem;">
+              <span class="stat-label">LLM Context Tokens Saved / Mo</span>
+              <span class="stat-number" id="stat-tokens-saved">48.2M</span>
+            </div>
+          </div>
+
+          <div style="background: var(--md-sys-color-surface-container); border-radius: var(--md-sys-shape-corner-md); padding: 1rem; text-align: center;">
+            <span style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--md-sys-color-on-surface-variant); font-weight: 700;">Total Estimated Annual Value</span>
+            <div style="font-size: 2.2rem; font-weight: 900; color: #10b981; font-family: var(--font-mono); margin-top: 0.25rem;" id="stat-annual-dollars">$1,185,600</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Future Roadmap & Cloud Horizon -->
+    <section id="roadmap" style="scroll-margin-top: 5rem;">
+      <div class="section-header">
+        <span class="badge" style="width: fit-content;">Engineering Horizon</span>
+        <h2 class="section-title">Product Roadmap: From CLI to Cloud Backbone</h2>
+        <p class="section-desc">
+          Milestones connecting local developer workstations to real-time Google Firebase Firestore and automated GitHub pipelines.
+        </p>
+      </div>
+
+      <div class="roadmap-list">
+        <div class="roadmap-item done">
+          <div class="phase-badge done">✓</div>
+          <div class="phase-body">
+            <div class="phase-header-row">
+              <span class="phase-title">Phase 1: Core Engine &amp; DS-VCS (Completed)</span>
+              <span class="badge-emerald">Delivered Q3 2026</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--md-sys-color-on-surface-variant);">
+              Autonomous URL extraction, HCT tonal palette math, Git-native <code>.tds/vcs/</code> branching, 3-way AST semantic merger, and Review Studio (<code>overview.html</code>).
+            </p>
+            <ul class="phase-bullets">
+              <li>M3 DTCG 3-tier token synthesizer</li>
+              <li>Multi-page crawler &amp; Shadow DOM piercing</li>
+              <li>WCAG AA 4.5:1 &amp; 48px pre-merge gatekeeper</li>
+              <li>Astryx JIT <code>tds doc</code> component querying</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="roadmap-item current">
+          <div class="phase-badge active">2</div>
+          <div class="phase-body">
+            <div class="phase-header-row">
+              <span class="phase-title">Phase 2: Firebase Cloud Backbone (Current Release Horizon)</span>
+              <span class="badge-primary">Active Development</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--md-sys-color-on-surface-variant);">
+              Real-time synchronization via Cloud Firestore, global edge delivery of <code>/llms.txt</code> on Firebase Hosting, and headless evaluation Cloud Functions.
+            </p>
+            <ul class="phase-bullets">
+              <li>Firestore token sync (&lt;1.5s live propagation)</li>
+              <li>Hosting Edge CDN for <code>/llms.txt</code></li>
+              <li>Cloud Functions <code>POST /api/v1/evaluate</code></li>
+              <li>Cloud Run MCP server (SSE transport)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="phase-badge planned">3</div>
+          <div class="phase-body">
+            <div class="phase-header-row">
+              <span class="phase-title">Phase 3: Enterprise Integrations &amp; Automation</span>
+              <span class="badge" style="background:var(--md-sys-color-surface-container-high);">Q1 2027</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--md-sys-color-on-surface-variant);">
+              Two-way live Figma Variable synchronization, automated GitHub App for PR evaluation, and headless visual regression diffing.
+            </p>
+            <ul class="phase-bullets">
+              <li>Figma two-way sync plugin (canvas to Firestore)</li>
+              <li>GitHub App automated PR bot with inline lints</li>
+              <li>Playwright visual regression diffing sandbox</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="roadmap-item">
+          <div class="phase-badge planned">4</div>
+          <div class="phase-body">
+            <div class="phase-header-row">
+              <span class="phase-title">Phase 4: Multi-Brand Federation &amp; Cross-Platform</span>
+              <span class="badge" style="background:var(--md-sys-color-surface-container-high);">Q2 2027</span>
+            </div>
+            <p style="font-size: 0.9rem; color: var(--md-sys-color-on-surface-variant);">
+              Multi-brand enterprise token inheritance, dynamic theme morphing, and cross-platform native component targets (Flutter, React Native, SwiftUI).
+            </p>
+            <ul class="phase-bullets">
+              <li>Multi-brand parent/child token inheritance</li>
+              <li>Cross-platform generator (React, Flutter, SwiftUI)</li>
+              <li>Generative micro-interaction physics engine</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="portal-footer">
+    <div class="footer-container">
+      <div>
+        <strong>Trainable DS — Product Requirements Document (PRD) &amp; JTBD Strategy</strong>
+        <p style="margin-top: 0.25rem;">Built for technical PMs, staff design technologists, and AI pair programmers.</p>
+      </div>
+      <ul class="footer-links">
+        <li><a href="/" class="footer-link">Main Portal</a></li>
+        <li><a href="/overview.html" class="footer-link" target="_blank">Review Studio ↗</a></li>
+        <li><a href="/llms.txt" class="footer-link" target="_blank">llms.txt</a></li>
+        <li><a href="#overview" class="footer-link">Back to Top &uarr;</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Interactive Workbench & Application Logic -->
+  <script>
+    /* Theme Toggle */
+    const themeBtn = document.getElementById('theme-toggle');
+    const htmlEl = document.documentElement;
+
+    function initTheme() {
+      const saved = localStorage.getItem('tds-theme') || 'dark';
+      htmlEl.setAttribute('data-theme', saved);
+      themeBtn.textContent = saved === 'dark' ? '☀️' : '🌙';
+    }
+
+    themeBtn.addEventListener('click', () => {
+      const current = htmlEl.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      htmlEl.setAttribute('data-theme', next);
+      localStorage.setItem('tds-theme', next);
+      themeBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+    initTheme();
+
+    /* 1. JTBD Persona Data Model */
+    const PERSONAS = {
+      a: {
+        role: "Persona A: Design System Lead / Brand Guardian",
+        badge: "Governance & Brand Sovereignty",
+        title: "The Token Sovereign",
+        quote: "When our brand identity evolves, I want to consolidate, lock, and version tokens into a single authoritative machine-readable source, so our brand is never fragmented or diluted by rogue AI-generated code.",
+        forces: {
+          push: "Engineers and AI agents write arbitrary hex colors (#2563eb) and custom HTML tags. Tokens are fragmented across 14 Figma libraries, 3 PDFs, and legacy CSS.",
+          pull: "A centralized, version-controlled machine truth where I can lock brand tokens (tds:locked) and automatically block PRs violating WCAG AA contrast.",
+          anxiety: "Will an automated extraction engine misinterpret brand nuance? Can rogue developers overwrite certified tokens?",
+          habit: "Manually exporting JSON from Figma Tokens Studio and emailing spreadsheets or pinging engineers in Slack."
+        },
+        solution: {
+          title: "Multi-Modal Ingestion, Token Locking & Git-Native VCS",
+          desc: "Trainable DS ingests tokens from CSV, Markdown, live websites, and screenshots. Critical tokens are cryptographically locked (tds:locked). Changes are isolated in .tds/vcs/ branches and guarded by automated WCAG AA 4.5:1 merge checks.",
+          cli: "tds branch create brand-refresh\ntds ingest -f tokens.csv --type table\ntds refine \"Set primary to #00639b\"\ntds merge brand-refresh --target main"
+        },
+        outcomes: [
+          { metric: "Token Consolidation Time", before: "4–6 weeks across 8 repos", after: "< 10 minutes", status: "win" },
+          { metric: "Token Immutability Enforcement", before: "0% (anyone can edit CSS)", after: "100% (tds:locked blocked)", status: "win" },
+          { metric: "WCAG Contrast Merge Guarantee", before: "35% post-release failure", after: "0% failure (Gatekeeper)", status: "win" }
+        ]
+      },
+      b: {
+        role: "Persona B: Full-Stack Engineer / AI Pair Programmer",
+        badge: "Developer Velocity & Agent DX",
+        title: "The Velocity Builder",
+        quote: "When I ask an AI agent to build a UI feature, I want the agent to automatically reuse certified components and semantic tokens without bloating context, so that my code compiles cleanly and passes PR review immediately.",
+        forces: {
+          push: "Claude Code and Cursor hallucinate non-existent props, invent ad-hoc classes like p-[13px], and reinvent <button> tags. PRs get rejected during design review.",
+          pull: "Instant zero-touch agent onboarding via /llms.txt, JIT component querying (<600 tokens per component), and 100% compliant TSX on the first prompt.",
+          anxiety: "Will this system slow down my AI prompting by forcing the model to read a 100,000-line Storybook document?",
+          habit: "Copying and pasting an old component file from components/ and hacking raw CSS inline."
+        },
+        solution: {
+          title: "Astryx Parity JIT Querying & Closed-Loop MCP",
+          desc: "Agents discover instructions from /llms.txt and query only the exact component contract they need on demand via 'tds doc <Component>' or MCP 'get_component_code'. Pre-commit 'tds evaluate' validates code and self-patches errors.",
+          cli: "# Agent discovers system via /llms.txt\ntds doc Button --json\ntds evaluate OrderScreen.tsx --strict"
+        },
+        outcomes: [
+          { metric: "Agent Onboarding Friction", before: "30 mins manual JSON config", after: "< 5 seconds (1-prompt)", status: "win" },
+          { metric: "Context Window Overhead", before: "50,000+ tokens (Storybook)", after: "< 600 tokens (JIT)", status: "win" },
+          { metric: "First-Pass Component Reuse", before: "22% (reinvented tags)", after: "≥ 95% certified reuse", status: "win" }
+        ]
+      },
+      c: {
+        role: "Persona C: Head of Product / Design Technologist",
+        badge: "Product Quality & CI Governance",
+        title: "The Governance Arbiter",
+        quote: "When multiple teams ship fast with AI, I want an automated compliance score and CI regression gate, so that inaccessible or off-brand UI cannot reach production.",
+        forces: {
+          push: "10+ squads shipping AI-assisted code at breakneck speed. UI quality is eroding, and legal audits are flagging inaccessible low-contrast text and tiny mobile buttons.",
+          pull: "An objective 0–100 Compliance Score and an automated CI regression gatekeeper blocking bad PRs. A visual Review Studio (overview.html) with zero build steps.",
+          anxiety: "Will automated merge gates slow down engineering delivery and create developer friction?",
+          habit: "Spot-checking staging deployments manually and relying on quarterly a11y audit spreadsheets."
+        },
+        solution: {
+          title: "Pre-Merge Gatekeeper & Visual Review Studio",
+          desc: "Trainable DS acts as an automated CI arbiter: checks WCAG 2.1 AA 4.5:1 relative luminance and verifies mobile >=48px touch targets. Product leaders inspect visual diffs and live branch overrides directly in overview.html.",
+          cli: "# CI Pipeline Gatekeeper\ntds evaluate src/components/ --strict\ntds merge feature-branch --target main\n# Visual Studio\ntds serve --port 5000"
+        },
+        outcomes: [
+          { metric: "WCAG AA Contrast Pass Rate", before: "62% in production", after: "100% (Guaranteed)", status: "win" },
+          { metric: "Mobile Touch Target Compliance", before: "45% (<48px buttons)", after: "100% (>=48px enforced)", status: "win" },
+          { metric: "Design Review Cycle Time", before: "4.2 days lag", after: "< 15 minutes", status: "win" }
+        ]
+      }
+    };
+
+    function switchPersona(key) {
+      document.querySelectorAll('.persona-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = document.getElementById(`btn-persona-${key}`);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const p = PERSONAS[key];
+      const panel = document.getElementById('persona-display-panel');
+
+      panel.innerHTML = `
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:0.5rem;">
+          <div>
+            <span class="persona-role-badge">${p.role}</span>
+            <h3 style="font-size:1.5rem; font-weight:800; margin-top:0.25rem;">${p.title}</h3>
+          </div>
+          <span class="badge-primary">${p.badge}</span>
+        </div>
+
+        <div class="job-quote-box">
+          <div class="job-quote-label">Core Job to be Done (JTBD)</div>
+          <div class="job-quote-text">"${p.quote}"</div>
+        </div>
+
+        <!-- Four Forces Diagram -->
+        <div>
+          <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:0.04em;">The Four Forces of Progress</h4>
+          <div class="forces-grid">
+            <div class="force-card force-push">
+              <div class="force-header">⚠️ The Push (Current Pain)</div>
+              <div>${p.forces.push}</div>
+            </div>
+            <div class="force-card force-pull">
+              <div class="force-header">✨ The Pull (Trainable DS Solution)</div>
+              <div>${p.forces.pull}</div>
+            </div>
+            <div class="force-card force-anxiety">
+              <div class="force-header">❓ The Anxiety (Hesitation)</div>
+              <div>${p.forces.anxiety}</div>
+            </div>
+            <div class="force-card force-habit">
+              <div class="force-header">🔄 The Habit (Legacy Way)</div>
+              <div>${p.forces.habit}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trainable DS Solution & CLI -->
+        <div style="background:var(--md-sys-color-surface-container); border-radius:var(--md-sys-shape-corner-md); padding:1.25rem; display:flex; flex-direction:column; gap:0.75rem;">
+          <h4 style="font-size:1.05rem; font-weight:800; color:var(--md-sys-color-primary);">${p.solution.title}</h4>
+          <p style="font-size:0.9rem; line-height:1.5; color:var(--md-sys-color-on-surface-variant);">${p.solution.desc}</p>
+          <div class="code-box">${p.solution.cli}</div>
+        </div>
+
+        <!-- Measurable Outcomes -->
+        <div>
+          <h4 style="font-size:0.95rem; font-weight:800; margin-bottom:0.75rem; text-transform:uppercase; letter-spacing:0.04em;">Measurable Value &amp; Acceptance Criteria</h4>
+          <table class="outcomes-table">
+            <thead>
+              <tr>
+                <th>Job Step / Metric</th>
+                <th>Traditional Legacy Baseline</th>
+                <th>Trainable DS Target</th>
+                <th>Verification</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${p.outcomes.map(o => `
+                <tr>
+                  <td><strong>${o.metric}</strong></td>
+                  <td style="color:var(--md-sys-color-on-surface-variant);">${o.before}</td>
+                  <td style="color:#10b981; font-weight:800;">${o.after}</td>
+                  <td><span class="pill-win">Verified</span></td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+    // Initialize default persona A
+    switchPersona('a');
+
+    /* 2. Workflow Interactive Stepper */
+    const WORKFLOWS = {
+      1: {
+        title: "Workflow 1: One-Prompt Autonomous Website Extraction",
+        badge: "Zero-Knowledge Extraction",
+        desc: "Extract a full M3 design system directly from any live website without manual token exports. Pierces shadow DOM, harvests WOFF2 web fonts and SVGs, and synthesizes 36+ semantic color roles with HCT color science.",
+        cli: "tds train --url https://brand.example.com --align --threshold 95",
+        steps: [
+          "1. Archetype Crawler visits root URL and classifies subpages (Home, Listing, Detail, Configurator).",
+          "2. Headless CDP pierces Shadow DOM (<button>, custom elements) extracting computed colors, padding, and radii.",
+          "3. Typography Harvester extracts @font-face WOFF2 rules and vector SVG icons.",
+          "4. HCT Engine derives 0-100 tonal palettes and maps 36+ semantic roles (primary, surface-container).",
+          "5. Convergence Loop (tds align) runs up to 3 visual refinement passes until >=95% similarity.",
+          "6. Standalone Review Studio (overview.html) is automatically generated for visual review."
+        ]
+      },
+      2: {
+        title: "Workflow 2: Multi-Modal Ingestion & Version Branching",
+        badge: "Git-Native DS-VCS",
+        desc: "Isolate experimental design updates in dedicated DS-VCS branches. Ingest disparate data from CSV tables, markdown guidelines, visual screenshots, and natural language prompts without overwriting locked tokens.",
+        cli: "tds branch create brand-refresh-2027\ntds ingest -f tokens.csv --type table\ntds ingest -f brand-book.pdf --type document\ntds refine \"Make dark mode surface-container deeper by 5%\"",
+        steps: [
+          "1. Branch Isolation: Creates .tds/vcs/branches/brand-refresh-2027 snapshot from HEAD.",
+          "2. TableAdapter: Maps CSV headers ('Token Name, Hex Value') into W3C DTCG 3-tier syntax.",
+          "3. DocumentAdapter: Parses markdown brand books for typography hierarchies and sentence-case rules.",
+          "4. ConversationAdapter: Reconciles natural language directives into exact token changes.",
+          "5. Token Locking: Checks tds:locked flags; rejects unauthorized edits unless --force is provided.",
+          "6. Atomic Commit: Generates immutable snapshot hash with author, timestamp, and summary."
+        ]
+      },
+      3: {
+        title: "Workflow 3: Visual Review Studio & Semantic 3-Way AST Merge",
+        badge: "Automated Merge Gatekeeper",
+        desc: "Stakeholders inspect branch overrides in overview.html and initiate a 3-way AST merge. The Merge Gatekeeper automatically blocks merges that violate WCAG 2.1 AA 4.5:1 contrast or mobile 48px touch targets.",
+        cli: "tds serve --port 5000\ntds merge brand-refresh-2027 --target main",
+        steps: [
+          "1. Visual Studio: Product leads switch branches in overview.html and test live token overrides.",
+          "2. 3-Way AST Merge: Reconciles common ancestor (Base), active (Our), and incoming (Their).",
+          "3. Conflict Detection: Identifies token key collisions and prompts for human resolution.",
+          "4. Contrast Gatekeeper: Calculates relative luminance L = 0.2126R + 0.7152G + 0.0722B. Blocks if <4.5:1.",
+          "5. Touch Target Gatekeeper: Validates Button, Input, and Select components guarantee >=48px height.",
+          "6. Fast-Forward: Successful merges update main branch with zero visual regressions."
+        ]
+      },
+      4: {
+        title: "Workflow 4: AI Agent UI Generation (Astryx Parity JIT)",
+        badge: "Sub-90s Certified Screens",
+        desc: "AI agents (Claude Code, Cursor, Antigravity) discover the design system via /llms.txt and query exact component contracts on demand. Closed-loop evaluator audits code before pull requests.",
+        cli: "# 1. Agent queries certified component contract (<600 tokens)\ntds doc Card --json\n# 2. Agent evaluates generated UI\ntds evaluate OrderConfirmationCard.tsx --strict",
+        steps: [
+          "1. Zero-Touch Discovery: Agent reads /llms.txt and configures workspace MCP bindings.",
+          "2. JIT Component Query: Agent calls 'tds doc <Component>' receiving exact TypeScript props (<600 tokens).",
+          "3. Clean Generation: Agent writes TSX referencing semantic tokens and certified component primitives.",
+          "4. Closed-Loop Evaluation: 'tds evaluate' audits static AST (0 raw hex), component reuse, and sentence case.",
+          "5. Self-Correction: If violations occur, evaluator emits structured JSON diagnostics for instant agent self-patching.",
+          "6. 100% Certified Delivery: PR is opened with verified compliance score of 100/100."
+        ]
+      }
+    };
+
+    function switchWorkflow(id) {
+      document.querySelectorAll('.step-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx + 1 === id);
+      });
+
+      const w = WORKFLOWS[id];
+      const container = document.getElementById('workflow-card');
+
+      container.innerHTML = `
+        <div class="step-header-group">
+          <div>
+            <span class="badge-primary" style="margin-bottom:0.5rem; display:inline-block;">${w.badge}</span>
+            <h3 class="step-title-text">${w.title}</h3>
+          </div>
+        </div>
+        <p style="font-size:0.95rem; line-height:1.6; color:var(--md-sys-color-on-surface-variant);">${w.desc}</p>
+        
+        <div>
+          <span style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--md-sys-color-primary);">Executable Terminal Command</span>
+          <div class="code-box" style="margin-top:0.4rem;">${w.cli}</div>
+        </div>
+
+        <div style="background:var(--md-sys-color-surface-container); border-radius:var(--md-sys-shape-corner-md); padding:1.25rem;">
+          <span style="font-size:0.8rem; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:var(--md-sys-color-on-surface); display:block; margin-bottom:0.75rem;">Step-by-Step Architectural Sequence</span>
+          <ol style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.9rem; color:var(--md-sys-color-on-surface-variant); list-style-position:inside;">
+            ${w.steps.map(s => `<li>${s}</li>`).join('')}
+          </ol>
+        </div>
+      `;
+    }
+    // Initialize default workflow 1
+    switchWorkflow(1);
+
+    /* 3. Feature Requirements Filterable Matrix */
+    const FEATURES = [
+      { id: "F-P0-01", tier: "p0", name: "Autonomous URL Extractor", desc: "Crawl target website, pierce Shadow DOM, and harvest computed styles.", hook: "tds train --url <url>" },
+      { id: "F-P0-02", tier: "p0", name: "3-Tier Token Synthesizer", desc: "Generate Reference, System, and Component tokens with HCT color roles.", hook: "@trainable-ds/core:hct" },
+      { id: "F-P0-03", tier: "p0", name: "Git-Native DS-VCS Core", desc: "Branch creation, snapshot commits, branch switching, and visual diffing.", hook: "tds branch <action>" },
+      { id: "F-P0-04", tier: "p0", name: "3-Way AST Semantic Merger", desc: "Merge design system branches, resolve paths, and detect token conflicts.", hook: "tds merge <branch>" },
+      { id: "F-P0-05", tier: "p0", name: "Pre-Merge Gatekeeper", desc: "Enforce WCAG 2.1 AA 4.5:1 contrast and 48px touch target requirements.", hook: "MergeGatekeeper.check()" },
+      { id: "F-P0-06", tier: "p0", name: "Astryx JIT Component Query", desc: "Provide instant, lightweight component schemas and TSX code (<600 tokens).", hook: "tds doc [component]" },
+      { id: "F-P0-07", tier: "p0", name: "Multi-Modal Ingestion", desc: "Ingest tokens from CSV tables, markdown docs, screenshots, and prompts.", hook: "tds ingest -f <path>" },
+      { id: "F-P0-08", tier: "p0", name: "Token Locking (tds:locked)", desc: "Protect critical brand tokens from automated or unauthorized edits.", hook: "tds refine --force" },
+      { id: "F-P0-09", tier: "p0", name: "4-Tier Compliance Evaluator", desc: "Audit code for raw hex colors, unmapped spacing, and sentence case.", hook: "tds evaluate <file>" },
+      { id: "F-P0-10", tier: "p0", name: "MCP Server (13 Tools)", desc: "Model Context Protocol server for Claude, Cursor, and Antigravity.", hook: "tds mcp --stdio" },
+      { id: "F-P1-01", tier: "p1", name: "Visual Review Studio", desc: "Standalone HTML portal (overview.html) with branch switcher & overrides.", hook: "tds serve --port 5000" },
+      { id: "F-P1-02", tier: "p1", name: "Astryx Edge Portal (/llms.txt)", desc: "Edge-hosted /llms.txt providing zero-touch discovery for AI agents.", hook: "Firebase Hosting CDN" },
+      { id: "F-P1-03", tier: "p1", name: "Figma Variables Exporter", desc: "Export W3C DTCG tokens directly into Figma Variables via REST API.", hook: "tds figma push" },
+      { id: "F-P1-04", tier: "p1", name: "WOFF2 & SVG Asset Harvester", desc: "Automatically capture web fonts and vector SVGs during URL training.", hook: "tds train --url" },
+      { id: "F-P1-05", tier: "p1", name: "Headless Evaluation REST API", desc: "Cloud Function endpoint for CI/CD pipelines to evaluate snippets remotely.", hook: "POST /api/v1/evaluate" },
+      { id: "F-P2-01", tier: "p2", name: "Multi-Brand Token Federation", desc: "Parent and child brand token inheritance across enterprise business units.", hook: "Cloud Firestore Hub" },
+      { id: "F-P2-02", tier: "p2", name: "Visual Regression Sandbox", desc: "Headless Playwright screenshot diffing against live production URLs.", hook: "tds test-visual" },
+      { id: "F-P2-03", tier: "p2", name: "Two-Way Figma Sync Plugin", desc: "Real-time bidirectional sync between Figma canvas and Cloud Firestore.", hook: "Figma Plugin SDK" }
+    ];
+
+    function filterFeatures(tier) {
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      const chip = document.getElementById(`chip-${tier}`);
+      if (chip) chip.classList.add('active');
+
+      const filtered = tier === 'all' ? FEATURES : FEATURES.filter(f => f.tier === tier);
+      const tbody = document.getElementById('features-tbody');
+
+      tbody.innerHTML = filtered.map(f => {
+        let badgeClass = f.tier === 'p0' ? 'badge-primary' : f.tier === 'p1' ? 'badge-emerald' : 'badge-amber';
+        let tierLabel = f.tier === 'p0' ? 'P0 • Must Have' : f.tier === 'p1' ? 'P1 • Should Have' : 'P2 • Nice to Have';
+
+        return `
+          <tr>
+            <td>
+              <span class="${badgeClass}" style="font-size:0.75rem;">${tierLabel}</span>
+              <div style="font-family:var(--font-mono); font-size:0.8rem; margin-top:0.35rem; opacity:0.8;">${f.id}</div>
+            </td>
+            <td><strong>${f.name}</strong></td>
+            <td style="color:var(--md-sys-color-on-surface-variant); font-size:0.88rem;">${f.desc}</td>
+            <td><code style="font-family:var(--font-mono); font-size:0.8rem; color:var(--md-sys-color-primary);">${f.hook}</code></td>
+          </tr>
+        `;
+      }).join('');
+    }
+    filterFeatures('all');
+
+    /* 4. Interactive ROI Calculator */
+    function calculateROI() {
+      const engineers = parseInt(document.getElementById('slider-engineers').value, 10);
+      const screensPerWeek = parseInt(document.getElementById('slider-screens').value, 10);
+      const hourlyRate = parseInt(document.getElementById('slider-rate').value, 10);
+
+      document.getElementById('label-engineers').textContent = `${engineers} Engineers`;
+      document.getElementById('label-screens').textContent = `${screensPerWeek} Screens`;
+      document.getElementById('label-rate').textContent = `$${hourlyRate} / hour`;
+
+      // Calculations:
+      // Legacy manual design system lookup + CSS hacking + PR review rework = ~2.5 hrs per screen
+      // Trainable DS automated screen + JIT query + auto evaluation = ~0.25 hrs (15 mins)
+      // Hours saved per screen = 2.0 hrs
+      const hoursSavedPerWeek = engineers * screensPerWeek * 2.0;
+      const weeklyDollars = hoursSavedPerWeek * hourlyRate;
+      const annualDollars = weeklyDollars * 50; // 50 working weeks
+
+      // Token context savings:
+      // Legacy Storybook = 60,000 tokens per prompt
+      // Trainable DS JIT = 600 tokens per prompt
+      // Net token savings per prompt = 59,400 tokens
+      const monthlyPrompts = engineers * screensPerWeek * 4 * 3; // ~3 prompts per screen
+      const monthlyTokensSavedM = (monthlyPrompts * 59400) / 1000000;
+
+      document.getElementById('stat-hours-week').textContent = `${Math.round(hoursSavedPerWeek).toLocaleString()} hrs`;
+      document.getElementById('stat-tokens-saved').textContent = `${monthlyTokensSavedM.toFixed(1)}M`;
+      document.getElementById('stat-annual-dollars').textContent = `$${Math.round(annualDollars).toLocaleString()}`;
+    }
+    calculateROI();
+  </script>
+
+</body>
+</html>

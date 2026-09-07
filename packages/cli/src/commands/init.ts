@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import pc from "picocolors";
-import { generateCursorRules, generateClaudeMdBlock } from "@trainable-ds/compiler";
+import { generateCursorRules, generateClaudeMdBlock, generateAntigravityRulesBlock } from "@trainable-ds/compiler";
 
 export interface InitOptions {
   auto?: boolean;
@@ -86,6 +86,8 @@ tokens:
 2. **NO AD-HOC REINVENTIONS:** Always import certified components.
 3. **SENTENCE CASE:** Button and tab labels MUST be sentence case.
 4. **MINIMUM TOUCH TARGET:** Minimum 48x48px touch targets.
+5. **STRICT USER COMMAND & SKETCH FIDELITY (ZERO FEATURE HALLUCINATION):** Follow user wireframes, sketches, and prompts strictly. NEVER hallucinate, assume, or inject unrequested features, action buttons, or widgets (e.g. heating, horn, walk, tire pressure) to fill space.
+6. **INTENTIONAL WHITESPACE & PLACEHOLDER MANDATE:** If an area is marked as whitespace (e.g. "Whitespace (for now)") or left empty, DO NOT invent features. Either ask the user first if they want to add specific features, OR render an explicit visual placeholder indicating the area is intentionally left empty.
 `;
     fs.writeFileSync(designMdPath, defaultDesignMd, "utf-8");
     console.log(pc.green("✔ Emitted root DESIGN.md"));
@@ -128,6 +130,17 @@ tokens:
   if (!claudeContent.includes("TRAINABLE_DS_START")) {
     fs.appendFileSync(claudeMdPath, generateClaudeMdBlock("My Application"), "utf-8");
     console.log(pc.green("✔ Injected guidelines into CLAUDE.md"));
+  }
+
+  // Google Antigravity injection (AGENTS.md & GEMINI.md)
+  const agentsMdPath = path.join(cwd, "AGENTS.md");
+  let agentsContent = "";
+  if (fs.existsSync(agentsMdPath)) {
+    agentsContent = fs.readFileSync(agentsMdPath, "utf-8");
+  }
+  if (!agentsContent.includes("TRAINABLE_DS_START")) {
+    fs.appendFileSync(agentsMdPath, generateAntigravityRulesBlock("My Application"), "utf-8");
+    console.log(pc.green("✔ Injected guidelines into AGENTS.md (Antigravity)"));
   }
 
   // 5. If remote URL provided, log connection

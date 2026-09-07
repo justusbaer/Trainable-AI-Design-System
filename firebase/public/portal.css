@@ -1,11 +1,11 @@
 /* ==========================================================================
-   Trainable DS Portal — Material Design 3 CSS Architecture
+   Trainable DS Portal — 3-Tier Design Token CSS Architecture
    ========================================================================== */
 
 :root {
   color-scheme: light dark;
 
-  /* M3 Light Palette Defaults */
+  /* Semantic Palette Defaults */
   --md-sys-color-primary: #3c485c;
   --md-sys-color-on-primary: #ffffff;
   --md-sys-color-primary-container: #d9dee7;

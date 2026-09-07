@@ -58,11 +58,14 @@ function updateThemeIcon(theme) {
 // One-Prompt Agent Connect & Extraction Boxes
 function initAgentPrompt() {
   const origin = window.location.origin;
+  const siteUrl = (origin && origin.startsWith("http") && !origin.includes("localhost") && !origin.includes("127.0.0.1"))
+    ? origin
+    : "https://trainable-ds-2026.web.app";
 
   // 1. Connect prompt
   const codeEl = document.getElementById("agent-prompt-code");
   const copyBtn = document.getElementById("copy-agent-prompt");
-  const connectPromptText = `Connect to Trainable DS from ${origin} and follow /DESIGN.md for all UI generation.`;
+  const connectPromptText = `Follow the design system protocol at ${siteUrl}/llms.txt and adhere strictly to /DESIGN.md for all UI generation.`;
 
   if (codeEl) codeEl.textContent = connectPromptText;
   if (copyBtn) {
@@ -80,7 +83,7 @@ function initAgentPrompt() {
   function updateExtractPrompt() {
     if (!extractPromptCode) return;
     const url = (extractUrlInput && extractUrlInput.value.trim()) || "https://example.com";
-    extractPromptCode.textContent = `Use Trainable Design System to extract the design system from ${url}`;
+    extractPromptCode.textContent = `Follow the autonomous training protocol at ${siteUrl}/llms.txt to extract and build a complete design system from ${url}`;
   }
 
   if (extractUrlInput) {
@@ -90,33 +93,59 @@ function initAgentPrompt() {
   if (copyExtractBtn) {
     copyExtractBtn.addEventListener("click", () => {
       const url = (extractUrlInput && extractUrlInput.value.trim()) || "https://example.com";
-      const prompt = `Use Trainable Design System to extract the design system from ${url}`;
+      const prompt = `Follow the autonomous training protocol at ${siteUrl}/llms.txt to extract and build a complete design system from ${url}`;
       navigator.clipboard.writeText(prompt);
-      showToast("Website extraction prompt copied! Paste into any AI agent.");
+      showToast("Website extraction prompt copied! Paste into Antigravity, Cursor, or Claude Code.");
     });
   }
 
-  // 3. Mode tab toggles
+  // 3. Vision Image Training prompt
+  const visionPromptCode = document.getElementById("vision-prompt-code");
+  const copyVisionBtn = document.getElementById("copy-vision-prompt");
+  if (visionPromptCode) {
+    visionPromptCode.textContent = `Follow the autonomous training protocol at ${siteUrl}/llms.txt to train and build a complete design system from these attached images.`;
+  }
+  if (copyVisionBtn) {
+    copyVisionBtn.addEventListener("click", () => {
+      const prompt = `Follow the autonomous training protocol at ${siteUrl}/llms.txt to train and build a complete design system from these attached images.`;
+      navigator.clipboard.writeText(prompt);
+      showToast("Image training prompt copied! Paste into Antigravity, Cursor, or Claude Code.");
+    });
+  }
+
+  // 4. Mode tab toggles
   const tabExtract = document.getElementById("tab-btn-extract");
+  const tabVision = document.getElementById("tab-btn-vision");
+  const tabVcs = document.getElementById("tab-btn-vcs");
   const tabConnect = document.getElementById("tab-btn-connect");
   const panelExtract = document.getElementById("panel-extract");
+  const panelVision = document.getElementById("panel-vision");
+  const panelVcs = document.getElementById("panel-vcs");
   const panelConnect = document.getElementById("panel-connect");
 
-  if (tabExtract && tabConnect) {
-    tabExtract.addEventListener("click", () => {
-      tabExtract.classList.add("active");
-      tabConnect.classList.remove("active");
-      if (panelExtract) panelExtract.style.display = "flex";
-      if (panelConnect) panelConnect.style.display = "none";
-    });
-
-    tabConnect.addEventListener("click", () => {
-      tabConnect.classList.add("active");
-      tabExtract.classList.remove("active");
-      if (panelConnect) panelConnect.style.display = "flex";
-      if (panelExtract) panelExtract.style.display = "none";
+  const copyVcsBtn = document.getElementById("copy-vcs-prompt");
+  if (copyVcsBtn) {
+    copyVcsBtn.addEventListener("click", () => {
+      const codeEl = document.getElementById("vcs-prompt-code");
+      if (codeEl) {
+        navigator.clipboard.writeText(codeEl.textContent || "");
+        showToast("Branch & refine command copied to clipboard!");
+      }
     });
   }
+
+  function setBannerTab(activeTab, activePanel) {
+    [tabExtract, tabVision, tabVcs, tabConnect].forEach(t => t && t.classList.remove("active"));
+    [panelExtract, panelVision, panelVcs, panelConnect].forEach(p => p && (p.style.display = "none"));
+
+    if (activeTab) activeTab.classList.add("active");
+    if (activePanel) activePanel.style.display = "flex";
+  }
+
+  if (tabExtract) tabExtract.addEventListener("click", () => setBannerTab(tabExtract, panelExtract));
+  if (tabVision) tabVision.addEventListener("click", () => setBannerTab(tabVision, panelVision));
+  if (tabVcs) tabVcs.addEventListener("click", () => setBannerTab(tabVcs, panelVcs));
+  if (tabConnect) tabConnect.addEventListener("click", () => setBannerTab(tabConnect, panelConnect));
 }
 
 // Load and render Tokens
@@ -274,7 +303,7 @@ function renderComponents(filterFamily) {
       <div class="comp-meta">
         <div><strong>Touch Target:</strong> ${minTarget}</div>
         <div><strong>Variants:</strong> ${variantsList}</div>
-        <div><strong>Import:</strong> <code>import { ${comp.name} } from '${comp.path}';</code></div>
+        <div><strong>Import:</strong> <code>import { ${comp.name} } from '${comp.path || `./components/ui/${comp.name}.tsx`}';</code></div>
       </div>
       <div class="code-box">${escapeHtml(exampleSnippet)}</div>
       <button type="button" class="btn-secondary copy-snippet-btn" data-snippet="${escapeAttr(exampleSnippet)}">
@@ -356,7 +385,7 @@ async function runEvaluation(code) {
   if (!scoreCircle || !scoreSummary || !diagList) return;
 
   scoreCircle.textContent = "...";
-  scoreSummary.textContent = "Auditing against Material Design 3 and Trainable DS constraints...";
+  scoreSummary.textContent = "Auditing against Design System and token constraints...";
   diagList.innerHTML = "";
 
   try {

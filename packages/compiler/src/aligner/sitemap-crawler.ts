@@ -30,9 +30,21 @@ export function classifyPageArchetype(urlStr: string, title = "", label = ""): P
     return "form";
   }
 
+  // Detail / Single Item page
+  if (
+    lower.includes("/detail") ||
+    lower.includes("product-detail") ||
+    lower.includes("/item/") ||
+    lower.includes("/product/") ||
+    lower.includes("/p/") ||
+    lower.includes("/dp/")
+  ) {
+    return "detail";
+  }
+
   // Listing / Catalog
   if (
-    lower.includes("models") && !/\b(911|taycan|panamera|macan|cayenne|718)\b/.test(lower) ||
+    lower.includes("models") ||
     lower.includes("category") ||
     lower.includes("products") ||
     lower.includes("catalog") ||
@@ -40,16 +52,6 @@ export function classifyPageArchetype(urlStr: string, title = "", label = ""): P
     lower.includes("overview")
   ) {
     return "listing";
-  }
-
-  // Detail / Model page
-  if (
-    /\b(911|taycan|panamera|macan|cayenne|718)\b/.test(lower) ||
-    lower.includes("/product/") ||
-    lower.includes("/item/") ||
-    lower.includes("/detail")
-  ) {
-    return "detail";
   }
 
   // Content / Experience / News

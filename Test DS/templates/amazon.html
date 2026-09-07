@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amazon.de — Porsche Design System Edition</title>
-  <link rel="stylesheet" href="../porsche-tokens.css">
+  <title>Amazon.de — Enterprise Design System Edition</title>
+  <link rel="stylesheet" href="../Enterprise-tokens.css">
   <style>
     * {
       box-sizing: border-box;
@@ -13,7 +13,7 @@
     }
 
     body {
-      font-family: var(--p-font-porsche-next);
+      font-family: var(--p-font-Enterprise-next);
       background-color: var(--p-color-canvas);
       color: var(--p-color-primary);
       line-height: var(--p-typescale-line-height);
@@ -23,9 +23,9 @@
     }
 
     /* -----------------------------------------------------------------------
-       PORSCHE BUTTONS & INTERACTIVE TOKENS
+       Enterprise BUTTONS & INTERACTIVE TOKENS
        ----------------------------------------------------------------------- */
-    .porsche-btn-primary {
+    .Enterprise-btn-primary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -44,12 +44,12 @@
       transition: opacity var(--p-motion-duration-sm) var(--p-motion-easing-base),
                   transform var(--p-motion-duration-sm) var(--p-motion-easing-base);
     }
-    .porsche-btn-primary:hover {
+    .Enterprise-btn-primary:hover {
       opacity: 0.88;
       transform: translateY(-1px);
     }
 
-    .porsche-btn-secondary {
+    .Enterprise-btn-secondary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -69,11 +69,11 @@
       text-decoration: none;
       transition: background var(--p-motion-duration-sm) var(--p-motion-easing-base);
     }
-    .porsche-btn-secondary:hover {
+    .Enterprise-btn-secondary:hover {
       background: var(--p-color-frosted);
     }
 
-    .porsche-btn-compact {
+    .Enterprise-btn-compact {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -93,12 +93,12 @@
       transition: border-color var(--p-motion-duration-sm) var(--p-motion-easing-base),
                   background var(--p-motion-duration-sm) var(--p-motion-easing-base);
     }
-    .porsche-btn-compact:hover {
+    .Enterprise-btn-compact:hover {
       border-color: var(--p-color-primary);
       background: var(--p-color-frosted-soft);
     }
 
-    .porsche-btn-pure {
+    .Enterprise-btn-pure {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
@@ -114,11 +114,11 @@
       text-decoration: none;
       transition: opacity var(--p-motion-duration-sm) var(--p-motion-easing-base);
     }
-    .porsche-btn-pure:hover {
+    .Enterprise-btn-pure:hover {
       opacity: 0.75;
     }
 
-    .porsche-tag {
+    .Enterprise-tag {
       display: inline-flex;
       align-items: center;
       gap: 0.35rem;
@@ -135,7 +135,7 @@
       white-space: nowrap;
     }
 
-    .porsche-tag-deal {
+    .Enterprise-tag-deal {
       background: var(--p-color-primary);
       color: var(--p-color-canvas);
       border-color: transparent;
@@ -353,7 +353,7 @@
     }
 
     /* Top Announcement Banner */
-    .porsche-banner {
+    .Enterprise-banner {
       background: var(--p-color-frosted-strong);
       border: 1px solid var(--p-color-contrast-lower);
       border-left: 4px solid var(--p-color-primary);
@@ -588,7 +588,7 @@
       padding-bottom: 0.25rem;
     }
 
-    .porsche-chip {
+    .Enterprise-chip {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -605,11 +605,11 @@
       white-space: nowrap;
       transition: all var(--p-motion-duration-sm) var(--p-motion-easing-base);
     }
-    .porsche-chip:hover {
+    .Enterprise-chip:hover {
       border-color: var(--p-color-primary);
       background: var(--p-color-frosted-strong);
     }
-    .porsche-chip.active {
+    .Enterprise-chip.active {
       background: var(--p-color-primary);
       color: var(--p-color-canvas);
       border-color: transparent;
@@ -618,7 +618,7 @@
     /* -----------------------------------------------------------------------
        FLYOUT DRAWER MENU ("ALLE")
        ----------------------------------------------------------------------- */
-    .porsche-flyout-scrim {
+    .Enterprise-flyout-scrim {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.5);
@@ -629,12 +629,12 @@
       pointer-events: none;
       transition: opacity var(--p-motion-duration-md) var(--p-motion-easing-base);
     }
-    .porsche-flyout-scrim.open {
+    .Enterprise-flyout-scrim.open {
       opacity: 1;
       pointer-events: auto;
     }
 
-    .porsche-flyout-drawer {
+    .Enterprise-flyout-drawer {
       position: fixed;
       top: 0;
       left: 0;
@@ -649,7 +649,7 @@
       flex-direction: column;
       box-shadow: var(--p-shadow-lg);
     }
-    .porsche-flyout-scrim.open .porsche-flyout-drawer {
+    .Enterprise-flyout-scrim.open .Enterprise-flyout-drawer {
       transform: translateX(0);
     }
 
@@ -815,11 +815,11 @@
         <a href="#" class="brand-wrap">
           <span class="brand-wordmark">AMAZON</span>
           <span class="brand-domain">.de</span>
-          <span class="porsche-tag porsche-tag-deal" style="margin-left:4px; font-size:0.65rem;">PRIME</span>
+          <span class="Enterprise-tag Enterprise-tag-deal" style="margin-left:4px; font-size:0.65rem;">PRIME</span>
         </a>
 
         <!-- Location Pin -->
-        <button type="button" class="porsche-btn-pure location-btn" onclick="alert('Lieferadresse: Justus, 72072 Tübingen')">
+        <button type="button" class="Enterprise-btn-pure location-btn" onclick="alert('Lieferadresse: Justus, 72072 Tübingen')">
           <span class="loc-sub">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             Lieferung an Justus
@@ -828,7 +828,7 @@
         </button>
       </div>
 
-      <!-- Porsche Precision Search Bar -->
+      <!-- Enterprise Precision Search Bar -->
       <form class="amz-search-box" onsubmit="event.preventDefault();">
         <select class="search-category-select" aria-label="Kategorie auswählen">
           <option>Alle</option>
@@ -838,7 +838,7 @@
           <option>Bücher &amp; Audible</option>
           <option>Computer &amp; Zubehör</option>
         </select>
-        <input type="text" class="search-input" placeholder="Amazon.de durchsuchen (Porsche DS Engine)" aria-label="Suchbegriff" />
+        <input type="text" class="search-input" placeholder="Amazon.de durchsuchen (Enterprise DS Engine)" aria-label="Suchbegriff" />
         <button type="submit" class="search-submit-btn" aria-label="Suchen">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
         </button>
@@ -847,18 +847,18 @@
       <!-- Account & Cart Actions -->
       <div class="nav-actions">
         <!-- Language -->
-        <button type="button" class="porsche-btn-pure" style="font-size:0.85rem;">
+        <button type="button" class="Enterprise-btn-pure" style="font-size:0.85rem;">
           🇩🇪 DE ▾
         </button>
 
         <!-- Account -->
-        <button type="button" class="porsche-btn-pure user-btn">
+        <button type="button" class="Enterprise-btn-pure user-btn">
           <span style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">Hallo, Justus</span>
           <span style="font-size:var(--p-typescale-xs); font-weight:700;">Konto und Listen ▾</span>
         </button>
 
         <!-- Orders -->
-        <button type="button" class="porsche-btn-pure user-btn">
+        <button type="button" class="Enterprise-btn-pure user-btn">
           <span style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">Warenrücksendungen</span>
           <span style="font-size:var(--p-typescale-xs); font-weight:700;">&amp; Bestellungen</span>
         </button>
@@ -867,11 +867,11 @@
         <button type="button" class="cart-btn" onclick="alert('Warenkorb: 3 Artikel gespeichert.')">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
           <span style="font-weight:600; font-size:var(--p-typescale-xs);">Warenkorb</span>
-          <span class="porsche-tag porsche-tag-deal" style="background:var(--p-color-canvas); color:var(--p-color-primary); font-size:0.75rem;">3</span>
+          <span class="Enterprise-tag Enterprise-tag-deal" style="background:var(--p-color-canvas); color:var(--p-color-primary); font-size:0.75rem;">3</span>
         </button>
 
         <!-- Dual-Theme Toggle -->
-        <button type="button" id="theme-btn" class="porsche-btn-compact" title="Dark / Light Theme umschalten" onclick="toggleTheme()">
+        <button type="button" id="theme-btn" class="Enterprise-btn-compact" title="Dark / Light Theme umschalten" onclick="toggleTheme()">
           🌙
         </button>
       </div>
@@ -886,7 +886,7 @@
         </button>
 
         <!-- Rufus AI Chip -->
-        <span class="porsche-tag porsche-tag-deal" style="cursor:pointer;" onclick="alert('Rufus AI: Wie kann ich Ihnen heute bei Ihrer Auswahl helfen?')">
+        <span class="Enterprise-tag Enterprise-tag-deal" style="cursor:pointer;" onclick="alert('Rufus AI: Wie kann ich Ihnen heute bei Ihrer Auswahl helfen?')">
           ✨ Rufus AI
         </span>
 
@@ -904,7 +904,7 @@
       <div class="subnav-sponsor">
         <span>⚽ UEFA Champions League</span>
         <strong>BVB - VIL</strong>
-        <span class="porsche-tag" style="height:18px; padding:2px 8px;">Dienstag 20:00 Prime</span>
+        <span class="Enterprise-tag" style="height:18px; padding:2px 8px;">Dienstag 20:00 Prime</span>
       </div>
     </div>
   </header>
@@ -915,7 +915,7 @@
   <main class="amz-stage">
 
     <!-- Top Announcement Strip -->
-    <div class="porsche-banner">
+    <div class="Enterprise-banner">
       <div style="display:flex; align-items:center; gap:0.75rem;">
         <span style="font-size:1.25rem;">⚡</span>
         <div>
@@ -923,7 +923,7 @@
           <div style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">Sparen Sie bis zu 50 % auf geprüfte B-Ware und zertifizierte Retouren.</div>
         </div>
       </div>
-      <a href="#deals" class="porsche-btn-compact">Jetzt entdecken &rarr;</a>
+      <a href="#deals" class="Enterprise-btn-compact">Jetzt entdecken &rarr;</a>
     </div>
 
     <!-- -------------------------------------------------------------------
@@ -945,7 +945,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="6" width="18" height="15" rx="3"/><path d="M7 6V3h10v3"/><line x1="8" y1="11" x2="16" y2="11"/></svg>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
-              <span class="porsche-tag porsche-tag-deal">39 % Rabatt</span>
+              <span class="Enterprise-tag Enterprise-tag-deal">39 % Rabatt</span>
             </div>
             <span class="tile-caption">Ninja Multikocher Grill</span>
           </a>
@@ -956,7 +956,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="3" x2="12" y2="6"/></svg>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
-              <span class="porsche-tag porsche-tag-deal">50 % Rabatt</span>
+              <span class="Enterprise-tag Enterprise-tag-deal">50 % Rabatt</span>
             </div>
             <span class="tile-caption">Roboter Absaugstation</span>
           </a>
@@ -967,7 +967,7 @@
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="8"/><circle cx="12" cy="10" r="2"/></svg>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
-              <span class="porsche-tag porsche-tag-deal">24 % Rabatt</span>
+              <span class="Enterprise-tag Enterprise-tag-deal">24 % Rabatt</span>
             </div>
             <span class="tile-caption">Smarter Saugroboter</span>
           </a>
@@ -978,13 +978,13 @@
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/><path d="M19 19v2a2 2 0 0 1-2 2h-4"/></svg>
             </div>
             <div style="display:flex; justify-content:space-between; align-items:center; margin-top:2px;">
-              <span class="porsche-tag porsche-tag-deal">19 % Rabatt</span>
+              <span class="Enterprise-tag Enterprise-tag-deal">19 % Rabatt</span>
             </div>
             <span class="tile-caption">HyperX Gaming Headset</span>
           </a>
         </div>
 
-        <a href="#" class="porsche-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
+        <a href="#" class="Enterprise-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
           Alle Angebote anzeigen &rarr;
         </a>
       </div>
@@ -999,7 +999,7 @@
         <div class="hero-visual-card">
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" style="width:60%; height:60%; stroke:var(--p-color-primary);"><path d="M12 2a10 10 0 0 0-9.95 9h19.9A10 10 0 0 0 12 2z"/><path d="M2 13v5a4 4 0 0 0 4 4h12a4 4 0 0 0 4-4v-5z"/><circle cx="8" cy="17" r="1"/><circle cx="16" cy="17" r="1"/></svg>
           <div style="position:absolute; bottom:8px; left:8px;">
-            <span class="porsche-tag" style="background:var(--p-color-canvas);">Outdoor Pizzaofen Set</span>
+            <span class="Enterprise-tag" style="background:var(--p-color-canvas);">Outdoor Pizzaofen Set</span>
           </div>
         </div>
 
@@ -1012,7 +1012,7 @@
           </div>
         </div>
 
-        <a href="#" class="porsche-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
+        <a href="#" class="Enterprise-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
           Sortiment entdecken &rarr;
         </a>
       </div>
@@ -1028,7 +1028,7 @@
           <div style="display:flex; flex-direction:column; align-items:center; gap:0.5rem; padding:1rem; text-align:center;">
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5" style="width:48px; height:48px; stroke:var(--p-color-primary);"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             <span style="font-size:var(--p-typescale-xs); font-weight:700;">Notebooks, Sound &amp; Smart Home</span>
-            <span class="porsche-tag porsche-tag-deal">Bis zu 50 % Sparen</span>
+            <span class="Enterprise-tag Enterprise-tag-deal">Bis zu 50 % Sparen</span>
           </div>
         </div>
 
@@ -1036,7 +1036,7 @@
           Vollständige Herstellerprüfung, inklusive gesetzlicher Gewährleistung und Rückgaberecht.
         </p>
 
-        <a href="#" class="porsche-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
+        <a href="#" class="Enterprise-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
           Jetzt Deals sichern &rarr;
         </a>
       </div>
@@ -1044,7 +1044,7 @@
       <!-- Card 4: Inklusive bei Prime (Lieferando Burger Feature) -->
       <div class="deal-card" style="background:var(--p-color-surface);">
         <div>
-          <span class="porsche-tag" style="margin-bottom:0.4rem;">Inklusive bei Prime</span>
+          <span class="Enterprise-tag" style="margin-bottom:0.4rem;">Inklusive bei Prime</span>
           <h2 class="card-title">Kostenfreie Lieferung bei Lieferando</h2>
           <p class="card-subtitle">Genießen Sie Restaurant-Spezialitäten ohne Liefergebühr</p>
         </div>
@@ -1057,7 +1057,7 @@
         </div>
 
         <div style="display:flex; flex-direction:column; gap:0.4rem;">
-          <button type="button" class="porsche-btn-primary" style="height:48px; width:100%;" onclick="alert('Prime Vorteil aktiviert!')">
+          <button type="button" class="Enterprise-btn-primary" style="height:48px; width:100%;" onclick="alert('Prime Vorteil aktiviert!')">
             Angebot jetzt sichern
           </button>
           <span style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-low); text-align:center;">
@@ -1069,7 +1069,7 @@
       <!-- Card 5: Neues fürs neue Schuljahr -->
       <div class="deal-card">
         <div>
-          <span class="porsche-tag" style="margin-bottom:0.4rem;">Neues Schuljahr</span>
+          <span class="Enterprise-tag" style="margin-bottom:0.4rem;">Neues Schuljahr</span>
           <h2 class="card-title">Ab ins Studium</h2>
           <p class="card-subtitle">Ausstattung &amp; Essentials für Campus und WG</p>
         </div>
@@ -1085,7 +1085,7 @@
           Erhalten Sie Studenten-Rabatte mit Prime Student und schnellem Gratisversand.
         </p>
 
-        <a href="#" class="porsche-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
+        <a href="#" class="Enterprise-btn-pure" style="font-size:var(--p-typescale-xs); font-weight:600; padding:0;">
           Kollektion ansehen &rarr;
         </a>
       </div>
@@ -1107,8 +1107,8 @@
         </div>
 
         <div style="display:flex; gap:0.5rem;">
-          <button type="button" class="porsche-btn-compact" onclick="scrollTrack(-1)" aria-label="Vorherige">&lsaquo;</button>
-          <button type="button" class="porsche-btn-compact" onclick="scrollTrack(1)" aria-label="Nächste">&rsaquo;</button>
+          <button type="button" class="Enterprise-btn-compact" onclick="scrollTrack(-1)" aria-label="Vorherige">&lsaquo;</button>
+          <button type="button" class="Enterprise-btn-compact" onclick="scrollTrack(1)" aria-label="Nächste">&rsaquo;</button>
         </div>
       </div>
 
@@ -1130,7 +1130,7 @@
               <span style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">(52,82 € / kg)</span>
             </div>
           </div>
-          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('Beef Jerky')">
+          <button type="button" class="Enterprise-btn-compact" style="width:100%;" onclick="addToCart('Beef Jerky')">
             In den Einkaufswagen
           </button>
         </div>
@@ -1149,7 +1149,7 @@
               <span class="prod-price">49,99 €</span>
             </div>
           </div>
-          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('RC Lader')">
+          <button type="button" class="Enterprise-btn-compact" style="width:100%;" onclick="addToCart('RC Lader')">
             In den Einkaufswagen
           </button>
         </div>
@@ -1158,7 +1158,7 @@
         <div class="product-card">
           <div class="prod-meta-label">
             <span>Gesponsert</span>
-            <span class="porsche-tag porsche-tag-deal" style="margin-left:auto;">42 % Rabatt</span>
+            <span class="Enterprise-tag Enterprise-tag-deal" style="margin-left:auto;">42 % Rabatt</span>
           </div>
           <div class="prod-image-container">
             <span style="font-size:3rem;">🤖</span>
@@ -1170,7 +1170,7 @@
               <span style="font-size:var(--p-typescale-2xs); text-decoration:line-through; color:var(--p-color-contrast-medium);">1.499,00 €</span>
             </div>
           </div>
-          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('Roborock S8')">
+          <button type="button" class="Enterprise-btn-compact" style="width:100%;" onclick="addToCart('Roborock S8')">
             In den Einkaufswagen
           </button>
         </div>
@@ -1179,7 +1179,7 @@
         <div class="product-card">
           <div class="prod-meta-label">
             <span>Angebot für Sie</span>
-            <span class="porsche-tag porsche-tag-deal" style="margin-left:auto;">25 % Rabatt</span>
+            <span class="Enterprise-tag Enterprise-tag-deal" style="margin-left:auto;">25 % Rabatt</span>
           </div>
           <div class="prod-image-container">
             <span style="font-size:3rem;">🔊</span>
@@ -1191,7 +1191,7 @@
               <span style="font-size:var(--p-typescale-2xs); text-decoration:line-through; color:var(--p-color-contrast-medium);">69,99 €</span>
             </div>
           </div>
-          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('Bluetooth Speaker')">
+          <button type="button" class="Enterprise-btn-compact" style="width:100%;" onclick="addToCart('Bluetooth Speaker')">
             In den Einkaufswagen
           </button>
         </div>
@@ -1200,7 +1200,7 @@
         <div class="product-card">
           <div class="prod-meta-label">
             <span>Gesponsert</span>
-            <span class="porsche-tag porsche-tag-deal" style="margin-left:auto;">17 % Rabatt</span>
+            <span class="Enterprise-tag Enterprise-tag-deal" style="margin-left:auto;">17 % Rabatt</span>
           </div>
           <div class="prod-image-container">
             <span style="font-size:3rem;">🧹</span>
@@ -1212,7 +1212,7 @@
               <span style="font-size:var(--p-typescale-2xs); text-decoration:line-through; color:var(--p-color-contrast-medium);">299,00 €</span>
             </div>
           </div>
-          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('Dreame R20')">
+          <button type="button" class="Enterprise-btn-compact" style="width:100%;" onclick="addToCart('Dreame R20')">
             In den Einkaufswagen
           </button>
         </div>
@@ -1231,7 +1231,7 @@
               <span class="prod-price">29,99 €</span>
             </div>
           </div>
-          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('USB-C Netzteil')">
+          <button type="button" class="Enterprise-btn-compact" style="width:100%;" onclick="addToCart('USB-C Netzteil')">
             In den Einkaufswagen
           </button>
         </div>
@@ -1250,7 +1250,7 @@
               <span class="prod-price">39,99 €</span>
             </div>
           </div>
-          <button type="button" class="porsche-btn-compact" style="width:100%;" onclick="addToCart('iPad Folio')">
+          <button type="button" class="Enterprise-btn-compact" style="width:100%;" onclick="addToCart('iPad Folio')">
             In den Einkaufswagen
           </button>
         </div>
@@ -1267,25 +1267,25 @@
       </h3>
 
       <div class="chips-row">
-        <button type="button" class="porsche-chip active">
+        <button type="button" class="Enterprise-chip active">
           Ihre Angebote <span style="font-size:1.1rem; opacity:0.8;">›</span>
         </button>
-        <button type="button" class="porsche-chip">
+        <button type="button" class="Enterprise-chip">
           4 Sterne und mehr <span style="font-size:1.1rem; opacity:0.8;">›</span>
         </button>
-        <button type="button" class="porsche-chip">
+        <button type="button" class="Enterprise-chip">
           Staubsauger &amp; Roboter <span style="font-size:1.1rem; opacity:0.8;">›</span>
         </button>
-        <button type="button" class="porsche-chip">
+        <button type="button" class="Enterprise-chip">
           Küche, Haushalt &amp; Wohnen <span style="font-size:1.1rem; opacity:0.8;">›</span>
         </button>
-        <button type="button" class="porsche-chip">
+        <button type="button" class="Enterprise-chip">
           Elektronik &amp; Smart Home <span style="font-size:1.1rem; opacity:0.8;">›</span>
         </button>
-        <button type="button" class="porsche-chip">
+        <button type="button" class="Enterprise-chip">
           Gaming &amp; Entertainment <span style="font-size:1.1rem; opacity:0.8;">›</span>
         </button>
-        <button type="button" class="porsche-chip">
+        <button type="button" class="Enterprise-chip">
           Prime Exklusive Deals <span style="font-size:1.1rem; opacity:0.8;">›</span>
         </button>
       </div>
@@ -1296,8 +1296,8 @@
   <!-- =======================================================================
        FLYOUT DRAWER MENU ("ALLE")
        ======================================================================= -->
-  <div id="amz-flyout-scrim" class="porsche-flyout-scrim" onclick="toggleFlyout(false)">
-    <aside class="porsche-flyout-drawer" onclick="event.stopPropagation()">
+  <div id="amz-flyout-scrim" class="Enterprise-flyout-scrim" onclick="toggleFlyout(false)">
+    <aside class="Enterprise-flyout-drawer" onclick="event.stopPropagation()">
       <div class="flyout-header">
         <div style="display:flex; align-items:center; gap:0.75rem;">
           <div style="width:36px; height:36px; border-radius:50%; background:var(--p-color-primary); color:var(--p-color-canvas); display:flex; align-items:center; justify-content:center; font-weight:700;">
@@ -1308,7 +1308,7 @@
             <div style="font-size:var(--p-typescale-2xs); color:var(--p-color-contrast-medium);">Prime Mitglied</div>
           </div>
         </div>
-        <button type="button" class="porsche-btn-compact" onclick="toggleFlyout(false)" aria-label="Schließen">
+        <button type="button" class="Enterprise-btn-compact" onclick="toggleFlyout(false)" aria-label="Schließen">
           ✕
         </button>
       </div>
@@ -1400,10 +1400,10 @@
 
     <div class="footer-bottom">
       <div style="font-weight:700; letter-spacing:0.25em; text-transform:uppercase; color:var(--p-color-primary);">
-        AMAZON • PORSCHE DESIGN SYSTEM EDITION
+        AMAZON • Enterprise Design System EDITION
       </div>
       <div>
-        Entwickelt streng nach den Tokens und Web Component Guidelines des Porsche Design Systems (v4.5.0) • 99.6 % Visual Convergence.
+        Entwickelt streng nach den Tokens und Web Component Guidelines des Enterprise Design Systems (v4.5.0) • 99.6 % Visual Convergence.
       </div>
       <div>
         &copy; 1996-2026, Amazon.com, Inc. oder Tochtergesellschaften. Re-engineered mit Trainable DS.
@@ -1443,9 +1443,9 @@
     }
 
     // Chips selection
-    document.querySelectorAll('.porsche-chip').forEach(chip => {
+    document.querySelectorAll('.Enterprise-chip').forEach(chip => {
       chip.addEventListener('click', () => {
-        document.querySelectorAll('.porsche-chip').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.Enterprise-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
       });
     });

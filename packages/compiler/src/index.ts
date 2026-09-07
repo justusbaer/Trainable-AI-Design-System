@@ -5,4 +5,6 @@ export * from "./extractor/component-scanner.js";
 export * from "./figma/variables-adapter.js";
 export * from "./aligner/index.js";
 export * from "./overview/generator.js";
-
+export * from "./extractor/component-library-generator.js";
+export * from "./ingest/index.js";
+export * from "./vcs/index.js";

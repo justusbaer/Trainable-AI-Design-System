@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Trainable DS — Source of Truth for Humans & AI Agents</title>
-  <meta name="description" content="Agent-native Material Design 3 Design System portal, DTCG tokens, and closed-loop compliance engine.">
+  <meta name="description" content="Agent-native Design System portal, W3C DTCG tokens, prototype component library, and closed-loop compliance engine.">
 
   <!-- Agent Discovery Links (Astryx Parity) -->
   <link rel="llms-txt" type="text/markdown" href="/llms.txt">
@@ -26,12 +26,16 @@
       <a href="/" class="brand-group">
         <div class="brand-logo">T</div>
         <span class="brand-title">Trainable DS</span>
-        <span class="badge">v1.7.0 (M3)</span>
+        <span class="badge">v1.7.0</span>
       </a>
 
       <nav>
         <ul class="nav-links">
           <li><a href="#extract" class="nav-link" style="color:var(--md-sys-color-primary); font-weight:600;">Extract from URL</a></li>
+          <li><a href="#vcs-ingest" class="nav-link" style="color:#059669; font-weight:600;">Multi-Modal &amp; VCS</a></li>
+          <li><a href="/overview.html" class="nav-link" style="color:#2563eb; font-weight:600;" target="_blank">Review Studio ↗</a></li>
+          <li><a href="/docs/technical.html" class="nav-link" style="color:#6366f1; font-weight:600;">Technical Docs ↗</a></li>
+          <li><a href="/docs/product.html" class="nav-link" style="color:#d97706; font-weight:600;">Product PRD ↗</a></li>
           <li><a href="#foundations" class="nav-link">Foundations</a></li>
           <li><a href="#components" class="nav-link">Components</a></li>
           <li><a href="#evaluator" class="nav-link">Live Evaluator</a></li>
@@ -56,16 +60,22 @@
         <span class="badge" style="margin-block-end:0.75rem;">AI Developer Portal & System Hub</span>
         <h1 class="hero-title">The Living Source of Truth for Humans & AI Agents</h1>
         <p class="hero-subtitle">
-          Extract, govern, and enforce design systems at full <strong>Material Design 3 (M3)</strong> depth.
+          Extract, govern, and enforce design systems with mathematically rigorous 3-tier token depth and certified component fidelity.
           Tell any AI agent to extract from a URL or point it to this portal for 100% compliant UI generation.
         </p>
       </div>
 
-      <!-- Agent Banner (Dual Mode: Extract or Connect) -->
+      <!-- Agent Banner (Multi-Mode: Extract, Vision, VCS, Connect) -->
       <div class="agent-banner">
         <div class="banner-mode-tabs">
           <button type="button" id="tab-btn-extract" class="banner-mode-btn active">
             🌐 Extract from Website (One Prompt)
+          </button>
+          <button type="button" id="tab-btn-vision" class="banner-mode-btn">
+            🖼️ Train from Images (One Prompt)
+          </button>
+          <button type="button" id="tab-btn-vcs" class="banner-mode-btn">
+            🌿 Multi-Modal &amp; VCS Branching
           </button>
           <button type="button" id="tab-btn-connect" class="banner-mode-btn">
             ⚡ Connect for UI Generation
@@ -83,11 +93,11 @@
           </div>
 
           <div class="prompt-url-row">
-            <input type="url" id="extract-url-input" class="prompt-url-input" value="https://www.porsche.com/germany/" placeholder="https://example.com">
+            <input type="url" id="extract-url-input" class="prompt-url-input" value="https://example.com" placeholder="https://example.com">
           </div>
 
           <div class="prompt-copy-container">
-            <code id="extract-prompt-code" class="prompt-code">Use Trainable Design System to extract the design system from https://www.porsche.com/germany/</code>
+            <code id="extract-prompt-code" class="prompt-code">Follow the autonomous training protocol at https://trainable-ds-2026.web.app/llms.txt to extract and build a complete design system from https://example.com</code>
             <button type="button" id="copy-extract-prompt" class="btn-primary">
               📋 Copy Extraction Prompt
             </button>
@@ -96,13 +106,71 @@
           <div class="surfaces-taglist">
             <span>Autonomous Pipeline:</span>
             <span class="surface-chip">Auto-Discovers Subpages</span>
-            <span class="surface-chip">Harvests Fonts & Shadow-DOM SVGs</span>
-            <span class="surface-chip">Iterative Alignment Loops (≥95%)</span>
-            <span class="surface-chip">Generates overview.html with Live Overrides</span>
+            <span class="surface-chip">Harvests Fonts & Shadow SVGs</span>
+            <span class="surface-chip">Alignment Loops (≥95%)</span>
+            <span class="surface-chip">Emits Prototype TSX Components</span>
+            <span class="surface-chip">Review Studio (overview.html)</span>
+            <span class="surface-chip">Astryx JIT Agent Doc (tds doc)</span>
           </div>
         </div>
 
-        <!-- Mode 2: Connect for Generation -->
+        <!-- Mode 2: Multi-Modal Vision Image Training -->
+        <div id="panel-vision" style="display:none; flex-direction:column; gap:0.75rem;">
+          <div class="agent-banner-header">
+            <div class="agent-banner-title">
+              <span>🖼️ Train Custom Design System from Screenshot Images</span>
+              <span class="badge" style="background:#fce7f3; color:#9d174d;">Zero Process Knowledge Required</span>
+            </div>
+            <span style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">Attach screenshots, Figma mockups, or UI photos, then paste this into Antigravity, Cursor, or Claude:</span>
+          </div>
+
+          <div class="prompt-copy-container">
+            <code id="vision-prompt-code" class="prompt-code">Follow the autonomous training protocol at https://trainable-ds-2026.web.app/llms.txt to train and build a complete design system from these attached images.</code>
+            <button type="button" id="copy-vision-prompt" class="btn-primary">
+              📋 Copy Image Training Prompt
+            </button>
+          </div>
+
+          <div class="surfaces-taglist">
+            <span>Autonomous Pipeline:</span>
+            <span class="surface-chip">OKLab Color Clustering</span>
+            <span class="surface-chip">0–100 Tonal Palettes</span>
+            <span class="surface-chip">47 WCAG AA Roles</span>
+            <span class="surface-chip">4px/8px Quantum Grid</span>
+            <span class="surface-chip">Emits Prototype TSX Components</span>
+            <span class="surface-chip">Review Studio (overview.html)</span>
+          </div>
+        </div>
+
+        <!-- Mode 3: Multi-Modal Ingest & DS-VCS -->
+        <div id="panel-vcs" style="display:none; flex-direction:column; gap:0.75rem;">
+          <div class="agent-banner-header">
+            <div class="agent-banner-title">
+              <span>🌿 Multi-Modal Ingestion &amp; Git-Native Version Control</span>
+              <span class="badge" style="background:#fef3c7; color:#92400e;">AST 3-Way Merge &amp; Gatekeeper</span>
+            </div>
+            <span style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">Branch, refine with AI, ingest CSV/Figma tokens/guidelines, and merge with WCAG AA enforcement:</span>
+          </div>
+
+          <div class="prompt-copy-container">
+            <code id="vcs-prompt-code" class="prompt-code">tds branch create feature/dark-mode &amp;&amp; tds refine "Change primary color to deep navy #002b66 and card radius to 12px"</code>
+            <button type="button" id="copy-vcs-prompt" class="btn-primary">
+              📋 Copy Command
+            </button>
+          </div>
+
+          <div class="surfaces-taglist">
+            <span>Supported Ingestion &amp; VCS Engines:</span>
+            <span class="surface-chip">CSV / TSV Token Tables</span>
+            <span class="surface-chip">Figma Tokens Studio JSON</span>
+            <span class="surface-chip">Markdown Brand Guidelines</span>
+            <span class="surface-chip">Vision (OKLab &amp; Quantum Grid)</span>
+            <span class="surface-chip">Natural Language Refine (tds refine)</span>
+            <span class="surface-chip">WCAG AA Contrast Merge Gatekeeper</span>
+          </div>
+        </div>
+
+        <!-- Mode 4: Connect for Generation -->
         <div id="panel-connect" style="display:none; flex-direction:column; gap:0.75rem;">
           <div class="agent-banner-header">
             <div class="agent-banner-title">
@@ -113,7 +181,7 @@
           </div>
 
           <div class="prompt-copy-container">
-            <code id="agent-prompt-code" class="prompt-code">Connect to Trainable DS from current origin and follow /DESIGN.md for all UI generation.</code>
+            <code id="agent-prompt-code" class="prompt-code">Follow the design system protocol at https://trainable-ds-2026.web.app/llms.txt and adhere strictly to /DESIGN.md for all UI generation.</code>
             <button type="button" id="copy-agent-prompt" class="btn-primary">
               📋 Copy Prompt
             </button>
@@ -134,7 +202,7 @@
       <div class="metrics-grid">
         <div class="metric-card">
           <span class="metric-value">47</span>
-          <span class="metric-label">M3 Semantic Color Roles</span>
+          <span class="metric-label">Semantic Color Roles (HCT)</span>
         </div>
         <div class="metric-card">
           <span class="metric-value">15-Tier</span>
@@ -178,7 +246,7 @@
           <div class="step-num-badge">2</div>
           <div class="step-title">Deep Font & Icon Harvesting</div>
           <p class="step-desc">
-            Captures origin typography by extracting <code>@font-face</code> CDN <code>.woff2</code> URLs into <code>fonts.json</code>, and pierces Web Component Shadow DOMs (like <code>&lt;p-icon&gt;</code>) to extract vector SVGs into <code>icons.json</code>.
+            Captures origin typography by extracting <code>@font-face</code> CDN <code>.woff2</code> URLs into <code>fonts.json</code>, and pierces Web Component Shadow DOMs (like <code>&lt;ds-icon&gt;</code>) to extract vector SVGs into <code>icons.json</code>.
           </p>
         </div>
 
@@ -187,17 +255,89 @@
           <div class="step-num-badge">3</div>
           <div class="step-title">Iterative Alignment Loops (≥95%)</div>
           <p class="step-desc">
-            Executes autonomous visual alignment feedback loops comparing live computed styles against M3 tokens. Automatically patches discrepancies until cross-page compliance meets or exceeds 95%.
+            Executes autonomous visual alignment feedback loops comparing live computed styles against design tokens. Automatically patches discrepancies until cross-page compliance meets or exceeds 95%.
           </p>
         </div>
 
         <!-- Step 4 -->
         <div class="workflow-step-card">
           <div class="step-num-badge">4</div>
-          <div class="step-title">Human Overview & Live Overrides</div>
+          <div class="step-title">Component Library & Review Studio</div>
           <p class="step-desc">
-            Outputs machine-ready assets (<code>tokens.json</code>, <code>components.json</code>, <code>DESIGN.md</code>) and launches <code>overview.html</code> where humans can visually review and live-override any token with permanent disk locking (<code>tds:locked: true</code>).
+            Synthesizes executable React/TSX components in <code>components/ui/*.tsx</code> (100% compliant). Launches <a href="/overview.html" target="_blank" style="color:var(--md-sys-color-primary); font-weight:600;">overview.html</a> with the <strong>Component Review Studio</strong> where humans can test live previews, edit TSX code, bind to upstream packages (<code>@mui/material</code>, <code>@radix-ui</code>, <code>shadcn/ui</code>), and toggle <code>🔒 Lock</code> to protect from crawler overwrites.
           </p>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge">5</div>
+          <div class="step-title">JIT Agent Querying (tds doc)</div>
+          <p class="step-desc">
+            AI agents and engineers query certified imports, prop contracts, touch target rules, and copy-paste snippets on demand via <code>tds doc &lt;Component&gt;</code> or MCP tool <code>get_component_code</code> without bloating agent context windows (Meta Astryx parity).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Multi-Modal Ingestion & Git-Native DS-VCS Section -->
+    <section id="vcs-ingest">
+      <div class="section-header">
+        <span class="badge" style="margin-block-end:0.5rem; background:#ecfdf5; color:#065f46;">Multi-Modal &amp; DS-VCS Architecture</span>
+        <h2 class="section-title">Multi-Modal Ingestion &amp; Git-Native Version Control</h2>
+        <p class="section-desc">
+          Build and refine design systems from any source — images, app screenshots, brand guideline documents, CSV token sheets, or conversational AI prompts. Experiment safely on isolated branches and merge with AST-aware 3-way semantic reconciliation and automated accessibility gates.
+        </p>
+      </div>
+
+      <div class="workflow-steps-grid">
+        <!-- Capability 1 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge" style="background:#059669;">1</div>
+          <div class="step-title">Universal Ingestion Adapters</div>
+          <p class="step-desc">
+            Accepts CSV/TSV tables, Figma Tokens Studio JSON, Markdown brand guidelines (DOs/DONTs), SVG/app screenshots (OKLab clustering &amp; spatial quantum snapping), and natural language prompt directives.
+          </p>
+          <div style="margin-top:0.75rem; font-size:0.75rem; font-family:var(--font-mono); color:var(--md-sys-color-on-surface-variant); background:rgba(0,0,0,0.03); padding:0.5rem; border-radius:4px;">
+            tds ingest -f tokens.csv -t table<br>
+            tds ingest -f guidelines.md -t document
+          </div>
+        </div>
+
+        <!-- Capability 2 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge" style="background:#059669;">2</div>
+          <div class="step-title">Conversational AI Refinement</div>
+          <p class="step-desc">
+            Refine tokens, component geometry, and accessibility rules in plain natural language. Directives like <em>"Make primary button darker navy #002b66 and increase card radius to 12px"</em> compile directly into exact patches.
+          </p>
+          <div style="margin-top:0.75rem; font-size:0.75rem; font-family:var(--font-mono); color:var(--md-sys-color-on-surface-variant); background:rgba(0,0,0,0.03); padding:0.5rem; border-radius:4px;">
+            tds refine "Change primary to #00458C"
+          </div>
+        </div>
+
+        <!-- Capability 3 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge" style="background:#059669;">3</div>
+          <div class="step-title">Isolated Git-Native Branches</div>
+          <p class="step-desc">
+            Branching engine stored in <code>.tds/vcs/</code>. Create experiments, dark-mode variations, or customer-specific sub-brands without polluting the main design system until reviewed and certified.
+          </p>
+          <div style="margin-top:0.75rem; font-size:0.75rem; font-family:var(--font-mono); color:var(--md-sys-color-on-surface-variant); background:rgba(0,0,0,0.03); padding:0.5rem; border-radius:4px;">
+            tds branch create feature/dark-mode<br>
+            tds branch switch feature/dark-mode
+          </div>
+        </div>
+
+        <!-- Capability 4 -->
+        <div class="workflow-step-card">
+          <div class="step-num-badge" style="background:#059669;">4</div>
+          <div class="step-title">AST 3-Way Merge &amp; Evaluator Gate</div>
+          <p class="step-desc">
+            AST-aware 3-way semantic merger automatically reconciles non-conflicting tokens and component props. Before merging into <code>main</code>, the Evaluator CI Gatekeeper verifies WCAG 2.1 AA contrast (&ge;4.5:1) and touch targets (&ge;48px).
+          </p>
+          <div style="margin-top:0.75rem; font-size:0.75rem; font-family:var(--font-mono); color:var(--md-sys-color-on-surface-variant); background:rgba(0,0,0,0.03); padding:0.5rem; border-radius:4px;">
+            tds merge feature/dark-mode --target main
+          </div>
         </div>
       </div>
     </section>
@@ -205,7 +345,7 @@
     <!-- Foundations Explorer -->
     <section id="foundations">
       <div class="section-header">
-        <h2 class="section-title">1. Material Design 3 Foundations</h2>
+        <h2 class="section-title">1. Design System Foundations &amp; Tokens</h2>
         <p class="section-desc">Authoritative 3-tier W3C DTCG tokens. Click any tone or token to copy its value.</p>
       </div>
 
@@ -316,7 +456,20 @@
     <section id="components">
       <div class="section-header">
         <h2 class="section-title">2. Certified Component Catalog</h2>
-        <p class="section-desc">Anatomical contracts across 6 M3 functional families. Every interactive element satisfies &ge; 48px touch targets.</p>
+        <p class="section-desc">Anatomical contracts across 6 functional component families. Every interactive element satisfies &ge; 48px touch targets.</p>
+      </div>
+
+      <!-- Review Studio Callout Banner -->
+      <div style="background: rgba(59, 130, 246, 0.08); border: 1px solid rgba(59, 130, 246, 0.25); border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <strong style="color: var(--md-sys-color-primary);">🛠️ Interactive Component Review Studio:</strong>
+          <span style="font-size: 0.88rem; color: var(--md-sys-color-on-surface-variant); margin-inline-start: 0.5rem;">
+            Inspect live previews, edit TSX code directly in browser, bind to upstream packages (e.g. <code>@mui/material</code>, <code>@radix-ui</code>, <code>shadcn/ui</code>), and lock components to freeze crawler overwrites.
+          </span>
+        </div>
+        <a href="/overview.html" target="_blank" class="btn-primary" style="text-decoration: none; padding: 0.5rem 1rem; font-size: 0.85rem; white-space: nowrap;">
+          Open Review Studio (overview.html) ↗
+        </a>
       </div>
 
       <!-- Functional Family Filter Chips -->
@@ -340,7 +493,7 @@
     <section id="evaluator">
       <div class="section-header">
         <h2 class="section-title">3. Live Closed-Loop Compliance Evaluator</h2>
-        <p class="section-desc">Audit any React / TSX snippet against Material Design 3 and Trainable DS constraints in real-time.</p>
+        <p class="section-desc">Audit any React / TSX snippet against design system token contracts and accessibility constraints in real-time.</p>
       </div>
 
       <div class="evaluator-layout">
@@ -429,10 +582,25 @@
             <span class="badge">Remote SSE / Stdio</span>
           </div>
           <p style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">
-            Connect any MCP client to the server for live token queries and code audits.
+            Connect any MCP client to the server for live token queries, component code retrieval, and code audits.
           </p>
           <div class="code-box">npx @trainable-ds/cli mcp</div>
           <button type="button" class="btn-secondary" data-copy="npx @trainable-ds/cli mcp">
+            📋 Copy Command
+          </button>
+        </div>
+
+        <!-- JIT Astryx Parity Card -->
+        <div class="comp-card">
+          <div class="comp-card-header">
+            <span class="comp-name">JIT Component Contracts</span>
+            <span class="badge" style="background:#fef3c7; color:#92400e;">Astryx JIT</span>
+          </div>
+          <p style="font-size:0.85rem; color:var(--md-sys-color-on-surface-variant)">
+            Query certified imports, prop contracts, touch target rules, and copy-paste TSX code snippets without context bloat.
+          </p>
+          <div class="code-box">npx @trainable-ds/cli doc Button</div>
+          <button type="button" class="btn-secondary" data-copy="npx @trainable-ds/cli doc Button">
             📋 Copy Command
           </button>
         </div>
@@ -445,9 +613,12 @@
   <footer class="portal-footer">
     <div class="footer-container">
       <div>
-        <strong>Trainable DS</strong> — Material Design 3 Agent-Native System Portal (v1.7.0).
+        <strong>Trainable DS</strong> — Agent-Native Design System Portal &amp; Closed-Loop Compliance Engine (v1.7.0).
       </div>
       <ul class="footer-links">
+        <li><a href="/docs/technical.html" class="footer-link" style="color:#6366f1; font-weight:600;">Technical Docs</a></li>
+        <li><a href="/docs/product.html" class="footer-link" style="color:#d97706; font-weight:600;">Product PRD (JTBD)</a></li>
+        <li><a href="/overview.html" class="footer-link" style="color:#2563eb; font-weight:600;">overview.html</a></li>
         <li><a href="/llms.txt" class="footer-link">llms.txt</a></li>
         <li><a href="/llms-full.txt" class="footer-link">llms-full.txt</a></li>
         <li><a href="/.well-known/mcp.json" class="footer-link">mcp.json</a></li>

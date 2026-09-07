@@ -4,18 +4,18 @@ import { generateOverviewHtml } from "./generator.js";
 describe("overview generator", () => {
   it("generates standalone overview HTML with brand tokens and loaded fonts", () => {
     const html = generateOverviewHtml({
-      brandName: "Porsche Design System",
-      version: "4.5.0",
+      brandName: "Enterprise Design System",
+      version: "1.7.0",
       complianceScore: 99,
-      crawledPages: ["https://porsche.com/germany/", "https://porsche.com/germany/models/911/"],
+      crawledPages: ["https://brand.example.com/", "https://brand.example.com/products/"],
       fonts: {
         families: {
-          "Porsche Next": {
-            name: "Porsche Next",
+          "Brand Sans": {
+            name: "Brand Sans",
             weights: ["400", "700"],
             styles: ["normal"],
             faces: [],
-            cssBlock: "@font-face { font-family: 'Porsche Next'; src: url('https://cdn.ui.porsche.com/font.woff2'); }"
+            cssBlock: "@font-face { font-family: 'Brand Sans'; src: url('https://cdn.brand.example.com/font.woff2'); }"
           }
         }
       },
@@ -39,12 +39,17 @@ describe("overview generator", () => {
       }
     });
 
-    expect(html).toContain("Porsche Design System Overview");
-    expect(html).toContain("v4.5.0");
+    expect(html).toContain("Enterprise Design System Overview");
+    expect(html).toContain("v1.7.0");
     expect(html).toContain("99% Aligned");
-    expect(html).toContain("@font-face { font-family: 'Porsche Next';");
+    expect(html).toContain("@font-face { font-family: 'Brand Sans';");
     expect(html).toContain("arrow-right");
     expect(html).toContain("Save All Overrides to Disk");
     expect(html).toContain("/api/v1/override");
+    expect(html).toContain("Component Review Studio & Prototype Library");
+    expect(html).toContain("comp-locked-toggle");
+    expect(html).toContain("Authoritative Source Binding");
+    expect(html).toContain("comp-code-editor");
+    expect(html).toContain("Save Component to Disk");
   });
 });

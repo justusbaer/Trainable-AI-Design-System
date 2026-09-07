@@ -13,21 +13,21 @@ describe("assets-harvester", () => {
 
   it("normalizes fonts and generates @font-face css blocks", () => {
     const raw = {
-      baseUrl: "https://cdn.ui.porsche.com/porsche-design-system/",
+      baseUrl: "https://cdn.brand.example.com/assets/",
       fonts: [
         {
-          family: "Porsche Next",
+          family: "Brand Sans",
           weight: "400",
           style: "normal",
-          url: "fonts/porsche-next-w-regular.woff2",
+          url: "fonts/brand-sans-regular.woff2",
           format: "woff2",
           display: "swap"
         },
         {
-          family: "Porsche Next",
+          family: "Brand Sans",
           weight: "700",
           style: "normal",
-          url: "fonts/porsche-next-w-bold.woff2",
+          url: "fonts/brand-sans-bold.woff2",
           format: "woff2",
           display: "swap"
         }
@@ -36,18 +36,18 @@ describe("assets-harvester", () => {
     };
 
     const assets = normalizeHarvestedAssets(raw);
-    const porscheFam = assets.fonts.families["Porsche Next"];
-    expect(porscheFam).toBeDefined();
-    expect(porscheFam.weights).toContain("400");
-    expect(porscheFam.weights).toContain("700");
-    expect(porscheFam.faces[0].url).toBe("https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-regular.woff2");
-    expect(porscheFam.cssBlock).toContain("@font-face");
-    expect(porscheFam.cssBlock).toContain("https://cdn.ui.porsche.com/porsche-design-system/fonts/porsche-next-w-regular.woff2");
+    const brandFam = assets.fonts.families["Brand Sans"];
+    expect(brandFam).toBeDefined();
+    expect(brandFam.weights).toContain("400");
+    expect(brandFam.weights).toContain("700");
+    expect(brandFam.faces[0].url).toBe("https://cdn.brand.example.com/assets/fonts/brand-sans-regular.woff2");
+    expect(brandFam.cssBlock).toContain("@font-face");
+    expect(brandFam.cssBlock).toContain("https://cdn.brand.example.com/assets/fonts/brand-sans-regular.woff2");
   });
 
   it("normalizes and categorizes extracted SVG icons", () => {
     const raw = {
-      baseUrl: "https://porsche.com",
+      baseUrl: "https://brand.example.com",
       fonts: [],
       icons: [
         {

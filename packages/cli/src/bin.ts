@@ -94,5 +94,92 @@ program
     await runServe(options);
   });
 
+program
+  .command("doc [component]")
+  .description("Query certified component contracts, authoritative source, props, and ready-to-use TSX snippets for AI agents (Astryx JIT parity)")
+  .option("--dir <path>", "Design system directory")
+  .option("--json", "Emit structured JSON output", false)
+  .action(async (component, options) => {
+    const { runDoc } = await import("./commands/doc.js");
+    await runDoc(component, options);
+  });
+
+program
+  .command("ingest")
+  .description("Ingest tokens and guidelines from diverse multi-modal sources (CSV, tokens JSON, markdown docs, screenshots/SVGs)")
+  .option("-f, --file <path>", "File path to ingest")
+  .option("-t, --type <type>", "Ingestion type (table, document, vision, conversation, auto)")
+  .option("-b, --branch <name>", "Target branch")
+  .option("--force", "Overwrite locked tokens")
+  .option("--dir <path>", "Design system directory")
+  .action(async (options) => {
+    const { runIngest } = await import("./commands/ingest.js");
+    await runIngest(options);
+  });
+
+program
+  .command("refine <prompt>")
+  .description("Conversational refinement of design tokens, components, and rules using natural language directives")
+  .option("-b, --branch <name>", "Target branch")
+  .option("--force", "Overwrite locked tokens")
+  .option("--dir <path>", "Design system directory")
+  .action(async (prompt, options) => {
+    const { runRefine } = await import("./commands/refine.js");
+    await runRefine(prompt, options);
+  });
+
+const branchCmd = program
+  .command("branch")
+  .description("Manage Trainable DS version branches and commits");
+
+branchCmd
+  .command("list", { isDefault: true })
+  .description("List all local design system branches")
+  .option("--dir <path>", "Design system directory")
+  .action(async (options) => {
+    const { runBranchList } = await import("./commands/branch.js");
+    await runBranchList(options);
+  });
+
+branchCmd
+  .command("create <name>")
+  .description("Create a new design system branch")
+  .option("--from <branch>", "Source branch to branch from")
+  .option("--dir <path>", "Design system directory")
+  .action(async (name, options) => {
+    const { runBranchCreate } = await import("./commands/branch.js");
+    await runBranchCreate(name, options);
+  });
+
+branchCmd
+  .command("switch <name>")
+  .description("Switch the active design system branch")
+  .option("--dir <path>", "Design system directory")
+  .action(async (name, options) => {
+    const { runBranchSwitch } = await import("./commands/branch.js");
+    await runBranchSwitch(name, options);
+  });
+
+branchCmd
+  .command("diff <source>")
+  .description("Show token and component diffs between branches")
+  .option("--target <branch>", "Target branch to compare against")
+  .option("--dir <path>", "Design system directory")
+  .action(async (source, options) => {
+    const { runBranchDiff } = await import("./commands/branch.js");
+    await runBranchDiff(source, options);
+  });
+
+program
+  .command("merge <source>")
+  .description("AST-aware 3-way semantic merge with automated accessibility evaluation gatekeeper")
+  .option("-t, --target <branch>", "Target branch to merge into (default: current HEAD)")
+  .option("--skip-gates", "Bypass WCAG AA contrast and touch-target merge gatekeeper")
+  .option("--dir <path>", "Design system directory")
+  .action(async (source, options) => {
+    const { runMerge } = await import("./commands/merge.js");
+    await runMerge(source, options);
+  });
+
 program.parse();
 
