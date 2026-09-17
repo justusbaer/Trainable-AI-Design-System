@@ -43,9 +43,11 @@ describe("assets-harvester", () => {
     expect(brandFam.faces[0].url).toBe("https://cdn.brand.example.com/assets/fonts/brand-sans-regular.woff2");
     expect(brandFam.cssBlock).toContain("@font-face");
     expect(brandFam.cssBlock).toContain("https://cdn.brand.example.com/assets/fonts/brand-sans-regular.woff2");
+    expect(brandFam.cdnFallbackUrl).toContain("fonts.googleapis.com/css2?family=Brand%20Sans");
+    expect(brandFam.fallbackStack).toContain("-apple-system");
   });
 
-  it("normalizes and categorizes extracted SVG icons", () => {
+  it("normalizes and categorizes extracted SVG icons including brand logos", () => {
     const raw = {
       baseUrl: "https://brand.example.com",
       fonts: [],
@@ -65,15 +67,24 @@ describe("assets-harvester", () => {
           height: 24,
           svg: "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"8\" r=\"4\"/></svg>",
           occurrences: 2
+        },
+        {
+          name: "brand-logo",
+          viewBox: "0 0 120 30",
+          width: 120,
+          height: 30,
+          svg: "<svg viewBox=\"0 0 120 30\"><path d=\"M10 10\"/></svg>",
+          occurrences: 1
         }
       ]
     };
 
     const assets = normalizeHarvestedAssets(raw);
-    expect(assets.icons.length).toBe(2);
+    expect(assets.icons.length).toBe(3);
     expect(assets.icons[0].name).toBe("arrow-right");
     expect(assets.icons[0].category).toBe("navigation");
     expect(assets.icons[1].category).toBe("social");
+    expect(assets.icons[2].category).toBe("brand");
     expect(assets.icons[0].occurrences).toBe(5);
   });
 });

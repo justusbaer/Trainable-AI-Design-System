@@ -143,12 +143,13 @@ Font Family: `Inter, Roboto, sans-serif`
 - **Badge:** Small (6px dot) or Large (16px pill with label-small).
 
 ### 3. Containment (`Card`, `Dialog`, `BottomSheet`, `Divider`)
-- **Card:** `rounded-2xl p-6 bg-surface-container-low text-on-surface border border-outline-variant/30`.
+- **Card:** `rounded-2xl p-6 bg-surface-container-low text-on-surface`. Filled variants use surface containment without arbitrary borders (`border: none`); outlined variant uses `border border-outline-variant`.
 - **Dialog:** `rounded-3xl p-6 bg-surface-container-high text-on-surface shadow-lg max-w-md`.
 
 ### 4. Navigation (`NavigationBar`, `NavigationDrawer`, `NavigationRail`, `Tabs`)
 - **NavigationBar:** 80px container height, 3–5 items, active pill `bg-secondary-container text-on-secondary-container`.
 - **Tabs:** 48px height, 2px bottom active indicator `bg-primary`.
+- **NavTab:** 48px touch target, authentic hover background (`surface-container-high`), indicator pill or underline.
 
 ### 5. Selection (`Checkbox`, `RadioButton`, `Switch`, `Chip`)
 - **Touch Target:** $48\times 48\text{px}$ bounding box even if visual indicator is smaller.
@@ -173,6 +174,9 @@ Font Family: `Inter, Roboto, sans-serif`
 | `TDS-CAPITALIZATION-NOT-SENTENCE-CASE` | MEDIUM | All labels, titles, and buttons must use sentence case (`Save changes`, not `Save Changes`). |
 | `TDS-SPEC-FIDELITY` | CRITICAL | Strictly adhere to user specifications, sketches, and commands. Zero feature hallucination (do not invent unrequested action buttons, widgets, or toggles). |
 | `TDS-WHITESPACE-PRESERVATION` | HIGH | When space is marked as whitespace or left unoccupied in a sketch, either ask the user first or render an explicit placeholder container. Never fill with speculative features. |
+| `TDS-GHOST-BORDER-HALLUCINATION` | HIGH | Surface containment over outlines & shadows: never add arbitrary `border` or `box-shadow` to flat `surface-container` or `Card` elements unless explicitly specified. |
+| `TDS-FONT-SMOOTHING-DEGRADATION` | MEDIUM | Subpixel text rendering contract: never apply `-webkit-font-smoothing: antialiased` or `.antialiased`. Enforce `auto` on text elements. |
+| `TDS-TYPOGRAPHIC-LOGO-APPROXIMATION` | HIGH | Asset vector sanctity: brand logos and wordmarks must be rendered with authentic vector assets (`<img src="...svg">` or inline `<svg>`), never approximated using styled text spans. |
 
 ---
 

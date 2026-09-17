@@ -23,12 +23,18 @@ describe("component-library-generator", () => {
     expect(result.manifest["Button"].variants.primary.containerColor).toBe("#010205");
 
     expect(result.files["Card.tsx"]).toBeDefined();
+    expect(result.files["Card.tsx"]).toContain('border: "none"');
+    expect(result.files["NavTab.tsx"]).toBeDefined();
+    expect(result.files["NavTab.tsx"]).toContain("tds-nav-tab");
     expect(result.files["TextField.tsx"]).toBeDefined();
     expect(result.files["Icon.tsx"]).toBeDefined();
     expect(result.files["Icon.tsx"]).toContain("\"arrow-right\"");
     expect(result.files["index.ts"]).toContain("export * from \"./Button.js\";");
+    expect(result.files["index.ts"]).toContain("export * from \"./NavTab.js\";");
 
     expect(result.manifest["Button"]).toBeDefined();
+    expect(result.manifest["NavTab"]).toBeDefined();
+    expect(result.manifest["NavTab"].family).toBe("navigation");
     expect(result.manifest["Button"].code).toContain("Button: React.FC<ButtonProps>");
     expect(result.manifest["Button"].authoritativeSource.type).toBe("generated");
   });

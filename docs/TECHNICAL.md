@@ -616,7 +616,8 @@ Before any merge can be committed to the target branch, the `MergeGatekeeper` in
 ### 7.1 Component Library Generator
 The `ComponentLibraryGenerator` in [`packages/compiler/src/extractor/component-library-generator.ts`](file:///Users/justus/Desktop/Merchant/Design%20Systems%204%20LLM/Design%20Systems%20for%20LLMs/packages/compiler/src/extractor/component-library-generator.ts) emits certified, production-ready React/TSX component files configured with the exact tokens extracted from the brand:
 - **`Button.tsx`:** Action primitive with 48px touch target, extracted corner radius (pill or rounded rect), variant switching (`primary`, `secondary`, `outlined`, `text`), icon slots, and active focus rings.
-- **`Card.tsx`:** Containment primitive implementing the 5-level surface container hierarchy and elevation shadows.
+- **`Card.tsx`:** Containment primitive implementing the 5-level surface container hierarchy. By default, `filled` and `elevated` variants feature zero border outlines (`border: none`), establishing depth strictly through tonal surface contrast.
+- **`NavTab.tsx`:** Navigation primitive supporting subtle color/weight state transitions without arbitrary underlines, respecting subpixel text rendering.
 - **`TextField.tsx`:** Text input primitive with 56px height, floating label, error state, and start/end icon adornments.
 - **`Badge.tsx`, `Chip.tsx`, `Icon.tsx`:** Selection and communication primitives.
 
@@ -704,7 +705,12 @@ Located in [`packages/evaluator/src/engine.ts`](file:///Users/justus/Desktop/Mer
 ### 8.5 Tier 4: Semantic Content & Sentence-Case
 - **`TDS-CAPITALIZATION-NOT-SENTENCE-CASE` (MEDIUM):** Audits button label text using `isSentenceCase()`. Disallows Title Case (`"Submit Form"`) and ALL CAPS (`"SUBMIT"`), enforcing Sentence Case (`"Submit form"`).
 
-### 8.6 Scoring Algorithm & Certification Gate
+### 8.6 Tier 5: Modern Visual Fidelity & Anti-Drift Guardrails
+- **`TDS-GHOST-BORDER-HALLUCINATION` (HIGH):** Detects arbitrary `border` or `border-[1px]` applied to flat surface containers or filled cards. Enforces tonal surface contrast over artificial borders.
+- **`TDS-FONT-SMOOTHING-DEGRADATION` (MEDIUM):** Detects `-webkit-font-smoothing: antialiased` or `antialiased` utility classes that disable LCD subpixel antialiasing on macOS/WebKit, eroding 100–150 weight units from typography. Enforces `-webkit-font-smoothing: auto;`.
+- **`TDS-TYPOGRAPHIC-LOGO-APPROXIMATION` (HIGH):** Flags adjacent styled HTML text spans attempting to replicate brand marks or wordmarks, requiring authentic SVG vectors from `icons.json`.
+
+### 8.7 Scoring Algorithm & Certification Gate
 Every evaluation starts at a baseline score of 100. Points are deducted per diagnostic based on severity:
 - **`CRITICAL`:** $-25$ points
 - **`HIGH`:** $-15$ points

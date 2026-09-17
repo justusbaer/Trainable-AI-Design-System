@@ -106,4 +106,58 @@ describe("discrepancy-analyzer", () => {
     expect(report.score).toBe(100);
     expect(report.discrepancies.length).toBe(0);
   });
+
+  it("detects card border containment discrepancy (ghost outline on flat card)", () => {
+    const srcCardSnapshot: HarvestedSystemSnapshot = {
+      url: "https://example.com",
+      timestamp: Date.now(),
+      title: "Brand Official",
+      elements: [
+        {
+          selector: ".card",
+          tagName: "div",
+          isShadowRoot: false,
+          family: "containment",
+          role: "card",
+          geometry: { padding: { top: 16, right: 16, bottom: 16, left: 16 }, height: 200, minHeight: 0, borderRadius: 16, isPill: false },
+          material: {
+            backgroundColor: { hex: "#f0f4f9", rgb: "rgb(240, 244, 249)", alpha: 1 },
+            color: { hex: "#1f1f1f", rgb: "rgb(31, 31, 31)", alpha: 1 },
+            hasBorder: false,
+            borderWidth: 0,
+            opacity: 1
+          },
+          rawComputed: {}
+        }
+      ],
+      fontSmoothing: "auto",
+      brandColors: {},
+      detectedWebComponents: []
+    };
+
+    const extCardWithBorder: HarvestedSystemSnapshot = {
+      ...srcCardSnapshot,
+      elements: [
+        {
+          ...srcCardSnapshot.elements[0],
+          material: {
+            ...srcCardSnapshot.elements[0].material,
+            hasBorder: true,
+            borderWidth: 1
+          }
+        }
+      ],
+      fontSmoothing: "antialiased"
+    };
+
+    const report = analyzeDrift(srcCardSnapshot, extCardWithBorder, 95);
+    expect(report.isConverged).toBe(false);
+
+    const borderDisc = report.discrepancies.find(d => d.property === "border");
+    expect(borderDisc).toBeDefined();
+    expect(borderDisc?.observedValue).toContain("none");
+
+    const fontSmoothingDisc = report.discrepancies.find(d => d.property === "webkitFontSmoothing");
+    expect(fontSmoothingDisc).toBeDefined();
+  });
 });

@@ -200,6 +200,44 @@ export function analyzeDrift(
         });
       }
     }
+
+    // 5. Material: Border Containment (Zero Ghost Outlines on Cards)
+    if (role === "card") {
+      const srcHasBorder = Boolean(src.material.hasBorder || (src.material.borderWidth && src.material.borderWidth > 0));
+      const extHasBorder = Boolean(ext.material.hasBorder || (ext.material.borderWidth && ext.material.borderWidth > 0));
+      if (srcHasBorder !== extHasBorder) {
+        matPenalties += 30;
+        discrepancies.push({
+          id: `${role}-border-containment`,
+          category: "material",
+          componentRole: role,
+          property: "border",
+          observedValue: srcHasBorder ? `${src.material.borderWidth}px border` : "none (flat surface)",
+          currentValue: extHasBorder ? `${ext.material.borderWidth || 1}px border` : "none (flat surface)",
+          severity: "high",
+          remediation: srcHasBorder
+            ? `Add ${src.material.borderWidth || 1}px border to card container`
+            : "Remove artificial border from card; modern cards establish depth through tonal surface contrast without outlines."
+        });
+      }
+    }
+  }
+
+  // 6. Font Smoothing & Subpixel Rendering Audit
+  if (sourceSnapshot.fontSmoothing && extractedSnapshot.fontSmoothing) {
+    if (sourceSnapshot.fontSmoothing !== extractedSnapshot.fontSmoothing) {
+      typoPenalties += 20;
+      discrepancies.push({
+        id: "typography-font-smoothing",
+        category: "typography",
+        componentRole: "root",
+        property: "webkitFontSmoothing",
+        observedValue: sourceSnapshot.fontSmoothing,
+        currentValue: extractedSnapshot.fontSmoothing,
+        severity: "medium",
+        remediation: `Align root text rendering to -webkit-font-smoothing: ${sourceSnapshot.fontSmoothing} to preserve authentic stroke weights.`
+      });
+    }
   }
 
   // If no direct role matches were found, do a general brand check

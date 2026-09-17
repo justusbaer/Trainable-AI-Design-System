@@ -159,6 +159,44 @@ export function evaluateCode(code: string, options: EvaluateOptions = {}): Evalu
         }
       }
     }
+
+    // =========================================================================
+    // Tier 5: Modern Visual Fidelity & Anti-Drift Guardrails
+    // =========================================================================
+    // 1. Ghost Border Hallucination Check on Surface Containers
+    if (/\b(?:surface-container|tds-card--filled|<Card\b(?!.*variant=["']outlined["']))/.test(lineText) &&
+        /\b(?:border(?:-\[[^\]]+\])?|border-outline(?:-variant)?)\b/.test(lineText) &&
+        !/\bborder-(?:none|0|transparent)\b/.test(lineText)) {
+      diagnostics.push({
+        severity: "HIGH",
+        code: "TDS-GHOST-BORDER-HALLUCINATION",
+        line: lineNum,
+        message: "Artificial border outline added to flat surface container or filled card.",
+        remediation: "Modern surface containment establishes depth through tonal contrast without borders. Remove border or use 'border-none'.",
+      });
+    }
+
+    // 2. Subpixel Font Smoothing Check
+    if (/(?:-webkit-font-smoothing:\s*antialiased|\bantialiased\b)/i.test(lineText)) {
+      diagnostics.push({
+        severity: "MEDIUM",
+        code: "TDS-FONT-SMOOTHING-DEGRADATION",
+        line: lineNum,
+        message: "Grayscale font smoothing ('antialiased') detected, which strips stroke weight on macOS/WebKit.",
+        remediation: "Use '-webkit-font-smoothing: auto;' or 'subpixel-antialiased' to preserve authentic letterform thickness.",
+      });
+    }
+
+    // 3. Typographic Logo Approximation Check
+    if (/<span[^>]+style=[^>]+color:[^>]+>[A-Za-z0-9]<\/span>\s*<span[^>]+style=[^>]+color:[^>]+>[A-Za-z0-9]<\/span>/.test(lineText)) {
+      diagnostics.push({
+        severity: "HIGH",
+        code: "TDS-TYPOGRAPHIC-LOGO-APPROXIMATION",
+        line: lineNum,
+        message: "Brand logo approximated using styled HTML text spans instead of vector SVG.",
+        remediation: "Render brand logos using authentic vector SVGs from 'icons.json' or inline <svg>.",
+      });
+    }
   });
 
   let score = 100;

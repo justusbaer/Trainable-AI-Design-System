@@ -238,6 +238,9 @@ tokens:
 3. **SENTENCE CASE MANDATE:** Button and menu labels MUST be sentence case (e.g., "Submit application", NOT "Submit Application").
 4. **ON-COLOR PAIRING:** Elements with `bg-primary` MUST use text colored with `text-on-primary`.
 5. **MINIMUM TOUCH TARGET:** All clickable elements must have an active target of at least 48x48px on compact viewports.
+6. **SURFACE CONTAINMENT OVER GHOST OUTLINES:** Never apply arbitrary 1px borders or drop-shadows to cards or content surfaces. Modern flat container architectures establish visual hierarchy strictly through tonal surface contrast (`surface-container-lowest` through `highest`).
+7. **SUBPIXEL RENDERING CONTRACT:** Never inject `-webkit-font-smoothing: antialiased;` across stylesheets, as this causes grayscale rasterization and erodes 100–150 weight units from typography on macOS/WebKit. Enforce `-webkit-font-smoothing: auto;`.
+8. **ASSET VECTOR SANCTITY:** Always render brand marks and logos as authentic SVG vectors from `icons.json` rather than approximating them with styled HTML text spans.
 ```
 
 ---

@@ -69,11 +69,12 @@ flowchart LR
 4. **Astryx-Parity Just-In-Time (JIT) Agent Experience:**
    Modeled after Meta's cutting-edge Astryx architecture, agents discover the entire system from a single edge-hosted endpoint (`/llms.txt`). Agents never parse 50,000 lines of documentation; instead, they query the exact component contract they need on demand (`tds doc <Component>` or MCP `get_component_code`), consuming less than **500 tokens of context per component**.
 5. **Universal Closed-Loop Compliance & Verification:**
-   A 4-tier evaluation engine (`tds evaluate`) that audits code before it enters a PR:
+   A 5-tier evaluation engine (`tds evaluate`) that audits code before it enters a PR:
    - *Tier 1:* Static AST Token Audit (0 raw hex colors, strict spacing scale enforcement).
    - *Tier 2:* Component Reuse & On-Color Pair Audit (enforcing `sys.color.on-primary` pairing).
    - *Tier 3:* DOM Sandbox & A11y Audit (axe-core integration, mobile $\ge 48\times 48\text{px}$ touch target enforcement, RTL bidirectionality).
-   - *Tier 4:* Semantic LLM Rubric checking execution against root `DESIGN.md` philosophy and sentence-case mandates.
+   - *Tier 4:* Semantic Content Audit (M3 sentence-case mandates on buttons and headings).
+   - *Tier 5:* Visual Fidelity & Anti-Drift Guardrails (zero ghost outlines on flat surface containers, subpixel text rendering enforcement with `-webkit-font-smoothing: auto`, and asset vector sanctity for brand marks).
 
 ---
 

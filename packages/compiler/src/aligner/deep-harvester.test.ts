@@ -47,6 +47,7 @@ describe("deep-harvester", () => {
     expect(snapshot.elements.length).toBe(1);
     expect(snapshot.elements[0].role).toBe("button.primary");
     expect(snapshot.elements[0].geometry.isPill).toBe(true);
+    expect(snapshot.fontSmoothing).toBe("auto");
     expect(snapshot.detectedWebComponents).toContain("p-button");
   });
 });

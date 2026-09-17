@@ -20,6 +20,8 @@ export interface HarvestedFontFamily {
   styles: string[];
   faces: HarvestedFontFace[];
   cssBlock: string;
+  cdnFallbackUrl?: string;
+  fallbackStack?: string;
 }
 
 export interface HarvestedFontManifest {
@@ -240,12 +242,18 @@ export function normalizeHarvestedAssets(raw: any, baseUrl = ""): HarvestedAsset
     });
   }
 
-  // Generate combined cssBlock for each family
+  // Generate combined cssBlock, CDN fallback URL, and system fallback stack for each family
   for (const fam of Object.values(families)) {
     fam.cssBlock = fam.faces
       .filter(face => face.cssDeclaration)
       .map(face => face.cssDeclaration)
       .join("\n\n");
+
+    fam.fallbackStack = `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`;
+
+    const cleanFamName = fam.name.replace(/['"]/g, "").trim();
+    const weightsParam = fam.weights.length > 0 ? fam.weights.sort().join(";") : "400;500;600;700";
+    fam.cdnFallbackUrl = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(cleanFamName)}:wght@${weightsParam}&display=swap`;
   }
 
   // 2. Process Icons
@@ -271,6 +279,9 @@ export function normalizeHarvestedAssets(raw: any, baseUrl = ""): HarvestedAsset
 
 function inferIconCategory(name: string): string {
   const lower = name.toLowerCase();
+  if (lower.includes("logo") || lower.includes("brand") || lower.includes("wordmark") || lower.includes("emblem") || lower.includes("google") || lower.includes("apple") || lower.includes("meta") || lower.includes("car") || lower.includes("vehicle")) {
+    return "brand";
+  }
   if (lower.includes("arrow") || lower.includes("chevron") || lower.includes("back") || lower.includes("forward")) {
     return "navigation";
   }
@@ -279,9 +290,6 @@ function inferIconCategory(name: string): string {
   }
   if (lower.includes("user") || lower.includes("profile") || lower.includes("account")) {
     return "social";
-  }
-  if (lower.includes("car") || lower.includes("vehicle") || lower.includes("battery") || lower.includes("speed")) {
-    return "brand";
   }
   return "general";
 }

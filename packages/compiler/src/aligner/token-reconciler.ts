@@ -114,6 +114,41 @@ export function reconcileTokensAndComponents(
         }
         appliedPatches.push(`Updated brand typeface to "${brandFont}"`);
       }
+    } else if (componentRole === "card") {
+      if (property === "border") {
+        const borderVal = String(observedValue).includes("none") ? "none" : String(observedValue);
+        if (updatedTokens["comp.card.container.border"]?.["$extensions"]?.["tds:locked"] === true) {
+          skippedLocked.push(`${componentRole}.${property}`);
+          continue;
+        }
+        if (!updatedTokens["comp.card.container.border"]) {
+          updatedTokens["comp.card.container.border"] = {
+            "$value": borderVal,
+            "$type": "dimension"
+          };
+        } else {
+          updatedTokens["comp.card.container.border"]["$value"] = borderVal;
+        }
+
+        const comp = updatedComponents["card"] || updatedComponents["Card"];
+        if (comp) {
+          if (!comp.anatomy) comp.anatomy = {};
+          if (!comp.anatomy.container) comp.anatomy.container = {};
+          comp.anatomy.container.border = borderVal;
+        }
+        appliedPatches.push(`Reconciled card container border to ${borderVal}`);
+      }
+    } else if (componentRole === "root" && property === "webkitFontSmoothing") {
+      const smoothingVal = String(observedValue);
+      if (!updatedTokens["sys.typography.font-smoothing"]) {
+        updatedTokens["sys.typography.font-smoothing"] = {
+          "$value": smoothingVal,
+          "$type": "fontSmoothing"
+        };
+      } else {
+        updatedTokens["sys.typography.font-smoothing"]["$value"] = smoothingVal;
+      }
+      appliedPatches.push(`Reconciled root font smoothing to ${smoothingVal}`);
     }
   }
 

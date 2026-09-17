@@ -90,4 +90,54 @@ describe("token-reconciler", () => {
     expect(result.tokens["sys.color.primary"]["$value"]).toBe("#000000"); // Unchanged!
     expect(result.skippedLocked).toContain("button.primary.backgroundColor");
   });
+
+  it("reconciles card border to none and root font smoothing to auto", () => {
+    const mockTokens = {};
+    const mockComponents = {
+      "Card": {
+        name: "Card",
+        anatomy: { container: { border: "1px solid #ccc" } }
+      }
+    };
+
+    const mockReport: DriftReport = {
+      score: 70,
+      isConverged: false,
+      threshold: 95,
+      discrepancies: [
+        {
+          id: "card-border-containment",
+          category: "material",
+          componentRole: "card",
+          property: "border",
+          observedValue: "none (flat surface)",
+          currentValue: "1px border",
+          severity: "high",
+          remediation: "Remove border"
+        },
+        {
+          id: "typography-font-smoothing",
+          category: "typography",
+          componentRole: "root",
+          property: "webkitFontSmoothing",
+          observedValue: "auto",
+          currentValue: "antialiased",
+          severity: "medium",
+          remediation: "Align font smoothing"
+        }
+      ],
+      categoryScores: {
+        geometry: 100,
+        color: 100,
+        typography: 80,
+        material: 70
+      }
+    };
+
+    const result = reconcileTokensAndComponents(mockTokens, mockComponents, mockReport);
+    expect(result.tokens["comp.card.container.border"]["$value"]).toBe("none");
+    expect(result.tokens["sys.typography.font-smoothing"]["$value"]).toBe("auto");
+    expect(result.components["Card"].anatomy.container.border).toBe("none");
+    expect(result.appliedPatches.length).toBe(2);
+  });
 });

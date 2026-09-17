@@ -77,4 +77,52 @@ describe("Trainable DS Compliance Evaluator", () => {
     const codes = result.diagnostics.map(d => d.code);
     expect(codes).toContain("TDS-M3-ON-COLOR-MISMATCH");
   });
+
+  it("detects ghost border hallucination on flat card surfaces", () => {
+    const ghostBorderCode = `
+      export function FlatCard() {
+        return (
+          <div className="bg-surface-container border border-outline p-4">
+            <span>Content</span>
+          </div>
+        );
+      }
+    `;
+
+    const result = evaluateCode(ghostBorderCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-GHOST-BORDER-HALLUCINATION");
+  });
+
+  it("detects grayscale font-smoothing degradation", () => {
+    const smoothedCode = `
+      export function RootLayout() {
+        return (
+          <div className="antialiased font-sans text-on-surface">
+            <h1>Header</h1>
+          </div>
+        );
+      }
+    `;
+
+    const result = evaluateCode(smoothedCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-FONT-SMOOTHING-DEGRADATION");
+  });
+
+  it("detects typographic logo approximation instead of vector SVG", () => {
+    const fauxLogoCode = `
+      export function BrandHeader() {
+        return (
+          <div>
+            <span style={{ color: "#4285f4" }}>G</span><span style={{ color: "#ea4335" }}>o</span>
+          </div>
+        );
+      }
+    `;
+
+    const result = evaluateCode(fauxLogoCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-TYPOGRAPHIC-LOGO-APPROXIMATION");
+  });
 });

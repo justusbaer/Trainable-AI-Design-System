@@ -173,6 +173,7 @@ export const Card: React.FC<CardProps> = ({
     gap: "16px",
     boxSizing: "border-box",
     transition: "transform 0.15s ease, box-shadow 0.15s ease",
+    WebkitFontSmoothing: "auto",
     ...style,
   };
 
@@ -182,15 +183,16 @@ export const Card: React.FC<CardProps> = ({
       variantStyle = {
         background: "var(--sys-color-surface-container)",
         color: "var(--sys-color-on-surface)",
-        border: "1px solid var(--sys-color-outline-variant)",
+        border: "none",
+        boxShadow: "none",
       };
       break;
     case "elevated":
       variantStyle = {
         background: "var(--sys-color-surface-container-high)",
         color: "var(--sys-color-on-surface)",
-        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.35)",
-        border: "1px solid var(--sys-color-outline-variant)",
+        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.15)",
+        border: "none",
       };
       break;
     case "outlined":
@@ -198,6 +200,7 @@ export const Card: React.FC<CardProps> = ({
         background: "transparent",
         color: "var(--sys-color-on-surface)",
         border: "1px solid var(--sys-color-outline)",
+        boxShadow: "none",
       };
       break;
   }
@@ -394,7 +397,74 @@ export const Chip: React.FC<ChipProps> = ({
 );
 `;
 
-  // 5. Icon.tsx with harvested SVGs dictionary
+  // 5. NavTab.tsx (Navigation Family)
+  files["NavTab.tsx"] = `import React from "react";
+
+export interface NavTabProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  active?: boolean;
+  icon?: React.ReactNode;
+  children?: React.ReactNode;
+}
+
+/**
+ * ${brandName} Certified NavTab Component (Navigation Family)
+ * - Subtle color and weight shift on hover/active
+ * - Strict subpixel rendering without arbitrary underline
+ */
+export const NavTab: React.FC<NavTabProps> = ({
+  active = false,
+  icon,
+  children,
+  className = "",
+  style = {},
+  ...props
+}) => {
+  const [isHovered, setIsHovered] = React.useState(false);
+
+  const baseStyle: React.CSSProperties = {
+    fontFamily: "var(--font-brand, '${primaryFont}')",
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "8px",
+    padding: "8px 16px",
+    borderRadius: "8px",
+    fontSize: "0.875rem",
+    fontWeight: active ? 600 : isHovered ? 500 : 400,
+    color: active
+      ? "var(--sys-color-primary, #1a73e8)"
+      : isHovered
+      ? "var(--sys-color-on-surface, #000000)"
+      : "var(--sys-color-on-surface-variant, #5f6368)",
+    background: active
+      ? "var(--sys-color-secondary-container, rgba(0, 0, 0, 0.05))"
+      : isHovered
+      ? "var(--sys-color-surface-container, rgba(0, 0, 0, 0.03))"
+      : "transparent",
+    border: "none",
+    cursor: "pointer",
+    textDecoration: "none",
+    transition: "color 0.15s ease, background-color 0.15s ease, font-weight 0.15s ease",
+    WebkitFontSmoothing: "auto",
+    ...style,
+  };
+
+  return (
+    <button
+      type="button"
+      style={baseStyle}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={\`tds-nav-tab \${active ? "tds-nav-tab--active" : ""} \${className}\`}
+      {...props}
+    >
+      {icon && <span className="tds-nav-tab-icon">{icon}</span>}
+      {children && <span className="tds-nav-tab-label">{children}</span>}
+    </button>
+  );
+};
+`;
+
+  // 6. Icon.tsx with harvested SVGs dictionary
   const iconDictionaryEntries = icons.map(ic => `  "${ic.name}": (${ic.svg})`).join(",\n");
 
   files["Icon.tsx"] = `import React from "react";
@@ -442,16 +512,17 @@ export const Icon: React.FC<IconProps> = ({ name, size = 24, className = "", sty
 };
 `;
 
-  // 6. index.ts barrel
+  // 7. index.ts barrel
   files["index.ts"] = `export * from "./Button.js";
 export * from "./Card.js";
 export * from "./TextField.js";
 export * from "./Badge.js";
 export * from "./Chip.js";
+export * from "./NavTab.js";
 export * from "./Icon.js";
 `;
 
-  // 7. Component manifest metadata for components.json
+  // 8. Component manifest metadata for components.json
   const manifest: Record<string, any> = {
     Button: {
       name: "Button",
@@ -554,6 +625,28 @@ export * from "./Icon.js";
       rules: [],
       examples: ['<Chip selected={true}>Filter option</Chip>'],
       code: files["Chip.tsx"],
+      authoritativeSource: { type: "generated" },
+      locked: false,
+    },
+    NavTab: {
+      name: "NavTab",
+      path: "./components/ui/NavTab.tsx",
+      family: "navigation",
+      description: "Interactive navigation tab with subtle color and weight shifts, adhering to subpixel rendering.",
+      anatomy: { container: { height: 40, padding: "8px 16px", borderRadius: "8px" } },
+      variants: {
+        default: { active: false },
+        active: { active: true },
+      },
+      props: {
+        active: { type: "boolean", default: "false" },
+        icon: { type: "React.ReactNode" },
+        children: { type: "React.ReactNode" },
+      },
+      a11y: { minTouchTarget: "40px height", requiredAria: ["aria-current"], focusIndicator: "Outline" },
+      rules: ["TDS-INTERACTIVE-PSEUDO-STATE: Navigation items must shift color and weight without adding underlines."],
+      examples: ['<NavTab active={true}>Home</NavTab>', '<NavTab active={false}>For you</NavTab>'],
+      code: files["NavTab.tsx"],
       authoritativeSource: { type: "generated" },
       locked: false,
     },

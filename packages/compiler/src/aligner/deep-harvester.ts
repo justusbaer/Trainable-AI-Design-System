@@ -34,10 +34,22 @@ export interface HarvestedGeometry {
 export interface HarvestedMaterial {
   backgroundColor: HarvestedColor;
   color: HarvestedColor;
+  hasBorder?: boolean;
+  borderWidth?: number;
+  borderStyle?: string;
   borderColor?: HarvestedColor;
   boxShadow?: string;
   backdropFilter?: string;
   opacity: number;
+}
+
+export interface HarvestedPseudoStates {
+  hover?: {
+    color?: HarvestedColor;
+    backgroundColor?: HarvestedColor;
+    textDecoration?: string;
+    fontWeight?: number;
+  };
 }
 
 export interface HarvestedElement {
@@ -49,6 +61,7 @@ export interface HarvestedElement {
   geometry: HarvestedGeometry;
   typography?: HarvestedTypography;
   material: HarvestedMaterial;
+  pseudoStates?: HarvestedPseudoStates;
   rawComputed: Record<string, string>;
 }
 
@@ -57,6 +70,7 @@ export interface HarvestedSystemSnapshot {
   timestamp: number;
   title: string;
   elements: HarvestedElement[];
+  fontSmoothing?: string;
   brandColors: {
     primary?: HarvestedColor;
     surface?: HarvestedColor;
@@ -194,49 +208,75 @@ export function getInPageHarvesterScript(): string {
             isPill: radiusData.isPill
           },
           typography: parseTypography(cs),
-          material: {
-            backgroundColor: parseRgb(cs.backgroundColor),
-            color: parseRgb(cs.color),
-            borderColor: parseRgb(cs.borderColor),
-            boxShadow: cs.boxShadow !== 'none' ? cs.boxShadow : undefined,
-            backdropFilter: cs.backdropFilter !== 'none' ? cs.backdropFilter : undefined,
-            opacity: parseFloat(cs.opacity) || 1
-          },
-          rawComputed: {
-            backgroundColor: cs.backgroundColor,
-            color: cs.color,
-            fontFamily: cs.fontFamily,
-            fontSize: cs.fontSize,
-            fontWeight: cs.fontWeight,
-            borderRadius: cs.borderRadius,
-            padding: cs.padding
-          }
-        });
+          const bWidth = parsePx(cs.borderTopWidth || cs.borderWidth);
+          const bStyle = cs.borderStyle || cs.borderTopStyle || 'none';
+          const hasBorder = bWidth > 0 && bStyle !== 'none' && bStyle !== 'hidden';
+
+          observedElements.push({
+            selector: tagName + (el.className ? '.' + String(el.className).trim().replace(/\\s+/g, '.') : ''),
+            tagName,
+            isShadowRoot: isShadow,
+            family,
+            role,
+            geometry: {
+              padding: parsePadding(cs.padding),
+              height,
+              minHeight: parsePx(cs.minHeight),
+              borderRadius: radiusData.val,
+              isPill: radiusData.isPill
+            },
+            typography: parseTypography(cs),
+            material: {
+              backgroundColor: parseRgb(cs.backgroundColor),
+              color: parseRgb(cs.color),
+              hasBorder,
+              borderWidth: hasBorder ? bWidth : 0,
+              borderStyle: hasBorder ? bStyle : undefined,
+              borderColor: hasBorder ? parseRgb(cs.borderColor) : undefined,
+              boxShadow: cs.boxShadow !== 'none' ? cs.boxShadow : undefined,
+              backdropFilter: cs.backdropFilter !== 'none' ? cs.backdropFilter : undefined,
+              opacity: parseFloat(cs.opacity) || 1
+            },
+            rawComputed: {
+              backgroundColor: cs.backgroundColor,
+              color: cs.color,
+              fontFamily: cs.fontFamily,
+              fontSize: cs.fontSize,
+              fontWeight: cs.fontWeight,
+              borderRadius: cs.borderRadius,
+              padding: cs.padding,
+              borderWidth: cs.borderWidth,
+              borderStyle: cs.borderStyle,
+              boxShadow: cs.boxShadow
+            }
+          });
+        }
+
+        // Recurse light DOM children
+        Array.from(el.children).forEach(child => inspectElement(child, isShadow));
       }
 
-      // Recurse light DOM children
-      Array.from(el.children).forEach(child => inspectElement(child, isShadow));
-    }
+      inspectElement(document.body);
 
-    inspectElement(document.body);
+      // Extract brand canvas, font smoothing & surface
+      const bodyCs = window.getComputedStyle(document.body);
+      const canvasColor = parseRgb(bodyCs.backgroundColor);
+      const fontSmoothing = bodyCs.webkitFontSmoothing || bodyCs.getPropertyValue('-webkit-font-smoothing') || 'auto';
 
-    // Extract brand canvas & surface
-    const bodyCs = window.getComputedStyle(document.body);
-    const canvasColor = parseRgb(bodyCs.backgroundColor);
-
-    return {
-      url: window.location.href,
-      timestamp: Date.now(),
-      title: document.title,
-      elements: observedElements,
-      brandColors: {
-        canvas: canvasColor,
-        surface: observedElements.find(e => e.role === 'card')?.material.backgroundColor,
-        primary: observedElements.find(e => e.role === 'button.primary')?.material.backgroundColor
-      },
-      detectedWebComponents: Array.from(webComponents)
-    };
-  })();`;
+      return {
+        url: window.location.href,
+        timestamp: Date.now(),
+        title: document.title,
+        elements: observedElements,
+        fontSmoothing,
+        brandColors: {
+          canvas: canvasColor,
+          surface: observedElements.find(e => e.role === 'card')?.material.backgroundColor,
+          primary: observedElements.find(e => e.role === 'button.primary')?.material.backgroundColor
+        },
+        detectedWebComponents: Array.from(webComponents)
+      };
+    })();`;
 }
 
 /**
@@ -249,6 +289,7 @@ export function normalizeHarvestedSnapshot(data: any): HarvestedSystemSnapshot {
       timestamp: Date.now(),
       title: "",
       elements: [],
+      fontSmoothing: "auto",
       brandColors: {},
       detectedWebComponents: []
     };
@@ -259,6 +300,7 @@ export function normalizeHarvestedSnapshot(data: any): HarvestedSystemSnapshot {
     timestamp: Number(data.timestamp || Date.now()),
     title: String(data.title || ""),
     elements: Array.isArray(data.elements) ? data.elements : [],
+    fontSmoothing: String(data.fontSmoothing || "auto"),
     brandColors: data.brandColors || {},
     detectedWebComponents: Array.isArray(data.detectedWebComponents) ? data.detectedWebComponents : []
   };
