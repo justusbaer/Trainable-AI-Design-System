@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google News</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Text:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Google Sans';
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+      src: url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2rgCIhM907-0x.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Google Sans';
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+      src: url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2oQCIhM907-0x.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Google Sans';
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+      src: url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vgCIhM907w.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Google Sans Text';
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+      src: url('https://fonts.gstatic.com/s/googlesanstext/v29/5aUu9-KzpRiLCAt4Unrc-xIKmCU5qEp2i0VBuxM.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Google Sans Text';
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+      src: url('https://fonts.gstatic.com/s/googlesanstext/v29/5aUp9-KzpRiLCAt4Unrc-xIKmCU5oLlVnmhjtjm4DZw.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Google Sans Text';
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+      src: url('https://fonts.gstatic.com/s/googlesanstext/v29/5aUp9-KzpRiLCAt4Unrc-xIKmCU5oPFTnmhjtjm4DZw.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Product Sans';
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+      src: url('https://fonts.gstatic.com/s/productsans/v9/pxiDypQkot1TnFhsFMOfGShVF9eOYktMqg.woff2') format('woff2');
+    }
+
+    :root {
+      --gn-primary: #1867dc;
+      --gn-on-primary: #ffffff;
+      --gn-primary-container: #d3e3fd;
+      --gn-on-primary-container: #0842a0;
+      --gn-secondary-blue: #004a77;
+      --gn-surface: #ffffff;
+      --gn-on-surface: #1f1f1f;
+      --gn-surface-container-low: #f6f8fc;
+      --gn-surface-container: #f0f4f9;
+      --gn-surface-container-high: #f0f4f9;
+      --gn-coverage-bg: #f2f2f2;
+      --gn-coverage-text: #444746;
+      --gn-outline: #747775;
+      --gn-outline-variant: #e3e3e3;
+      --gn-link: #1a73e8;
+      --gn-purple: #592fd0;
+      --gn-radius-card: 18px;
+      --gn-radius-pill: 9999px;
+      --gn-radius-img: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Google Sans Text', Roboto, Arial, sans-serif;
+      background-color: var(--gn-surface-container-low);
+      color: var(--gn-on-surface);
+      -webkit-font-smoothing: auto;
+      line-height: 1.4;
+    }
+
+    /* Top App Bar */
+    .top-header {
+      background-color: var(--gn-surface);
+      height: 64px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand-section {
+      display: flex;
+      align-items: center;
+      min-width: 170px;
+    }
+
+    .google-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      user-select: none;
+      gap: 6px;
+      line-height: 24px;
+    }
+    .google-logo-svg {
+      display: block;
+      width: 74px;
+      height: 24px;
+    }
+    .google-logo .g-news {
+      font-family: 'Product Sans', Arial, sans-serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: #5f6368;
+      line-height: 24px;
+      letter-spacing: -0.2px;
+      display: inline-block;
+      margin-top: -1px;
+    }
+
+    /* Search Bar */
+    .search-wrapper {
+      flex: 1;
+      max-width: 680px;
+      margin: 0 24px;
+    }
+
+    .search-bar {
+      background-color: var(--gn-surface-container-high);
+      height: 46px;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      padding: 0 18px;
+      gap: 14px;
+      border: 1px solid transparent;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+    .search-bar:focus-within {
+      background-color: var(--gn-surface);
+      border-color: var(--gn-primary);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+
+    .search-icon {
+      color: #5f6368;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 16px;
+      color: var(--gn-on-surface);
+    }
+    .search-input::placeholder {
+      color: #5f6368;
+    }
+
+    .dropdown-icon {
+      color: #5f6368;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--gn-radius-pill);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #5f6368;
+      transition: background-color 0.1s ease;
+    }
+    .icon-btn:hover {
+      background-color: var(--gn-surface-container-high);
+      color: var(--gn-on-surface);
+    }
+
+    .btn-anmelden {
+      background-color: #0b57d0;
+      color: #ffffff;
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      height: 40px;
+      padding: 0 24px;
+      border-radius: var(--gn-radius-pill);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: opacity 0.15s ease;
+    }
+    .btn-anmelden:hover {
+      opacity: 0.94;
+    }
+
+    /* Subheader Tabs */
+    .nav-tabs-bar {
+      background-color: var(--gn-surface);
+      border-bottom: 1px solid var(--gn-outline-variant);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-tabs-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-tab-item {
+      padding: 12px 14px;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 27px;
+      color: #5f6368;
+      text-decoration: none;
+      white-space: nowrap;
+      position: relative;
+      cursor: pointer;
+      transition: color 0.1s ease;
+    }
+    .nav-tab-item:hover {
+      color: #000000;
+    }
+
+    .nav-tab-item.active {
+      color: #1a73e8;
+    }
+    .nav-tab-item.active:hover {
+      color: #1a73e8;
+    }
+    .nav-tab-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 14px;
+      right: 14px;
+      height: 3px;
+      background-color: #1a73e8;
+      border-radius: 3px 3px 0 0;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background-color: var(--gn-outline-variant);
+      margin: 0 12px;
+    }
+
+    /* Main Container */
+    .main-content {
+      max-width: 1260px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+    }
+
+    /* Page Header */
+    .page-header-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      gap: 20px;
+    }
+
+    .info-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #5f6368;
+      text-decoration: none;
+      margin-bottom: 6px;
+    }
+    .info-link:hover {
+      text-decoration: underline;
+    }
+
+    .page-heading {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--gn-on-surface);
+      line-height: 1.2;
+    }
+
+    .page-date {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #5f6368;
+      margin-top: 4px;
+    }
+
+    /* AI Zusammenfassung Card */
+    .ai-summary-card {
+      background-color: var(--gn-surface);
+      border: none;
+      border-radius: var(--gn-radius-card);
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      box-shadow: none;
+    }
+
+    .ai-summary-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--gn-outline-variant);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .ai-summary-title-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .gemini-sparkle-icon {
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .ai-summary-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--gn-on-surface);
+      line-height: 26px;
+    }
+
+    .ai-summary-badge {
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      color: #5f6368;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .ai-summary-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .ai-summary-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--gn-on-surface);
+      -webkit-font-smoothing: auto;
+    }
+
+    .ai-summary-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1a73e8 0%, #7c4dff 100%);
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    .ai-summary-text {
+      flex: 1;
+    }
+
+    .ai-summary-text strong {
+      font-weight: 500;
+      color: #1f1f1f;
+    }
+
+    .ai-summary-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gn-link);
+      text-decoration: none;
+      white-space: nowrap;
+      margin-left: 6px;
+      transition: opacity 0.15s ease;
+    }
+
+    .ai-summary-link:hover {
+      text-decoration: underline;
+    }
+
+    .ai-summary-link svg {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* Weather Card - Header (Original Mode) */
+    .weather-card-header {
+      background-color: var(--gn-surface);
+      border: none;
+      border-radius: var(--gn-radius-card);
+      padding: 8px 16px 8px 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: none;
+      margin-bottom: 0;
+    }
+
+    /* Weather Card - Sidebar (AI Summary Mode) */
+    .weather-card-sidebar {
+      background-color: var(--gn-surface);
+      border: none;
+      border-radius: var(--gn-radius-card);
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      box-shadow: none;
+      margin-bottom: 24px;
+      width: 100%;
+    }
+
+    /* Mode Switching Visibility Rules */
+    body[data-proto-mode="original"] .ai-summary-card {
+      display: none !important;
+    }
+    body[data-proto-mode="original"] .weather-card-sidebar {
+      display: none !important;
+    }
+    body[data-proto-mode="original"] .weather-card-header {
+      display: flex !important;
+    }
+
+    body[data-proto-mode="ai"] .ai-summary-card {
+      display: block !important;
+    }
+    body[data-proto-mode="ai"] .weather-card-sidebar {
+      display: flex !important;
+    }
+    body[data-proto-mode="ai"] .weather-card-header {
+      display: none !important;
+    }
+
+    /* Floating Prototype Switcher Bar */
+    .proto-switcher-bar {
+      position: fixed;
+      bottom: 24px;
+      right: 28px;
+      z-index: 10000;
+      background: #ffffff;
+      border-radius: 9999px;
+      padding: 4px 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.16), 0 1px 4px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--gn-outline-variant);
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.2s ease;
+    }
+    .proto-switcher-bar:hover {
+      box-shadow: 0 6px 26px rgba(0, 0, 0, 0.22);
+    }
+    .proto-switcher-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: #747775;
+      padding: 0 6px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      user-select: none;
+    }
+    .proto-switch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 9999px;
+      border: none;
+      background: transparent;
+      color: #444746;
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+      min-height: 34px;
+    }
+    .proto-switch-btn:hover {
+      background-color: #f0f4f9;
+      color: #1f1f1f;
+    }
+    .proto-switch-btn.active {
+      background-color: #d3e3fd;
+      color: #041e49;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    }
+    .proto-switch-btn.active:hover {
+      background-color: #c2e7ff;
+    }
+    .proto-switch-btn svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+    .proto-shortcut-hint {
+      font-size: 10px;
+      font-weight: 400;
+      opacity: 0.65;
+      margin-left: 2px;
+    }
+
+    .weather-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .weather-chevron {
+      color: #747775;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .weather-icon-sun {
+      width: 38px;
+      height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .weather-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .weather-location-line {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: #5f6368;
+    }
+
+    .weather-temp {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--gn-on-surface);
+      line-height: 1.15;
+    }
+
+    .weather-link {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--gn-link);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .weather-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Grid Layout */
+    .content-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 980px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Section Header Inside Card with Divider */
+    .section-card-header {
+      border-bottom: 1px solid var(--gn-outline-variant);
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+
+    .section-header-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Google Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--gn-primary);
+      text-decoration: none;
+    }
+    .section-header-link:hover {
+      text-decoration: underline;
+    }
+
+    .section-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    /* Major Story Card - Unified Zero-Outline Container */
+    .news-card-container {
+      background-color: var(--gn-surface);
+      border: none;
+      border-radius: var(--gn-radius-card);
+      padding: 16px;
+      margin-bottom: 24px;
+      box-shadow: none;
+    }
+
+    .story-main-headline {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--gn-secondary-blue);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      line-height: 28px;
+    }
+    .story-main-headline:hover {
+      text-decoration: underline;
+    }
+
+    /* Cluster layout */
+    .cluster-layout {
+      display: grid;
+      grid-template-columns: 290px minmax(0, 1fr);
+      gap: 24px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .cluster-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lead-story-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .lead-img-wrapper {
+      width: 100%;
+      height: 165px;
+      border-radius: var(--gn-radius-img);
+      overflow: hidden;
+      background-color: #2c2523;
+    }
+    .lead-img-wrapper img, .lead-img-wrapper svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .source-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-ntv {
+      background-color: #d93025;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .source-name {
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #1f1f1f;
+      cursor: pointer;
+    }
+    .source-name:hover {
+      text-decoration: underline;
+    }
+
+    .lead-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--gn-on-surface);
+      line-height: 26px;
+      text-decoration: none;
+    }
+    .lead-title:hover {
+      text-decoration: underline;
+      color: var(--gn-on-surface);
+    }
+
+    .timestamp-text {
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 12px;
+      color: #5f6368;
+    }
+
+    .sub-stories-col {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .sub-story-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .sub-story-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: #444746;
+      text-decoration: none;
+      line-height: 20px;
+    }
+    .sub-story-title:hover {
+      text-decoration: underline;
+      color: #444746;
+    }
+
+    .badge-zeit {
+      font-family: serif;
+      font-weight: 900;
+      font-size: 13px;
+      color: #1f1f1f;
+    }
+
+    .badge-spiegel {
+      background-color: #e64415;
+      color: #ffffff;
+      font-family: serif;
+      font-weight: 900;
+      font-size: 11px;
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    .badge-sz {
+      font-family: serif;
+      font-style: italic;
+      font-weight: bold;
+      font-size: 13px;
+      color: #1f1f1f;
+    }
+
+    .badge-gea {
+      background-color: #0055a5;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    .badge-swp {
+      background-color: #00828a;
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    .badge-tagesschau {
+      background-color: #002d62;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 5px;
+      border-radius: 2px;
+    }
+
+    /* Coverage button */
+    .coverage-btn {
+      width: 100%;
+      height: 40px;
+      background-color: var(--gn-coverage-bg);
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      cursor: pointer;
+      color: var(--gn-coverage-text);
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      margin-top: 16px;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+    .coverage-btn:hover {
+      background-color: #e5e5e5;
+      color: #1f1f1f;
+    }
+    .coverage-btn svg {
+      color: var(--gn-primary);
+    }
+
+    /* Internal Card Divider */
+    .story-divider {
+      border: none;
+      border-top: 1px solid var(--gn-outline-variant);
+      margin-top: 16px;
+      padding-top: 16px;
+    }
+
+    /* Right column: Local News Card - Zero Outline */
+    .local-news-card {
+      background-color: var(--gn-surface);
+      border: none;
+      border-radius: var(--gn-radius-card);
+      padding: 16px;
+      box-shadow: none;
+    }
+
+    .local-article-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 14px 0;
+    }
+    .local-article-row:first-child {
+      padding-top: 0;
+    }
+    .local-article-row:not(:last-child) {
+      border-bottom: 1px solid var(--gn-outline-variant);
+    }
+
+    .local-text-block {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .local-headline {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gn-on-surface);
+      line-height: 1.35;
+      text-decoration: none;
+    }
+    .local-headline:hover {
+      text-decoration: underline;
+      color: var(--gn-on-surface);
+    }
+
+    .local-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 10px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background-color: #f1f3f4;
+    }
+    .local-thumb img, .local-thumb svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .local-footer-action {
+      display: flex;
+      justify-content: flex-end;
+      padding-top: 8px;
+    }
+
+    .recommendations-heading {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--gn-purple);
+      margin-top: 24px;
+      margin-bottom: 12px;
+      cursor: pointer;
+    }
+    .recommendations-heading:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top App Bar Header -->
+  <header class="top-header">
+    <div class="brand-section">
+      <a href="#" class="google-logo" aria-label="Google News">
+        <svg class="google-logo-svg" viewBox="0 0 74 24" width="74" height="24" aria-hidden="true" role="img">
+          <path fill="#4285F4" d="M9.24 8.19v2.46h5.88c-.18 1.38-.64 2.39-1.34 3.1-.86.86-2.2 1.8-4.54 1.8-3.62 0-6.45-2.92-6.45-6.54s2.83-6.54 6.45-6.54c1.95 0 3.38.77 4.43 1.76L15.4 2.5C13.94 1.08 11.98 0 9.24 0 4.28 0 .11 4.04.11 9s4.17 9 9.13 9c2.68 0 4.7-.88 6.28-2.52 1.62-1.62 2.13-3.91 2.13-5.75 0-.57-.04-1.1-.13-1.54H9.24z"/>
+          <path fill="#EA4335" d="M25 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z"/>
+          <path fill="#4285F4" d="M53.58 7.49h-.09c-.57-.68-1.67-1.3-3.06-1.3C47.53 6.19 45 8.72 45 12c0 3.26 2.53 5.81 5.43 5.81 1.39 0 2.49-.62 3.06-1.32h.09v.81c0 2.22-1.19 3.41-3.1 3.41-1.56 0-2.53-1.12-2.93-2.07l-2.22.92c.64 1.54 2.33 3.43 5.15 3.43 2.99 0 5.52-1.76 5.52-6.05V6.49h-2.42v1zm-2.93 8.03c-1.76 0-3.1-1.5-3.1-3.52 0-2.05 1.34-3.52 3.1-3.52 1.74 0 3.1 1.5 3.1 3.54.01 2.03-1.36 3.5-3.1 3.5z"/>
+          <path fill="#FBBC05" d="M38 6.19c-3.21 0-5.83 2.44-5.83 5.81 0 3.34 2.62 5.81 5.83 5.81s5.83-2.46 5.83-5.81c0-3.37-2.62-5.81-5.83-5.81zm0 9.33c-1.76 0-3.28-1.45-3.28-3.52 0-2.09 1.52-3.52 3.28-3.52s3.28 1.43 3.28 3.52c0 2.07-1.52 3.52-3.28 3.52z"/>
+          <path fill="#34A853" d="M58 .24h2.51v17.57H58z"/>
+          <path fill="#EA4335" d="M68.26 15.52c-1.3 0-2.22-.59-2.82-1.76l7.77-3.21-.26-.66c-.48-1.3-1.96-3.7-4.97-3.7-2.99 0-5.48 2.35-5.48 5.81 0 3.26 2.46 5.81 5.76 5.81 2.66 0 4.2-1.63 4.84-2.57l-1.98-1.32c-.66.96-1.56 1.6-2.86 1.6zm-.18-7.15c1.03 0 1.91.53 2.2 1.28l-5.25 2.17c0-2.44 1.73-3.45 3.05-3.45z"/>
+        </svg>
+        <span class="g-news">News</span>
+      </a>
+    </div>
+
+    <!-- Pill Search Bar -->
+    <div class="search-wrapper">
+      <div class="search-bar">
+        <div class="search-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.49 19l-5.73-5.73C15.53 12.2 16 10.91 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.41 0 2.7-.47 3.77-1.24L19 20.49 20.49 19zM5 9.5C5 7.01 7.01 5 9.5 5S14 7.01 14 9.5 11.99 14 9.5 14 5 11.99 5 9.5z"/></svg>
+        </div>
+        <input type="text" class="search-input" placeholder="Themen, Orte und Quellen suchen" aria-label="Themen, Orte und Quellen suchen">
+        <div class="dropdown-icon" title="Erweiterte Suche">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="header-actions">
+      <!-- Help -->
+      <button class="icon-btn" title="Hilfe" aria-label="Hilfe">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+      </button>
+      <!-- Settings -->
+      <button class="icon-btn" title="Einstellungen" aria-label="Einstellungen">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+      </button>
+      <!-- Google Apps 9-dots -->
+      <button class="icon-btn" title="Google-Apps" aria-label="Google-Apps">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 12c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm-6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0-6c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 0c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm4-8c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2zm-4 2c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6 6c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2zm0 6c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2z"/></svg>
+      </button>
+      <!-- Anmelden Button -->
+      <a href="#" class="btn-anmelden">Anmelden</a>
+    </div>
+  </header>
+
+  <!-- Horizontal Tab Navigation Bar -->
+  <nav class="nav-tabs-bar">
+    <a href="#" class="nav-tab-item active">Startseite</a>
+    <a href="#" class="nav-tab-item">Für mich</a>
+    <a href="#" class="nav-tab-item">Folge ich</a>
+    <a href="#" class="nav-tab-item">News Showcase</a>
+    <div class="nav-divider"></div>
+    <a href="#" class="nav-tab-item">Deutschland</a>
+    <a href="#" class="nav-tab-item">Welt</a>
+    <a href="#" class="nav-tab-item">Lokales</a>
+    <a href="#" class="nav-tab-item">Unternehmen & Märkte</a>
+    <a href="#" class="nav-tab-item">Wissenschaft & Technik</a>
+    <a href="#" class="nav-tab-item">Unterhaltung</a>
+    <a href="#" class="nav-tab-item">Sport</a>
+    <a href="#" class="nav-tab-item">Gesundheit</a>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <main class="main-content">
+
+    <!-- Page Header Title Group -->
+    <div class="page-header-row">
+      <div class="page-title-group">
+        <a href="#" class="info-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+          Kriterien für die Reihenfolge der Artikel
+        </a>
+        <h1 class="page-heading">Meine Auswahl</h1>
+        <div class="page-date">Donnerstag, 17. September</div>
+      </div>
+
+      <!-- Weather Widget Card (Original Header Position) -->
+      <div class="weather-card weather-card-header">
+        <div class="weather-chevron" title="Vorheriger Ort">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+        </div>
+        <div class="weather-icon-sun">
+          <!-- Solid golden sun with fluffy cloud overlay matching the user screenshot -->
+          <svg width="36" height="36" viewBox="0 0 40 40">
+            <!-- Bright Golden Sun Circle -->
+            <circle cx="20" cy="18" r="12" fill="#FBBC04"/>
+            <!-- Subtle Cloud Overlay bottom-right -->
+            <path d="M16 28h16a5 5 0 0 0 0-10 4.9 4.9 0 0 0-2.8.9A6.5 6.5 0 0 0 17 19.5a5 5 0 0 0-1 8.5z" fill="#ffffff" fill-opacity="0.95"/>
+          </svg>
+        </div>
+        <div class="weather-info">
+          <div class="weather-location-line">
+            <span>Tübingen</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+          </div>
+          <div class="weather-temp">21 °C</div>
+          <a href="#" class="weather-link">Google Wetter</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content 2-Column Grid -->
+    <div class="content-grid">
+
+      <!-- LEFT COLUMN -->
+      <div class="main-column">
+
+        <!-- AI Zusammenfassung Card (Gemini Sparkle + Zero-Outline Container) -->
+        <article class="ai-summary-card">
+          <div class="ai-summary-header">
+            <div class="ai-summary-title-group">
+              <!-- Official Gemini Sparkle Icon with AI Gradient -->
+              <svg class="gemini-sparkle-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <defs>
+                  <linearGradient id="geminiSparkleGrad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#1a73e8"/>
+                    <stop offset="50%" stop-color="#7c4dff"/>
+                    <stop offset="100%" stop-color="#d04b82"/>
+                  </linearGradient>
+                </defs>
+                <path d="M12 2C12 7.52285 7.52285 12 2 12C7.52285 12 12 16.4772 12 22C12 16.4772 16.4772 12 22 12C16.4772 12 12 7.52285 12 2Z" fill="url(#geminiSparkleGrad)"/>
+              </svg>
+              <h2 class="ai-summary-title">Zusammenfassung</h2>
+            </div>
+            <div class="ai-summary-meta">
+              <span class="ai-summary-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                Vor 10 Min. aktualisiert
+              </span>
+            </div>
+          </div>
+
+          <ul class="ai-summary-list">
+            <li class="ai-summary-item">
+              <span class="ai-summary-bullet"></span>
+              <div class="ai-summary-text">
+                <strong>Verdacht auf seltene lokale Malaria-Infektionen:</strong> Nach dem Tod einer dritten Person im Großraum Frankfurt untersuchen die Gesundheitsbehörden mögliche Übertragungswege abseits gewohnter Reiserouten.
+                <a href="#" class="ai-summary-link" title="Artikel auf n-tv.de öffnen">
+                  n-tv.de
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z"/></svg>
+                </a>
+              </div>
+            </li>
+
+            <li class="ai-summary-item">
+              <span class="ai-summary-bullet"></span>
+              <div class="ai-summary-text">
+                <strong>Geldpolitischer Ausblick im Euroraum:</strong> Nach jüngsten Daten zu rückläufigen Inflationsraten wächst innerhalb der EZB die Zuversicht für weitere Zinsschritte in den kommenden Quartalen.
+                <a href="#" class="ai-summary-link" title="Artikel auf DIE ZEIT öffnen">
+                  DIE ZEIT
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z"/></svg>
+                </a>
+              </div>
+            </li>
+
+            <li class="ai-summary-item">
+              <span class="ai-summary-bullet"></span>
+              <div class="ai-summary-text">
+                <strong>Einigung über Haushaltsleitlinien:</strong> Die Spitzen der Koalitionsfraktionen in Berlin verständigen sich auf zentrale Prioritäten bei Zukunftsinvestitionen und Haushaltsdisziplin.
+                <a href="#" class="ai-summary-link" title="Artikel auf Der Spiegel öffnen">
+                  Der Spiegel
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z"/></svg>
+                </a>
+              </div>
+            </li>
+
+            <li class="ai-summary-item">
+              <span class="ai-summary-bullet"></span>
+              <div class="ai-summary-text">
+                <strong>Gastronomischer Neuanfang für Tübinger Kelter:</strong> Ein Reutlinger Gastronomen-Paar übernimmt den Betrieb des historischen Wahrzeichens mit einem regionalen Gastronomiekonzept.
+                <a href="#" class="ai-summary-link" title="Artikel auf gea.de öffnen">
+                  gea.de
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7z"/></svg>
+                </a>
+              </div>
+            </li>
+          </ul>
+        </article>
+
+        <!-- Major Story Card: Unified Section Container with Zero Outline -->
+        <article class="news-card-container">
+
+          <!-- Integrated Section Header Inside Card with 1px Divider -->
+          <div class="section-card-header">
+            <a href="#" class="section-header-link">
+              Top-Meldungen
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+            </a>
+          </div>
+
+          <a href="#" class="story-main-headline">
+            Zwei Anwohner in Frankfurt an Malaria erkrankt
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+          </a>
+
+          <div class="cluster-layout">
+            <!-- Left lead story with mosquito photo -->
+            <div class="lead-story-col">
+              <div class="lead-img-wrapper">
+                <!-- Detailed, realistic SVG illustration of the mosquito photo from screenshot -->
+                <svg viewBox="0 0 290 165" width="100%" height="100%">
+                  <defs>
+                    <radialGradient id="skinBack" cx="50%" cy="80%" r="90%">
+                      <stop offset="0%" stop-color="#df7557"/>
+                      <stop offset="45%" stop-color="#b65239"/>
+                      <stop offset="85%" stop-color="#3c5234"/>
+                      <stop offset="100%" stop-color="#1e2d1d"/>
+                    </radialGradient>
+                    <radialGradient id="bloodGlow2" cx="42%" cy="56%" r="22%">
+                      <stop offset="0%" stop-color="#ff3322" stop-opacity="0.95"/>
+                      <stop offset="60%" stop-color="#aa1100" stop-opacity="0.8"/>
+                      <stop offset="100%" stop-color="#440500" stop-opacity="0"/>
+                    </radialGradient>
+                    <linearGradient id="wingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+                      <stop offset="100%" stop-color="#dddddd" stop-opacity="0.2"/>
+                    </linearGradient>
+                  </defs>
+                  <!-- Blurred macro background of skin surface and warm light -->
+                  <rect width="290" height="165" fill="url(#skinBack)"/>
+                  <ellipse cx="145" cy="135" rx="150" ry="60" fill="#ca5c42" opacity="0.95"/>
+                  <ellipse cx="145" cy="155" rx="140" ry="30" fill="#e8856c" opacity="0.6"/>
+
+                  <!-- Blood fill inside mosquito body glow -->
+                  <circle cx="126" cy="88" r="28" fill="url(#bloodGlow2)"/>
+
+                  <!-- Mosquito Anatomy -->
+                  <!-- Swollen Red Abdomen -->
+                  <path d="M102 85 C118 76, 142 80, 150 90 C140 102, 116 99, 102 85 Z" fill="#dd2e18" stroke="#5a0b02" stroke-width="1.2"/>
+                  <!-- Abdomen segments -->
+                  <path d="M112 80 Q116 88 114 94" stroke="#881507" stroke-width="1" fill="none"/>
+                  <path d="M124 80 Q128 89 126 95" stroke="#881507" stroke-width="1" fill="none"/>
+                  <path d="M136 82 Q140 90 138 94" stroke="#881507" stroke-width="1" fill="none"/>
+
+                  <!-- Thorax -->
+                  <ellipse cx="155" cy="88" rx="11" ry="8" fill="#7a4b22" stroke="#3d2109" stroke-width="1.2"/>
+
+                  <!-- Head & Needle Proboscis piercing the skin -->
+                  <circle cx="166" cy="90" r="5" fill="#3d2109"/>
+                  <!-- Piercing proboscis down into skin -->
+                  <line x1="168" y1="91" x2="182" y2="118" stroke="#1d0e03" stroke-width="1.8"/>
+                  <line x1="168" y1="91" x2="176" y2="114" stroke="#603010" stroke-width="0.8"/>
+
+                  <!-- Delicate Translucent Wings -->
+                  <path d="M152 84 C132 46, 106 50, 96 55 C118 72, 142 82, 150 85 Z" fill="url(#wingGrad)" stroke="#c0c0c0" stroke-width="0.8"/>
+                  <path d="M154 84 C138 42, 118 45, 108 50 C128 68, 146 79, 153 85 Z" fill="url(#wingGrad)" stroke="#b0b0b0" stroke-width="0.7"/>
+
+                  <!-- Realistic Spidery Jointed Legs -->
+                  <!-- Front Leg 1 -->
+                  <polyline points="160,86 182,68 208,96 222,125" fill="none" stroke="#261405" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Front Leg 2 -->
+                  <polyline points="162,88 190,80 218,110 234,136" fill="none" stroke="#361d07" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Middle Leg -->
+                  <polyline points="155,91 164,110 174,132 182,150" fill="none" stroke="#261405" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Back Leg 1 -->
+                  <polyline points="148,88 132,58 98,66 68,98" fill="none" stroke="#261405" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <!-- Back Leg 2 -->
+                  <polyline points="146,90 120,72 84,88 54,126" fill="none" stroke="#361d07" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+                  <!-- Antennae -->
+                  <path d="M169 87 Q178 80 186 78" fill="none" stroke="#361d07" stroke-width="1.1"/>
+                  <path d="M168 86 Q176 77 182 72" fill="none" stroke="#361d07" stroke-width="1.1"/>
+                </svg>
+              </div>
+
+              <div class="source-row">
+                <span class="badge-ntv">n-tv</span>
+                <span class="source-name">n-tv.de</span>
+              </div>
+
+              <a href="#" class="lead-title">
+                Dritte verstorbene Person: Todesfall nach Malariainfektion nahe Frankfurter Flughafen
+              </a>
+
+              <div class="timestamp-text">Vor 46 Minuten</div>
+            </div>
+
+            <!-- Right related sub-stories list -->
+            <div class="sub-stories-col">
+              <!-- Item 1: DIE ZEIT -->
+              <div class="sub-story-item">
+                <div class="source-row">
+                  <span class="badge-zeit">Z</span>
+                  <span class="source-name" style="font-size: 11px; letter-spacing: 0.5px;">DIE ZEIT</span>
+                </div>
+                <a href="#" class="sub-story-title">
+                  Malaria in Deutschland: Todesfall nach Malariainfektion nahe dem Frankfurter Flughafen
+                </a>
+                <div class="timestamp-text">Vor 29 Minuten</div>
+              </div>
+
+              <!-- Item 2: spiegel.de -->
+              <div class="sub-story-item">
+                <div class="source-row">
+                  <span class="badge-spiegel">S</span>
+                  <span class="source-name">spiegel.de</span>
+                </div>
+                <a href="#" class="sub-story-title">
+                  Malaria nahe Frankfurter Flughafen – Anwohner nach Infektion gestorben
+                </a>
+                <div class="timestamp-text">Vor 40 Minuten</div>
+              </div>
+
+              <!-- Item 3: SZ.de -->
+              <div class="sub-story-item">
+                <div class="source-row">
+                  <span class="badge-sz">SZ</span>
+                  <span class="source-name">SZ.de</span>
+                </div>
+                <a href="#" class="sub-story-title">
+                  „Diese Fälle sind aufsehenerregend“
+                </a>
+                <div class="timestamp-text">Vor 1 Stunde • Meinung • Von Berit Uhlmann</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Coverage Button -->
+          <a href="#" class="coverage-btn">
+            <svg width="20" height="20" viewBox="0 -960 960 960" fill="currentColor">
+              <path d="M360-360h384v-72H360v72zm0-156h168v-228H360v228zm264 0h120v-72H624v72zm0-156h120v-72H624v72zM312-240q-29.7 0-50.85-21.15Q240-282.3 240-312v-480q0-29.7 21.15-50.85Q282.3-864 312-864h480q29.7 0 50.85 21.15Q864-821.7 864-792v480q0 29.7-21.15 50.85Q821.7-240 792-240H312zm-144 144q-29.7 0-50.85-21.15Q96-138.3 96-168v-552h72v552h552v72H168z"/>
+            </svg>
+            Weitere Schlagzeilen und Meinungen
+          </a>
+
+          <!-- Internal 1px Story Divider separating next article -->
+          <hr class="story-divider">
+
+          <!-- Next Story Inside the SAME Continuous Card Container -->
+          <div style="display: flex; gap: 16px; align-items: flex-start; padding: 4px 0 0;">
+            <div style="width: 90px; height: 80px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: #e0e0e0;">
+              <svg viewBox="0 0 90 80" width="100%" height="100%">
+                <defs>
+                  <radialGradient id="faceGrad" cx="50%" cy="40%" r="60%">
+                    <stop offset="0%" stop-color="#f8ddd0"/>
+                    <stop offset="100%" stop-color="#d69f88"/>
+                  </radialGradient>
+                </defs>
+                <rect width="90" height="80" fill="#b3261e"/>
+                <!-- Portrait of speaker from screenshot -->
+                <ellipse cx="45" cy="20" rx="24" ry="16" fill="#f0f0f2"/>
+                <ellipse cx="45" cy="38" rx="18" ry="20" fill="url(#faceGrad)"/>
+                <path d="M15 80 Q45 54 75 80 Z" fill="#1f1f1f"/>
+                <polygon points="45,58 39,70 51,70" fill="#ffffff"/>
+              </svg>
+            </div>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+              <div class="source-row">
+                <span class="badge-tagesschau" style="display: inline-flex; align-items: center; gap: 4px; border-radius: 4px; padding: 2px 6px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                  tagesschau.de
+                </span>
+              </div>
+              <a href="#" class="lead-title" style="font-size: 16px; font-weight: 400; line-height: 1.35;">
+                Premier Carney: Kanada ist offen für EU-Sondermitgliedschaft
+              </a>
+            </div>
+          </div>
+
+        </article>
+
+      </div>
+
+      <!-- RIGHT COLUMN: WEATHER & LOKALE NACHRICHTEN -->
+      <div class="sidebar-column">
+
+        <!-- Weather Widget Card (Aligned with Right Column in AI Mode) -->
+        <div class="weather-card weather-card-sidebar">
+          <div class="weather-left">
+            <div class="weather-chevron" title="Vorheriger Ort">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            </div>
+            <div class="weather-icon-sun">
+              <!-- Solid golden sun with fluffy cloud overlay matching the user screenshot -->
+              <svg width="38" height="38" viewBox="0 0 40 40">
+                <circle cx="20" cy="18" r="12" fill="#FBBC04"/>
+                <path d="M16 28h16a5 5 0 0 0 0-10 4.9 4.9 0 0 0-2.8.9A6.5 6.5 0 0 0 17 19.5a5 5 0 0 0-1 8.5z" fill="#ffffff" fill-opacity="0.95"/>
+              </svg>
+            </div>
+            <div class="weather-info">
+              <div class="weather-location-line">
+                <span>Tübingen</span>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3A8.994 8.994 0 0 0 13 3.06V1h-2v2.06A8.994 8.994 0 0 0 3.06 11H1v2h2.06A8.994 8.994 0 0 0 11 20.94V23h2v-2.06A8.994 8.994 0 0 0 20.94 13H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>
+              </div>
+              <div class="weather-temp">21 °C</div>
+            </div>
+          </div>
+          <a href="#" class="weather-link">Google Wetter</a>
+        </div>
+
+        <!-- Local News Card: Unified Zero-Outline Container -->
+        <div class="local-news-card">
+
+          <!-- Integrated Header Row Inside Card with 1px Divider -->
+          <div class="section-card-header" style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; margin-bottom: 12px;">
+            <a href="#" class="section-header-link" style="margin-bottom: 0;">
+              Lokale Nachrichten
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+            </a>
+            <button class="icon-btn" title="Lokalnachrichten anpassen" aria-label="Lokalnachrichten anpassen">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+            </button>
+          </div>
+
+          <!-- Local Item 1: gea.de -->
+          <div class="local-article-row">
+            <div class="local-text-block">
+              <div class="source-row">
+                <span class="badge-gea">gea</span>
+                <span class="source-name">gea.de</span>
+              </div>
+              <a href="#" class="local-headline">
+                Reutlinger Gastronomen-Paar übernimmt Tübinger Kelter
+              </a>
+              <div class="timestamp-text">Vor 1 Stunde • Von Kathrin Kammerer</div>
+            </div>
+            <div class="local-thumb">
+              <!-- Historic building / Kelter Tübingen street view SVG -->
+              <svg viewBox="0 0 72 72" width="100%" height="100%">
+                <defs>
+                  <linearGradient id="skyKelter" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#9cbcd9"/>
+                    <stop offset="100%" stop-color="#dce6ee"/>
+                  </linearGradient>
+                </defs>
+                <rect width="72" height="72" fill="url(#skyKelter)"/>
+                <!-- Timbered House Structure -->
+                <polygon points="10,32 36,8 62,32" fill="#7a3811"/>
+                <polygon points="12,32 36,12 60,32" fill="#8f4318"/>
+                <rect x="14" y="32" width="44" height="36" fill="#f0ecd8"/>
+                <!-- Dark timber beams -->
+                <line x1="14" y1="44" x2="58" y2="44" stroke="#3d1d07" stroke-width="2.2"/>
+                <line x1="14" y1="56" x2="58" y2="56" stroke="#3d1d07" stroke-width="2.2"/>
+                <line x1="36" y1="32" x2="36" y2="68" stroke="#3d1d07" stroke-width="2.2"/>
+                <line x1="14" y1="32" x2="36" y2="44" stroke="#3d1d07" stroke-width="1.8"/>
+                <line x1="58" y1="32" x2="36" y2="44" stroke="#3d1d07" stroke-width="1.8"/>
+                <line x1="14" y1="56" x2="36" y2="44" stroke="#3d1d07" stroke-width="1.8"/>
+                <line x1="58" y1="56" x2="36" y2="44" stroke="#3d1d07" stroke-width="1.8"/>
+                <!-- Windows with blue sky reflection -->
+                <rect x="20" y="35" width="9" height="7" fill="#2b4764"/>
+                <rect x="43" y="35" width="9" height="7" fill="#2b4764"/>
+                <rect x="20" y="47" width="9" height="7" fill="#2b4764"/>
+                <rect x="43" y="47" width="9" height="7" fill="#2b4764"/>
+                <!-- Arch Entrance -->
+                <path d="M30 68 V57 Q36 52 42 57 V68 Z" fill="#44210a"/>
+                <!-- Cobblestones street -->
+                <rect x="0" y="66" width="72" height="6" fill="#6c7a89"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Local Item 2: swp.de Unfall -->
+          <div class="local-article-row">
+            <div class="local-text-block">
+              <div class="source-row">
+                <span class="badge-swp">swp</span>
+                <span class="source-name">swp.de</span>
+              </div>
+              <a href="#" class="local-headline">
+                Unfall in Tübingen: Deshalb staute sich am Mittwoch der Verkehr nach Derendingen
+              </a>
+              <div class="timestamp-text">Vor 4 Stunden</div>
+            </div>
+            <div class="local-thumb">
+              <!-- Digital traffic LED warning sign UNFALL matching the photo -->
+              <svg viewBox="0 0 72 72" width="100%" height="100%">
+                <defs>
+                  <radialGradient id="blueFlash" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#00bfff"/>
+                    <stop offset="60%" stop-color="#0044ff"/>
+                    <stop offset="100%" stop-color="#001144" stop-opacity="0"/>
+                  </radialGradient>
+                  <radialGradient id="redLed" cx="50%" cy="50%" r="60%">
+                    <stop offset="0%" stop-color="#ff2200"/>
+                    <stop offset="80%" stop-color="#cc0000"/>
+                    <stop offset="100%" stop-color="#660000"/>
+                  </radialGradient>
+                </defs>
+                <!-- Night highway background -->
+                <rect width="72" height="72" fill="#0d141e"/>
+                <!-- Matrix Display Box -->
+                <rect x="5" y="14" width="62" height="44" rx="3" fill="#000000" stroke="#334455" stroke-width="1.8"/>
+                <!-- Red illuminated LED sign band -->
+                <rect x="8" y="22" width="56" height="18" fill="url(#redLed)" rx="2"/>
+                <text x="36" y="35" fill="#ffffff" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="11" text-anchor="middle" letter-spacing="1.5">UNFALL</text>
+                <!-- Emergency blue warning lights -->
+                <circle cx="15" cy="48" r="5" fill="url(#blueFlash)"/>
+                <circle cx="15" cy="48" r="2" fill="#ffffff"/>
+                <circle cx="57" cy="48" r="5" fill="url(#blueFlash)"/>
+                <circle cx="57" cy="48" r="2" fill="#ffffff"/>
+                <line x1="24" y1="48" x2="48" y2="48" stroke="#ffaa00" stroke-width="2" stroke-dasharray="3,2"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Local Item 3: swp.de Bahnverkehr -->
+          <div class="local-article-row">
+            <div class="local-text-block">
+              <div class="source-row">
+                <span class="badge-swp">swp</span>
+                <span class="source-name">swp.de</span>
+              </div>
+              <a href="#" class="local-headline">
+                Bahnverkehr unterbrochen: Mann kommt auf Bahnübergang bei Tübingen ums Leben
+              </a>
+              <div class="timestamp-text">Vor 23 Stunden</div>
+            </div>
+            <div class="local-thumb">
+              <!-- Regional train / railroad crossing photo SVG -->
+              <svg viewBox="0 0 72 72" width="100%" height="100%">
+                <defs>
+                  <linearGradient id="skyTrain" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#64a5d8"/>
+                    <stop offset="100%" stop-color="#bce0fd"/>
+                  </linearGradient>
+                </defs>
+                <rect width="72" height="42" fill="url(#skyTrain)"/>
+                <rect y="42" width="72" height="30" fill="#4d7c22"/>
+                <!-- Railroad tracks perspective -->
+                <polygon points="16,72 31,44 41,44 56,72" fill="#4a4a4a"/>
+                <line x1="20" y1="65" x2="52" y2="65" stroke="#888888" stroke-width="2"/>
+                <line x1="24" y1="57" x2="48" y2="57" stroke="#888888" stroke-width="1.8"/>
+                <line x1="28" y1="50" x2="44" y2="50" stroke="#888888" stroke-width="1.5"/>
+                <!-- German Regional Train (DB Regio yellow aerodynamic front) -->
+                <path d="M25 32 L47 32 L45 54 L27 54 Z" fill="#ffd000" stroke="#222222" stroke-width="1.2"/>
+                <!-- Large dark windshield -->
+                <rect x="28" y="35" width="16" height="8" rx="1.5" fill="#1a273b"/>
+                <!-- Headlights -->
+                <circle cx="30" cy="49" r="2.2" fill="#ffffff"/>
+                <circle cx="42" cy="49" r="2.2" fill="#ffffff"/>
+                <!-- Level crossing pole with red/white stripes -->
+                <rect x="53" y="18" width="3.5" height="46" fill="#ffffff"/>
+                <rect x="53" y="24" width="3.5" height="7" fill="#cc0000"/>
+                <rect x="53" y="38" width="3.5" height="7" fill="#cc0000"/>
+                <rect x="53" y="52" width="3.5" height="7" fill="#cc0000"/>
+                <!-- St. Andrew's cross warning -->
+                <line x1="50" y1="15" x2="60" y2="25" stroke="#cc0000" stroke-width="2.2"/>
+                <line x1="60" y1="15" x2="50" y2="25" stroke="#cc0000" stroke-width="2.2"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Bottom Coverage Icon Button -->
+          <div class="local-footer-action">
+            <button class="icon-btn" title="Mehr lokale Meldungen" aria-label="Mehr lokale Meldungen" style="width: 32px; height: 32px;">
+              <svg width="18" height="18" viewBox="0 -960 960 960" fill="var(--gn-primary)">
+                <path d="M360-360h384v-72H360v72zm0-156h168v-228H360v228zm264 0h120v-72H624v72zm0-156h120v-72H624v72zM312-240q-29.7 0-50.85-21.15Q240-282.3 240-312v-480q0-29.7 21.15-50.85Q282.3-864 312-864h480q29.7 0 50.85 21.15Q864-821.7 864-792v480q0 29.7-21.15 50.85Q821.7-240 792-240H312zm-144 144q-29.7 0-50.85-21.15Q96-138.3 96-168v-552h72v552h552v72H168z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Empfehlungen für dich Heading -->
+        <a href="#" class="recommendations-heading" style="display: block;">
+          Empfehlungen für dich
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Floating Prototype Mode Switcher -->
+  <aside class="proto-switcher-bar" aria-label="Prototyp-Modus">
+    <span class="proto-switcher-label">Ansicht</span>
+    <button type="button" class="proto-switch-btn active" data-mode="ai" id="btn-proto-ai" title="AI Zusammenfassung anzeigen (Taste A)">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 2C12 7.52 7.52 12 2 12C7.52 12 12 16.48 12 22C12 16.48 16.48 12 22 12C16.48 12 12 7.52 12 2Z" fill="url(#geminiSparkleGrad)"/>
+      </svg>
+      <span>AI Zusammenfassung</span>
+      <span class="proto-shortcut-hint">[A]</span>
+    </button>
+    <button type="button" class="proto-switch-btn" data-mode="original" id="btn-proto-original" title="Originalzustand anzeigen (Taste O)">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 4H5c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H5V8h14v10z"/>
+      </svg>
+      <span>Original</span>
+      <span class="proto-shortcut-hint">[O]</span>
+    </button>
+  </aside>
+
+  <script>
+    (function() {
+      const btnAi = document.getElementById('btn-proto-ai');
+      const btnOriginal = document.getElementById('btn-proto-original');
+
+      function setMode(mode) {
+        document.body.setAttribute('data-proto-mode', mode);
+        if (mode === 'ai') {
+          btnAi.classList.add('active');
+          btnOriginal.classList.remove('active');
+        } else {
+          btnOriginal.classList.add('active');
+          btnAi.classList.remove('active');
+        }
+        try {
+          localStorage.setItem('gn_proto_mode', mode);
+          const url = new URL(window.location);
+          url.searchParams.set('mode', mode);
+          window.history.replaceState(null, '', url);
+        } catch(e) {}
+      }
+
+      btnAi.addEventListener('click', function() { setMode('ai'); });
+      btnOriginal.addEventListener('click', function() { setMode('original'); });
+
+      // Keyboard shortcuts: A for AI, O for Original
+      window.addEventListener('keydown', function(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (e.key === 'a' || e.key === 'A') setMode('ai');
+        if (e.key === 'o' || e.key === 'O') setMode('original');
+      });
+
+      // Initialize from URL or localStorage (default: 'ai')
+      const params = new URLSearchParams(window.location.search);
+      const urlMode = params.get('mode');
+      const savedMode = localStorage.getItem('gn_proto_mode');
+      const initialMode = urlMode === 'original' || (!urlMode && savedMode === 'original') ? 'original' : 'ai';
+      setMode(initialMode);
+    })();
+  </script>
+
+</body>
+</html>

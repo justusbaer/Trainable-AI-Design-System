@@ -1,0 +1,124 @@
+{
+  "system": "Google News Design System",
+  "version": "1.2.0",
+  "families": {
+    "Google Sans": {
+      "name": "Google Sans",
+      "role": "Headlines, section link headers, category navigation tabs (500 weight), date headers, and weather display.",
+      "weights": [
+        "400",
+        "500",
+        "700"
+      ],
+      "styles": [
+        "normal"
+      ],
+      "faces": [
+        {
+          "family": "Google Sans",
+          "weight": "400",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2rgCIhM907-0x.woff2') format('woff2')"
+        },
+        {
+          "family": "Google Sans",
+          "weight": "500",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2oQCIhM907-0x.woff2') format('woff2')"
+        },
+        {
+          "family": "Google Sans",
+          "weight": "700",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vgCIhM907w.woff2') format('woff2')"
+        }
+      ],
+      "cssBlock": "@font-face {\\n  font-family: 'Google Sans';\\n  font-weight: 400;\\n  font-style: normal;\\n  font-display: swap;\\n  src: url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2rgCIhM907-0x.woff2') format('woff2');\\n}\\n@font-face {\\n  font-family: 'Google Sans';\\n  font-weight: 500;\\n  font-style: normal;\\n  font-display: swap;\\n  src: url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2oQCIhM907-0x.woff2') format('woff2');\\n}\\n@font-face {\\n  font-family: 'Google Sans';\\n  font-weight: 700;\\n  font-style: normal;\\n  font-display: swap;\\n  src: url('https://fonts.gstatic.com/s/googlesans/v62/4UaRrENHsxJlGDuGo1OIlJfC6l_24rlCK1Yo_Iq2vgCIhM907w.woff2') format('woff2');\\n}"
+    },
+    "Product Sans": {
+      "name": "Product Sans",
+      "role": "Brand lockup suffix wordmark ('News' in Google News header logo lockup, 22px 400 weight). The 'Google' portion is the official vector SVG brandmark.",
+      "weights": [
+        "400"
+      ],
+      "styles": [
+        "normal"
+      ],
+      "faces": [
+        {
+          "family": "Product Sans",
+          "weight": "400",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/productsans/v9/pxiDypQkot1TnFhsFMOfGShVF9eOYktMqg.woff2') format('woff2')"
+        }
+      ],
+      "cssBlock": "@font-face {\\n  font-family: 'Product Sans';\\n  font-weight: 400;\\n  font-style: normal;\\n  font-display: swap;\\n  src: url('https://fonts.gstatic.com/s/productsans/v9/pxiDypQkot1TnFhsFMOfGShVF9eOYktMqg.woff2') format('woff2');\\n}"
+    },
+    "Google Sans Text": {
+      "name": "Google Sans Text",
+      "role": "Article body copy, publisher / source names, publication timestamps, pill coverage buttons, search input field, and interactive controls.",
+      "weights": [
+        "400",
+        "500",
+        "700"
+      ],
+      "styles": [
+        "normal"
+      ],
+      "faces": [
+        {
+          "family": "Google Sans Text",
+          "weight": "400",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/googlesanstext/v29/5aUu9-KzpRiLCAt4Unrc-xIKmCU5qEp2i0VBuxM.woff2') format('woff2')"
+        },
+        {
+          "family": "Google Sans Text",
+          "weight": "500",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/googlesanstext/v29/5aUp9-KzpRiLCAt4Unrc-xIKmCU5oLlVnmhjtjm4DZw.woff2') format('woff2')"
+        },
+        {
+          "family": "Google Sans Text",
+          "weight": "700",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/googlesanstext/v29/5aUp9-KzpRiLCAt4Unrc-xIKmCU5oPFTnmhjtjm4DZw.woff2') format('woff2')"
+        }
+      ],
+      "cssBlock": "@font-face {\n  font-family: 'Google Sans Text';\n  font-weight: 400;\n  font-style: normal;\n  font-display: swap;\n  src: url('https://fonts.gstatic.com/s/googlesanstext/v29/5aUu9-KzpRiLCAt4Unrc-xIKmCU5qEp2i0VBuxM.woff2') format('woff2');\n}\n@font-face {\n  font-family: 'Google Sans Text';\n  font-weight: 500;\n  font-style: normal;\n  font-display: swap;\n  src: url('https://fonts.gstatic.com/s/googlesanstext/v29/5aUp9-KzpRiLCAt4Unrc-xIKmCU5oLlVnmhjtjm4DZw.woff2') format('woff2');\n}\n@font-face {\n  font-family: 'Google Sans Text';\n  font-weight: 700;\n  font-style: normal;\n  font-display: swap;\n  src: url('https://fonts.gstatic.com/s/googlesanstext/v29/5aUp9-KzpRiLCAt4Unrc-xIKmCU5oPFTnmhjtjm4DZw.woff2') format('woff2');\n}"
+    },
+    "Roboto": {
+      "name": "Roboto",
+      "role": "Fallback and secondary font for body copy, system controls, and density-optimized UI elements.",
+      "weights": [
+        "400",
+        "500",
+        "700"
+      ],
+      "styles": [
+        "normal"
+      ],
+      "faces": [
+        {
+          "family": "Roboto",
+          "weight": "400",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBHMdazQ.woff2') format('woff2')"
+        },
+        {
+          "family": "Roboto",
+          "weight": "500",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3KUBHMdazTgWw.woff2') format('woff2')"
+        },
+        {
+          "family": "Roboto",
+          "weight": "700",
+          "style": "normal",
+          "src": "url('https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMawCUBHMdazTgWw.woff2') format('woff2')"
+        }
+      ],
+      "cssBlock": "@font-face {\\n  font-family: 'Roboto';\\n  font-weight: 400;\\n  font-style: normal;\\n  font-display: swap;\\n  src: url('https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3yUBHMdazQ.woff2') format('woff2');\\n}\\n@font-face {\\n  font-family: 'Roboto';\\n  font-weight: 500;\\n  font-style: normal;\\n  font-display: swap;\\n  src: url('https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMa3KUBHMdazTgWw.woff2') format('woff2');\\n}\\n@font-face {\\n  font-family: 'Roboto';\\n  font-weight: 700;\\n  font-style: normal;\\n  font-display: swap;\\n  src: url('https://fonts.gstatic.com/s/roboto/v48/KFO7CnqEu92Fr1ME7kSn66aGLdTylUAMawCUBHMdazTgWw.woff2') format('woff2');\\n}"
+    }
+  }
+}

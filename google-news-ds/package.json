@@ -1,0 +1,20 @@
+{
+  "name": "google-news-design-system",
+  "version": "1.0.0",
+  "description": "Authoritative Design System for Google News extracted and trained via Trainable DS Protocol (W3C DTCG / Material 3)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "node server.js",
+    "build": "node generate-ds.js"
+  },
+  "keywords": [
+    "design-system",
+    "google-news",
+    "material-3",
+    "tokens",
+    "w3c-dtcg"
+  ],
+  "author": "Trainable DS Autonomous Agent",
+  "license": "Apache-2.0"
+}

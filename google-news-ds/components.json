@@ -1,0 +1,468 @@
+{
+  "version": "1.7.0",
+  "system": "Google News Design System",
+  "releaseVersion": "1.0.0",
+  "lastUpdated": "2026-09-17T15:20:00.000Z",
+  "components": {
+    "Button": {
+      "name": "Button",
+      "family": "actions",
+      "description": "Interactive action button with full pill border radius and minimum 48px touch target meeting WCAG 2.2 AA.",
+      "anatomy": {
+        "container": {
+          "shape": "full-pill",
+          "borderRadius": "9999px",
+          "minHeight": 48,
+          "padding": "12px 24px"
+        },
+        "label": {
+          "typescale": "labelLarge",
+          "case": "sentence"
+        }
+      },
+      "variants": {
+        "filled": {
+          "containerColor": "sys.color.primary",
+          "labelColor": "sys.color.onPrimary"
+        },
+        "tonal": {
+          "containerColor": "sys.color.primaryContainer",
+          "labelColor": "sys.color.onPrimaryContainer"
+        },
+        "outlined": {
+          "borderColor": "sys.color.outline",
+          "labelColor": "sys.color.primary"
+        },
+        "text": {
+          "containerColor": "transparent",
+          "labelColor": "sys.color.primary"
+        }
+      },
+      "props": {
+        "variant": {
+          "type": "'filled' | 'tonal' | 'outlined' | 'text'",
+          "default": "'filled'"
+        },
+        "size": {
+          "type": "'small' | 'medium' | 'large'",
+          "default": "'medium'"
+        },
+        "icon": {
+          "type": "string",
+          "optional": true
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "accessibility": {
+        "minTouchTarget": "48x48px",
+        "keyboardFocus": "3px solid sys.color.primary with 2px offset",
+        "ariaRole": "button"
+      }
+    },
+    "IconButton": {
+      "name": "IconButton",
+      "family": "actions",
+      "description": "Standard 48x48px touch target icon action button for toolbars, card actions (Share, Bookmark, More options).",
+      "anatomy": {
+        "container": {
+          "shape": "full-pill",
+          "borderRadius": "9999px",
+          "minWidth": 48,
+          "minHeight": 48,
+          "display": "inline-flex",
+          "alignItems": "center",
+          "justifyContent": "center"
+        },
+        "icon": {
+          "width": 24,
+          "height": 24
+        }
+      },
+      "variants": {
+        "standard": {
+          "containerColor": "transparent",
+          "iconColor": "sys.color.onSurfaceVariant"
+        },
+        "filled": {
+          "containerColor": "sys.color.primary",
+          "iconColor": "sys.color.onPrimary"
+        },
+        "tonal": {
+          "containerColor": "sys.color.surfaceContainerHigh",
+          "iconColor": "sys.color.onSurface"
+        }
+      },
+      "props": {
+        "icon": {
+          "type": "string",
+          "required": true
+        },
+        "ariaLabel": {
+          "type": "string",
+          "required": true
+        },
+        "variant": {
+          "type": "'standard' | 'filled' | 'tonal'",
+          "default": "'standard'"
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "accessibility": {
+        "minTouchTarget": "48x48px",
+        "ariaLabelMandatory": true
+      }
+    },
+    "ExtendedFab": {
+      "name": "ExtendedFab",
+      "family": "actions",
+      "description": "Floating action button with icon and label for high-emphasis primary tasks.",
+      "anatomy": {
+        "container": {
+          "shape": "rounded-2xl",
+          "borderRadius": "16px",
+          "minHeight": 56,
+          "padding": "16px 24px"
+        }
+      },
+      "variants": {
+        "primary": {
+          "containerColor": "sys.color.primaryContainer",
+          "labelColor": "sys.color.onPrimaryContainer"
+        }
+      }
+    },
+    "Badge": {
+      "name": "Badge",
+      "family": "communication",
+      "description": "Small status or count indicator attached to icons or navigation items.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "9999px",
+          "minHeight": 16,
+          "padding": "0 4px"
+        }
+      },
+      "variants": {
+        "notification": {
+          "containerColor": "sys.color.error",
+          "labelColor": "sys.color.onError"
+        },
+        "tonal": {
+          "containerColor": "sys.color.secondaryContainer",
+          "labelColor": "sys.color.onSecondaryContainer"
+        }
+      }
+    },
+    "Tooltip": {
+      "name": "Tooltip",
+      "family": "communication",
+      "description": "Informative hover/focus label explaining action button purpose.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "4px",
+          "padding": "4px 8px",
+          "backgroundColor": "sys.color.inverseSurface",
+          "textColor": "sys.color.inverseOnSurface"
+        }
+      }
+    },
+    "Snackbar": {
+      "name": "Snackbar",
+      "family": "communication",
+      "description": "Transient message toast providing feedback on actions (e.g. 'Artikel gespeichert').",
+      "anatomy": {
+        "container": {
+          "borderRadius": "8px",
+          "minHeight": 48,
+          "padding": "14px 16px",
+          "backgroundColor": "sys.color.inverseSurface",
+          "textColor": "sys.color.inverseOnSurface"
+        }
+      }
+    },
+    "StoryCard": {
+      "name": "StoryCard",
+      "family": "containment",
+      "description": "Unified Google News M3 section container with 18px radius, pure white surface, zero outline/border, and zero shadow. Integrates section header at top, lead story with macro media, multi-source sub-stories, and tonal coverage pill button.",
+      "anatomy": {
+        "container": {
+          "shape": "rounded-2xl",
+          "borderRadius": "18px",
+          "backgroundColor": "sys.color.surface",
+          "padding": "16px",
+          "border": "none",
+          "boxShadow": "none",
+          "elevation": "level0"
+        },
+        "sectionHeader": {
+          "fontFamily": "Google Sans",
+          "fontSize": "20px",
+          "fontWeight": 400,
+          "color": "sys.color.primary",
+          "borderBottom": "1px solid sys.color.outlineVariant",
+          "paddingBottom": "16px",
+          "marginBottom": "16px"
+        },
+        "publisher": {
+          "typescale": "labelMedium",
+          "color": "sys.color.onSurfaceVariant"
+        },
+        "headline": {
+          "typescale": "titleMedium",
+          "color": "sys.color.onSurface",
+          "fontFamily": "Google Sans"
+        },
+        "timestamp": {
+          "typescale": "bodySmall",
+          "color": "sys.color.onSurfaceVariant"
+        },
+        "divider": {
+          "borderTop": "1px solid sys.color.outlineVariant",
+          "marginTop": "16px",
+          "paddingTop": "16px"
+        },
+        "actions": {
+          "display": "flex",
+          "gap": "8px"
+        }
+      },
+      "variants": {
+        "standard": {
+          "hasImage": true,
+          "layout": "row-reverse"
+        },
+        "cluster": {
+          "hasLeadStory": true,
+          "hasSubStories": true,
+          "showsCoverageButton": true
+        },
+        "multiSection": {
+          "containsMultipleStories": true,
+          "separatedWithDividers": true
+        }
+      }
+    },
+    "WeatherCard": {
+      "name": "WeatherCard",
+      "family": "containment",
+      "description": "Weather summary widget aligned at the top of the right sidebar column with 18px radius, pure white surface, zero outline, and zero shadow.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "18px",
+          "backgroundColor": "sys.color.surface",
+          "padding": "12px 18px",
+          "border": "none",
+          "boxShadow": "none",
+          "marginBottom": "24px"
+        },
+        "location": {
+          "fontSize": "11px",
+          "color": "sys.color.onSurfaceVariant"
+        },
+        "temperature": {
+          "fontFamily": "Google Sans",
+          "fontSize": "22px",
+          "fontWeight": 500,
+          "color": "sys.color.onSurface"
+        }
+      }
+    },
+    "AiSummaryCard": {
+      "name": "AiSummaryCard",
+      "family": "containment",
+      "description": "AI-generated news summary card powered by Gemini, featuring a zero-outline surface container, Gemini sparkle vector icon with AI gradient, and curated bullet points with direct article links.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "18px",
+          "backgroundColor": "sys.color.surface",
+          "padding": "16px 20px",
+          "border": "none",
+          "boxShadow": "none",
+          "marginBottom": "24px"
+        },
+        "header": {
+          "borderBottom": "1px solid sys.color.outlineVariant",
+          "paddingBottom": "12px",
+          "marginBottom": "16px"
+        },
+        "sparkleIcon": {
+          "shape": "gemini-sparkle-4pt",
+          "size": "20px",
+          "gradient": "linear-gradient(135deg, #1a73e8 0%, #7c4dff 50%, #d04b82 100%)"
+        },
+        "title": {
+          "fontFamily": "Google Sans",
+          "fontSize": "20px",
+          "fontWeight": 400,
+          "lineHeight": "26px",
+          "color": "sys.color.onSurface"
+        },
+        "bullet": {
+          "fontFamily": "Google Sans Text",
+          "fontSize": "14px",
+          "lineHeight": "22px",
+          "color": "sys.color.onSurface",
+          "indicator": "6px linear-gradient dot"
+        },
+        "articleLink": {
+          "fontFamily": "Google Sans Text",
+          "fontSize": "13px",
+          "fontWeight": 500,
+          "color": "sys.color.link",
+          "icon": "arrow_outward 12px"
+        }
+      }
+    },
+    "CoverageButton": {
+      "name": "CoverageButton",
+      "family": "actions",
+      "description": "Full coverage pill button linking to comprehensive opinions and coverage, with tonal #f2f2f2 container, #444746 label, and blue coverage icon.",
+      "anatomy": {
+        "container": {
+          "shape": "full-pill",
+          "borderRadius": "40px",
+          "minHeight": 40,
+          "backgroundColor": "#f2f2f2",
+          "border": "none",
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "center",
+          "gap": "10px",
+          "color": "#444746"
+        },
+        "icon": {
+          "color": "sys.color.primary"
+        }
+      }
+    },
+    "Dialog": {
+      "name": "Dialog",
+      "family": "containment",
+      "description": "Modal container with 28px radius, title, body content, and action button bar.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "28px",
+          "backgroundColor": "sys.color.surfaceContainerHigh",
+          "padding": "24px",
+          "boxShadow": "sys.elevation.level3"
+        }
+      }
+    },
+    "Divider": {
+      "name": "Divider",
+      "family": "containment",
+      "description": "1px accessible boundary dividing content sections or story clusters.",
+      "anatomy": {
+        "line": {
+          "height": "1px",
+          "backgroundColor": "sys.color.outlineVariant"
+        }
+      }
+    },
+    "TopAppBar": {
+      "name": "TopAppBar",
+      "family": "navigation",
+      "description": "Authoritative Google News top header containing brand lockup, pill search bar, help, settings, apps grid, and sign-in button.",
+      "anatomy": {
+        "container": {
+          "height": 64,
+          "padding": "0 16px",
+          "display": "flex",
+          "alignItems": "center",
+          "justifyContent": "space-between",
+          "backgroundColor": "sys.color.surface"
+        }
+      }
+    },
+    "NavigationRail": {
+      "name": "NavigationRail",
+      "family": "navigation",
+      "description": "Left vertical or horizontal navigation for Google News archetypes (Startseite, Für mich, Folgen, Showcase, Topics).",
+      "anatomy": {
+        "item": {
+          "minHeight": 48,
+          "borderRadius": "9999px",
+          "padding": "8px 16px",
+          "display": "flex",
+          "alignItems": "center",
+          "gap": "12px"
+        },
+        "activeItem": {
+          "backgroundColor": "sys.color.secondaryContainer",
+          "color": "sys.color.onSecondaryContainer"
+        }
+      }
+    },
+    "Chip": {
+      "name": "Chip",
+      "family": "selection",
+      "description": "Filter and topic chips with 8px radius, min 48px touch target, and selectable active state.",
+      "anatomy": {
+        "container": {
+          "shape": "rounded-lg",
+          "borderRadius": "8px",
+          "minHeight": 48,
+          "padding": "0 16px",
+          "display": "inline-flex",
+          "alignItems": "center",
+          "border": "1px solid sys.color.outlineVariant"
+        },
+        "label": {
+          "typescale": "labelLarge",
+          "color": "sys.color.onSurface"
+        }
+      },
+      "variants": {
+        "unselected": {
+          "backgroundColor": "sys.color.surface",
+          "textColor": "sys.color.onSurface"
+        },
+        "selected": {
+          "backgroundColor": "sys.color.secondaryContainer",
+          "textColor": "sys.color.onSecondaryContainer",
+          "borderColor": "transparent"
+        }
+      }
+    },
+    "SearchBar": {
+      "name": "SearchBar",
+      "family": "text-inputs",
+      "description": "Signature Google News pill search bar with 48px height, leading search icon, clear button, and filter controls.",
+      "anatomy": {
+        "container": {
+          "shape": "full-pill",
+          "borderRadius": "9999px",
+          "minHeight": 48,
+          "padding": "0 16px",
+          "backgroundColor": "sys.color.surfaceContainerHigh",
+          "display": "flex",
+          "alignItems": "center",
+          "gap": "12px"
+        },
+        "input": {
+          "typescale": "bodyLarge",
+          "color": "sys.color.onSurface"
+        }
+      }
+    },
+    "TextField": {
+      "name": "TextField",
+      "family": "text-inputs",
+      "description": "Accessible form text input with floating label, 8px border radius, and WCAG focus ring.",
+      "anatomy": {
+        "container": {
+          "borderRadius": "8px",
+          "minHeight": 56,
+          "padding": "0 16px",
+          "border": "1px solid sys.color.outline"
+        }
+      }
+    }
+  }
+}
