@@ -1,7 +1,7 @@
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
 import pc from "picocolors";
-import { ConversationAdapter, FusionEngine, VCSStore } from "@trainable-ds/compiler";
+import { ConversationAdapter, FusionEngine, VCSStore, emitAgentSkills } from "@trainable-ds/compiler";
 import { DesignSystemSnapshot } from "@trainable-ds/core";
 
 export interface RefineOptions {
@@ -59,6 +59,13 @@ export async function runRefine(prompt: string, options: RefineOptions = {}): Pr
     );
   } catch {
     // VCS is authoritative
+  }
+
+  // Synchronize Open Agent Skills
+  try {
+    await emitAgentSkills(rootDir);
+  } catch {
+    // Non-critical
   }
 
   console.log(pc.green(`✓ Refinement applied to branch '${currentBranch}' (commit: ${commit.id})`));

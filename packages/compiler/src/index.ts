@@ -8,3 +8,4 @@ export * from "./overview/generator.js";
 export * from "./extractor/component-library-generator.js";
 export * from "./ingest/index.js";
 export * from "./vcs/index.js";
+export * from "./skills/index.js";

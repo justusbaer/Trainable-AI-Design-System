@@ -58,6 +58,18 @@ program
   });
 
 program
+  .command("audit [path]")
+  .description("Scan project or directory for design system compliance, touch targets, and deprecations")
+  .option("--json", "Emit structured JSON output", false)
+  .option("--strict", "Exit with error code 1 if violations found", false)
+  .option("--no-report", "Disable writing persistent report to .tds/audits/")
+  .option("--dir <path>", "Workspace directory")
+  .action(async (targetPath, options) => {
+    const { runAudit } = await import("./commands/audit.js");
+    await runAudit(targetPath || ".", options);
+  });
+
+program
   .command("mcp")
   .description("Start Model Context Protocol (MCP) server for AI pair programming")
   .option("--stdio", "Use stdio transport (default)", true)

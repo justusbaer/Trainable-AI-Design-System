@@ -13,7 +13,7 @@ import {
   M3_ELEVATION_DEFAULTS,
   TrainableDsConfig,
 } from "@trainable-ds/core";
-import { compileDesignMd, scanComponentsInDir } from "@trainable-ds/compiler";
+import { compileDesignMd, scanComponentsInDir, emitAgentSkills } from "@trainable-ds/compiler";
 
 export interface TrainOptions {
   src?: string;
@@ -380,6 +380,10 @@ export async function runTrain(options: TrainOptions) {
   });
   fs.writeFileSync(path.join(cwd, "DESIGN.md"), compiledMd, "utf-8");
   console.log(pc.green("✔ Compiled and synchronized root DESIGN.md with tokens and component contracts"));
+
+  // 8. Emit Open Agent Skills (.agents/skills/)
+  await emitAgentSkills(cwd, { designSystemName: config.name || "Trainable DS" });
+  console.log(pc.green("✔ Synchronized Open Agent Skills in .agents/skills/ (tds-knowledge, tds-audit)"));
 
   console.log(pc.bold(pc.green("\n✨ Training complete! Design system derived at M3 fidelity.")));
 

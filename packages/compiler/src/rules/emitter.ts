@@ -15,7 +15,7 @@ alwaysApply: true
 
 # ${designSystemName} Design System Rules
 
-You MUST follow the project design system defined in \`DESIGN.md\` and \`.design-system/\`:
+You MUST follow the project design system defined in \`DESIGN.md\`, \`.design-system/\`, and \`.agents/skills/tds-knowledge/SKILL.md\`:
 1. **NO RAW HEX CODES:** Never write inline hex colors (\`#...\`) or raw RGB/HSL. Use semantic tokens (\`bg-brand-primary\`, \`text-on-primary\`).
 2. **NO REINVENTED HTML PRIMITIVES:** Always check \`DESIGN.md\` Section 3 or query MCP for certified components (\`<Button>\`, \`<TextField>\`, \`<Card>\`, \`<NavTab>\`). Do not write raw \`<button>\` or \`<input>\`.
 3. **SENTENCE CASE:** All button labels, chip texts, and headers MUST be sentence case (e.g. "Create invoice", not "Create Invoice").
@@ -26,7 +26,8 @@ You MUST follow the project design system defined in \`DESIGN.md\` and \`.design
 8. **SUBPIXEL TEXT RENDERING & FONT-SMOOTHING CONTRACT:** Do NOT blindly apply \`-webkit-font-smoothing: antialiased;\` across stylesheets or root elements. Disabling subpixel rendering strips 100–150 weight units from letterforms on macOS/WebKit and makes typography appear frail. Always default to \`-webkit-font-smoothing: auto;\` unless explicitly mandated by the design system.
 9. **INTERACTIVE PSEUDO-STATE FIDELITY:** Never guess or hallucinate hover/active styles (e.g. turning text link-blue or adding random underlines). Adhere strictly to the state contracts in \`components.json\`: navigation tabs/links use subtle color/weight shifts without underlines; editorial headlines underline without changing font color; action buttons use state-layer opacity overlays.
 10. **ASSET VECTOR SANCTITY:** Brand marks, company logos, and emblems must ALWAYS be rendered using authentic vector SVGs from \`icons.json\` or inline SVGs. NEVER simulate or approximate brand logos using styled HTML text spans or colored character glyphs.
-11. **EVALUATE YOUR CODE:** Run \`npx tds evaluate <file>\` to verify compliance before finalizing work.
+11. **AGENT SKILLS & AUDIT:** Refer to \`.agents/skills/tds-knowledge/SKILL.md\` for ambient guidelines, or run \`/tds-audit\` (\`npx tds audit\`) to generate an audit report in \`.tds/audits/<runId>/\`.
+12. **EVALUATE YOUR CODE:** Run \`npx tds evaluate <file>\` to verify compliance before finalizing work.
 `;
 }
 
@@ -37,7 +38,7 @@ export function generateClaudeMdBlock(designSystemName: string): string {
   return `
 <!-- TRAINABLE_DS_START -->
 ## Design System Guidelines (${designSystemName})
-- The project design system is defined in \`DESIGN.md\` adhering to a 3-tier W3C DTCG token architecture.
+- The project design system is defined in \`DESIGN.md\` and \`.agents/skills/tds-knowledge/SKILL.md\` adhering to a 3-tier W3C DTCG token architecture.
 - Always use semantic color tokens (\`primary\`, \`on-primary\`, \`surface-container\`) and certified components.
 - Enforce sentence-case labels on buttons, tabs, and headers.
 - **Strict Command & Sketch Fidelity (Zero Feature Hallucination):** Strictly adhere to the user's explicit instructions or sketches. NEVER invent or hallucinate unrequested features, widgets, or action tiles (e.g. horn, heating, tire pressure) to fill empty space.
@@ -46,7 +47,7 @@ export function generateClaudeMdBlock(designSystemName: string): string {
 - **Subpixel Text Rendering Contract:** Do NOT use \`-webkit-font-smoothing: antialiased;\`. Default to \`-webkit-font-smoothing: auto;\` to preserve subpixel antialiasing and authentic stroke weights.
 - **Interactive Pseudo-State Fidelity:** Do not invent hover colors or underlines. Follow \`components.json\` state contracts (navigation tabs use color/weight shift without underline; editorial headlines use underline without color change).
 - **Asset Vector Sanctity:** Brand logos and wordmarks must always use authentic vector SVGs from \`icons.json\`. Never simulate logos with styled HTML text spans.
-- Verify generated screens by running: \`npx tds evaluate <filepath>\`
+- **Audit & Verification:** Run \`npx tds audit <path>\` to generate persistent reports in \`.tds/audits/\`, or verify single files via \`npx tds evaluate <filepath>\`.
 <!-- TRAINABLE_DS_END -->
 `;
 }
@@ -58,7 +59,7 @@ export function generateAntigravityRulesBlock(designSystemName: string): string 
   return `
 <!-- TRAINABLE_DS_START -->
 ## Design System Guidelines (${designSystemName})
-- Single Source of Truth: \`DESIGN.md\` and \`llms.txt\` (W3C DTCG 3-tier token architecture).
+- Single Source of Truth: \`DESIGN.md\`, \`llms.txt\`, and \`.agents/skills/tds-knowledge/SKILL.md\` (W3C DTCG 3-tier token architecture).
 - Always use semantic color tokens (\`sys.color.primary\`, \`sys.color.on-primary\`, \`sys.color.surface-container\`) and certified components from \`components/ui/\`.
 - Query components Just-in-Time: Run \`npx tds doc <ComponentName>\` to get props, variants, and copy-paste snippets without context bloat.
 - Enforce sentence-case labels on buttons, tabs, and headers.
@@ -70,7 +71,7 @@ export function generateAntigravityRulesBlock(designSystemName: string): string 
 - **Subpixel Text Rendering Contract:** Never add \`-webkit-font-smoothing: antialiased;\`. Preserve native subpixel antialiasing with \`-webkit-font-smoothing: auto;\` so font weights match the original design.
 - **Interactive Pseudo-State Fidelity:** Never invent hover styles. Obey \`components.json\` state contracts (navigation tabs shift color/weight with no underline; headlines underline with persistent text color).
 - **Asset Vector Sanctity:** Brand logos and wordmarks must be rendered with SVG vectors from \`icons.json\`. Do not convert vector marks into HTML text spans.
-- Verify UI compliance by running: \`npx tds evaluate <filepath>\`.
+- **Audit & Verification:** Run \`npx tds audit <path>\` to generate persistent reports in \`.tds/audits/\`, or verify single files via \`npx tds evaluate <filepath>\`.
 <!-- TRAINABLE_DS_END -->
 `;
 }

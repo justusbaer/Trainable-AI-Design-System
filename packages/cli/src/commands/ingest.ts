@@ -7,7 +7,8 @@ import {
   VisionAdapter, 
   ConversationAdapter, 
   FusionEngine, 
-  VCSStore 
+  VCSStore,
+  emitAgentSkills 
 } from "@trainable-ds/compiler";
 import { IngestSourceType, DesignSystemSnapshot } from "@trainable-ds/core";
 
@@ -108,7 +109,14 @@ export async function runIngest(options: IngestOptions): Promise<void> {
     // VCS is authoritative
   }
 
-  console.log(pc.green(`✓ Ingestion successfully fused into branch '${currentBranch}' (commit: ${commit.id})`));
+  // Synchronize Open Agent Skills
+  try {
+    await emitAgentSkills(rootDir);
+  } catch {
+    // Non-critical
+  }
+
+  console.log(pc.green(`✔ Ingest complete! Created commit ${pc.cyan(commit.id.slice(0, 8))} on branch ${pc.cyan(currentBranch)}`));
   console.log(pc.dim(`  • Tokens applied: ${fused.appliedTokensCount} (${fused.skippedLockedTokensCount} locked tokens skipped)`));
   console.log(pc.dim(`  • Components updated: ${fused.appliedComponentsCount}`));
   console.log(pc.dim(`  • Guidelines integrated: ${fused.appliedGuidelinesCount}`));

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import pc from "picocolors";
-import { generateCursorRules, generateClaudeMdBlock, generateAntigravityRulesBlock } from "@trainable-ds/compiler";
+import { generateCursorRules, generateClaudeMdBlock, generateAntigravityRulesBlock, emitAgentSkills } from "@trainable-ds/compiler";
 
 export interface InitOptions {
   auto?: boolean;
@@ -142,6 +142,10 @@ tokens:
     fs.appendFileSync(agentsMdPath, generateAntigravityRulesBlock("My Application"), "utf-8");
     console.log(pc.green("✔ Injected guidelines into AGENTS.md (Antigravity)"));
   }
+
+  // Open Agent Skills emission (.agents/skills/)
+  await emitAgentSkills(cwd, { designSystemName: "My Application" });
+  console.log(pc.green("✔ Emitted Open Agent Skills (.agents/skills/tds-knowledge, .agents/skills/tds-audit)"));
 
   // 5. If remote URL provided, log connection
   if (options.remote) {
