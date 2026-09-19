@@ -17,13 +17,17 @@ Every piece of HTML, CSS, or TSX code you output MUST satisfy the following inva
 
 | Rule ID | Severity | Invariant Constraint |
 | :--- | :--- | :--- |
-| `TDS-GHOST-BORDER-HALLUCINATION` | **CRITICAL** | **NEVER** add `border`, `border: 1px solid ...`, or `box-shadow` to surface containers, `Card`, or `StoryCard` elements unless explicitly specified by the user. Grouping is established solely by `#ffffff` surface tone on `#f6f8fc` canvas. |
-| `TDS-FONT-SMOOTHING-DEGRADATION` | **HIGH** | **NEVER** apply `-webkit-font-smoothing: antialiased` or `.antialiased`. You MUST enforce `-webkit-font-smoothing: auto;` or `font-smooth: auto;` to preserve authentic subpixel font weight on macOS/WebKit. |
-| `TDS-TYPOGRAPHIC-LOGO-APPROXIMATION`| **CRITICAL** | **NEVER** approximate brand wordmarks using styled HTML `<span>` elements (e.g. `<span style="color:blue">G</span>`). ALWAYS use authentic SVG vectors (`googlelogo_clr_74x24px.svg`). |
-| `TDS-RAW-COLOR` | **CRITICAL** | **NO** raw hex (`#1e293b`), rgb, or hsl values in styles or classes. Use semantic CSS variables (`var(--gn-...)`) or DTCG tokens (`sys.color.*`). |
-| `TDS-NON-QUANTUM-SPACING` | **HIGH** | All layout spacing (padding, margin, gap) MUST use multiples of 4px / 8px (`8px`, `12px`, `16px`, `24px`, `32px`). Never use arbitrary values (e.g. `13px`, `17px`). |
-| `TDS-SPEC-FIDELITY` | **CRITICAL** | Strictly adhere to wireframes, sketches, and user requirements. Zero feature hallucination (do not invent unrequested action buttons, toggles, or floating chips). |
-| `TDS-WHITESPACE-PRESERVATION` | **HIGH** | Respect whitespace in user wireframes. Never fill open space with speculative widgets. |
+| `TDS-GHOST-BORDER-HALLUCINATION` | **CRITICAL** | **NEVER** add `border` or `box-shadow` to flat feed surface containers (`Card`, `StoryCard`, or canvas articles). EXCEPTION: News Showcase cards (`ShowcaseCard` / `variant="outlined"`) strictly mandate `border: 1px solid #c7c7c7;`. |
+| `TDS-DIALOG-SURFACE-SPECS` | **CRITICAL** | Dialogs, Modals, and the Advanced Search panel MUST use `rounded-[28px]` (`28px` corner radius) and M3 Level 3 elevation shadow. Never use arbitrary radii like 8px or 12px for modals. |
+| `TDS-FLOATING-MENU-SPECS` | **HIGH** | Context Menus and Popovers MUST use `rounded-[4px]` (`4px` corner radius) and M3 Level 2 elevation shadow with backdrop dismissal. |
+| `TDS-FOLLOW-BUTTON-SPECS` | **HIGH** | Follow / Save action pills MUST use `rounded-[36px]` with standard `36px` height (`h-9`) and star/bookmark icon. |
+| `TDS-CARD-RADIUS-HIERARCHY` | **HIGH** | Card corners must follow the hierarchy: `18px` for continuous section cards, `16px` for single cards & Showcase, `8px` for sub-cards. |
+| `TDS-FONT-SMOOTHING-DEGRADATION` | **HIGH** | **NEVER** apply `-webkit-font-smoothing: antialiased` or `.antialiased`. You MUST enforce `-webkit-font-smoothing: auto;` to preserve authentic subpixel font weight on macOS/WebKit. |
+| `TDS-TYPOGRAPHIC-LOGO-APPROXIMATION`| **CRITICAL** | **NEVER** approximate brand wordmarks using styled HTML `<span>` elements. ALWAYS use authentic SVG vectors (`googlelogo_clr_74x24px.svg`). |
+| `TDS-RAW-COLOR` | **CRITICAL** | **NO** raw hex values in styles or classes. Use semantic CSS variables (`var(--gn-...)`) or DTCG tokens (`sys.color.*`). |
+| `TDS-NON-QUANTUM-SPACING` | **HIGH** | All layout spacing (padding, margin, gap) MUST use multiples of 4px / 8px (`8px`, `12px`, `16px`, `24px`, `32px`). |
+| `TDS-SPEC-FIDELITY` | **CRITICAL** | Strictly adhere to wireframes and user specifications. Zero feature hallucination. |
+| `TDS-WHITESPACE-PRESERVATION` | **HIGH** | Respect whitespace in user wireframes. |
 
 ---
 

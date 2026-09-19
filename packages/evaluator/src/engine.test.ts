@@ -125,4 +125,72 @@ describe("Trainable DS Compliance Evaluator", () => {
     const codes = result.diagnostics.map(d => d.code);
     expect(codes).toContain("TDS-TYPOGRAPHIC-LOGO-APPROXIMATION");
   });
+
+  it("permits explicit M3 Outlined Showcase cards without triggering ghost border hallucination", () => {
+    const showcaseCode = `
+      export function NewsShowcase() {
+        return (
+          <article className="showcase-card border border-outline-showcase rounded-[16px] bg-surface">
+            <h2>Showcase story</h2>
+          </article>
+        );
+      }
+    `;
+
+    const result = evaluateCode(showcaseCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).not.toContain("TDS-GHOST-BORDER-HALLUCINATION");
+  });
+
+  it("detects inadequate small corner radius on Dialogs (TDS-DIALOG-SURFACE-SPECS)", () => {
+    const badDialogCode = `
+      export function SettingsModal() {
+        return (
+          <div role="dialog" className="m3-dialog-card rounded-md bg-surface p-6">
+            <h2>Language Preferences</h2>
+          </div>
+        );
+      }
+    `;
+
+    const result = evaluateCode(badDialogCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-DIALOG-SURFACE-SPECS");
+    expect(result.diagnostics[0].remediation).toContain("28px");
+  });
+
+  it("detects oversized corner radius on floating Context Menus (TDS-FLOATING-MENU-SPECS)", () => {
+    const badMenuCode = `
+      export function ActionMenu() {
+        return (
+          <div role="menu" className="m3-context-menu rounded-2xl bg-surface shadow-lg">
+            <div role="menuitem">Save story</div>
+          </div>
+        );
+      }
+    `;
+
+    const result = evaluateCode(badMenuCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-FLOATING-MENU-SPECS");
+    expect(result.diagnostics[0].remediation).toContain("4px");
+  });
+
+  it("detects oversized height on Follow / Save action pills (TDS-FOLLOW-BUTTON-SPECS)", () => {
+    const badFollowCode = `
+      export function FollowSection() {
+        return (
+          <FollowButton className="h-12 rounded-[36px]" aria-label="Thema folgen">
+            <span>Folgen</span>
+          </FollowButton>
+        );
+      }
+    `;
+
+    const result = evaluateCode(badFollowCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-FOLLOW-BUTTON-SPECS");
+    const followDiag = result.diagnostics.find(d => d.code === "TDS-FOLLOW-BUTTON-SPECS");
+    expect(followDiag?.remediation).toContain("36px");
+  });
 });

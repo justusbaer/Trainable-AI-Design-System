@@ -66,18 +66,36 @@
       --gn-secondary-blue: #004a77;
       --gn-surface: #ffffff;
       --gn-on-surface: #1f1f1f;
+      --gn-on-surface-variant: #444746;
       --gn-surface-container-low: #f6f8fc;
       --gn-surface-container: #f0f4f9;
       --gn-surface-container-high: #f0f4f9;
       --gn-coverage-bg: #f2f2f2;
       --gn-coverage-text: #444746;
+      --gn-coverage-hover-bg: #e5e5e5;
       --gn-outline: #747775;
       --gn-outline-variant: #e3e3e3;
+      --gn-outline-showcase: #c7c7c7;
       --gn-link: #1a73e8;
-      --gn-purple: #592fd0;
-      --gn-radius-card: 18px;
+      --gn-purple: #7c4dff;
+      --gn-gray-muted: #5f6368;
+      --gn-brand-spiegel: #e64415;
+      --gn-brand-zeit: #000000;
+      --gn-brand-handelsblatt: #f35c00;
+      --gn-brand-x: #0f1419;
+      --gn-brand-x-sub: #536471;
+      --gn-brand-x-blue: #1d9bf0;
+      --gn-radius-card-container: 18px;
+      --gn-radius-card: 16px;
+      --gn-radius-dialog: 28px;
+      --gn-radius-follow-pill: 36px;
+      --gn-radius-menu: 4px;
+      --gn-radius-sub-card: 8px;
+      --gn-radius-thumbnail: 12px;
       --gn-radius-pill: 9999px;
       --gn-radius-img: 12px;
+      --gn-elevation-menu: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+      --gn-elevation-dialog: rgba(60, 64, 67, 0.3) 0px 1px 3px 0px, rgba(60, 64, 67, 0.15) 0px 4px 8px 3px;
     }
 
     * {
@@ -130,7 +148,7 @@
       font-family: 'Product Sans', Arial, sans-serif;
       font-size: 22px;
       font-weight: 400;
-      color: #5f6368;
+      color: var(--gn-gray-muted);
       line-height: 24px;
       letter-spacing: -0.2px;
       display: inline-block;
@@ -162,7 +180,7 @@
     }
 
     .search-icon {
-      color: #5f6368;
+      color: var(--gn-gray-muted);
       display: flex;
       align-items: center;
     }
@@ -177,11 +195,11 @@
       color: var(--gn-on-surface);
     }
     .search-input::placeholder {
-      color: #5f6368;
+      color: var(--gn-gray-muted);
     }
 
     .dropdown-icon {
-      color: #5f6368;
+      color: var(--gn-gray-muted);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -204,7 +222,7 @@
       background: transparent;
       border: none;
       cursor: pointer;
-      color: #5f6368;
+      color: var(--gn-gray-muted);
       transition: background-color 0.1s ease;
     }
     .icon-btn:hover {
@@ -213,8 +231,8 @@
     }
 
     .btn-anmelden {
-      background-color: #0b57d0;
-      color: #ffffff;
+      background-color: var(--gn-primary);
+      color: var(--gn-surface);
       font-family: 'Google Sans Text', Roboto, sans-serif;
       font-size: 14px;
       font-weight: 500;
@@ -253,7 +271,7 @@
       font-size: 14px;
       font-weight: 500;
       line-height: 27px;
-      color: #5f6368;
+      color: var(--gn-gray-muted);
       text-decoration: none;
       white-space: nowrap;
       position: relative;
@@ -261,14 +279,14 @@
       transition: color 0.1s ease;
     }
     .nav-tab-item:hover {
-      color: #000000;
+      color: var(--gn-brand-zeit);
     }
 
     .nav-tab-item.active {
-      color: #1a73e8;
+      color: var(--gn-link);
     }
     .nav-tab-item.active:hover {
-      color: #1a73e8;
+      color: var(--gn-link);
     }
     .nav-tab-item.active::after {
       content: '';
@@ -277,7 +295,7 @@
       left: 14px;
       right: 14px;
       height: 3px;
-      background-color: #1a73e8;
+      background-color: var(--gn-link);
       border-radius: 3px 3px 0 0;
     }
 
@@ -309,7 +327,7 @@
       align-items: center;
       gap: 6px;
       font-size: 12px;
-      color: #5f6368;
+      color: var(--gn-gray-muted);
       text-decoration: none;
       margin-bottom: 6px;
     }
@@ -329,7 +347,7 @@
       font-family: 'Google Sans', sans-serif;
       font-size: 14px;
       font-weight: 400;
-      color: #5f6368;
+      color: var(--gn-gray-muted);
       margin-top: 4px;
     }
 
@@ -377,7 +395,7 @@
       font-family: 'Google Sans Text', Roboto, sans-serif;
       font-size: 11px;
       font-weight: 500;
-      color: #5f6368;
+      color: var(--gn-gray-muted);
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -407,7 +425,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1a73e8 0%, #7c4dff 100%);
+      background: linear-gradient(135deg, var(--gn-link) 0%, var(--gn-purple) 100%);
       margin-top: 8px;
       flex-shrink: 0;
     }
@@ -418,7 +436,7 @@
 
     .ai-summary-text strong {
       font-weight: 500;
-      color: #1f1f1f;
+      color: var(--gn-on-surface);
     }
 
     .ai-summary-link {
@@ -501,7 +519,7 @@
       bottom: 24px;
       right: 28px;
       z-index: 10000;
-      background: #ffffff;
+      background: var(--gn-surface);
       border-radius: 9999px;
       padding: 4px 6px;
       display: flex;
@@ -519,7 +537,7 @@
     .proto-switcher-label {
       font-size: 11px;
       font-weight: 500;
-      color: #747775;
+      color: var(--gn-outline);
       padding: 0 6px 0 10px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -533,7 +551,7 @@
       border-radius: 9999px;
       border: none;
       background: transparent;
-      color: #444746;
+      color: var(--gn-on-surface-variant);
       font-family: 'Google Sans Text', Roboto, sans-serif;
       font-size: 13px;
       font-weight: 500;
@@ -543,16 +561,16 @@
       min-height: 34px;
     }
     .proto-switch-btn:hover {
-      background-color: #f0f4f9;
-      color: #1f1f1f;
+      background-color: var(--gn-surface-container);
+      color: var(--gn-on-surface);
     }
     .proto-switch-btn.active {
-      background-color: #d3e3fd;
-      color: #041e49;
+      background-color: var(--gn-primary-container);
+      color: var(--gn-on-primary-container);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
     }
     .proto-switch-btn.active:hover {
-      background-color: #c2e7ff;
+      background-color: var(--gn-primary-container);
     }
     .proto-switch-btn svg {
       width: 15px;
@@ -573,7 +591,7 @@
     }
 
     .weather-chevron {
-      color: #747775;
+      color: var(--gn-outline);
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -597,7 +615,7 @@
       align-items: center;
       gap: 4px;
       font-size: 11px;
-      color: #5f6368;
+      color: var(--gn-gray-muted);
     }
 
     .weather-temp {
@@ -713,7 +731,7 @@
       height: 165px;
       border-radius: var(--gn-radius-img);
       overflow: hidden;
-      background-color: #2c2523;
+      background-color: var(--gn-on-surface);
     }
     .lead-img-wrapper img, .lead-img-wrapper svg {
       width: 100%;
@@ -729,8 +747,8 @@
     }
 
     .badge-ntv {
-      background-color: #d93025;
-      color: #ffffff;
+      background-color: var(--gn-brand-spiegel);
+      color: var(--gn-surface);
       font-size: 11px;
       font-weight: 700;
       padding: 1px 5px;
@@ -743,7 +761,7 @@
       font-family: 'Google Sans Text', Roboto, sans-serif;
       font-size: 12px;
       font-weight: 500;
-      color: #1f1f1f;
+      color: var(--gn-on-surface);
       cursor: pointer;
     }
     .source-name:hover {
@@ -766,7 +784,7 @@
     .timestamp-text {
       font-family: 'Google Sans Text', Roboto, sans-serif;
       font-size: 12px;
-      color: #5f6368;
+      color: var(--gn-gray-muted);
     }
 
     .sub-stories-col {
@@ -785,25 +803,25 @@
       font-family: 'Google Sans', sans-serif;
       font-size: 14px;
       font-weight: 400;
-      color: #444746;
+      color: var(--gn-on-surface-variant);
       text-decoration: none;
       line-height: 20px;
     }
     .sub-story-title:hover {
       text-decoration: underline;
-      color: #444746;
+      color: var(--gn-on-surface-variant);
     }
 
     .badge-zeit {
       font-family: serif;
       font-weight: 900;
       font-size: 13px;
-      color: #1f1f1f;
+      color: var(--gn-on-surface);
     }
 
     .badge-spiegel {
-      background-color: #e64415;
-      color: #ffffff;
+      background-color: var(--gn-brand-spiegel);
+      color: var(--gn-surface);
       font-family: serif;
       font-weight: 900;
       font-size: 11px;
@@ -816,12 +834,12 @@
       font-style: italic;
       font-weight: bold;
       font-size: 13px;
-      color: #1f1f1f;
+      color: var(--gn-on-surface);
     }
 
     .badge-gea {
-      background-color: #0055a5;
-      color: #ffffff;
+      background-color: var(--gn-primary);
+      color: var(--gn-surface);
       font-size: 10px;
       font-weight: 700;
       padding: 1px 5px;
@@ -829,8 +847,8 @@
     }
 
     .badge-swp {
-      background-color: #00828a;
-      color: #ffffff;
+      background-color: var(--gn-secondary-blue);
+      color: var(--gn-surface);
       font-size: 10px;
       font-weight: 700;
       padding: 1px 5px;
@@ -838,8 +856,8 @@
     }
 
     .badge-tagesschau {
-      background-color: #002d62;
-      color: #ffffff;
+      background-color: var(--gn-secondary-blue);
+      color: var(--gn-surface);
       font-size: 11px;
       font-weight: 700;
       padding: 1px 5px;
@@ -867,8 +885,8 @@
       transition: background-color 0.15s ease, color 0.15s ease;
     }
     .coverage-btn:hover {
-      background-color: #e5e5e5;
-      color: #1f1f1f;
+      background-color: var(--gn-coverage-hover-bg);
+      color: var(--gn-on-surface);
     }
     .coverage-btn svg {
       color: var(--gn-primary);
@@ -931,7 +949,7 @@
       border-radius: 10px;
       overflow: hidden;
       flex-shrink: 0;
-      background-color: #f1f3f4;
+      background-color: var(--gn-surface-container);
     }
     .local-thumb img, .local-thumb svg {
       width: 100%;
@@ -958,6 +976,587 @@
     .recommendations-heading:hover {
       text-decoration: underline;
     }
+  
+    /* Shape & Elevation Tokens */
+    :root {
+      --gn-radius-card-container: 18px;
+      --gn-radius-card: 16px;
+      --gn-radius-dialog: 28px;
+      --gn-radius-follow-pill: 36px;
+      --gn-radius-menu: 4px;
+      --gn-radius-sub-card: 8px;
+      --gn-radius-thumbnail: 12px;
+      --gn-outline-showcase: #c7c7c7;
+      --gn-elevation-menu: rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px;
+      --gn-elevation-dialog: rgba(60, 64, 67, 0.3) 0px 1px 3px 0px, rgba(60, 64, 67, 0.15) 0px 4px 8px 3px;
+    }
+
+    /* Sub-page Views */
+    .proto-view {
+      display: none;
+    }
+    .proto-view.active {
+      display: block;
+    }
+
+    /* News Showcase Outlined Cards Grid */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+    .showcase-card {
+      background-color: var(--gn-surface);
+      border: 1px solid var(--gn-outline-showcase);
+      border-radius: var(--gn-radius-card);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: box-shadow 0.2s ease;
+    }
+    .showcase-card:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .showcase-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--gn-outline-variant);
+    }
+    .showcase-publisher-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .showcase-pub-logo {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--gn-surface);
+    }
+    .showcase-pub-name {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--gn-on-surface);
+    }
+
+    /* Follow Pill Button (Astryx Slot Contract) */
+    .btn-follow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 36px;
+      padding: 0 16px;
+      border-radius: var(--gn-radius-follow-pill);
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid var(--gn-outline);
+      background-color: transparent;
+      color: var(--gn-on-surface);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-follow:hover {
+      background-color: rgba(11, 87, 208, 0.08);
+      border-color: var(--gn-primary);
+      color: var(--gn-primary);
+    }
+    .btn-follow.followed {
+      background-color: var(--gn-primary-container);
+      color: var(--gn-on-primary-container);
+      border-color: transparent;
+    }
+    .btn-follow svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .showcase-lead-story {
+      margin-bottom: 16px;
+    }
+    .showcase-lead-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 24px;
+      color: var(--gn-on-surface);
+      margin-bottom: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+    .showcase-lead-title:hover {
+      text-decoration: underline;
+    }
+    .showcase-story-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .showcase-story-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 14px;
+      line-height: 20px;
+      color: var(--gn-on-surface-variant);
+    }
+    .showcase-bullet {
+      color: var(--gn-primary);
+      font-size: 16px;
+      line-height: 18px;
+    }
+
+    /* Search Results Page Layout */
+    .search-results-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .search-filter-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+    }
+    .filter-chip {
+      height: 32px;
+      padding: 0 16px;
+      border-radius: var(--gn-radius-sub-card);
+      border: 1px solid var(--gn-outline-variant);
+      background-color: var(--gn-surface);
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gn-on-surface-variant);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      transition: all 0.15s ease;
+    }
+    .filter-chip.active {
+      background-color: var(--gn-primary-container);
+      color: var(--gn-on-primary-container);
+      border-color: transparent;
+    }
+    .single-story-card {
+      background-color: var(--gn-surface);
+      border: none;
+      box-shadow: none;
+      border-radius: var(--gn-radius-card);
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .single-story-content {
+      flex: 1;
+    }
+    .single-story-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 12px;
+      color: var(--gn-on-surface-variant);
+    }
+    .single-story-source {
+      font-weight: 500;
+      color: var(--gn-on-surface);
+      text-decoration: none;
+    }
+    .single-story-source:hover {
+      text-decoration: underline;
+    }
+    .single-story-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 22px;
+      color: var(--gn-on-surface);
+      text-decoration: none;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .single-story-title:hover {
+      text-decoration: underline;
+    }
+    .search-topic-sidebar-card {
+      background-color: var(--gn-surface);
+      border: none;
+      box-shadow: none;
+      border-radius: var(--gn-radius-card);
+      padding: 24px;
+      height: fit-content;
+    }
+    .topic-card-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--gn-on-surface);
+      margin-bottom: 4px;
+    }
+    .topic-card-subtitle {
+      font-size: 13px;
+      color: var(--gn-on-surface-variant);
+      margin-bottom: 20px;
+    }
+
+    /* Astryx Compound Lifecycle States */
+    .astryx-state-box {
+      padding: 48px 24px;
+      text-align: center;
+      background-color: var(--gn-surface);
+      border-radius: var(--gn-radius-card);
+    }
+    .astryx-state-icon {
+      font-size: 48px;
+      color: var(--gn-outline);
+      margin-bottom: 12px;
+    }
+    .astryx-skeleton-row {
+      height: 16px;
+      background: linear-gradient(90deg, var(--gn-surface-container) 25%, var(--gn-outline-variant) 50%, var(--gn-surface-container) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-pulse 1.5s infinite;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    @keyframes skeleton-pulse {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Full Coverage Layout & Social Embed */
+    .coverage-layout {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    .coverage-section-box {
+      background-color: var(--gn-surface);
+      border-radius: var(--gn-radius-card);
+      border: none;
+      box-shadow: none;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .coverage-section-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--gn-on-surface);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .social-embed-card {
+      border: 1px solid var(--gn-outline-variant);
+      border-radius: var(--gn-radius-sub-card);
+      padding: 16px;
+      background-color: var(--gn-surface);
+      margin-top: 12px;
+    }
+    .social-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .social-author-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .social-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--gn-link);
+      color: var(--gn-surface);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+    .social-name-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gn-brand-x);
+    }
+    .social-handle {
+      font-size: 13px;
+      color: var(--gn-brand-x-sub);
+    }
+    .social-post-text {
+      font-size: 15px;
+      line-height: 22px;
+      color: var(--gn-brand-x);
+      margin-bottom: 10px;
+    }
+    .social-footer-meta {
+      font-size: 13px;
+      color: var(--gn-brand-x-sub);
+    }
+
+    /* M3 Dialog / Modal (28px radius, Level 3 Elevation) */
+    .m3-dialog-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(2px);
+    }
+    .m3-dialog-backdrop.hidden {
+      display: none;
+    }
+    .m3-dialog-card {
+      width: 560px;
+      max-width: 90vw;
+      background-color: var(--gn-surface);
+      border-radius: var(--gn-radius-dialog);
+      box-shadow: var(--gn-elevation-dialog);
+      padding: 24px 28px;
+      outline: none;
+      animation: dialog-pop 0.2s cubic-bezier(0.0, 0.0, 0.2, 1);
+    }
+    @keyframes dialog-pop {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .m3-dialog-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 24px;
+      font-weight: 400;
+      color: var(--gn-on-surface);
+      margin-bottom: 8px;
+    }
+    .m3-dialog-subtitle {
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      color: var(--gn-on-surface-variant);
+      margin-bottom: 20px;
+    }
+    .m3-radio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-height: 320px;
+      overflow-y: auto;
+      margin-bottom: 24px;
+    }
+    .m3-radio-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.1s ease;
+    }
+    .m3-radio-item:hover {
+      background-color: var(--gn-surface-container-high);
+    }
+    .m3-radio-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--gn-outline);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+    .m3-radio-item.selected .m3-radio-circle {
+      border-color: var(--gn-primary);
+    }
+    .m3-radio-item.selected .m3-radio-circle::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--gn-primary);
+    }
+    .m3-radio-label {
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--gn-on-surface);
+    }
+    .m3-dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .btn-text {
+      background: none;
+      border: none;
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gn-primary);
+      padding: 0 16px;
+      height: 40px;
+      border-radius: var(--gn-radius-pill);
+      cursor: pointer;
+    }
+    .btn-text:hover {
+      background-color: rgba(11, 87, 208, 0.08);
+    }
+    .btn-filled {
+      background-color: var(--gn-primary);
+      border: none;
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gn-on-primary);
+      padding: 0 24px;
+      height: 40px;
+      border-radius: var(--gn-radius-pill);
+      cursor: pointer;
+      transition: opacity 0.15s ease;
+    }
+    .btn-filled:hover {
+      opacity: 0.92;
+    }
+
+    /* M3 Advanced Search Panel (28px radius, surface-container) */
+    .m3-advanced-search-panel {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 680px;
+      max-width: calc(100vw - 48px);
+      background-color: var(--gn-surface-container);
+      border-radius: var(--gn-radius-dialog);
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      z-index: 200;
+      animation: dialog-pop 0.15s ease-out;
+    }
+    .m3-advanced-search-panel.hidden {
+      display: none;
+    }
+    .adv-title {
+      font-family: 'Google Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--gn-on-surface);
+      margin-bottom: 4px;
+    }
+    .adv-subtitle {
+      font-size: 13px;
+      color: var(--gn-on-surface-variant);
+      margin-bottom: 20px;
+    }
+    .adv-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .adv-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .adv-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gn-on-surface-variant);
+    }
+    .adv-input {
+      height: 40px;
+      background-color: var(--gn-surface);
+      border: 1px solid var(--gn-outline-variant);
+      border-radius: 8px;
+      padding: 0 12px;
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      color: var(--gn-on-surface);
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .adv-input:focus {
+      border-color: var(--gn-primary);
+    }
+    .adv-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    /* M3 Context Menu (4px radius, Level 2 Elevation) */
+    .m3-context-menu {
+      position: fixed;
+      background-color: var(--gn-surface);
+      border-radius: var(--gn-radius-menu);
+      box-shadow: var(--gn-elevation-menu);
+      padding: 6px 0;
+      z-index: 300;
+      min-width: 240px;
+      border: none;
+    }
+    .m3-context-menu.hidden {
+      display: none;
+    }
+    .m3-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 18px;
+      height: 44px;
+      font-family: 'Google Sans Text', Roboto, sans-serif;
+      font-size: 14px;
+      color: var(--gn-on-surface);
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.1s ease;
+    }
+    .m3-menu-item:hover {
+      background-color: var(--gn-surface-container-high);
+    }
+    .m3-menu-item svg {
+      width: 20px;
+      height: 20px;
+      color: var(--gn-on-surface-variant);
+    }
+    .m3-menu-divider {
+      height: 1px;
+      background-color: var(--gn-outline-variant);
+      margin: 4px 0;
+    }
+
   </style>
 </head>
 <body>
@@ -985,7 +1584,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.49 19l-5.73-5.73C15.53 12.2 16 10.91 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.41 0 2.7-.47 3.77-1.24L19 20.49 20.49 19zM5 9.5C5 7.01 7.01 5 9.5 5S14 7.01 14 9.5 11.99 14 9.5 14 5 11.99 5 9.5z"/></svg>
         </div>
         <input type="text" class="search-input" placeholder="Themen, Orte und Quellen suchen" aria-label="Themen, Orte und Quellen suchen">
-        <div class="dropdown-icon" title="Erweiterte Suche">
+        <div class="dropdown-icon" id="btn-toggle-adv-search" title="Erweiterte Suche" role="button" tabindex="0">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5H7z"/></svg>
         </div>
       </div>
@@ -993,6 +1592,10 @@
 
     <!-- Header Actions -->
     <div class="header-actions">
+      <!-- Language / Region Dialog Trigger -->
+      <button class="icon-btn" id="btn-open-language" title="Sprache & Region" aria-label="Sprache und Region">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/></svg>
+      </button>
       <!-- Help -->
       <button class="icon-btn" title="Hilfe" aria-label="Hilfe">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
@@ -1011,26 +1614,26 @@
   </header>
 
   <!-- Horizontal Tab Navigation Bar -->
-  <nav class="nav-tabs-bar">
-    <a href="#" class="nav-tab-item active">Startseite</a>
-    <a href="#" class="nav-tab-item">Für mich</a>
-    <a href="#" class="nav-tab-item">Folge ich</a>
-    <a href="#" class="nav-tab-item">News Showcase</a>
+  <!-- Horizontal Tab Navigation Bar -->
+  <nav class="nav-tabs-bar" role="tablist">
+    <a href="#home" class="nav-tab-item active" data-view-target="view-home" role="tab" aria-selected="true">Startseite</a>
+    <a href="#showcase" class="nav-tab-item" data-view-target="view-showcase" role="tab" aria-selected="false">News Showcase</a>
+    <a href="#search" class="nav-tab-item" data-view-target="view-search" role="tab" aria-selected="false">Suche & Thema</a>
+    <a href="#coverage" class="nav-tab-item" data-view-target="view-coverage" role="tab" aria-selected="false">Vollständige Berichterstattung</a>
     <div class="nav-divider"></div>
-    <a href="#" class="nav-tab-item">Deutschland</a>
-    <a href="#" class="nav-tab-item">Welt</a>
-    <a href="#" class="nav-tab-item">Lokales</a>
-    <a href="#" class="nav-tab-item">Unternehmen & Märkte</a>
-    <a href="#" class="nav-tab-item">Wissenschaft & Technik</a>
-    <a href="#" class="nav-tab-item">Unterhaltung</a>
-    <a href="#" class="nav-tab-item">Sport</a>
-    <a href="#" class="nav-tab-item">Gesundheit</a>
+    <a href="#" class="nav-tab-item" role="tab">Deutschland</a>
+    <a href="#" class="nav-tab-item" role="tab">Welt</a>
+    <a href="#" class="nav-tab-item" role="tab">Lokales</a>
+    <a href="#" class="nav-tab-item" role="tab">Wirtschaft</a>
+    <a href="#" class="nav-tab-item" role="tab">Technik</a>
   </nav>
 
   <!-- Main Content Layout -->
   <main class="main-content">
 
-    <!-- Page Header Title Group -->
+    <!-- View 1: Home Feed (Baseline) -->
+    <div id="view-home" class="proto-view active">
+      <!-- Page Header Title Group -->
     <div class="page-header-row">
       <div class="page-title-group">
         <a href="#" class="info-link">
@@ -1295,7 +1898,7 @@
 
           <!-- Next Story Inside the SAME Continuous Card Container -->
           <div style="display: flex; gap: 16px; align-items: flex-start; padding: 4px 0 0;">
-            <div style="width: 90px; height: 80px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: #e0e0e0;">
+            <div style="width: 90px; height: 80px; border-radius: 12px; overflow: hidden; flex-shrink: 0; background: var(--gn-outline-variant);">
               <svg viewBox="0 0 90 80" width="100%" height="100%">
                 <defs>
                   <radialGradient id="faceGrad" cx="50%" cy="40%" r="60%">
@@ -1522,9 +2125,280 @@
           Empfehlungen für dich
         </a>
 
+
+      </div>
+    </div>
+  </div> <!-- /#view-home -->
+
+    <!-- View 2: News Showcase (M3 Outlined Cards) -->
+    <div id="view-showcase" class="proto-view">
+      <div class="page-title-group" style="margin-bottom: 8px;">
+        <h1 class="page-heading">News Showcase</h1>
+        <div class="page-date">Exklusive Einblicke und kuratierte Geschichten von führenden Verlagen</div>
       </div>
 
-    </div>
+      <div class="showcase-grid">
+        <!-- Showcase Card 1: SPIEGEL -->
+        <article class="showcase-card">
+          <div>
+            <div class="showcase-header">
+              <div class="showcase-publisher-brand">
+                <div class="showcase-pub-logo" style="background:var(--gn-brand-spiegel);">S</div>
+                <div class="showcase-pub-name">DER SPIEGEL</div>
+              </div>
+              <button type="button" class="btn-follow" aria-label="DER SPIEGEL folgen">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span>Folgen</span>
+              </button>
+            </div>
+            <div class="showcase-lead-story">
+              <a href="#" class="showcase-lead-title">Duma-Wahl in Russland: Putins Kriegswahl und der Widerstand im Untergrund</a>
+              <div style="font-size: 12px; color: var(--gn-on-surface-variant); margin-bottom: 12px;">Vor 45 Minuten · Auslandsressort</div>
+            </div>
+            <ul class="showcase-story-list">
+              <li class="showcase-story-item">
+                <span class="showcase-bullet">•</span>
+                <span>Opposition ruft trotz massiver Repressionen zu Protestaktionen auf</span>
+              </li>
+              <li class="showcase-story-item">
+                <span class="showcase-bullet">•</span>
+                <span>Reaktionen aus Brüssel: EU verurteilt Scheinwahlen in besetzten Gebieten</span>
+              </li>
+            </ul>
+          </div>
+          <div style="margin-top: 16px; border-top: 1px solid var(--gn-outline-variant); padding-top: 12px;">
+            <a href="#" style="font-size: 13px; color: var(--gn-primary); text-decoration: none; font-weight: 500;">Gesamten SPIEGEL Showcase ansehen →</a>
+          </div>
+        </article>
+
+        <!-- Showcase Card 2: DIE ZEIT -->
+        <article class="showcase-card">
+          <div>
+            <div class="showcase-header">
+              <div class="showcase-publisher-brand">
+                <div class="showcase-pub-logo" style="background:var(--gn-brand-zeit);">Z</div>
+                <div class="showcase-pub-name">DIE ZEIT</div>
+              </div>
+              <button type="button" class="btn-follow" aria-label="DIE ZEIT folgen">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span>Folgen</span>
+              </button>
+            </div>
+            <div class="showcase-lead-story">
+              <a href="#" class="showcase-lead-title">Energiewende im Praxistest: Welche Entlastungen die Wirtschaft wirklich braucht</a>
+              <div style="font-size: 12px; color: var(--gn-on-surface-variant); margin-bottom: 12px;">Vor 2 Stunden · Wirtschaft & Politik</div>
+            </div>
+            <ul class="showcase-story-list">
+              <li class="showcase-story-item">
+                <span class="showcase-bullet">•</span>
+                <span>Streit um Tankpreisdeckel entzweit Bundeskabinett</span>
+              </li>
+              <li class="showcase-story-item">
+                <span class="showcase-bullet">•</span>
+                <span>Industriepräsident warnt vor schleichender Deindustrialisierung</span>
+              </li>
+            </ul>
+          </div>
+          <div style="margin-top: 16px; border-top: 1px solid var(--gn-outline-variant); padding-top: 12px;">
+            <a href="#" style="font-size: 13px; color: var(--gn-primary); text-decoration: none; font-weight: 500;">Gesamten ZEIT Showcase ansehen →</a>
+          </div>
+        </article>
+
+        <!-- Showcase Card 3: Handelsblatt -->
+        <article class="showcase-card">
+          <div>
+            <div class="showcase-header">
+              <div class="showcase-publisher-brand">
+                <div class="showcase-pub-logo" style="background:var(--gn-brand-handelsblatt);">H</div>
+                <div class="showcase-pub-name">Handelsblatt</div>
+              </div>
+              <button type="button" class="btn-follow" aria-label="Handelsblatt folgen">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <span>Folgen</span>
+              </button>
+            </div>
+            <div class="showcase-lead-story">
+              <a href="#" class="showcase-lead-title">DAX trotzt Zinssorgen: Tech-Werte treiben Erholungsrally an</a>
+              <div style="font-size: 12px; color: var(--gn-on-surface-variant); margin-bottom: 12px;">Vor 1 Stunde · Märkte & Finanzen</div>
+            </div>
+            <ul class="showcase-story-list">
+              <li class="showcase-story-item">
+                <span class="showcase-bullet">•</span>
+                <span>Halbleiter-Hersteller verzeichnen Rekordaufträge für KI-Infrastruktur</span>
+              </li>
+              <li class="showcase-story-item">
+                <span class="showcase-bullet">•</span>
+                <span>Zentralbank signalisiert vorerst Zinspause</span>
+              </li>
+            </ul>
+          </div>
+          <div style="margin-top: 16px; border-top: 1px solid var(--gn-outline-variant); padding-top: 12px;">
+            <a href="#" style="font-size: 13px; color: var(--gn-primary); text-decoration: none; font-weight: 500;">Gesamten Handelsblatt Showcase ansehen →</a>
+          </div>
+        </article>
+      </div>
+    </div> <!-- /#view-showcase -->
+
+    <!-- View 3: Search Results Page (Klimawandel) -->
+    <div id="view-search" class="proto-view">
+      <div class="search-results-layout">
+        <!-- Main Search Results Column -->
+        <div class="search-main-col">
+          <!-- Filter Chips Bar -->
+          <div class="search-filter-chips">
+            <button type="button" class="filter-chip active">Alle</button>
+            <button type="button" class="filter-chip">Zuletzt</button>
+            <button type="button" class="filter-chip">Nur Relevanz</button>
+            <button type="button" class="filter-chip" id="btn-toggle-astryx-empty" style="margin-left: auto; border-color: var(--gn-link); color: var(--gn-link);">
+              Astryx Leere-Status testen
+            </button>
+          </div>
+
+          <div id="search-content-populated">
+            <!-- Search Story 1 -->
+            <article class="single-story-card">
+              <div class="single-story-content">
+                <div class="single-story-meta">
+                  <span class="single-story-source">SWR</span>
+                  <span>•</span>
+                  <span>Vor 3 Stunden</span>
+                </div>
+                <a href="#" class="single-story-title">Klimawandel: Ist Wandern in den Alpen jetzt auch auf einfachen Wegen gefährlich?</a>
+                <div style="font-size: 13px; color: var(--gn-on-surface-variant); line-height: 18px;">Experten warnen vor zunehmendem Steinschlag und tauendem Permafrost in den Hochlagen.</div>
+              </div>
+              <button type="button" class="icon-btn btn-context-trigger" title="Optionen" aria-label="Optionen">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </button>
+            </article>
+
+            <!-- Search Story 2 -->
+            <article class="single-story-card">
+              <div class="single-story-content">
+                <div class="single-story-meta">
+                  <span class="single-story-source">Golem.de</span>
+                  <span>•</span>
+                  <span>Vor 5 Stunden</span>
+                </div>
+                <a href="#" class="single-story-title">Europa erhitzt sich doppelt so schnell wie der globale Durchschnitt</a>
+                <div style="font-size: 13px; color: var(--gn-on-surface-variant); line-height: 18px;">Neuer WMO-Klimabericht analysiert Extremwetter und Niederschlagsdefizite auf dem Kontinent.</div>
+              </div>
+              <button type="button" class="icon-btn btn-context-trigger" title="Optionen" aria-label="Optionen">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </button>
+            </article>
+
+            <!-- Search Story 3 -->
+            <article class="single-story-card">
+              <div class="single-story-content">
+                <div class="single-story-meta">
+                  <span class="single-story-source">DIE ZEIT</span>
+                  <span>•</span>
+                  <span>Gestern</span>
+                </div>
+                <a href="#" class="single-story-title">Klimawandel: Schwund an Eisschilden beschleunigt Meeresspiegelanstieg</a>
+                <div style="font-size: 13px; color: var(--gn-on-surface-variant); line-height: 18px;">Internationale Satellitendaten bestätigen den dramatischen Verlust von Gletschermasse.</div>
+              </div>
+              <button type="button" class="icon-btn btn-context-trigger" title="Optionen" aria-label="Optionen">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+              </button>
+            </article>
+          </div>
+
+          <!-- Astryx Empty State Placeholder (hidden by default) -->
+          <div id="search-content-empty" class="astryx-state-box" style="display:none;">
+            <div class="astryx-state-icon">🔍</div>
+            <div style="font-family: 'Google Sans', sans-serif; font-size: 18px; font-weight: 500; margin-bottom: 8px;">Keine Suchergebnisse gefunden</div>
+            <div style="font-size: 14px; color: var(--gn-on-surface-variant); margin-bottom: 20px;">Überprüfe deine Rechtschreibung oder versuche es mit allgemeineren Suchbegriffen.</div>
+            <button type="button" class="btn-filled" id="btn-reset-astryx-empty">Ergebnisse wieder einblenden</button>
+          </div>
+        </div>
+
+        <!-- Sidebar Topic Card -->
+        <aside class="search-sidebar-col">
+          <div class="search-topic-sidebar-card">
+            <div class="topic-card-title">Klimawandel</div>
+            <div class="topic-card-subtitle">Thema · Suchanfrage</div>
+            <button type="button" class="btn-follow" style="width: 100%; justify-content: center;" aria-label="Thema Klimawandel speichern">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+              <span>Diese Suchanfrage speichern</span>
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div> <!-- /#view-search -->
+
+    <!-- View 4: Full Coverage View (Multi-Perspective & Social Post) -->
+    <div id="view-coverage" class="proto-view">
+      <div class="coverage-layout">
+        <div style="margin-bottom: 20px;">
+          <a href="#home" class="info-link" style="font-size: 14px;">← Zurück zu Top-Meldungen</a>
+          <h1 class="page-heading" style="font-size: 26px; margin-top: 8px;">Vollständige Berichterstattung: Rekordpreise an den Tankstellen & Spritpreis-Ultimatum</h1>
+          <div class="page-date">18 Quellen berichten über dieses Thema</div>
+        </div>
+
+        <!-- Perspective 1: Leitmedien & Wirtschaft -->
+        <section class="coverage-section-box">
+          <h2 class="coverage-section-title">
+            <svg width="22" height="22" viewBox="0 -960 960 960" fill="var(--gn-primary)"><path d="M360-360h384v-72H360v72zm0-156h168v-228H360v228zm264 0h120v-72H624v72zm0-156h120v-72H624v72zM312-240q-29.7 0-50.85-21.15Q240-282.3 240-312v-480q0-29.7 21.15-50.85Q282.3-864 312-864h480q29.7 0 50.85 21.15Q864-821.7 864-792v480q0 29.7-21.15 50.85Q821.7-240 792-240H312zm-144 144q-29.7 0-50.85-21.15Q96-138.3 96-168v-552h72v552h552v72H168z"/></svg>
+            Top-Nachrichten & Leitartikel
+          </h2>
+
+          <article class="single-story-card" style="padding: 12px 0; border-bottom: 1px solid var(--gn-outline-variant); border-radius: 0;">
+            <div class="single-story-content">
+              <div class="single-story-meta">
+                <span class="single-story-source">WELT</span>
+                <span>•</span>
+                <span>Vor 4 Stunden · Von Daniel Zwick</span>
+              </div>
+              <a href="#" class="single-story-title">SPD-Bundestagsfraktion stellt Mineralölkonzernen Spritpreis-Ultimatum</a>
+              <div style="font-size: 13px; color: var(--gn-on-surface-variant);">Fraktionsspitze fordert Senkung der Margen und droht mit kartellrechtlichen Konsequenzen.</div>
+            </div>
+          </article>
+
+          <article class="single-story-card" style="padding: 12px 0; border-radius: 0;">
+            <div class="single-story-content">
+              <div class="single-story-meta">
+                <span class="single-story-source">Süddeutsche Zeitung</span>
+                <span>•</span>
+                <span>Vor 9 Minuten</span>
+              </div>
+              <a href="#" class="single-story-title">Entlastungen: Verhandlungen über neuen Tankrabatt gehen in die entscheidende Phase</a>
+              <div style="font-size: 13px; color: var(--gn-on-surface-variant);">Finanz- und Wirtschaftsministerium suchen Kompromiss zwischen Steuersenkung und Direktzuschuss.</div>
+            </div>
+          </article>
+        </section>
+
+        <!-- Perspective 2: Reaktionen auf X (Social Media Embed) -->
+        <section class="coverage-section-box">
+          <h2 class="coverage-section-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Reaktionen auf X
+          </h2>
+
+          <div class="social-embed-card">
+            <div class="social-header">
+              <div class="social-author-info">
+                <div class="social-avatar">NB</div>
+                <div>
+                  <div class="social-name-row">
+                    <span>Nikolaus Blome</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#1d9bf0"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                  </div>
+                  <div class="social-handle">@NikolausBlome</div>
+                </div>
+              </div>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#536471"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </div>
+            <div class="social-post-text">
+              Sollten wir das Geld für Entlastungen nicht lieber gezielter investieren als erneut über die Gießkanne? Die Debatte um den Tankrabatt zeigt die alten Reflexe der Koalitionspartner. #Spritpreise #Tankrabatt
+            </div>
+            <div class="social-footer-meta">
+              15:42 · 18. Sept. 2026 · 142.5K Aufrufe
+            </div>
+          </div>
+        </section>
+      </div>
+    </div> <!-- /#view-coverage -->
 
   </main>
 
@@ -1588,5 +2462,235 @@
     })();
   </script>
 
+
+  <!-- M3 Dialog: Sprache & Region (28px radius, Level 3 Elevation) -->
+  <div id="dialog-language" class="m3-dialog-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="lang-dialog-title">
+    <div class="m3-dialog-card" tabindex="-1">
+      <h2 id="lang-dialog-title" class="m3-dialog-title">Sprache und Region</h2>
+      <p class="m3-dialog-subtitle">Wähle die gewünschte Sprach- und Regionalausgabe für deine Nachrichten aus.</p>
+      
+      <div class="m3-radio-list">
+        <div class="m3-radio-item selected" data-lang="de-DE">
+          <div class="m3-radio-circle"></div>
+          <span class="m3-radio-label">Deutsch (Deutschland)</span>
+        </div>
+        <div class="m3-radio-item" data-lang="de-AT">
+          <div class="m3-radio-circle"></div>
+          <span class="m3-radio-label">Deutsch (Österreich)</span>
+        </div>
+        <div class="m3-radio-item" data-lang="de-CH">
+          <div class="m3-radio-circle"></div>
+          <span class="m3-radio-label">Deutsch (Schweiz)</span>
+        </div>
+        <div class="m3-radio-item" data-lang="en-US">
+          <div class="m3-radio-circle"></div>
+          <span class="m3-radio-label">English (United States)</span>
+        </div>
+        <div class="m3-radio-item" data-lang="en-GB">
+          <div class="m3-radio-circle"></div>
+          <span class="m3-radio-label">English (United Kingdom)</span>
+        </div>
+      </div>
+
+      <div class="m3-dialog-actions">
+        <button type="button" class="btn-text" id="btn-lang-cancel">Abbrechen</button>
+        <button type="button" class="btn-filled" id="btn-lang-save">Übernehmen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- M3 Advanced Search Panel (28px radius, Surface-Container) -->
+  <div id="panel-advanced-search" class="m3-advanced-search-panel hidden" role="region" aria-label="Erweiterte Suche">
+    <div class="adv-title">Erweiterte Suche</div>
+    <div class="adv-subtitle">Suchergebnisse gezielt nach Kriterien eingrenzen</div>
+
+    <div class="adv-form-grid">
+      <div class="adv-input-group">
+        <label class="adv-label">Genaue Wortgruppe</label>
+        <input type="text" class="adv-input" placeholder="z. B. 'Klimawandel in Europa'">
+      </div>
+      <div class="adv-input-group">
+        <label class="adv-label">Enthält alle Wörter</label>
+        <input type="text" class="adv-input" placeholder="z. B. Erneuerbare Energien">
+      </div>
+      <div class="adv-input-group">
+        <label class="adv-label">Schließt diese Wörter aus</label>
+        <input type="text" class="adv-input" placeholder="Wörter ausschließen">
+      </div>
+      <div class="adv-input-group">
+        <label class="adv-label">Bestimmte Website</label>
+        <input type="text" class="adv-input" placeholder="z. B. spiegel.de">
+      </div>
+    </div>
+
+    <div class="adv-actions">
+      <button type="button" class="btn-text" id="btn-adv-clear">Löschen</button>
+      <button type="button" class="btn-filled" id="btn-adv-submit">Suchen</button>
+    </div>
+  </div>
+
+  <!-- M3 Context Menu (4px radius, Level 2 Elevation) -->
+  <div id="menu-context" class="m3-context-menu hidden" role="menu" aria-label="Artikeloptionen">
+    <div class="m3-menu-item" role="menuitem" data-action="save">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+      <span>Für später speichern</span>
+    </div>
+    <div class="m3-menu-item" role="menuitem" data-action="share">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
+      <span>Teilen</span>
+    </div>
+    <div class="m3-menu-divider"></div>
+    <div class="m3-menu-item" role="menuitem" data-action="hide">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/></svg>
+      <span>Weniger Berichte wie dieser</span>
+    </div>
+    <div class="m3-menu-item" role="menuitem" data-action="open">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></svg>
+      <span>Quelle in neuem Tab öffnen</span>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // Sub-page Tab Routing
+      function switchProtoView(targetId) {
+        document.querySelectorAll('.proto-view').forEach(v => v.classList.remove('active'));
+        const targetView = document.getElementById(targetId);
+        if (targetView) targetView.classList.add('active');
+
+        document.querySelectorAll('.nav-tab-item[data-view-target]').forEach(tab => {
+          const isSelected = tab.getAttribute('data-view-target') === targetId;
+          tab.classList.toggle('active', isSelected);
+          tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        });
+      }
+
+      document.querySelectorAll('.nav-tab-item[data-view-target]').forEach(tab => {
+        tab.addEventListener('click', function(e) {
+          e.preventDefault();
+          const target = this.getAttribute('data-view-target');
+          switchProtoView(target);
+          const hash = this.getAttribute('href');
+          if (hash) {
+            try { window.history.replaceState(null, '', hash + window.location.search); } catch(err) {}
+          }
+        });
+      });
+
+      // Handle initial hash on load
+      const initHash = window.location.hash.replace('#', '');
+      const hashToView = {
+        'home': 'view-home',
+        'showcase': 'view-showcase',
+        'search': 'view-search',
+        'coverage': 'view-coverage'
+      };
+      if (initHash && hashToView[initHash]) {
+        switchProtoView(hashToView[initHash]);
+      }
+
+      // Dialog Controls
+      const dialogLang = document.getElementById('dialog-language');
+      const btnOpenLang = document.getElementById('btn-open-language');
+      const btnCancelLang = document.getElementById('btn-lang-cancel');
+      const btnSaveLang = document.getElementById('btn-lang-save');
+
+      function openDialog() {
+        if (dialogLang) {
+          dialogLang.classList.remove('hidden');
+          dialogLang.querySelector('.m3-dialog-card')?.focus();
+        }
+      }
+      function closeDialog() {
+        if (dialogLang) dialogLang.classList.add('hidden');
+      }
+
+      if (btnOpenLang) btnOpenLang.addEventListener('click', openDialog);
+      if (btnCancelLang) btnCancelLang.addEventListener('click', closeDialog);
+      if (btnSaveLang) btnSaveLang.addEventListener('click', closeDialog);
+      if (dialogLang) {
+        dialogLang.addEventListener('click', function(e) {
+          if (e.target === dialogLang) closeDialog();
+        });
+      }
+
+      // Radio Selection in Dialog
+      document.querySelectorAll('.m3-radio-item').forEach(item => {
+        item.addEventListener('click', function() {
+          document.querySelectorAll('.m3-radio-item').forEach(r => r.classList.remove('selected'));
+          this.classList.add('selected');
+        });
+      });
+
+      // Advanced Search Drawer Controls
+      const advPanel = document.getElementById('panel-advanced-search');
+      const btnToggleAdv = document.getElementById('btn-toggle-adv-search');
+      const btnAdvClear = document.getElementById('btn-adv-clear');
+      const btnAdvSubmit = document.getElementById('btn-adv-submit');
+
+      function toggleAdvPanel() {
+        if (advPanel) advPanel.classList.toggle('hidden');
+      }
+      if (btnToggleAdv) btnToggleAdv.addEventListener('click', toggleAdvPanel);
+      if (btnAdvClear && advPanel) {
+        btnAdvClear.addEventListener('click', function() {
+          advPanel.querySelectorAll('.adv-input').forEach(inp => inp.value = '');
+        });
+      }
+      if (btnAdvSubmit) {
+        btnAdvSubmit.addEventListener('click', function() {
+          toggleAdvPanel();
+          switchProtoView('view-search');
+        });
+      }
+
+      // Context Menu Controls
+      const contextMenu = document.getElementById('menu-context');
+      document.querySelectorAll('.btn-context-trigger, .btn-icon-more, .story-action-btn[title="Mehr"]').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const rect = this.getBoundingClientRect();
+          if (contextMenu) {
+            contextMenu.style.top = (rect.bottom + 4) + 'px';
+            contextMenu.style.left = Math.min(rect.left, window.innerWidth - 250) + 'px';
+            contextMenu.classList.remove('hidden');
+          }
+        });
+      });
+
+      window.addEventListener('click', function() {
+        if (contextMenu && !contextMenu.classList.contains('hidden')) {
+          contextMenu.classList.add('hidden');
+        }
+      });
+
+      window.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeDialog();
+          if (advPanel) advPanel.classList.add('hidden');
+          if (contextMenu) contextMenu.classList.add('hidden');
+        }
+      });
+
+      // Astryx Empty State toggle in Search view
+      const btnToggleEmpty = document.getElementById('btn-toggle-astryx-empty');
+      const btnResetEmpty = document.getElementById('btn-reset-astryx-empty');
+      const searchPopulated = document.getElementById('search-content-populated');
+      const searchEmpty = document.getElementById('search-content-empty');
+
+      if (btnToggleEmpty && searchPopulated && searchEmpty) {
+        btnToggleEmpty.addEventListener('click', function() {
+          searchPopulated.style.display = 'none';
+          searchEmpty.style.display = 'block';
+        });
+      }
+      if (btnResetEmpty && searchPopulated && searchEmpty) {
+        btnResetEmpty.addEventListener('click', function() {
+          searchEmpty.style.display = 'none';
+          searchPopulated.style.display = 'block';
+        });
+      }
+    })();
+  </script>
 </body>
 </html>

@@ -10,3 +10,4 @@ export * from "./hct/palette.js";
 export * from "./rules/schema.js";
 export * from "./ingest/types.js";
 export * from "./vcs/types.js";
+export * from "./blueprint/index.js";

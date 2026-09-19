@@ -463,6 +463,133 @@
           "border": "1px solid sys.color.outline"
         }
       }
+    },
+    "ShowcaseCard": {
+      "name": "ShowcaseCard",
+      "family": "containment",
+      "description": "M3 Outlined Card variant exclusively used in News Showcase with 16px radius, 1px solid outline-variant border, and curated multi-story slot structure.",
+      "anatomy": {
+        "container": {
+          "shape": "card",
+          "borderRadius": "16px",
+          "border": "1px solid var(--gn-outline-variant, #c7c7c7)",
+          "backgroundColor": "sys.color.surface",
+          "boxShadow": "none",
+          "padding": "16px"
+        },
+        "slots": {
+          "leadingAccessory": "Publisher brand logo or title badge",
+          "trailingAccessory": "FollowButton (36px pill)",
+          "content": "Curated story headlines with bullet links or lead image",
+          "action": "Open publication showcase link"
+        }
+      },
+      "variants": {
+        "outlined": {
+          "borderColor": "var(--gn-outline-variant, #c7c7c7)",
+          "borderWidth": "1px"
+        }
+      },
+      "lifecycleStates": ["idle", "loadingSkeleton", "empty"]
+    },
+    "FollowButton": {
+      "name": "FollowButton",
+      "family": "actions",
+      "description": "Specialized 36px height pill button for Following/Saving topics, publications, or searches, featuring a star or bookmark icon.",
+      "anatomy": {
+        "container": {
+          "shape": "followPill",
+          "borderRadius": "36px",
+          "minHeight": 36,
+          "height": "36px",
+          "padding": "0 16px",
+          "display": "inline-flex",
+          "alignItems": "center",
+          "gap": "8px"
+        },
+        "slots": {
+          "leadingAccessory": "Star/Bookmark vector icon (18px)",
+          "label": "Google Sans / Google Sans Text 14px 500"
+        }
+      },
+      "variants": {
+        "unfollowed": {
+          "border": "1px solid var(--gn-outline, #747775)",
+          "backgroundColor": "transparent",
+          "labelColor": "var(--gn-on-surface, #1f1f1f)"
+        },
+        "followed": {
+          "border": "none",
+          "backgroundColor": "var(--gn-primary-container, #d3e3fd)",
+          "labelColor": "var(--gn-on-primary-container, #041e49)"
+        }
+      }
+    },
+    "AdvancedSearchPanel": {
+      "name": "AdvancedSearchPanel",
+      "family": "text-inputs",
+      "description": "Expandable search refinement drawer/panel utilizing 28px rounded surface-container, multi-clause input fields, and action buttons.",
+      "anatomy": {
+        "container": {
+          "shape": "dialog",
+          "borderRadius": "28px",
+          "backgroundColor": "var(--gn-surface-container, #f0f4f9)",
+          "boxShadow": "none",
+          "padding": "24px"
+        },
+        "slots": {
+          "header": "Title 'Erweiterte Suche' + Subtitle 'Suchergebnisse eingrenzen'",
+          "inputs": "Genaue Wortgruppe, Enthält Wörter, Schließt Wörter aus, Website",
+          "filters": "Datum Dropdown",
+          "actions": "Löschen (Text button) and Suchen (Filled pill button)"
+        }
+      }
+    },
+    "ContextMenu": {
+      "name": "ContextMenu",
+      "family": "navigation",
+      "description": "M3 Dropdown/Context menu anchored to 3-dots actions with 4px radius and Level 2 elevation shadow.",
+      "anatomy": {
+        "container": {
+          "shape": "menu",
+          "borderRadius": "4px",
+          "backgroundColor": "var(--gn-surface, #ffffff)",
+          "boxShadow": "rgba(0, 0, 0, 0.2) 0px 3px 5px -1px, rgba(0, 0, 0, 0.14) 0px 6px 10px 0px, rgba(0, 0, 0, 0.12) 0px 1px 18px 0px",
+          "padding": "8px 0"
+        },
+        "slots": {
+          "menuItem": {
+            "leadingAccessory": "24px SVG icon (Save, Share, Hide, Thumbs)",
+            "label": "Google Sans Text 14px",
+            "padding": "0 16px",
+            "minHeight": "48px"
+          }
+        }
+      },
+      "dismissal": {
+        "backdrop": true,
+        "escapeKey": true,
+        "outsideClick": true
+      }
+    },
+    "SocialEmbedCard": {
+      "name": "SocialEmbedCard",
+      "family": "containment",
+      "description": "Full Coverage embedded social post card (e.g. Posts on X) displaying verified publisher handle, post copy, and linkout.",
+      "anatomy": {
+        "container": {
+          "shape": "subCard",
+          "borderRadius": "8px",
+          "border": "1px solid var(--gn-outline-variant, #e3e3e3)",
+          "backgroundColor": "var(--gn-surface, #ffffff)",
+          "padding": "16px"
+        },
+        "slots": {
+          "header": "Author avatar, author name, verified badge, handle, X logo",
+          "body": "Post text and hashtags",
+          "footer": "Timestamp and engagement linkout"
+        }
+      }
     }
   }
 }

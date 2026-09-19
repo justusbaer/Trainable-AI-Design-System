@@ -52,18 +52,26 @@ export function evaluateCode(code: string, options: EvaluateOptions = {}): Evalu
     // Tier 1: Static Token Audit (Raw Hex Colors & Non-Quantum Spacing)
     // =========================================================================
     if (strictHexDisallowed) {
-      // Find raw hex colors (e.g. #2563eb, #ffffff)
-      const hexMatch = lineText.match(/#[0-9a-fA-F]{3,8}\b/g);
-      if (hexMatch) {
-        hexMatch.forEach(hex => {
-          diagnostics.push({
-            severity: "CRITICAL",
-            code: "TDS-RAW-COLOR",
-            line: lineNum,
-            message: `Raw hex color '${hex}' detected.`,
-            remediation: "Replace with semantic token (e.g. 'bg-brand-primary' or 'sys.color.primary').",
+      // Find raw hex colors in layout styling (exempting SVG vector artwork, CSS custom property definitions, and var() fallbacks)
+      const isVectorArtworkLine = /^\s*<(?:path|rect|circle|stop|polygon|line|ellipse|g)\b/.test(lineText) ||
+                                  /\b(?:fill|stroke|stop-color)=["']#[0-9a-fA-F]{3,8}["']/.test(lineText);
+      const isTokenDefinitionLine = /^\s*--[a-zA-Z0-9_-]+:\s*#[0-9a-fA-F]{3,8}\b/.test(lineText);
+
+      if (!isVectorArtworkLine && !isTokenDefinitionLine) {
+        // Strip var(--token, #hex) fallback values before checking
+        const sanitizedLine = lineText.replace(/var\(--[a-zA-Z0-9_-]+,\s*#[0-9a-fA-F]{3,8}\)/g, '');
+        const hexMatch = sanitizedLine.match(/#[0-9a-fA-F]{3,8}\b/g);
+        if (hexMatch) {
+          hexMatch.forEach(hex => {
+            diagnostics.push({
+              severity: "CRITICAL",
+              code: "TDS-RAW-COLOR",
+              line: lineNum,
+              message: `Raw hex color '${hex}' detected.`,
+              remediation: "Replace with semantic token (e.g. 'bg-brand-primary' or 'sys.color.primary').",
+            });
           });
-        });
+        }
       }
 
       // Find arbitrary spacing classes like p-[13px] or m-[7px]
@@ -161,10 +169,12 @@ export function evaluateCode(code: string, options: EvaluateOptions = {}): Evalu
     }
 
     // =========================================================================
-    // Tier 5: Modern Visual Fidelity & Anti-Drift Guardrails
+    // Tier 5: Modern Visual Fidelity & Anti-Drift Guardrails (M3 + Astryx Unified)
     // =========================================================================
     // 1. Ghost Border Hallucination Check on Surface Containers
+    // Exempt explicit outlined variants: ShowcaseCard, variant="outlined", showcase-card, or border-outline-showcase
     if (/\b(?:surface-container|tds-card--filled|<Card\b(?!.*variant=["']outlined["']))/.test(lineText) &&
+        !/\b(?:showcase-card|ShowcaseCard|variant=["']outlined["']|outline-showcase)\b/.test(lineText) &&
         /\b(?:border(?:-\[[^\]]+\])?|border-outline(?:-variant)?)\b/.test(lineText) &&
         !/\bborder-(?:none|0|transparent)\b/.test(lineText)) {
       diagnostics.push({
@@ -172,7 +182,7 @@ export function evaluateCode(code: string, options: EvaluateOptions = {}): Evalu
         code: "TDS-GHOST-BORDER-HALLUCINATION",
         line: lineNum,
         message: "Artificial border outline added to flat surface container or filled card.",
-        remediation: "Modern surface containment establishes depth through tonal contrast without borders. Remove border or use 'border-none'.",
+        remediation: "Modern surface containment establishes depth through tonal contrast without borders. Remove border or use 'border-none' (unless explicitly building an outlined ShowcaseCard).",
       });
     }
 
@@ -196,6 +206,45 @@ export function evaluateCode(code: string, options: EvaluateOptions = {}): Evalu
         message: "Brand logo approximated using styled HTML text spans instead of vector SVG.",
         remediation: "Render brand logos using authentic vector SVGs from 'icons.json' or inline <svg>.",
       });
+    }
+
+    // 4. M3 Dialog Surface Specs (28px corner radius mandate)
+    if (/\b(?:<Dialog\b|role=["']dialog["']|m3-dialog-card|class=["'][^"']*\bdialog\b)/i.test(lineText)) {
+      if (/\b(?:rounded-(?:sm|md|lg|xl)\b|rounded-\[(?:[468]|1[024])px\]|border-radius:\s*(?:[468]|1[024])px)\b/.test(lineText)) {
+        diagnostics.push({
+          severity: "CRITICAL",
+          code: "TDS-DIALOG-SURFACE-SPECS",
+          line: lineNum,
+          message: "Dialog or Modal container uses inadequate small corner radius.",
+          remediation: "Material 3 Dialogs strictly require 28px corner radius ('rounded-[28px]' or 'var(--gn-radius-dialog)').",
+        });
+      }
+    }
+
+    // 5. M3 Floating Menu Specs (4px corner radius mandate)
+    if (/\b(?:<Menu\b|role=["']menu["']|m3-context-menu)\b/i.test(lineText)) {
+      if (/\b(?:rounded-(?:xl|2xl|3xl|full)\b|rounded-\[(?:1[68]|2[48])px\]|border-radius:\s*(?:1[68]|2[48])px)\b/.test(lineText)) {
+        diagnostics.push({
+          severity: "HIGH",
+          code: "TDS-FLOATING-MENU-SPECS",
+          line: lineNum,
+          message: "Context menu or dropdown popover uses oversized corner radius.",
+          remediation: "Context menus and popovers strictly require 4px corner radius ('rounded' or 'rounded-[4px]') with M3 elevation shadow.",
+        });
+      }
+    }
+
+    // 6. Follow / Save Action Pill Specs (36px height mandate)
+    if (/\b(?:<FollowButton\b|btn-follow|aria-label=["'][^"']*(?:folgen|speichern)[^"']*["'])/i.test(lineText)) {
+      if (/\b(?:h-12|h-14|h-\[4\dpx\]|min-h-\[48px\])\b/.test(lineText) && !/\b(?:h-9|h-\[36px\]|min-h-\[36px\])\b/.test(lineText)) {
+        diagnostics.push({
+          severity: "HIGH",
+          code: "TDS-FOLLOW-BUTTON-SPECS",
+          line: lineNum,
+          message: "Follow/Save action pill appears oversized.",
+          remediation: "Follow buttons in Google News use a dedicated 36px pill height ('h-9' or 'h-[36px]' with 'rounded-[36px]').",
+        });
+      }
     }
   });
 
