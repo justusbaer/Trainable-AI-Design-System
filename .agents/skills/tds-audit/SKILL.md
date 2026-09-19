@@ -38,8 +38,12 @@ Example:
 3. **Reinvented Components (`TDS-REINVENTED-COMPONENT`):** Raw `<button>` or `<input>` instead of `<Button>` or `<TextField>`.
 4. **On-Color Contrast Mismatches (`TDS-M3-ON-COLOR-MISMATCH`):** Unpaired text colors on colored backgrounds.
 5. **Touch Target Deficits (`TDS-TOUCH-TARGET-TOO-SMALL`):** Interactive elements smaller than 48x48px.
-6. **Physical Directionality (`TDS-RTL-NON-LOGICAL`):** Physical `ml-`/`pr-` classes instead of RTL-safe `ms-`/`pe-`.
-7. **Deprecated APIs & Tokens (`TDS-DEPRECATED-TOKEN`):** Tokens scheduled for removal according to `.design-system/migrations.json`.
+6. **Missing Accessible Names (`TDS-MISSING-ACCESSIBLE-NAME`):** Icon buttons or icon-only actions lacking an `aria-label`.
+7. **Stripped Focus Outlines (`TDS-FOCUS-OUTLINE-STRIPPED`):** `outline-none` without an accessible `focus-visible:ring-*` replacement.
+8. **Arbitrary Typography (`TDS-ARBITRARY-TYPOGRAPHY`):** Arbitrary font sizes (`text-[17px]`), weights, or leading outside the typescale ladder.
+9. **Fixed Viewport Breakage (`TDS-FIXED-VIEWPORT-BREAKAGE`):** Hardcoded wide container widths causing mobile overflow.
+10. **Physical Directionality (`TDS-RTL-NON-LOGICAL`):** Physical `ml-`/`pr-` classes instead of RTL-safe `ms-`/`pe-`.
+11. **Deprecated APIs & Tokens (`TDS-DEPRECATED-TOKEN`):** Tokens scheduled for removal according to `.design-system/migrations.json`.
 
 ---
 

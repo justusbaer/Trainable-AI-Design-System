@@ -11,4 +11,10 @@ You MUST follow the project design system defined in `DESIGN.md` and `.design-sy
 2. **NO REINVENTED HTML PRIMITIVES:** Always check `DESIGN.md` Section 3 or query MCP for certified components (`<Button>`, `<TextField>`, `<Card>`). Do not write raw `<button>` or `<input>`.
 3. **SENTENCE CASE:** All button labels, chip texts, and headers MUST be sentence case (e.g. "Create invoice", not "Create Invoice").
 4. **TOUCH TARGETS:** All interactive elements must maintain at least 48x48px touch targets.
-5. **EVALUATE YOUR CODE:** Run `npx tds evaluate <file>` to verify compliance before finalizing work.
+5. **DETERMINISTIC VERIFICATION CONTRACT (MANDATORY):**
+   - Immediately after creating or modifying any UI file (`.tsx`, `.jsx`, `.vue`, `.svelte`, `.html`), you MUST execute:
+     ```bash
+     npm run tds -- evaluate <filepath> --strict
+     ```
+   - **Zero Tolerance:** You are strictly forbidden from reporting a task as complete if any violations exist.
+   - **Self-Correction Loop:** If the score is `< 100/100`, read the diagnostic error codes, line numbers, and remediation guidance, apply fixes, and re-run the evaluation until `✔ CERTIFIED COMPLIANT (Score: 100/100)` is achieved.

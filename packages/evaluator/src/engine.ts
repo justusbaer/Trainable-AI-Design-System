@@ -47,16 +47,14 @@ export function evaluateCode(code: string, options: EvaluateOptions = {}): Evalu
 
   lines.forEach((lineText, lineIdx) => {
     const lineNum = lineIdx + 1;
+    const isVectorArtworkLine = /^\s*<(?:path|rect|circle|stop|polygon|line|ellipse|g)\b/.test(lineText) ||
+                                /\b(?:fill|stroke|stop-color)=["']#[0-9a-fA-F]{3,8}["']/.test(lineText);
+    const isTokenDefinitionLine = /^\s*--[a-zA-Z0-9_-]+:\s*#[0-9a-fA-F]{3,8}\b/.test(lineText);
 
     // =========================================================================
     // Tier 1: Static Token Audit (Raw Hex Colors & Non-Quantum Spacing)
     // =========================================================================
     if (strictHexDisallowed) {
-      // Find raw hex colors in layout styling (exempting SVG vector artwork, CSS custom property definitions, and var() fallbacks)
-      const isVectorArtworkLine = /^\s*<(?:path|rect|circle|stop|polygon|line|ellipse|g)\b/.test(lineText) ||
-                                  /\b(?:fill|stroke|stop-color)=["']#[0-9a-fA-F]{3,8}["']/.test(lineText);
-      const isTokenDefinitionLine = /^\s*--[a-zA-Z0-9_-]+:\s*#[0-9a-fA-F]{3,8}\b/.test(lineText);
-
       if (!isVectorArtworkLine && !isTokenDefinitionLine) {
         // Strip var(--token, #hex) fallback values before checking
         const sanitizedLine = lineText.replace(/var\(--[a-zA-Z0-9_-]+,\s*#[0-9a-fA-F]{3,8}\)/g, '');
@@ -115,20 +113,41 @@ export function evaluateCode(code: string, options: EvaluateOptions = {}): Evalu
 
     // On-Color Pairing Audit: element has bg-primary or bg-brand-primary but text is not on-primary
     if (requireOnColorPairing) {
-      if (/\bbg-(?:brand-)?primary\b/.test(lineText) && /\btext-(?:gray|slate|zinc|black)-\d+/.test(lineText)) {
+      if (/\bbg-(?:brand-)?primary\b/.test(lineText) && /\btext-(?:gray|slate|zinc|black|neutral)-\d+/.test(lineText)) {
         diagnostics.push({
           severity: "CRITICAL",
           code: "TDS-M3-ON-COLOR-MISMATCH",
           line: lineNum,
-          message: "Element with 'bg-primary' background uses a non-paired text color.",
+          message: "Element with 'bg-primary' background uses an un-paired text color.",
           remediation: "Use paired token 'text-on-primary' to ensure accessible contrast.",
+        });
+      }
+
+      if (/\bbg-secondary-container\b/.test(lineText) && /\btext-(?:gray|slate|zinc|black|neutral)-\d+/.test(lineText)) {
+        diagnostics.push({
+          severity: "CRITICAL",
+          code: "TDS-M3-ON-COLOR-MISMATCH",
+          line: lineNum,
+          message: "Element with 'bg-secondary-container' background uses an un-paired text color.",
+          remediation: "Use paired token 'text-on-secondary-container' to ensure accessible contrast.",
+        });
+      }
+
+      if (/\bbg-error\b/.test(lineText) && !/\btext-on-error\b/.test(lineText) && /\btext-(?:gray|slate|zinc|black|neutral)-\d+/.test(lineText)) {
+        diagnostics.push({
+          severity: "CRITICAL",
+          code: "TDS-M3-ON-COLOR-MISMATCH",
+          line: lineNum,
+          message: "Element with 'bg-error' background must pair with 'text-on-error'.",
+          remediation: "Replace with 'text-on-error' to guarantee accessible contrast on error surfaces.",
         });
       }
     }
 
     // =========================================================================
-    // Tier 3: Touch Targets & RTL Directionality
+    // Tier 3: Accessibility, Touch Targets & State Layer Invariants
     // =========================================================================
+    // 1. Touch Target Deficits (<48px)
     if (/\b(?:IconButton|button)\b/i.test(lineText) && /\b(?:w-[678]|h-[678]|w-\[3\dpx\]|h-\[3\dpx\])\b/.test(lineText)) {
       diagnostics.push({
         severity: "HIGH",
@@ -139,6 +158,32 @@ export function evaluateCode(code: string, options: EvaluateOptions = {}): Evalu
       });
     }
 
+    // 2. Accessible Name on Icon-Only Controls
+    if ((/<\s*IconButton\b(?![^>]*\baria-label=)[^>]*\/>/.test(lineText) ||
+         /<\s*IconButton\b(?![^>]*\baria-label=)[^>]*>[^<]*<\/\s*IconButton>/.test(lineText)) ||
+        (/<\s*button\b(?![^>]*\baria-label=)[^>]*>\s*<(?:Icon|svg)\b[^>]*\/>\s*<\/\s*button>/.test(lineText))) {
+      diagnostics.push({
+        severity: "CRITICAL",
+        code: "TDS-MISSING-ACCESSIBLE-NAME",
+        line: lineNum,
+        message: "Interactive icon control lacks an accessible name ('aria-label').",
+        remediation: "Add 'aria-label=\"Action description\"' or visually hidden text (<span className=\"sr-only\">) for screen readers.",
+      });
+    }
+
+    // 3. Focus Outline Stripped without Accessible Replacement
+    if (/\b(?:outline-none|focus:outline-none)\b/.test(lineText) &&
+        !/\b(?:focus-visible:ring|focus:ring|focus-visible:outline)\b/.test(lineText)) {
+      diagnostics.push({
+        severity: "HIGH",
+        code: "TDS-FOCUS-OUTLINE-STRIPPED",
+        line: lineNum,
+        message: "Focus outline stripped ('outline-none') without an accessible 'focus-visible:ring-*' replacement.",
+        remediation: "Add 'focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2' to ensure keyboard accessibility.",
+      });
+    }
+
+    // 4. Bi-Directional RTL Directionality
     if (/\b(?:ml-\d+|mr-\d+|pl-\d+|pr-\d+)\b/.test(lineText)) {
       diagnostics.push({
         severity: "LOW",
@@ -146,6 +191,30 @@ export function evaluateCode(code: string, options: EvaluateOptions = {}): Evalu
         line: lineNum,
         message: "Physical directional classes detected (e.g. 'ml-', 'mr-').",
         remediation: "Use bidirectional logical properties ('ms-', 'me-', 'ps-', 'pe-') for internationalization.",
+      });
+    }
+
+    // 5. Typescale Ladder Enforcement (No Arbitrary Typography)
+    const arbitraryFontMatch = lineText.match(/\b(?:text-\[(\d+)px\]|font-\[(\d+)\]|leading-\[(\d+)px\])/);
+    if (arbitraryFontMatch && !isVectorArtworkLine) {
+      diagnostics.push({
+        severity: "MEDIUM",
+        code: "TDS-ARBITRARY-TYPOGRAPHY",
+        line: lineNum,
+        message: `Arbitrary typography style '${arbitraryFontMatch[0]}' bypasses the 15-tier typescale ladder.`,
+        remediation: "Use standard typescale tokens (e.g. 'text-title-medium', 'text-body-large', 'text-label-small').",
+      });
+    }
+
+    // 6. Responsive Flow & No Fixed Viewport Breakage
+    const fixedWidthMatch = lineText.match(/\b(?<!(?:sm:|md:|lg:|xl:|2xl:|max-))w-\[([4-9]\d{2,}|1\d{3,})px\]/);
+    if (fixedWidthMatch && !isVectorArtworkLine) {
+      diagnostics.push({
+        severity: "HIGH",
+        code: "TDS-FIXED-VIEWPORT-BREAKAGE",
+        line: lineNum,
+        message: `Fixed container width '${fixedWidthMatch[0]}' will cause horizontal overflow on mobile screens.`,
+        remediation: `Use 'w-full max-w-[${fixedWidthMatch[1]}px]' or responsive prefixes ('md:${fixedWidthMatch[0]}') for fluid layouts.`,
       });
     }
 

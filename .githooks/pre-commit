@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -e
+
+# Trainable DS (TDS) Pre-Commit Hook
+# Deterministically verifies all staged UI files against design system constraints.
+
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(tsx|jsx|vue|svelte|html)$' || true)
+
+if [ -z "$STAGED_FILES" ]; then
+  exit 0
+fi
+
+echo ""
+echo "🔍 [Trainable DS] Evaluating staged UI files for compliance..."
+echo "══════════════════════════════════════════════════════════════"
+
+FAILED=0
+ROOT_DIR=$(git rev-parse --show-toplevel)
+CLI_BIN="$ROOT_DIR/packages/cli/dist/bin.js"
+
+# Ensure CLI is built if missing
+if [ ! -f "$CLI_BIN" ]; then
+  echo "⚠️  Trainable DS CLI binary not found at $CLI_BIN. Building evaluator & cli..."
+  npm run build --workspace=@trainable-ds/evaluator --workspace=@trainable-ds/cli > /dev/null 2>&1 || true
+fi
+
+for FILE in $STAGED_FILES; do
+  if [ -f "$ROOT_DIR/$FILE" ]; then
+    echo "Checking: $FILE"
+    if ! node "$CLI_BIN" evaluate "$ROOT_DIR/$FILE" --strict; then
+      FAILED=1
+    fi
+  fi
+done
+
+if [ $FAILED -ne 0 ]; then
+  echo ""
+  echo "❌ [Trainable DS] Commit rejected: Design system violations detected."
+  echo "👉 Please fix the diagnostics above or ask your AI pair programmer to remediate them."
+  echo "   (Emergency bypass: 'git commit --no-verify')"
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo "✔ [Trainable DS] All staged UI files are 100% certified compliant!"
+echo ""
+exit 0

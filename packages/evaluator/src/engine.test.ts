@@ -193,4 +193,93 @@ describe("Trainable DS Compliance Evaluator", () => {
     const followDiag = result.diagnostics.find(d => d.code === "TDS-FOLLOW-BUTTON-SPECS");
     expect(followDiag?.remediation).toContain("36px");
   });
+
+  it("detects missing accessible name on icon-only buttons (TDS-MISSING-ACCESSIBLE-NAME)", () => {
+    const unlabelledCode = `
+      export function TopNav() {
+        return (
+          <header>
+            <IconButton icon="menu" />
+            <button className="min-h-[48px] min-w-[48px]"><Icon name="close" /></button>
+          </header>
+        );
+      }
+    `;
+
+    const result = evaluateCode(unlabelledCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-MISSING-ACCESSIBLE-NAME");
+  });
+
+  it("passes icon buttons that have an accessible aria-label", () => {
+    const labelledCode = `
+      export function TopNav() {
+        return (
+          <header>
+            <IconButton icon="menu" aria-label="Open main navigation" />
+          </header>
+        );
+      }
+    `;
+
+    const result = evaluateCode(labelledCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).not.toContain("TDS-MISSING-ACCESSIBLE-NAME");
+  });
+
+  it("detects focus outline stripped without focus-visible replacement (TDS-FOCUS-OUTLINE-STRIPPED)", () => {
+    const strippedCode = `
+      export function CustomInput() {
+        return (
+          <input className="outline-none p-2 bg-surface text-on-surface" />
+        );
+      }
+    `;
+
+    const result = evaluateCode(strippedCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-FOCUS-OUTLINE-STRIPPED");
+  });
+
+  it("detects arbitrary typography classes (TDS-ARBITRARY-TYPOGRAPHY)", () => {
+    const arbitraryCode = `
+      export function CardTitle() {
+        return <h2 className="text-[17px] font-[550] leading-[23px]">Custom Title</h2>;
+      }
+    `;
+
+    const result = evaluateCode(arbitraryCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-ARBITRARY-TYPOGRAPHY");
+  });
+
+  it("detects fixed wide container widths causing viewport breakage (TDS-FIXED-VIEWPORT-BREAKAGE)", () => {
+    const fixedWidthCode = `
+      export function WideCard() {
+        return <div className="w-[600px] p-4 bg-surface-container">Content</div>;
+      }
+    `;
+
+    const result = evaluateCode(fixedWidthCode);
+    const codes = result.diagnostics.map(d => d.code);
+    expect(codes).toContain("TDS-FIXED-VIEWPORT-BREAKAGE");
+  });
+
+  it("detects on-color mismatch on secondary-container and error surfaces", () => {
+    const badSecondaryCode = `
+      export function AlertBox() {
+        return (
+          <div>
+            <div className="bg-secondary-container text-gray-800">Note</div>
+            <div className="bg-error text-gray-900">Error occurred</div>
+          </div>
+        );
+      }
+    `;
+
+    const result = evaluateCode(badSecondaryCode);
+    const codes = result.diagnostics.map(d => d.code);
+    const mismatchCount = codes.filter(c => c === "TDS-M3-ON-COLOR-MISMATCH").length;
+    expect(mismatchCount).toBe(2);
+  });
 });

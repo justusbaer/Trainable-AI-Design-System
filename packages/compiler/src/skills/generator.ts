@@ -63,10 +63,18 @@ Your AI coding tool automatically activates this skill whenever you generate, re
 - **Bi-Directional RTL Directionality:** Never use physical directional properties (\`ml-\`, \`mr-\`, \`pl-\`, \`pr-\`). Use logical CSS properties:
   - Margin: \`ms-*\` (start), \`me-*\` (end)
   - Padding: \`ps-*\` (start), \`pe-*\` (end)
+- **Fluid Containment (No Fixed Viewport Breakage):** Never set hardcoded container widths (e.g. \`w-[600px]\`, \`w-[1024px]\`) that trigger mobile horizontal scrolling. Use fluid widths (\`w-full max-w-*\`) or responsive breakpoints (\`md:w-[...]\`).
 
 ---
 
-## 3. Component Reuse & JIT Retrieval
+## 3. Accessibility, Focus States & Typography
+- **Accessible Name on Icon Controls:** Every icon-only button (\`<IconButton>\` or \`<button><Icon /></button>\`) MUST include an \`aria-label="Action description"\` or visually hidden label text (\`<span className="sr-only">\`).
+- **Focus Rings & State Layers:** Interactive controls must NEVER strip focus outlines (\`outline-none\`) without providing a visible focus ring replacement: \`focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2\`.
+- **Typescale Ladder:** Never invent arbitrary font sizes (e.g. \`text-[17px]\`, \`font-[550]\`, \`leading-[23px]\`). Strictly use defined typescale tokens (\`text-title-medium\`, \`text-body-large\`, \`text-label-small\`).
+
+---
+
+## 4. Component Reuse & JIT Retrieval
 - **No Reinvented HTML Primitives:** Never write raw \`<button>\` or \`<input>\` elements with custom styling. Always import and use certified design system components from \`components/ui/\` (\`<Button>\`, \`<TextField>\`, \`<Card>\`, \`<Chip>\`, \`<Dialog>\`).
 - **Just-In-Time Documentation:** If you need the exact props or code snippet for a component, run:
   \`\`\`bash
@@ -76,7 +84,7 @@ Your AI coding tool automatically activates this skill whenever you generate, re
 
 ---
 
-## 4. Strict Command & Sketch Fidelity (Zero Feature Hallucination)
+## 5. Strict Command & Sketch Fidelity (Zero Feature Hallucination)
 - **Strict Adherence:** When building UI from a user prompt, sketch, wireframe, or screenshot, strictly implement **ONLY** what the user requested or drew.
 - **Zero Feature Invention:** NEVER invent, assume, or inject unrequested features, action tiles, toggles, or buttons (e.g. heating, horn, tire pressure, extra controls) to fill up empty space.
 - **Intentional Whitespace & Placeholder Mandate:** If an area is marked as whitespace (e.g. "Whitespace (for now)") or left blank:
@@ -85,7 +93,7 @@ Your AI coding tool automatically activates this skill whenever you generate, re
 
 ---
 
-## 5. Explicit Scope Invariants & Boundaries (Negative Constraints)
+## 6. Explicit Scope Invariants & Boundaries (Negative Constraints)
 To ensure safety and prevent regression drift, this skill enforces strict task boundaries:
 - **DO NOT** alter business logic, state management, API routes, or data fetching queries.
 - **DO NOT** perform general code refactoring or reformat unrelated source code.
@@ -93,7 +101,7 @@ To ensure safety and prevent regression drift, this skill enforces strict task b
 
 ---
 
-## 6. Verification
+## 7. Verification
 Before finalizing any UI code, verify compliance by running:
 \`\`\`bash
 npx tds evaluate <filepath>
@@ -152,8 +160,12 @@ Example:
 3. **Reinvented Components (\`TDS-REINVENTED-COMPONENT\`):** Raw \`<button>\` or \`<input>\` instead of \`<Button>\` or \`<TextField>\`.
 4. **On-Color Contrast Mismatches (\`TDS-M3-ON-COLOR-MISMATCH\`):** Unpaired text colors on colored backgrounds.
 5. **Touch Target Deficits (\`TDS-TOUCH-TARGET-TOO-SMALL\`):** Interactive elements smaller than 48x48px.
-6. **Physical Directionality (\`TDS-RTL-NON-LOGICAL\`):** Physical \`ml-\`/\`pr-\` classes instead of RTL-safe \`ms-\`/\`pe-\`.
-7. **Deprecated APIs & Tokens (\`TDS-DEPRECATED-TOKEN\`):** Tokens scheduled for removal according to \`.design-system/migrations.json\`.
+6. **Missing Accessible Names (\`TDS-MISSING-ACCESSIBLE-NAME\`):** Icon buttons or icon-only actions lacking an \`aria-label\`.
+7. **Stripped Focus Outlines (\`TDS-FOCUS-OUTLINE-STRIPPED\`):** \`outline-none\` without an accessible \`focus-visible:ring-*\` replacement.
+8. **Arbitrary Typography (\`TDS-ARBITRARY-TYPOGRAPHY\`):** Arbitrary font sizes (\`text-[17px]\`), weights, or leading outside the typescale ladder.
+9. **Fixed Viewport Breakage (\`TDS-FIXED-VIEWPORT-BREAKAGE\`):** Hardcoded wide container widths causing mobile overflow.
+10. **Physical Directionality (\`TDS-RTL-NON-LOGICAL\`):** Physical \`ml-\`/\`pr-\` classes instead of RTL-safe \`ms-\`/\`pe-\`.
+11. **Deprecated APIs & Tokens (\`TDS-DEPRECATED-TOKEN\`):** Tokens scheduled for removal according to \`.design-system/migrations.json\`.
 
 ---
 
